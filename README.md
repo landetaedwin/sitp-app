@@ -14,47 +14,47 @@ CONFIGURACION INICIAL
 
 2 ABRIR CONSOLA CMD 
 
-	npm install -g @angular/cli
+	- npm install -g @angular/cli
 
 3 CREAR UN DIRECTORIO DE TRABAJO PARA LA APLICACION ANGULAR
 
 4 ABRIR CMD EN EL REPOSITORIO 
 
-	git clone https://github.com/landetaedwin/sitp-app.git (Ojo rener instalado git)
+	- git clone https://github.com/landetaedwin/sitp-app.git (Ojo rener instalado git)
 
-	VER> https://git-scm.com/book/es/v1/Empezando-Instalando-Git
+	- VER> https://git-scm.com/book/es/v1/Empezando-Instalando-Git
 	
 5 COMANDOS INICIALES (UNA SOLA VEZ)
 
-	npm install
+	- npm install
 
-	npm install bootstrap --save 
+	- npm install bootstrap --save 
 
-	npm install font-awesome --save
+	- npm install font-awesome --save
 
-	npm install primeng --save
+	- npm install primeng --save
 
-	npm install
+	- npm install
 	
 6 EJECUTAR LA APLICACION ANGULAR
 
-	npm run start
+	- npm run start
 
-	Se abre en > http://localhost:4200/
+	- Se abre en > http://localhost:4200/
 	
 	
 *********************   IMPORTANTE   *********************
 Para crear componentes
 
-	ng generate component nombre_componente
+	- ng generate component nombre_componente
 
 Para crear servicios
 
-	ng generate service nombre_servicio
+	- ng generate service nombre_servicio
 
 para crear clases
 
-	ng generate class nombre_clase
+	- ng generate class nombre_clase
 
 
 
