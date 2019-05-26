@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
+import { PanelMenuModule } from 'primeng/panelmenu';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { Constantes } from './resources/constantes';
 import { MenuComponent } from './menu/menu.component';
+import { Constantes } from './resources/constantes';
+
 
 
 
@@ -14,12 +17,15 @@ import { MenuComponent } from './menu/menu.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    MenuComponent
+    MenuComponent,
+    
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
-    InputTextModule
+    InputTextModule,
+    PanelMenuModule
   ],
   providers: [Constantes],
   bootstrap: [AppComponent],
