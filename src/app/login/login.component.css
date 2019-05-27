@@ -1,0 +1,52 @@
+
+.tittle{
+color: grey;
+font-family: 'Courier New', Courier, monospace;
+text-align: center;
+
+}
+
+.space{
+   padding-top: 1rem;
+   padding-left: 1rem;
+   padding-right: 1rem;
+}
+
+.container{
+height: 100%;
+align-content: center;
+}
+
+.card{
+margin-top: auto;
+margin-bottom: auto;
+width: 100%;
+background-color: #EBEDEF !important;
+}
+
+
+.input-group-prepend span{
+width: 50px;
+background-color: #5D6D7E;
+color: black;
+border:0 !important;
+}
+
+.login_btn{
+color: white;
+background-color: #5D6D7E;
+width: 100%;
+}
+
+.centrar
+	{
+		position: absolute;
+		top:50%;
+		left:50%;
+		width:400px;
+		margin-left:-200px;
+		height:300px;
+		margin-top:-150px;
+		border:1px solid #808080;
+		padding:5px;
+	}

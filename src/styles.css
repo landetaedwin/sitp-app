@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+body .ui-inputtext {
+  font-size: 14px;
+  color: #333333;
+  background: #ffffff;
+  padding: 0.429em;
+  border: 1px solid #a6a6a6;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  height: 1.5rem;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+body .ui-panelmenu .ui-panelmenu-header > a {
+  font-size: 12px;
+  font-style: normal;
+  border: none;
+}
+
+
+body .ui-panelmenu .ui-panelmenu-content .ui-menuitem .ui-menuitem-link {
+    font-size: 12px;
+
+}
+
+.ui-panelmenu .ui-panelmenu-content>.ui-panelmenu-root-submenu>.ui-submenu-list {
+    margin-left: 0;
+}
