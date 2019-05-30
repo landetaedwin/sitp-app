@@ -5,6 +5,7 @@
     position: fixed;
     height: 100%;
     overflow: auto;
+    background-color: #f4f4f4;
   }
   
   div.content {
