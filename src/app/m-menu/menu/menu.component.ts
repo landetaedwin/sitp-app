@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
@@ -152,9 +152,9 @@ export class MenuComponent implements OnInit {
         label: 'Portafolio',
         visible: this.m1,
         items: [
-          { label: 'Crear portafolio', command: () => this.crearPortafolio(), visible: this.i1 },
-          { label: 'Editar portafolio', command: () => this.imprimirMensaje(), visible: this.i2 },
-          { label: 'Anular portafolio', command: () => this.imprimirMensaje(), visible: this.i3 },
+          { label: 'Crear portafolio', routerLink: [{ outlets: { sitp: ['crearPortafolio'] } }], visible: this.i1 },
+          { label: 'Editar portafolio', routerLink: [{ outlets: { sitp: ['editarPortafolio'] } }], visible: this.i2 },
+          { label: 'Anular portafolio', routerLink: [{ outlets: { sitp: ['anularPortafolio'] } }], visible: this.i3 },
         ]
       },
       {
@@ -244,10 +244,7 @@ export class MenuComponent implements OnInit {
 
 
 
-  crearPortafolio() {
-    this.router.navigate([{ outlets: { popup: ["compose"] } }]);
 
-  }
 
 
   imprimirMensaje() {
