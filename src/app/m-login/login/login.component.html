@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="row" style="margin-top: 30px;">
+    <div class="col-md-6">
+      <p><b>Agencia de regulacion y control hidrocarburifero</b> ARCH</p>
+    </div>
+    <div class="col-md-6 ">
+      <p style="font-size: 10px" class="float-right">
+        <a href="">Ver videotutorial &nbsp;</a>
+        <a href="">&nbsp; Descargar tutorial PDF</a>
+      </p>
+    </div>
+    <p class="separator-top"></p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h1><b>Módulo de trabajos en pozo v1.0.0</b></h1>
+    </div>
+    <div class="col-md-6">
+      <img
+        class="float-right"
+        src="../../../assets/img/logo-siscohi.PNG"
+        alt=""
+      />
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 5%;">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-2">
+          <label for="campo">Usuario:</label>
+        </div>
+        <div class="col-md-6">
+          <input
+            id="username"
+            name="username"
+            
+            type="text"
+            [(ngModel)]="username"
+            pInputText
+            required
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <label for="campo">Clave:</label>
+        </div>
+        <div class="col-md-6">
+          <input
+            id="password"
+            name="password"
+            
+            type="text"
+            [(ngModel)]="password"
+            pInputText
+            required
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+          <button type="button" class="button" (click)="verifyLogin()">
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <p class="separator-botton"></p>
+
+    <div class="col-md-12">
+      <p><b>Mayor informacion</b></p>
+    </div>
+    <div class="col-md-12">
+      <p>
+        <b>Correo:</b> soportearch@controlhidrocarburos.gob.ec &nbsp;
+        <b>Teléfono:</b>(593-2) 3996 500
+      </p>
+    </div>
+  </div>
+  <p-messages></p-messages>
+</div>
+
+<ng-template #customLoadingTemplate> </ng-template>
+<ngx-loading
+  [show]="loading"
+  [config]="{ backdropBorderRadius: '3px' }"
+  [template]="customLoadingTemplate"
+></ngx-loading>

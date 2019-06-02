@@ -1,0 +1,99 @@
+.sidebar {
+  margin: 1% 0 0 1%;
+  padding: 0;
+  width: 300px;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  background-color: var(--side-body);
+}
+
+.sidebar-header {
+  margin: 0;
+  padding: 0;
+  background-color: var(--side-header);
+}
+
+.sidebar-menu {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.sidebar-tittle {
+  margin: 1% 0 0 5%;
+  padding: 0;
+  width: 100%;
+}
+
+div.content {
+  margin-left: 310px;
+  padding: 1px 16px;
+  height: 100%;
+}
+
+div.container {
+  margin-top: 1%;
+  margin: 0;
+}
+
+.separator-top {
+  height: 2px;
+  width: 100%;
+  background-color: var(--sitp-color);
+}
+
+.separator-tittle {
+  margin: -3% 2% 5% 5%;
+  height: 2px;
+  width: 60%;
+  background-color: var(--sitp-color);
+}
+
+.separator-botton {
+  margin-top: 5%;
+  height: 1px;
+  width: 100%;
+  background-color: var(--sep-botton);
+}
+
+p {
+  font-size: 12px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    visibility: hidden;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  div.content {
+    margin-left: 1%;
+    padding: 1px 16px;
+    height: 1000px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

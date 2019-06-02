@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { Usuario } from '../../entidades/usuario';
-import { LoginService } from '../../servicios/login.service';
+import { Usuario } from 'src/app/m-login/entidades/usuario';
+import { LoginService } from 'src/app/m-login/servicios/login.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-menu',
@@ -11,6 +13,8 @@ import { LoginService } from '../../servicios/login.service';
 export class MenuComponent implements OnInit {
   items: MenuItem[];
   usuario: Usuario = new Usuario;
+
+  display: boolean = true;
 
   /**
    * Variables para menu dinamico.
@@ -49,7 +53,7 @@ export class MenuComponent implements OnInit {
   i22: boolean = false;
 
 
-  constructor(public loginService: LoginService) { }
+  constructor(public loginService: LoginService, public router: Router) { }
 
   ngOnInit() {
     debugger
@@ -240,8 +244,9 @@ export class MenuComponent implements OnInit {
 
 
 
-  crearPortafolio(){
-    
+  crearPortafolio() {
+    this.router.navigate([{ outlets: { popup: ["compose"] } }]);
+
   }
 
 

@@ -1,30 +1,60 @@
+:root {
+  --sitp-color: coral;
+  --sep-botton: gray;
+  --side-body: #f4f4f4;
+  --side-header: #e0e0e0;
+}
+
+body .ui-panelmenu .ui-panelmenu-header.ui-state-active > a {
+  border: 1px solid var(--sitp-color);
+  background-color: var(--sitp-color);
+  color: #ffffff;
+  font-size: 10px;
+}
+
+body .ui-panelmenu .ui-panelmenu-header.ui-state-active > a:hover {
+  outline: 0 none;
+  border: 1px solid var(--sitp-color);
+  background-color: var(--sitp-color);
+  color: #ffffff;
+  font-size: 10px;
+}
+
+body .ui-panelmenu .ui-panelmenu-content {
+  padding: 0;
+  background-color: #f4f4f4;
+  border: 0;
+  margin-top: 0;
+  position: static;
+  border-top: 0 none;
+}
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 
 body .ui-panelmenu .ui-panelmenu-header > a {
-  font-size: 12px;
+  font-size: 10px;
   font-style: normal;
   border: none;
 }
 
-
 body .ui-panelmenu .ui-panelmenu-content .ui-menuitem .ui-menuitem-link {
-    font-size: 12px;
-
-  }
-  body .ui-dropdown {
-    width: 100%;
+  font-size: 12px;
+}
+body .ui-dropdown {
+  width: 100%;
 }
 
-.ui-panelmenu .ui-panelmenu-content>.ui-panelmenu-root-submenu>.ui-submenu-list {
-    margin-left: 0;
+.ui-panelmenu
+  .ui-panelmenu-content
+  > .ui-panelmenu-root-submenu
+  > .ui-submenu-list {
+  margin-left: 0;
 }
 
 .ui-dropdown label.ui-dropdown-label {
   cursor: pointer;
   height: 22px;
   width: 100%;
-}
-
-input{
-  height: 22px;
-  width: 100%;  
 }

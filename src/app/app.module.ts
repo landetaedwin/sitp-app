@@ -1,47 +1,32 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarModule } from 'primeng/calendar';
-import { DropdownModule } from 'primeng/dropdown';
-import { FieldsetModule } from 'primeng/fieldset';
-import { InputTextModule } from 'primeng/inputtext';
-import { MenuModule } from 'primeng/menu';
-import { PanelMenuModule } from 'primeng/panelmenu';
+import { MessageService } from 'primeng/api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CrearPortafolioComponent } from './grupo1/crear-portafolio/crear-portafolio.component';
-import { LoginComponent } from './principal/login/login.component';
-import { MenuComponent } from './principal/menu/menu.component';
+import { MLoginModule } from './m-login/m-login.module';
+import { MMenuModule } from './m-menu/m-menu.module';
 import { Constantes } from './resources/constantes';
-
+import { MTrabajoPozoModule } from './m-trabajo-pozo/m-trabajo-pozo.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    MenuComponent,
-    CrearPortafolioComponent,
-
+    AppComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
+    MLoginModule,
+    MMenuModule,
+    MTrabajoPozoModule,
     AppRoutingModule,
-    InputTextModule,
-    PanelMenuModule,
-    MenuModule,
-    DropdownModule,
-    CalendarModule,
-    FieldsetModule
+
+
 
 
   ],
-  providers: [Constantes],
+  providers: [Constantes, MessageService],
   bootstrap: [AppComponent],
 
 })
