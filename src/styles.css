@@ -5,6 +5,10 @@
   --side-header: #e0e0e0;
 }
 
+*:focus {
+  outline: none;
+}
+
 body .ui-panelmenu .ui-panelmenu-header.ui-state-active > a {
   border: 1px solid var(--sitp-color);
   background-color: var(--sitp-color);
@@ -42,19 +46,45 @@ body .ui-panelmenu .ui-panelmenu-header > a {
 body .ui-panelmenu .ui-panelmenu-content .ui-menuitem .ui-menuitem-link {
   font-size: 12px;
 }
+/**
+ *Estilo dropdown 
+ */
+body .ui-dropdown .ui-dropdown-label {
+  height: 20px;
+  width: 100%;
+}
+
 body .ui-dropdown {
   width: 100%;
 }
 
-.ui-panelmenu
-  .ui-panelmenu-content
-  > .ui-panelmenu-root-submenu
-  > .ui-submenu-list {
-  margin-left: 0;
+body .ui-inputtext {
+  font-size: 12px;
+  height: 20px;
 }
 
-.ui-dropdown label.ui-dropdown-label {
-  cursor: pointer;
-  height: 22px;
-  width: 100%;
+body .ui-fieldset {
+  border: 0;
+}
+.ui-fieldset,
+.ui-fieldset .ui-fieldset-legend {
+  padding: 0;
+}
+.ui-fieldset .ui-state-default {
+  background: none;
+}
+
+body .ui-fieldset .ui-fieldset-legend a {
+  padding: 0;
+  border: 0;
+  font-weight: bold;
+  font-size: 14px;
+  text-decoration: none;
+}
+body .ui-fieldset.ui-fieldset-toggleable .ui-fieldset-legend a:hover {
+  border: 0;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  
 }

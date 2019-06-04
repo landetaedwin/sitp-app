@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./crear-portafolio.component.css']
 })
 export class CrearPortafolioComponent implements OnInit {
-
+  public loading = false;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  guardarPortafolio(){
+  // this.loading = true;
+
   }
 
 }

@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './m-login/login/login.component';
 import { MenuComponent } from './m-menu/menu/menu.component';
-import { CrearPortafolioComponent } from './m-trabajo-pozo/componentes/crear-portafolio/crear-portafolio.component';
-import { EditarPortafolioComponent } from './m-trabajo-pozo/componentes/editar-portafolio/editar-portafolio.component';
-import { AnularPortafolioComponent } from './m-trabajo-pozo/componentes/anular-portafolio/anular-portafolio.component';
+import { CrearPortafolioComponent } from './m-trabajo-pozo/crear-portafolio/crear-portafolio.component';
+import { EditarPortafolioComponent } from './m-trabajo-pozo/editar-portafolio/editar-portafolio.component';
+import { AnularPortafolioComponent } from './m-trabajo-pozo/anular-portafolio/anular-portafolio.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
