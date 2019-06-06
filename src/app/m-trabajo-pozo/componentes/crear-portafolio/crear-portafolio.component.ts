@@ -4,6 +4,7 @@ import { CrearPortafolioService } from "../../servicios/crear-portafolio.service
 import { Campo } from "src/app/entidades/campo";
 import { Pozo } from "src/app/entidades/pozo";
 import { TipoPozo } from "src/app/entidades/tipo-pozo";
+import { Bloque } from "src/app/entidades/bloque";
 
 @Component({
   selector: "app-crear-portafolio",
@@ -16,6 +17,7 @@ export class CrearPortafolioComponent implements OnInit {
   pozoList: SelectItem[] = [];
   tipoPozoList: SelectItem[] = [];
   campo: Campo;
+  bloque:Bloque;
 
   constructor(
     public crearPortafolioService: CrearPortafolioService,
@@ -51,7 +53,7 @@ export class CrearPortafolioComponent implements OnInit {
         let c: Campo;
         for (let i in data) {
           c = data[i];
-          this.campoList.push({ label: c.camNombre, value: c.camCodigo });
+          this.campoList.push({ label: c.camNombre, value: c });
         }
         this.loading = false;
       },
@@ -62,16 +64,38 @@ export class CrearPortafolioComponent implements OnInit {
     );
   }
 
-  cargarPozosByCodigo(campo: string) {
-    this.loading = true;
 
-    this.crearPortafolioService.findPozoByCamCodigo(campo).subscribe(
+  cargarCampoPozo(campo:Campo){
+    this.cargarBloqueByBlqCodigo(campo);
+    this.cargarPozosByCamCodigo(campo);
+  }
+
+  cargarPozosByCamCodigo(campo: Campo) {
+    this.loading = true;
+    this.crearPortafolioService.findPozoByCamCodigo(campo.camCodigo).subscribe(
       (data: Pozo[]) => {
         let p: Pozo;
         this.pozoList = [{ label: "Seleccione", value: null }];
         for (let i in data) {
           p = data[i];
           this.pozoList.push({ label: p.pozNombre, value: p.pozCodigo });
+        }
+        this.loading = false;
+      },
+      err => {
+        this.messageService.add({ severity: "error", detail: "Error interno" });
+        this.loading = false;
+      }
+    );
+  }
+
+  cargarBloqueByBlqCodigo(campo: Campo) {
+    this.loading = true;
+    debugger
+    this.crearPortafolioService.findBloque(campo.bqlCodigo).subscribe(
+      (data: Bloque) => {
+        if(data){
+
         }
         this.loading = false;
       },

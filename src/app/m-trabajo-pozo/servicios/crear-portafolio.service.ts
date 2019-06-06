@@ -26,4 +26,10 @@ findTipoPozoList() {
     const url = this.prop.PATH + "/sitp/crearPortafolio/findPozoByCamCodigo?camCodigo="+camCodigo;
     return this.http.get(url, httpOptions);
   }
+
+findBloque(blqCodigo:string){
+  const url = this.prop.PATH + "/sitp/crearPortafolio/findBloque?blqCodigo="+blqCodigo;
+    return this.http.get(url, httpOptions);
+}
+
 }
