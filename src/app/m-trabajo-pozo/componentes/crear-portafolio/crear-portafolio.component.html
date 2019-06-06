@@ -13,7 +13,7 @@
           <label for="campo"><b>Campo:*</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown></p-dropdown>
+          <p-dropdown [options]="campoList" [(ngModel)]="campo" (onChange)="cargarPozosByCodigo(campo)"></p-dropdown>
         </div>
       </div>
     </div>
@@ -23,7 +23,7 @@
           <label for="campo"><b>Pozo:*</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown></p-dropdown>
+          <p-dropdown  [options]="pozoList"></p-dropdown>
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@
           <label for="campo"><b>Tipo pozo:*</b></label>
         </div>
         <div class="col-md">
-          <p class="mtop">Tipo pozo</p>
+          <p-dropdown  [options]="tipoPozoList"></p-dropdown>
         </div>
       </div>
     </div>

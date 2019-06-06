@@ -52,6 +52,7 @@ body .ui-panelmenu .ui-panelmenu-content .ui-menuitem .ui-menuitem-link {
 body .ui-dropdown .ui-dropdown-label {
   height: 20px;
   width: 100%;
+  padding:0 0 0 0.5rem;
 }
 
 body .ui-dropdown {

@@ -56,7 +56,6 @@ export class MenuComponent implements OnInit {
   constructor(public loginService: LoginService, public router: Router) { }
 
   ngOnInit() {
-    debugger
     this.usuario = this.loginService.usuario;
     if (this.usuario.perfil.codigoPerfil == '1') {
       this.m1 = true;
