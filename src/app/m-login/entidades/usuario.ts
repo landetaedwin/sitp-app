@@ -1,9 +1,12 @@
 import { Perfil } from './perfil';
 export class Usuario {
 
-    userName: string;
+    idUsuario: number;
+    usuarioLogin: string;
     password: string;
-    perfil: Perfil;
+    apellidos: string;
+    nombres: string;
 
+    perfil:Perfil;
 
 }

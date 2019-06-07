@@ -27,10 +27,8 @@ export class LoginComponent implements OnInit {
   verifyLogin() {
     this.messageService.clear();
     this.loading = true;
-    this.usuario.userName = this.username;
-    this.usuario.password = this.password;
     this.loginService.loginUser(this.usuario).subscribe((data: Usuario) => {
-      if (data && data.perfil) {
+      if (data) {
         this.loginService.usuario = data;
         this.router.navigate(['/menu']);
         this.loading = false;
@@ -38,9 +36,6 @@ export class LoginComponent implements OnInit {
         this.messageService.add({ severity: 'info', detail: 'Usuario y Contraseña incorrecta' });
         this.loading = false;
       }
-
-
-
     }, (err) => {
       this.messageService.add({ severity: 'error', detail: 'Error interno' });
 

@@ -15,7 +15,7 @@ export class LoginService {
 
 
   loginUser(user: Usuario) {
-    const url = this.prop.PATH+"/sitp/menu/loginUser";
+    const url = this.prop.PATH+"/sitp/loginService/loginByUsuario";
     return this.http.post(url, user, httpOptions);
   }
 

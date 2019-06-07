@@ -23,7 +23,7 @@
           <label for="campo"><b>Pozo:*</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown  [options]="pozoList"></p-dropdown>
+          <p-dropdown  [options]="pozoList" [(ngModel)]="pozo" (onChange)="cargarOperadoraByPozCompaniaPetrolera(pozo);"></p-dropdown>
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@
           <label for="campo"><b>Bloque:*</b></label>
         </div>
         <div class="col-md">
-          <p class="mtop" ></p>
+          <p class="mtop">{{bloque.bqlNombre}}</p>
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@
           <label for="campo"><b>Operadora:*</b></label>
         </div>
         <div class="col-md">
-          <p class="mtop">Petroamazonas</p>
+          <p class="mtop">{{operadora.cexApellidoPaterno}}</p>
         </div>
       </div>
     </div>
@@ -68,7 +68,7 @@
           <label for="campo"><b>Consorcio:*</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown></p-dropdown>
+          <p-dropdown [options]="consorcioList" [(ngModel)]="consorcio"></p-dropdown>
         </div>
       </div>
     </div>
@@ -80,7 +80,7 @@
           <label for="campo"><b>Trabajo:*</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown></p-dropdown>
+          <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo" (onChange)="verficarTrabajoSinTorre(tipoTrabajo);"></p-dropdown>
         </div>
       </div>
     </div>
@@ -90,12 +90,12 @@
           <label for="campo"><b>Numero:</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown></p-dropdown>
+          <p-dropdown [options]="numeroList"></p-dropdown>
         </div>
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" [hidden]="tst">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
