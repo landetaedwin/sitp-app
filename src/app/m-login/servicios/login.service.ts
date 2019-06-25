@@ -11,12 +11,13 @@ const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/js
 export class LoginService {
   usuario: Usuario = new Usuario;
 
-  constructor(readonly http: HttpClient, public prop:Constantes) { }
+  constructor(readonly http: HttpClient, public prop: Constantes) { }
 
 
   loginUser(user: Usuario) {
-    const url = this.prop.PATH+"/sitp/loginService/loginByUsuario";
-    return this.http.post(url, user, httpOptions);
+    const url = this.prop.PATH + "/sitp/loginService/loginByUsuario?usuario=" + user.usuarioLogin + "&password=" + user.password + "";
+    return this.http.get(url, httpOptions);
+
   }
 
 }
