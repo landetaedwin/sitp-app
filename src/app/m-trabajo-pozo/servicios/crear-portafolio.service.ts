@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Constantes } from "src/app/resources/constantes";
+import { Portafolio } from 'src/app/entidades/portafolio';
 
 const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -45,5 +46,10 @@ export class CrearPortafolioService {
   findTrabajoList() {
     const url = this.prop.PATH + "/sitp/crearPortafolio/findTrabajoList";
     return this.http.get(url, httpOptions);
+  }
+
+  transCrearPortafolio(portafolio:Portafolio){
+    const url =  this.prop.PATH + "/sitp/crearPortafolio/transCrearPortafolio";
+    return this.http.post(url, portafolio, httpOptions);
   }
 }

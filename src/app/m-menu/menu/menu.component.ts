@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,8 +13,9 @@ import { Router, RouterLink } from '@angular/router';
 export class MenuComponent implements OnInit {
   items: MenuItem[];
   usuario: Usuario = new Usuario;
-
   display: boolean = true;
+  userNom:string;
+  userCI:string;
 
   /**
    * Variables para menu dinamico.
@@ -56,8 +57,18 @@ export class MenuComponent implements OnInit {
   constructor(public loginService: LoginService, public router: Router) { }
 
   ngOnInit() {
-    debugger
+
+    
+    
     this.usuario = this.loginService.usuario;
+
+    if(!this.usuario){
+      this.router.navigate(['/login'])
+    }
+
+    this.userNom = this.usuario.nombres + " " +this.usuario.apellidos;
+    this.userCI = this.usuario.usuarioLogin;
+    
     if (this.usuario.perfil.codigoPerfil == '1') {
       this.m1 = true;
       this.m2 = true;

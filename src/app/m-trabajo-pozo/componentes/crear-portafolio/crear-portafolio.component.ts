@@ -8,6 +8,10 @@ import { TipoPozo } from "src/app/entidades/tipo-pozo";
 import { CrearPortafolioService } from "../../servicios/crear-portafolio.service";
 import { Consorcio } from 'src/app/entidades/consorcio';
 import { TipoTrabajo } from 'src/app/entidades/tipo-trabajo';
+import { Portafolio } from 'src/app/entidades/portafolio';
+import { LoginService } from 'src/app/m-login/servicios/login.service';
+import { Usuario } from 'src/app/m-login/entidades/usuario';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-crear-portafolio",
@@ -25,16 +29,19 @@ export class CrearPortafolioComponent implements OnInit {
   campo: Campo;
   pozo: Pozo;
   consorcio: Consorcio;
-  tipoPozo: TipoPozo;
-  tipoTrabajo: TipoTrabajo;
+  tipoPozo: TipoPozo = new TipoPozo;
+  tipoTrabajo: TipoTrabajo = new TipoTrabajo;
   bloque: Bloque = new Bloque;
   operadora: Operadora = new Operadora;
   tst: boolean = true;
 
-  constructor(
-    public crearPortafolioService: CrearPortafolioService,
-    private messageService: MessageService
-  ) {
+  today = new Date();
+  usuario: Usuario;
+  portafolio: Portafolio = new Portafolio;
+
+
+
+  constructor(public crearPortafolioService: CrearPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.tipoPozoList = [{ label: "Seleccione", value: null, disabled: true }];
@@ -42,25 +49,18 @@ export class CrearPortafolioComponent implements OnInit {
     this.tipoTrabajoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.numeroList = [{ label: "Seleccione", value: null, disabled: true }];
 
-
-
   }
+
 
   ngOnInit() {
     this.loading = true;
-    this.crearPortafolioService.findTipoPozoList().subscribe(
-      (data: TipoPozo[]) => {
-        let tp: TipoPozo;
-        for (let i in data) {
-          tp = data[i];
-          this.tipoPozoList.push({
-            label: tp.tipoPozo,
-            value: tp.codigoTipoPozo
-          });
-        }
-        this.loading = false;
-      }
-    );
+
+    this.usuario = this.loginService.usuario;
+    console.log(this.usuario);
+    if (!this.usuario) {
+      this.router.navigate(['/login']);
+    }
+
 
     this.crearPortafolioService.findCamposList().subscribe(
       (data: Campo[]) => {
@@ -69,29 +69,39 @@ export class CrearPortafolioComponent implements OnInit {
           c = data[i];
           this.campoList.push({ label: c.camNombre, value: c });
         }
-        this.loading = false;
-      });
-    this.crearPortafolioService.findConsorcioList().subscribe(
-      (data: Consorcio[]) => {
-        let con: Consorcio;
-        for (let i in data) {
-          con = data[i];
-          this.consorcioList.push({ label: con.consorcio, value: con });
-        }
-        this.loading = false;
+
+        this.crearPortafolioService.findTipoPozoList().subscribe(
+          (data: TipoPozo[]) => {
+            let tp: TipoPozo;
+            for (let i in data) {
+              tp = data[i];
+              this.tipoPozoList.push({
+                label: tp.tipoPozo,
+                value: tp
+              });
+            }
+            this.crearPortafolioService.findConsorcioList().subscribe(
+              (data: Consorcio[]) => {
+                let con: Consorcio;
+                for (let i in data) {
+                  con = data[i];
+                  this.consorcioList.push({ label: con.consorcio, value: con });
+                }
+                this.crearPortafolioService.findTrabajoList().subscribe(
+                  (data: TipoTrabajo[]) => {
+                    let tt: TipoTrabajo;
+                    for (let i in data) {
+                      tt = data[i];
+                      this.tipoTrabajoList.push({ label: tt.tipoTrabajo, value: tt });
+                    }
+                    this.loading = false;
+                  });
+              });
+          }
+        );
       });
 
-    this.crearPortafolioService.findTrabajoList().subscribe(
-      (data: TipoTrabajo[]) => {
-        let tt: TipoTrabajo;
-        for (let i in data) {
-          tt = data[i];
-          this.tipoTrabajoList.push({ label: tt.tipoTrabajo, value: tt });
-        }
-        this.loading = false;
-      });
-
-      this.cargarNumeroList();
+    this.cargarNumeroList();
 
     this.bloque.bqlNombre = "n/a";
     this.operadora.cexApellidoPaterno = "n/a";
@@ -160,7 +170,7 @@ export class CrearPortafolioComponent implements OnInit {
   }
 
   verficarTrabajoSinTorre(tipoTrabajo: TipoTrabajo) {
-    if (tipoTrabajo.tipoTrabajo == 'Trabajo sin torre-TST') {
+    if (tipoTrabajo.codigoTipoTrabajo == 2) {
       this.tst = false;
     } else {
       this.tst = true;
@@ -168,6 +178,32 @@ export class CrearPortafolioComponent implements OnInit {
   }
 
   guardarPortafolio() {
-    // this.loading = true;
+
+    debugger
+    this.loading = true;
+    this.portafolio.codigoConsorcio = this.consorcio.codigoConsorcio;
+    this.portafolio.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
+    this.portafolio.codigoTipoPozo = this.tipoPozo.codigoTipoPozo;
+    this.portafolio.cexCodigo = this.operadora.cexCodigo;
+    this.portafolio.bqlCodigo = this.bloque.bqlCodigo;
+    this.portafolio.camCodigo = this.campo.camCodigo;
+    this.portafolio.pozCodigo = this.pozo.pozCodigo;
+    this.portafolio.numeroTrabajo = 1;
+    if (this.tst) {
+      this.portafolio.fechaTrabajoSinTorre = this.today;
+    }
+    this.portafolio.fechaInicio = this.today;
+    this.portafolio.estado = 3;
+    this.portafolio.fechaRegistro = this.today;
+    this.portafolio.idUsuario = this.usuario.idUsuario;
+
+    console.log(this.portafolio);
+    this.crearPortafolioService.transCrearPortafolio(this.portafolio).subscribe(data => {
+      console.log(data);
+      this.loading = false;
+
+    });
+
   }
+
 }

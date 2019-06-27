@@ -1,7 +1,7 @@
 <p-fieldset legend="Creación portafoilo trabajo en Pozo" [toggleable]="true">
   <div class="row">
     <div class="col-md-12">
-      <p class="float-right"><b>Fecha registro:&nbsp;&nbsp;</b> 03/03/2019</p>
+      <p class="float-right"><b>Fecha registro:&nbsp;&nbsp;</b> {{today | date:'shortDate'}}</p>
     </div>
   </div>
   <hr />
@@ -45,7 +45,7 @@
           <label for="campo"><b>Tipo pozo:*</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown  [options]="tipoPozoList"></p-dropdown>
+          <p-dropdown  [options]="tipoPozoList" [(ngModel)]="tipoPozo"></p-dropdown>
         </div>
       </div>
     </div>
