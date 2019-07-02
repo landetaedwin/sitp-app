@@ -8,6 +8,9 @@ import { MLoginModule } from './m-login/m-login.module';
 import { MMenuModule } from './m-menu/m-menu.module';
 import { MTrabajoPozoModule } from './m-trabajo-pozo/m-trabajo-pozo.module';
 import { Constantes } from './resources/constantes';
+import { AngularWebStorageModule } from 'angular-web-storage';
+
+
 
 
 @NgModule({
@@ -22,6 +25,7 @@ import { Constantes } from './resources/constantes';
     MMenuModule,
     MTrabajoPozoModule,
     AppRoutingModule,
+    AngularWebStorageModule
     
     
 

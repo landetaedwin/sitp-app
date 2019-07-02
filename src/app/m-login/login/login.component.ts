@@ -21,6 +21,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.loginService.sessionValue){
+      this.router.navigate(['/menu']);
+    }
   }
 
 
@@ -29,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.loginService.loginUser(this.usuario).subscribe((data: Usuario) => {
       if (data) {
-        this.loginService.usuario = data;
+        this.loginService.sessionValue = data;
         this.router.navigate(['/menu']);
         this.loading = false;
       } else {

@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { Router } from '@angular/router';
+import { SessionStorage } from 'angular-web-storage';
 
 
 @Component({
@@ -52,15 +53,16 @@ export class MenuComponent implements OnInit {
   i20: boolean = false;
   i21: boolean = false;
   i22: boolean = false;
+  
 
 
-  constructor(public loginService: LoginService, public router: Router) { }
+  constructor(public loginService: LoginService, public router: Router) { 
+    
+  }
 
   ngOnInit() {
-
     
-    
-    this.usuario = this.loginService.usuario;
+    this.usuario = this.loginService.sessionValue;
 
     if(!this.usuario){
       this.router.navigate(['/login'])
@@ -254,7 +256,10 @@ export class MenuComponent implements OnInit {
   }
 
 
-
+  closeSession(){
+    this.loginService.sessionValue = null;
+    this.router.navigate(['/login'])
+  }
 
 
 

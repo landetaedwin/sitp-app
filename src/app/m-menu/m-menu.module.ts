@@ -5,6 +5,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { SidebarModule } from 'primeng/sidebar';
 import { MenuComponent } from './menu/menu.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { NgxLoadingModule } from 'ngx-loading';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { DropdownModule } from 'primeng/dropdown';
     BrowserAnimationsModule,
     PanelMenuModule,
     SidebarModule,
-    DropdownModule
+    DropdownModule,
+    NgxLoadingModule.forRoot({}),
   ]
 })
 export class MMenuModule { }

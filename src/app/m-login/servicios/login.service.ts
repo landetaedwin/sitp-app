@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Usuario } from '../entidades/usuario';
 import { Constantes } from 'src/app/resources/constantes';
+import { SessionStorage } from 'angular-web-storage';
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
@@ -10,7 +11,7 @@ const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/js
 })
 export class LoginService {
   usuario: Usuario = new Usuario;
-
+  @SessionStorage() sessionValue: Usuario;
   constructor(readonly http: HttpClient, public prop: Constantes) { }
 
 
@@ -19,5 +20,7 @@ export class LoginService {
     return this.http.get(url, httpOptions);
 
   }
+
+
 
 }

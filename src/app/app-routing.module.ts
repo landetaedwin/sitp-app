@@ -9,6 +9,7 @@ import { AnularPortafolioComponent } from './m-trabajo-pozo/componentes/anular-p
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
+  { path: 'crearPortafolio', component: CrearPortafolioComponent},
   {
     path: 'menu', component: MenuComponent, children: [
       { path: 'crearPortafolio', component: CrearPortafolioComponent, outlet: 'sitp' },
