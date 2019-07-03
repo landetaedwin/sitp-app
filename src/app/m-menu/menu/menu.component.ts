@@ -30,7 +30,7 @@ export class MenuComponent implements OnInit {
   m6: boolean = false;
   m7: boolean = false;
   m8: boolean = false;
-
+  i0: boolean = false;  
   i1: boolean = false;
   i2: boolean = false;
   i3: boolean = false;
@@ -80,7 +80,7 @@ export class MenuComponent implements OnInit {
       this.m6 = true;
       this.m7 = true;
       this.m8 = true;
-
+      this.i0 = true;
       this.i1 = true;
       this.i2 = true;
       this.i3 = true;
@@ -111,7 +111,7 @@ export class MenuComponent implements OnInit {
       this.m2 = true;
       this.m3 = true;
       this.m6 = true;
-
+      this.i0 = true;
       this.i1 = true;
       this.i5 = true;
       this.i6 = true;
@@ -128,6 +128,7 @@ export class MenuComponent implements OnInit {
       this.m1 = true;
       this.m2 = true;
       this.m6 = true;
+      this.i0 = true;
       this.i1 = true;
       this.i4 = true;
       this.i21 = true;
@@ -165,6 +166,7 @@ export class MenuComponent implements OnInit {
         label: 'Portafolio',
         visible: this.m1,
         items: [
+          { label: 'Buscar portafolio', routerLink: [{ outlets: { sitp: ['buscarPortafolio'] } }], visible: this.i0},
           { label: 'Crear portafolio', routerLink: [{ outlets: { sitp: ['crearPortafolio'] } }], visible: this.i1 },
           { label: 'Editar portafolio', routerLink: [{ outlets: { sitp: ['editarPortafolio'] } }], visible: this.i2 },
           { label: 'Anular portafolio', routerLink: [{ outlets: { sitp: ['anularPortafolio'] } }], visible: this.i3 },

@@ -1,7 +1,7 @@
 <p-fieldset legend="Creación portafoilo trabajo en Pozo" [toggleable]="true">
   <div class="row">
     <div class="col-md-12">
-      <p class="float-right"><b>Fecha registro:&nbsp;&nbsp;</b> {{today | date:'shortDate'}}</p>
+      <p class="float-right"><b>Fecha registro:&nbsp;&nbsp;</b> {{today | date:'dd/MM/yyyy'}}</p>
     </div>
   </div>
   <hr />
@@ -23,7 +23,8 @@
           <label for="campo"><b>Pozo:*</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown  [options]="pozoList" [(ngModel)]="pozo" (onChange)="cargarOperadoraByPozCompaniaPetrolera(pozo);"></p-dropdown>
+          <p-dropdown [options]="pozoList" [(ngModel)]="pozo" (onChange)="cargarOperadoraByPozCompaniaPetrolera(pozo);">
+          </p-dropdown>
         </div>
       </div>
     </div>
@@ -45,7 +46,7 @@
           <label for="campo"><b>Tipo pozo:*</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown  [options]="tipoPozoList" [(ngModel)]="tipoPozo"></p-dropdown>
+          <p-dropdown [options]="tipoPozoList" [(ngModel)]="tipoPozo"></p-dropdown>
         </div>
       </div>
     </div>
@@ -80,7 +81,8 @@
           <label for="campo"><b>Trabajo:*</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo" (onChange)="verficarTrabajoSinTorre(tipoTrabajo);"></p-dropdown>
+          <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo"
+            (onChange)="verficarTrabajoSinTorre(tipoTrabajo);"></p-dropdown>
         </div>
       </div>
     </div>
@@ -102,10 +104,7 @@
           <label for="campo"><b>Fecha trabajo sin torre:</b></label>
         </div>
         <div class="col-md">
-          <p-calendar
-            [style]="{ width: '100%' }"
-            [inputStyle]="{ width: '100%' }"
-          ></p-calendar>
+          <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }" [(ngModel)]="portafolio.fechaTrabajoSinTorre"></p-calendar>
         </div>
       </div>
     </div>
@@ -120,8 +119,5 @@
   </div>
 </p-fieldset>
 <ng-template #customLoadingTemplate> </ng-template>
-<ngx-loading
-  [show]="loading"
-  [config]="{ backdropBorderRadius: '3px' }"
-  [template]="customLoadingTemplate"
-></ngx-loading>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>

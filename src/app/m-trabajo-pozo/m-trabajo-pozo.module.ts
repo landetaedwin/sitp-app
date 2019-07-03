@@ -7,15 +7,19 @@ import { CalendarModule } from "primeng/calendar";
 import { DropdownModule } from "primeng/dropdown";
 import { FieldsetModule } from "primeng/fieldset";
 import { AnularPortafolioComponent } from "./componentes/anular-portafolio/anular-portafolio.component";
+import { BuscarPortafolioComponent } from './componentes/buscar-portafolio/buscar-portafolio.component';
 import { CrearPortafolioComponent } from "./componentes/crear-portafolio/crear-portafolio.component";
 import { EditarPortafolioComponent } from "./componentes/editar-portafolio/editar-portafolio.component";
+
 
 
 @NgModule({
   declarations: [
     CrearPortafolioComponent,
     EditarPortafolioComponent,
-    AnularPortafolioComponent
+    AnularPortafolioComponent,
+    BuscarPortafolioComponent,
+
   ],
   imports: [
     CommonModule,
@@ -27,4 +31,4 @@ import { EditarPortafolioComponent } from "./componentes/editar-portafolio/edita
     NgxLoadingModule.forRoot({})
   ]
 })
-export class MTrabajoPozoModule {}
+export class MTrabajoPozoModule { }

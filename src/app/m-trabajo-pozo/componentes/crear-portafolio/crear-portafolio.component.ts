@@ -11,7 +11,7 @@ import { TipoTrabajo } from 'src/app/entidades/tipo-trabajo';
 import { Portafolio } from 'src/app/entidades/portafolio';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: "app-crear-portafolio",
@@ -55,8 +55,7 @@ export class CrearPortafolioComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
 
-    this.usuario = this.loginService.usuario;
-    console.log(this.usuario);
+    this.usuario = this.loginService.sessionValue;
     if (!this.usuario) {
       this.router.navigate(['/login']);
     }
@@ -189,9 +188,7 @@ export class CrearPortafolioComponent implements OnInit {
     this.portafolio.camCodigo = this.campo.camCodigo;
     this.portafolio.pozCodigo = this.pozo.pozCodigo;
     this.portafolio.numeroTrabajo = 1;
-    if (this.tst) {
-      this.portafolio.fechaTrabajoSinTorre = this.today;
-    }
+  
     this.portafolio.fechaInicio = this.today;
     this.portafolio.estado = 3;
     this.portafolio.fechaRegistro = this.today;
@@ -199,11 +196,26 @@ export class CrearPortafolioComponent implements OnInit {
 
     console.log(this.portafolio);
     this.crearPortafolioService.transCrearPortafolio(this.portafolio).subscribe(data => {
-      console.log(data);
-      this.loading = false;
+
+      if (data) {
+        this.loading = false;
+        this.messageService.add({ severity: 'success', detail: 'Se creo el portafolio' });
+        this.router.navigate(['/menu',{outlets: {sitp: ['buscarPortafolio']}}]);
+      } else {
+        this.loading = false;
+        this.messageService.add({ severity: 'info', detail: 'No se pudo crear el portafolio' });
+
+      }
+
+
+
 
     });
 
+  }
+
+
+  prueba() {
   }
 
 }

@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.loginService.sessionValue){
+    if (this.loginService.sessionValue) {
       this.router.navigate(['/menu']);
     }
   }
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     this.loginService.loginUser(this.usuario).subscribe((data: Usuario) => {
       if (data) {
         this.loginService.sessionValue = data;
-        this.router.navigate(['/menu']);
+        this.router.navigate(['/menu',{outlets: {sitp: ['buscarPortafolio']}}]);
         this.loading = false;
       } else {
         this.messageService.add({ severity: 'info', detail: 'Usuario y Contraseña incorrecta' });
@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
       }
     }, (err) => {
       this.messageService.add({ severity: 'error', detail: 'Error interno' });
-
       this.loading = false;
 
     });
