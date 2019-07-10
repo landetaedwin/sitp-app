@@ -30,7 +30,7 @@ export class MenuComponent implements OnInit {
   m6: boolean = false;
   m7: boolean = false;
   m8: boolean = false;
-  i0: boolean = false;  
+  i0: boolean = false;
   i1: boolean = false;
   i2: boolean = false;
   i3: boolean = false;
@@ -53,15 +53,15 @@ export class MenuComponent implements OnInit {
   i20: boolean = false;
   i21: boolean = false;
   i22: boolean = false;
-  
 
 
-  constructor(public loginService: LoginService, public router: Router) { 
-    
+
+  constructor(public loginService: LoginService, public router: Router) {
+
   }
 
   ngOnInit() {
-    
+
     this.usuario = this.loginService.sessionValue;
 
     if(!this.usuario){
@@ -70,7 +70,7 @@ export class MenuComponent implements OnInit {
 
     this.userNom = this.usuario.nombres + " " +this.usuario.apellidos;
     this.userCI = this.usuario.usuarioLogin;
-    
+
     if (this.usuario.perfil.codigoPerfil == '1') {
       this.m1 = true;
       this.m2 = true;
@@ -176,7 +176,7 @@ export class MenuComponent implements OnInit {
         label: 'Busqueda de portafolio anexo información',
         visible: this.m2,
         items: [
-          { label: 'Reportes diarios', command: () => this.imprimirMensaje(), visible: this.i4 },
+          { label: 'Reportes diarios', routerLink: [{ outlets: { sitp: ['reportesDiarios'] } }], visible: this.i4 },
           { label: 'Registro de Documentos Operadora', command: () => this.imprimirMensaje(), visible: this.i5 },
           { label: 'Registro de Documentos Ministerio', command: () => this.imprimirMensaje(), visible: this.i6 },
           { label: 'Infome de resultados', command: () => this.imprimirMensaje(), visible: this.i7 },
@@ -186,9 +186,10 @@ export class MenuComponent implements OnInit {
         label: 'Busqueda de portafolio para verificación',
         visible: this.m3,
         items: [
-          { label: 'Verrificación de fechas', command: () => this.imprimirMensaje(), visible: this.i8 },
+          { label: 'Buscar portafolio Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioVerificacion'] } }], visible: this.i0},
+          { label: 'Verrificación de fechas', routerLink: [{ outlets: { sitp: ['verificacionFechas'] } }], visible: this.i8 },
           { label: 'Verificación de cumplimiento de tasas', command: () => this.imprimirMensaje(), visible: this.i9 },
-          { label: 'Verificación de producción', command: () => this.imprimirMensaje(), visible: this.i10 },
+          { label: 'Verificación de producción', routerLink: [{ outlets: { sitp: ['verificacionProduccion'] } }], visible: this.i10 },
           { label: 'Verificación de Inyección/Reinyección', command: () => this.imprimirMensaje(), visible: this.i11 },
           { label: 'Verificación de Observaciones', command: () => this.imprimirMensaje(), visible: this.i12 },
           { label: 'Seguimiento de observaciones', command: () => this.imprimirMensaje(), visible: this.i13 },

@@ -109,7 +109,6 @@ export class EditarPortafolioComponent implements OnInit {
 
 
 
-    this.campoList.
     this.campo = this.portafolio.campo;
     this.pozo = this.portafolio.pozo;
   }
