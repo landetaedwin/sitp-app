@@ -12,7 +12,6 @@ import { Portafolio } from 'src/app/entidades/portafolio';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { Router, RouterLink } from '@angular/router';
-
 @Component({
   selector: "app-crear-portafolio",
   templateUrl: "./crear-portafolio.component.html",
@@ -48,6 +47,7 @@ export class CrearPortafolioComponent implements OnInit {
     this.consorcioList = [{ label: "Seleccione", value: null, disabled: true }];
     this.tipoTrabajoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.numeroList = [{ label: "Seleccione", value: null, disabled: true }];
+
 
   }
 
@@ -188,7 +188,7 @@ export class CrearPortafolioComponent implements OnInit {
     this.portafolio.camCodigo = this.campo.camCodigo;
     this.portafolio.pozCodigo = this.pozo.pozCodigo;
     this.portafolio.numeroTrabajo = 1;
-  
+
     this.portafolio.fechaInicio = this.today;
     this.portafolio.estado = 3;
     this.portafolio.fechaRegistro = this.today;
