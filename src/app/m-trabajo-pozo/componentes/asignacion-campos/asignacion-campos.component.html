@@ -1,0 +1,414 @@
+<p-fieldset legend="Asignación o des asignación de persona a campos">
+  <div class="row">
+    <div class="col-md-6">
+      <button type="button" class="button" (click)="openModalNewPersonaPorCampo(newPersonaPorCampoTemplate)">Nuevo
+        registro</button>
+    </div>
+    <div class="col-md-6">
+      <button type="button" class="button" (click)="getPersonaPorCampoList()">Buscar
+        registros</button>
+    </div>
+  </div>
+</p-fieldset>
+
+<br>
+<p-fieldset legend="Busqueda de personas por campo" [toggleable]="true">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4"><label for="bloque"><b>Bloque:</b></label></div>
+        <div class="col-md">
+          <p-dropdown [options]="bloqueList" [(ngModel)]="busquedaParametros.bloque" [filter]="true"
+            (onChange)="getCampoListByBlqCodigo(busquedaParametros.bloque)"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4"><label for="bloque"><b>Campo:</b></label></div>
+        <div class="col-md">
+          <p-dropdown [options]="campoList" [(ngModel)]="busquedaParametros.campo" [filter]="true"></p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4"><label for="bloque"><b>Fecha desde:</b></label></div>
+        <div class="col-md">
+          <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"
+            [(ngModel)]="busquedaParametros.fechaDesde">
+          </p-calendar>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4"><label for="bloque"><b>Fecha hasta:</b></label></div>
+        <div class="col-md">
+          <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"
+            [(ngModel)]="busquedaParametros.fechaHasta">
+          </p-calendar>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4"><label for="bloque"><b>Estado:</b></label></div>
+        <div class="col-md">
+          <p-dropdown [options]="estadoList" [(ngModel)]="busquedaParametros.estado"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4"><label for="funcionario"><b>Funcionario:</b></label></div>
+        <div class="col-md">
+          <input type="text" [(ngModel)]="busquedaParametros.usuario.apellidos"
+            (click)="openModalFuncionarioBusqueda(usuarioBusquedaAdTemplate)" pInputText>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover table-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Bloque</th>
+            <th>Campo</th>
+            <th>Funcionario</th>
+            <th>Correo electrónico</th>
+            <th>Fecha asignación</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Estado</th>
+            <th>Accion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ppc of personaPorCampoList; let i=index;">
+            <td>{{i+1}}</td>
+            <td>{{ppc.bloque.bqlNombre}}</td>
+            <td>{{ppc.campo.camNombre}}</td>
+            <td>{{ppc.funcionario.apellidos}}</td>
+            <td>{{ppc.correo}}</td>
+            <td>{{ppc.fechaAsignacion | date:'dd/MM/yyyy'}}</td>
+            <td>{{ppc.fechaInicio | date:'dd/MM/yyyy'}}</td>
+            <td>{{ppc.fechaFin | date:'dd/MM/yyyy'}}</td>
+            <td>{{ppc.estado}}</td>
+            <td>
+              <span class="badge badge-primary"
+                (click)="openModalEditPersonaPorCampo(editPersonaPorCampoTemplate,ppc)">Editar</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</p-fieldset>
+
+<p-fieldset legend="Campos no asignados" [toggleable]="true">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover table-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Campo</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let c of camposListNoAsing| paginate: { itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;">
+            <td>{{i+1}}</td>
+            <td>{{c.camNombre}}</td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <pagination-controls (pageChange)="page_number = $event" previousLabel="Anterior" nextLabel="Siguiente"
+        responsive="true">
+        ></pagination-controls>
+    </div>
+  </div>
+
+</p-fieldset>
+
+
+
+
+<ng-template #customLoadingTemplate> </ng-template>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>
+
+
+
+<ng-template #newPersonaPorCampoTemplate>
+  <div class="container mb-3 mt-3">
+    <p-fieldset legend="Asignación de campos">
+
+      <div class="row">
+        <div class="col-md-12">
+          <h6 style="color: red" [hidden]="!errorCrear">Completa todos los campos de este formulario</h6>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4"><label for="bloque"><b>Bloque:*</b></label></div>
+            <div class="col-md">
+              <p-dropdown [options]="bloqueList" [(ngModel)]="bloque" [filter]="true"
+                (onChange)="getCampoListByBlqCodigo(bloque)"></p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4"><label for="campo"><b>Campo:*</b></label></div>
+            <div class="col-md">
+              <p-dropdown [options]="campoList" [(ngModel)]="campo" [filter]="true"></p-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4"><label for="funcionario"><b>Funcionario:*</b></label></div>
+            <div class="col-md">
+              <input type="text" [(ngModel)]="usuarioFuncionario.apellidos" pInputText
+                (click)="openModalFuncionario(usuarioAdTemplate)">
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4"><label for="campo"><b>Correo electrónico:*</b></label></div>
+            <div class="col-md">
+              <input type="text" [(ngModel)]="usuarioFuncionario.correo" pInputText>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4"><label for="bloque"><b>Ubicación funcionario:*</b></label></div>
+            <div class="col-md">
+              <p-dropdown [options]="ubicacionList"></p-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-end mt-3">
+        <div class="col-md-4">
+          <button type="button" class="btn btn-sm btn-block btn-success" (click)="guardarPersonaPorCampo()">
+            Guardar
+          </button>
+        </div>
+        <div class="col-md-4">
+          <button type="button" class="btn btn-sm btn-block btn-danger " (click)="closeModalNewPersonaPorCampo()">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </p-fieldset>
+  </div>
+</ng-template>
+
+
+<ng-template #editPersonaPorCampoTemplate>
+  <div class="container mb-3 mt-3">
+    <p-fieldset legend="Asignación de campos">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4"><label for="bloque"><b>Bloque:*</b></label></div>
+            <div class="col-md">
+              <input type="text" [(ngModel)]="personaPorCampoEdit.bloque.bqlNombre" pInputText disabled>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4"><label for="campo"><b>Campo:*</b></label></div>
+            <div class="col-md">
+              <input type="text" [(ngModel)]="personaPorCampoEdit.campo.camNombre" pInputText disabled>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4"><label for="funcionario"><b>Funcionario:*</b></label></div>
+            <div class="col-md">
+              <input type="text" [(ngModel)]="personaPorCampoEdit.funcionario.apellidos" pInputText disabled>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4"><label for="campo"><b>Correo electrónico:*</b></label></div>
+            <div class="col-md">
+              <input type="text" [(ngModel)]="personaPorCampoEdit.funcionario.correo" pInputText disabled>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4"><label for="bloque"><b>Ubicación funcionario:*</b></label></div>
+            <div class="col-md">
+              <p-dropdown [options]="ubicacionList"></p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4"><label for="campo"><b>Estado:*</b></label></div>
+            <div class="col-md">
+              <p-dropdown [options]="estadoList" [(ngModel)]="estado"></p-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-end mt-3">
+        <div class="col-md-4">
+          <button type="button" class="btn btn-sm btn-block btn-success" (click)="guardarEditPersonaPorCampo()">
+            Guardar
+          </button>
+        </div>
+        <div class="col-md-4">
+          <button type="button" class="btn btn-sm btn-block btn-danger " (click)="closeModalEditPersonaPorCampo()">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </p-fieldset>
+  </div>
+</ng-template>
+
+
+
+
+
+<ng-template #usuarioAdTemplate>
+  <div class="container">
+    <div class="row" style="background-color: var(--btnColor); height: 28px;">
+      <div class="col-md-12 text-center">
+        <h5 style="color: white"> Usuarios </h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-1">
+        <input type="text" class="form-control form-control-sm w-100" [(ngModel)]="searchText"
+          placeholder="Buscar funcionario">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-1 table-responsive">
+        <table class="table table-hover table-sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Usuario</th>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let us of users | filterSearch: {usuarioLogin: searchText,apellidos: searchText,nombres: searchText}; let i=index;"
+              (dblclick)="goSelectUser(us)">
+              <td>{{i+1}}</td>
+              <td>{{us.usuarioLogin}}</td>
+              <td>{{us.apellidos}}</td>
+              <td>{{us.nombres}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row mt-1 mb-3 justify-content-end">
+      <div class="col-md-4 ">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="closeUsuarioModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #usuarioBusquedaAdTemplate>
+  <div class="container">
+    <div class="row" style="background-color: var(--btnColor); height: 28px;">
+      <div class="col-md-12 text-center">
+        <h5 style="color: white"> Usuarios </h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-1">
+        <input type="text" class="form-control form-control-sm w-100" [(ngModel)]="searchText"
+          placeholder="Buscar funcionario">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-1 table-responsive">
+        <table class="table table-hover table-sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Usuario</th>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let us of users | filterSearch: {usuarioLogin: searchText,apellidos: searchText,nombres: searchText}; let i=index;"
+              (dblclick)="goSelectUserBusqueds(us)">
+              <td>{{i+1}}</td>
+              <td>{{us.usuarioLogin}}</td>
+              <td>{{us.apellidos}}</td>
+              <td>{{us.nombres}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row mt-1 mb-3 justify-content-end">
+      <div class="col-md-4 ">
+        <button type="button" class="btn btn-sm btn-danger btn-block"
+          (click)="closeUsuarioModalBusqueda()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

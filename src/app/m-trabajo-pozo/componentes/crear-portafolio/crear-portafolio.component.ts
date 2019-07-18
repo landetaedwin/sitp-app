@@ -178,13 +178,12 @@ export class CrearPortafolioComponent implements OnInit {
 
   guardarPortafolio() {
 
-    debugger
     this.loading = true;
     this.portafolio.codigoConsorcio = this.consorcio.codigoConsorcio;
     this.portafolio.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
     this.portafolio.codigoTipoPozo = this.tipoPozo.codigoTipoPozo;
     this.portafolio.cexCodigo = this.operadora.cexCodigo;
-    this.portafolio.bqlCodigo = this.bloque.bqlCodigo;
+    this.portafolio.bqlCodigo = this.bloque.blqCodigo;
     this.portafolio.camCodigo = this.campo.camCodigo;
     this.portafolio.pozCodigo = this.pozo.pozCodigo;
     this.portafolio.numeroTrabajo = 1;
@@ -194,28 +193,20 @@ export class CrearPortafolioComponent implements OnInit {
     this.portafolio.fechaRegistro = this.today;
     this.portafolio.idUsuario = this.usuario.idUsuario;
 
-    console.log(this.portafolio);
     this.crearPortafolioService.transCrearPortafolio(this.portafolio).subscribe(data => {
 
       if (data) {
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se creo el portafolio' });
-        this.router.navigate(['/menu',{outlets: {sitp: ['buscarPortafolio']}}]);
+        this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
       } else {
         this.loading = false;
         this.messageService.add({ severity: 'info', detail: 'No se pudo crear el portafolio' });
 
       }
-
-
-
-
     });
 
   }
 
-
-  prueba() {
-  }
 
 }

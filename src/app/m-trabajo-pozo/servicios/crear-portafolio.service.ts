@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Constantes } from "src/app/resources/constantes";
 import { Portafolio } from 'src/app/entidades/portafolio';
+import { PersonaPorCampo } from 'src/app/entidades/persona-por-campo';
 
 const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -48,8 +49,20 @@ export class CrearPortafolioService {
     return this.http.get(url, httpOptions);
   }
 
-  transCrearPortafolio(portafolio:Portafolio){
-    const url =  this.prop.PATH + "/sitp/crearPortafolio/transCrearPortafolio";
+  transCrearPortafolio(portafolio: Portafolio) {
+    const url = this.prop.PATH + "/sitp/crearPortafolio/transCrearPortafolio";
     return this.http.post(url, portafolio, httpOptions);
+  }
+
+  transCrearPersonaPorCampo(personaPorCampo: PersonaPorCampo) {
+    debugger
+    const url = this.prop.PATH + "/sitp/crearPortafolio/transCrearPersonaPorCampo";
+    return this.http.post(url, personaPorCampo, httpOptions);
+  }
+
+  transUpdatePersonaPorCampo(personaPorCampo: PersonaPorCampo) {
+    debugger
+    const url = this.prop.PATH + "/sitp/crearPortafolio/transUpdatePersonaPorCampo";
+    return this.http.post(url, personaPorCampo, httpOptions);
   }
 }

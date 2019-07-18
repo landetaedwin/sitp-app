@@ -18,7 +18,7 @@ export class BuscarPortafolioService {
     return this.http.get(url, httpOptions);
   }
 
-  findOperadorabYCexCodigo(cexCodigo:number) {
+  findOperadorabYCexCodigo(cexCodigo: number) {
     const url = this.prop.PATH + "/sitp/buscarPortafolio/findOperadorabYCexCodigo?cexCodigo=" + cexCodigo;
     return this.http.get(url, httpOptions);
   }
@@ -28,11 +28,24 @@ export class BuscarPortafolioService {
     return this.http.get(url, httpOptions);
   }
 
-
   findPortafolioList(param: BusquedaParametros) {
     const url = this.prop.PATH + "/sitp/buscarPortafolio/findPortafolioList";
     return this.http.post(url, param, httpOptions);
   }
 
+  findCampoListByBlqCodigo(blqCodigo: string) {
+    const url = this.prop.PATH + "/sitp/buscarPortafolio/findCampoListByBlqCodigo?blqCodigo=" + blqCodigo;
+    return this.http.get(url, httpOptions);
+  }
+
+  findPersonaPorCampo(param: BusquedaParametros) {
+    const url = this.prop.PATH + "/sitp/buscarPortafolio/findPersonaPorCampoList";
+    return this.http.post(url, param, httpOptions);
+  }
+
+  findCamposListNoAsignados() {
+    const url = this.prop.PATH + "/sitp/buscarPortafolio/findCamposListNoAsignados";
+    return this.http.get(url, httpOptions);
+  }
 
 }

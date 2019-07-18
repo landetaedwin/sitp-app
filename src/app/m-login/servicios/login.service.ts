@@ -18,7 +18,11 @@ export class LoginService {
   loginUser(user: Usuario) {
     const url = this.prop.PATH + "/sitp/loginService/loginByUsuario?usuario=" + user.usuarioLogin + "&password=" + user.password + "";
     return this.http.get(url, httpOptions);
+  }
 
+  findUserList() {
+    const url = this.prop.PATH + "/sitp/loginService/findUserList";
+    return this.http.get(url, httpOptions);
   }
 
 

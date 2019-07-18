@@ -1,6 +1,6 @@
 export class Bloque {
 
-    bqlCodigo: string;
+    blqCodigo: string;
     bqlNombre: string;
     fechaCreacion: Date;
 
