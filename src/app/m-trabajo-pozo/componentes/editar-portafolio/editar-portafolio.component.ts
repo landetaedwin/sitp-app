@@ -61,7 +61,11 @@ export class EditarPortafolioComponent implements OnInit {
       this.router.navigate(['/login']);
     }
 
+    if(!this.editarPortafolioService.portafolio){
+      this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
+    }
     this.portafolio = this.editarPortafolioService.portafolio;
+    
 
 
     this.crearPortafolioService.findCamposList().subscribe(

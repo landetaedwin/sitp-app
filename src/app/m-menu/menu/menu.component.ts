@@ -15,7 +15,7 @@ export class MenuComponent implements OnInit {
   items: MenuItem[];
   usuario: Usuario = new Usuario;
   display: boolean = true;
-  userNom: string;
+  userNom: string = '';
   userCI: string;
 
   /**
@@ -68,7 +68,14 @@ export class MenuComponent implements OnInit {
       this.router.navigate(['/login'])
     }
 
-    this.userNom = this.usuario.nombres + " " + this.usuario.apellidos;
+    debugger
+    if (this.usuario.nombres) {
+      this.userNom = this.usuario.nombres;
+    }
+    if (this.usuario.apellidos) {
+      this.userNom = this.userNom + " " + this.usuario.apellidos;
+    }
+
     this.userCI = this.usuario.usuarioLogin;
 
     if (this.usuario.perfil.codigoPerfil == '1') {
@@ -168,8 +175,6 @@ export class MenuComponent implements OnInit {
         items: [
           { label: 'Buscar portafolio', routerLink: [{ outlets: { sitp: ['buscarPortafolio'] } }], visible: this.i0 },
           { label: 'Crear portafolio', routerLink: [{ outlets: { sitp: ['crearPortafolio'] } }], visible: this.i1 },
-          { label: 'Editar portafolio', routerLink: [{ outlets: { sitp: ['editarPortafolio'] } }], visible: this.i2 },
-          { label: 'Anular portafolio', routerLink: [{ outlets: { sitp: ['anularPortafolio'] } }], visible: this.i3 },
         ]
       },
       {
@@ -260,11 +265,10 @@ export class MenuComponent implements OnInit {
 
 
   closeSession() {
-    this.loginService.sessionValue = null;
+    debugger
+    this.loginService.clearSession();
     this.router.navigate(['/login'])
   }
-
-
 
   imprimirMensaje() {
     console.log("Hola");

@@ -25,6 +25,12 @@ export class LoginService {
     return this.http.get(url, httpOptions);
   }
 
+  clearSession(){
+    this.sessionValue = null;
+    window.sessionStorage.clear();
+
+  }
+
 
 
 }
