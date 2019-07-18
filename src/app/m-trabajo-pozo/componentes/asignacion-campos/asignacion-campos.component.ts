@@ -29,6 +29,9 @@ export class AsignacionCamposComponent implements OnInit {
   page_size: number = 10;
   page_number: number = 1;
 
+  page_size2: number = 10;
+  page_number2: number = 1;
+
   campoList: SelectItem[] = [];
   campo: Campo;
   bloqueList: SelectItem[] = [];

@@ -99,7 +99,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let ppc of personaPorCampoList; let i=index;">
+          <tr
+            *ngFor="let ppc of personaPorCampoList| paginate: { id: 'paginator1',itemsPerPage: page_size2, currentPage: page_number2 , totalItems: total}; let i=index;">
             <td>{{i+1}}</td>
             <td>{{ppc.bloque.bqlNombre}}</td>
             <td>{{ppc.campo.camNombre}}</td>
@@ -118,6 +119,13 @@
       </table>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <pagination-controls id="paginator1" (pageChange)="page_number2 = $event" previousLabel="Anterior" nextLabel="Siguiente"
+        responsive="true">
+        ></pagination-controls>
+    </div>
+  </div>
 
 </p-fieldset>
 
@@ -134,7 +142,7 @@
         </thead>
         <tbody>
           <tr
-            *ngFor="let c of camposListNoAsing| paginate: { itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;">
+            *ngFor="let c of camposListNoAsing | paginate: {  id: 'paginator', itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;">
             <td>{{i+1}}</td>
             <td>{{c.camNombre}}</td>
 
@@ -145,7 +153,7 @@
   </div>
   <div class="row">
     <div class="col-md-12 text-center">
-      <pagination-controls (pageChange)="page_number = $event" previousLabel="Anterior" nextLabel="Siguiente"
+      <pagination-controls id="paginator" (pageChange)="page_number = $event" previousLabel="Anterior" nextLabel="Siguiente"
         responsive="true">
         ></pagination-controls>
     </div>
