@@ -32,13 +32,14 @@ export class CrearPortafolioComponent implements OnInit {
   tipoTrabajo: TipoTrabajo = new TipoTrabajo;
   bloque: Bloque = new Bloque;
   operadora: Operadora = new Operadora;
-  tst: boolean = true;
+
 
   today = new Date();
   usuario: Usuario;
   portafolio: Portafolio = new Portafolio;
 
-
+  minDate: Date;
+  maxDate: Date;
 
   constructor(public crearPortafolioService: CrearPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
@@ -60,7 +61,8 @@ export class CrearPortafolioComponent implements OnInit {
       this.router.navigate(['/login']);
     }
 
-
+    this.maxDate = new Date();
+    this.minDate = new Date(2010, 0, 1);
     this.crearPortafolioService.findCamposList().subscribe(
       (data: Campo[]) => {
         let c: Campo;
@@ -168,11 +170,19 @@ export class CrearPortafolioComponent implements OnInit {
     }
   }
 
-  verficarTrabajoSinTorre(tipoTrabajo: TipoTrabajo) {
+
+  campoTst: boolean = false;
+  campoNumero: boolean = true;
+  verificacionTipoTrabajo(tipoTrabajo: TipoTrabajo) {
+    if (tipoTrabajo.codigoTipoTrabajo == 3) {
+      this.campoTst = true;
+    }
     if (tipoTrabajo.codigoTipoTrabajo == 2) {
-      this.tst = false;
-    } else {
-      this.tst = true;
+      this.campoNumero = true;
+    }
+
+    if (tipoTrabajo.codigoTipoTrabajo == 1) {
+      this.campoNumero = false;
     }
   }
 

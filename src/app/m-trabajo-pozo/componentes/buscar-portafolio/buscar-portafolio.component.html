@@ -79,6 +79,32 @@
 
   <div class="row">
     <div class="col-md-12">
+      <ul class="nav justify-content-end">
+        <li>
+          <i class="fa fa-pencil " aria-hidden="true"> Editar</i>
+        </li>
+        <li>
+          <i class="fa fa-calendar-check-o " aria-hidden="true"> Registrar trabajo diario</i>
+        </li>
+        <li>
+          <i class="fa fa-paperclip " aria-hidden="true"> Adjuntar documentos</i>
+        </li>
+      </ul>
+      <ul class="nav justify-content-end">
+
+        <li>
+          <i class="fa fa-file-pdf-o " aria-hidden="true"> Registrar Doc Ministerio</i>
+        </li>
+        <li>
+          <i class="fa fa-user " aria-hidden="true"> Informe final operadora</i>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-md-12">
       <table class="table table-bordered table-sm">
         <thead>
           <tr>
@@ -94,7 +120,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let portafolio of portafolioList; let i = index" style="font-size: 11px">
+          <tr
+            *ngFor="let portafolio of portafolioList| paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;">
             <td>{{i+1}} </td>
             <td>{{portafolio.operadora.cexApellidoPaterno}} </td>
             <td>{{portafolio.bloque.bqlNombre}}</td>
@@ -103,12 +130,30 @@
             <td>{{portafolio.tipoTrabajo.tipoTrabajo}}</td>
             <td>{{portafolio.numeroTrabajo}}</td>
             <td>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</td>
-            <td class="text-center">
-              <span class="badge badge-primary">Editar</span>
-              <span class="badge badge-primary">Editar</span>
-              <span class="badge badge-primary">Editar</span>
-              <span class="badge badge-primary">Editar</span>
-              <span class="badge badge-primary">Editar</span>
+            <td class="text-center" style="width:10%;">
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="nav">
+                    <li (click)="editarPortafolio(portafolio)">
+                      <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                    </li>
+                    <li>
+                      <i class="fa fa-calendar-check-o fa-2x" aria-hidden="true"></i>
+                    </li>
+                    <li>
+                      <i class="fa fa-paperclip fa-2x" aria-hidden="true"></i>
+                    </li>
+                    <li>
+                      <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
+                    </li>
+                    <li>
+                      <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+
             </td>
 
           </tr>
@@ -117,6 +162,13 @@
       </table>
     </div>
 
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <pagination-controls id="paginator" (pageChange)="page_number = $event" previousLabel="Anterior"
+        nextLabel="Siguiente" responsive="true">
+        ></pagination-controls>
+    </div>
   </div>
 
 </p-fieldset>

@@ -1,39 +1,57 @@
 .card-header {
-    padding: 1% 0 0 1%;
-    font-size: 12px;
-    background-color: rgba(0, 0, 0, 0.03);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    height: 30px;
+  padding: 1% 0 0 1%;
+  font-size: 12px;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  height: 30px;
 }
 
-input{
-    height: 20px;
-    width: 100%;
-    margin-top: 4px;
-    font-size: 12px;
+input {
+  height: 20px;
+  width: 100%;
+  margin-top: 4px;
+  font-size: 12px;
 }
 
-p{
-    font-size: 12px;
+p {
+  font-size: 12px;
 }
-label{
-    font-size: 12px;
+label {
+  font-size: 12px;
 }
 
 body .ui-dropdown .ui-dropdown-label {
-    padding-right: 2em;
-    height: 20px;
+  padding-right: 2em;
+  height: 20px;
 }
 
-.mtop{
-    margin-top: 4px; 
+.mtop {
+  margin-top: 4px;
 }
 
 .button {
-    background-color: white;
-    color: var(--sitp-color);
-    border: 2px solid var(--sitp-color);
-    font-size: 12px;
-    border-radius: 5px;
-    width: 100%;
-  }
+  background-color: white;
+  color: var(--sitp-color);
+  border: 2px solid var(--sitp-color);
+  font-size: 12px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+span {
+  font-size: 14px;
+  margin-left: 1px;
+  margin-right: 1px;
+}
+
+td {
+  font-size: 12px;
+}
+th {
+  font-size: 12px;
+}
+
+li {
+  margin-left: 3px;
+  margin-right: 3px;
+}

@@ -82,11 +82,11 @@
         </div>
         <div class="col-md">
           <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo"
-            (onChange)="verficarTrabajoSinTorre(tipoTrabajo);"></p-dropdown>
+            (onChange)="verificacionTipoTrabajo(tipoTrabajo);"></p-dropdown>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" [hidden]="!campoNumero">
       <div class="row">
         <div class="col-md-4">
           <label for="campo"><b>Numero:</b></label>
@@ -97,14 +97,15 @@
       </div>
     </div>
   </div>
-  <div class="row" [hidden]="tst">
+  <div class="row" [hidden]="!campoTst">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
           <label for="campo"><b>Fecha trabajo sin torre:</b></label>
         </div>
         <div class="col-md">
-          <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }" [(ngModel)]="portafolio.fechaTrabajoSinTorre"></p-calendar>
+          <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate" [inputStyle]="{ width: '100%' }"
+            [(ngModel)]="portafolio.fechaTrabajoSinTorre"></p-calendar>
         </div>
       </div>
     </div>
