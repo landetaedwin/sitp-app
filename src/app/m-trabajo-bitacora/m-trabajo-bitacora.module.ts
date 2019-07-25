@@ -11,14 +11,7 @@ import { ReportesDiariosComponent } from './componentes/reportes-diarios/reporte
 import { VerificacionFechasComponent } from './componentes/verificacion-fechas/verificacion-fechas.component';
 import { VerificacionProduccionComponent } from './componentes/verificacion-produccion/verificacion-produccion.component';
 import { DocumentoOperadoraComponent } from './componentes/documento-operadora/documento-operadora.component';
-<<<<<<< HEAD
 import { InformeTrabajosOperadoraComponent } from './componentes/informe-trabajos-operadora/informe-trabajos-operadora.component';
-=======
-import { BuscarPortafolioComponent } from './componentes/buscar-portafolio/buscar-portafolio.component';
-import { FieldsetModule } from 'primeng/fieldset';
-import { DropdownModule } from 'primeng/dropdown';
-import { CalendarModule } from 'primeng/calendar';
->>>>>>> 7a4b66934cc49478ed0e9f3c6207d758037de73d
 
 
 @NgModule({
