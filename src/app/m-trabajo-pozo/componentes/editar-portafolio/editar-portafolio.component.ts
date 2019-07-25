@@ -217,7 +217,6 @@ export class EditarPortafolioComponent implements OnInit {
 
 
   guardarPortafolio() {
-
     this.loading = true;
     this.portafolio.codigoConsorcio = this.consorcio.codigoConsorcio;
     this.portafolio.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
@@ -227,8 +226,6 @@ export class EditarPortafolioComponent implements OnInit {
     this.portafolio.camCodigo = this.portafolio.campo.camCodigo;
     this.portafolio.pozCodigo = this.pozo.pozCodigo;
     this.portafolio.numeroTrabajo = this.numeroTrabajo;
-
-    this.portafolio.fechaInicio = this.today;
     this.portafolio.estado = this.estado;
     this.portafolio.fechaRegistro = this.today;
     this.portafolio.idUsuario = this.usuario.idUsuario;
@@ -267,7 +264,6 @@ export class EditarPortafolioComponent implements OnInit {
         this.messageService.add({ severity: 'info', detail: 'No se pudo actualizar el portafolio' });
       }
     });
-
   }
 
   openConfirmModal(template: TemplateRef<any>) {

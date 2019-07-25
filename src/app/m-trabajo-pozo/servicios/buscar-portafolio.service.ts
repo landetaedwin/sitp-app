@@ -54,7 +54,6 @@ export class BuscarPortafolioService {
   }
 
   findPozoList() {
-    
     const url = this.prop.PATH + "/sitp/buscarPortafolio/findPozoList";
     return this.http.get(url, httpOptions);
   }

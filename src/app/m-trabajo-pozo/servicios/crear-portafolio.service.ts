@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Constantes } from "src/app/resources/constantes";
 import { Portafolio } from 'src/app/entidades/portafolio';
 import { PersonaPorCampo } from 'src/app/entidades/persona-por-campo';
+import { RegistroDiario } from 'src/app/entidades/registro-diario';
 
 const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -55,13 +56,13 @@ export class CrearPortafolioService {
   }
 
   transCrearPersonaPorCampo(personaPorCampo: PersonaPorCampo) {
-    
+
     const url = this.prop.PATH + "/sitp/crearPortafolio/transCrearPersonaPorCampo";
     return this.http.post(url, personaPorCampo, httpOptions);
   }
 
   transUpdatePersonaPorCampo(personaPorCampo: PersonaPorCampo) {
-    
+
     const url = this.prop.PATH + "/sitp/crearPortafolio/transUpdatePersonaPorCampo";
     return this.http.post(url, personaPorCampo, httpOptions);
   }
@@ -69,5 +70,15 @@ export class CrearPortafolioService {
   transUpdatePortafolio(portafolio: Portafolio) {
     const url = this.prop.PATH + "/sitp/crearPortafolio/transActualizarPortafolio";
     return this.http.post(url, portafolio, httpOptions);
+  }
+
+  transCrearRegistroDiario(rs: RegistroDiario) {
+    const url = this.prop.PATH + "/sitp/crearPortafolio/transCrearRegistroDiario";
+    return this.http.post(url, rs, httpOptions);
+  }
+
+  findAccionList() {
+    const url = this.prop.PATH + "/sitp/buscarPortafolio/findAccionList";
+    return this.http.get(url, httpOptions);
   }
 }

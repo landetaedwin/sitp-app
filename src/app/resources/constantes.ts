@@ -28,7 +28,7 @@ export class Constantes {
     actividad = 'Actividad'
     fechaSuspencion = 'Fecha suspencion'
     numeroTrabajo = 'Número de trabajo'
-
+    estado = 'Estado'
 
     msgNoAplica = 'No aplica'
 
