@@ -109,7 +109,7 @@ export class CrearPortafolioComponent implements OnInit {
   }
 
   cargarNumeroList() {
-    debugger
+
     for (let i: number = 0; i < 10; i++) {
       this.numeroList.push({ label: i.toString(), value: i });
     }
@@ -183,9 +183,11 @@ export class CrearPortafolioComponent implements OnInit {
 
     if (tipoTrabajo.codigoTipoTrabajo == 1) {
       this.campoNumero = false;
+      this.campoTst = false;
     }
   }
 
+  numeroTrabajo: number;
   guardarPortafolio() {
 
     this.loading = true;
@@ -196,7 +198,7 @@ export class CrearPortafolioComponent implements OnInit {
     this.portafolio.bqlCodigo = this.bloque.blqCodigo;
     this.portafolio.camCodigo = this.campo.camCodigo;
     this.portafolio.pozCodigo = this.pozo.pozCodigo;
-    this.portafolio.numeroTrabajo = 1;
+    this.portafolio.numeroTrabajo = this.numeroTrabajo;
 
     this.portafolio.fechaInicio = this.today;
     this.portafolio.estado = 3;
@@ -218,5 +220,8 @@ export class CrearPortafolioComponent implements OnInit {
 
   }
 
+  goToBuscarPortafolio() {
+    this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
+  }
 
 }

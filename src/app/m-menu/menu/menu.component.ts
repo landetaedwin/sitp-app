@@ -68,7 +68,7 @@ export class MenuComponent implements OnInit {
       this.router.navigate(['/login'])
     }
 
-    debugger
+    
     if (this.usuario.nombres) {
       this.userNom = this.usuario.nombres;
     }
@@ -174,7 +174,6 @@ export class MenuComponent implements OnInit {
         visible: this.m1,
         items: [
           { label: 'Buscar portafolio', routerLink: [{ outlets: { sitp: ['buscarPortafolio'] } }], visible: this.i0 },
-          { label: 'Crear portafolio', routerLink: [{ outlets: { sitp: ['crearPortafolio'] } }], visible: this.i1 },
         ]
       },
       {
@@ -265,7 +264,7 @@ export class MenuComponent implements OnInit {
 
 
   closeSession() {
-    debugger
+    
     this.loginService.clearSession();
     this.router.navigate(['/login'])
   }

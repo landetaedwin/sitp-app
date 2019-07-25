@@ -55,14 +55,19 @@ export class CrearPortafolioService {
   }
 
   transCrearPersonaPorCampo(personaPorCampo: PersonaPorCampo) {
-    debugger
+    
     const url = this.prop.PATH + "/sitp/crearPortafolio/transCrearPersonaPorCampo";
     return this.http.post(url, personaPorCampo, httpOptions);
   }
 
   transUpdatePersonaPorCampo(personaPorCampo: PersonaPorCampo) {
-    debugger
+    
     const url = this.prop.PATH + "/sitp/crearPortafolio/transUpdatePersonaPorCampo";
     return this.http.post(url, personaPorCampo, httpOptions);
+  }
+
+  transUpdatePortafolio(portafolio: Portafolio) {
+    const url = this.prop.PATH + "/sitp/crearPortafolio/transActualizarPortafolio";
+    return this.http.post(url, portafolio, httpOptions);
   }
 }

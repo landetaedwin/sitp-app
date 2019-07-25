@@ -1,12 +1,11 @@
 <p-fieldset legend="Asignación o des asignación de persona a campos">
-  <div class="row">
-    <div class="col-md-6">
-      <button type="button" class="button" (click)="openModalNewPersonaPorCampo(newPersonaPorCampoTemplate)">Nuevo
-        registro</button>
+  <div class="row justify-content-end">
+    <div class="col-md-2">
+      <button type="button" class="btn btn-sm btn-primary btn-block"
+        (click)="openModalNewPersonaPorCampo(newPersonaPorCampoTemplate)">Nuevo</button>
     </div>
-    <div class="col-md-6">
-      <button type="button" class="button" (click)="getPersonaPorCampoList()">Buscar
-        registros</button>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-sm btn-success btn-block" (click)="getPersonaPorCampoList()">Buscar</button>
     </div>
   </div>
 </p-fieldset>
@@ -121,8 +120,8 @@
   </div>
   <div class="row">
     <div class="col-md-12 text-center">
-      <pagination-controls id="paginator1" (pageChange)="page_number2 = $event" previousLabel="Anterior" nextLabel="Siguiente"
-        responsive="true">
+      <pagination-controls id="paginator1" (pageChange)="page_number2 = $event" previousLabel="Anterior"
+        nextLabel="Siguiente" responsive="true">
         ></pagination-controls>
     </div>
   </div>
@@ -153,8 +152,8 @@
   </div>
   <div class="row">
     <div class="col-md-12 text-center">
-      <pagination-controls id="paginator" (pageChange)="page_number = $event" previousLabel="Anterior" nextLabel="Siguiente"
-        responsive="true">
+      <pagination-controls id="paginator" (pageChange)="page_number = $event" previousLabel="Anterior"
+        nextLabel="Siguiente" responsive="true">
         ></pagination-controls>
     </div>
   </div>
@@ -225,7 +224,7 @@
           <div class="row">
             <div class="col-md-4"><label for="bloque"><b>Ubicación funcionario:*</b></label></div>
             <div class="col-md">
-              <p-dropdown [options]="ubicacionList"></p-dropdown>
+              <p-dropdown [options]="regionalList" [(ngModel)]="regional"></p-dropdown>
             </div>
           </div>
         </div>
@@ -257,7 +256,6 @@
             <div class="col-md-4"><label for="bloque"><b>Bloque:*</b></label></div>
             <div class="col-md">
               <input type="text" [(ngModel)]="personaPorCampoEdit.bloque.bqlNombre" pInputText disabled>
-
             </div>
           </div>
         </div>
@@ -296,7 +294,7 @@
           <div class="row">
             <div class="col-md-4"><label for="bloque"><b>Ubicación funcionario:*</b></label></div>
             <div class="col-md">
-              <p-dropdown [options]="ubicacionList"></p-dropdown>
+              <input type="text" [(ngModel)]="personaPorCampoEdit.regional.rdhDescripcion" pInputText disabled>
             </div>
           </div>
         </div>

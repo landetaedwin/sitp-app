@@ -3,10 +3,13 @@ import { Bloque } from './bloque';
 import { Campo } from './campo';
 import { Pozo } from './pozo';
 import { TipoTrabajo } from './tipo-trabajo';
+import { Consorcio } from './consorcio';
+import { TipoPozo } from './tipo-pozo';
+import { Usuario } from '../m-login/entidades/usuario';
 
 export class Portafolio {
     codigoPortafolio: number
-    codigoTipoTrabajo:number
+    codigoTipoTrabajo: number
     cexCodigo: number
     bqlCodigo: String
     camCodigo: String
@@ -22,10 +25,13 @@ export class Portafolio {
     codigoTipoPozo: number
     codigoConsorcio: number
 
-    operadora:Operadora;
-    bloque:Bloque;
-    campo:Campo;
-    pozo:Pozo;
-    tipoTrabajo:TipoTrabajo;
-    
+    operadora: Operadora;
+    bloque: Bloque;
+    campo: Campo;
+    pozo: Pozo;
+    tipoTrabajo: TipoTrabajo;
+    tipoPozo: TipoPozo;
+    consorcio: Consorcio;
+    funcionario: Usuario;
+
 }

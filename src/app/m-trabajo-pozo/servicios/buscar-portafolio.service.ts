@@ -28,6 +28,11 @@ export class BuscarPortafolioService {
     return this.http.get(url, httpOptions);
   }
 
+  findRegionalList() {
+    const url = this.prop.PATH + "/sitp/buscarPortafolio/findRegionalList";
+    return this.http.get(url, httpOptions);
+  }
+
   findPortafolioList(param: BusquedaParametros) {
     const url = this.prop.PATH + "/sitp/buscarPortafolio/findPortafolioList";
     return this.http.post(url, param, httpOptions);
@@ -45,6 +50,12 @@ export class BuscarPortafolioService {
 
   findCamposListNoAsignados() {
     const url = this.prop.PATH + "/sitp/buscarPortafolio/findCamposListNoAsignados";
+    return this.http.get(url, httpOptions);
+  }
+
+  findPozoList() {
+    
+    const url = this.prop.PATH + "/sitp/buscarPortafolio/findPozoList";
     return this.http.get(url, httpOptions);
   }
 

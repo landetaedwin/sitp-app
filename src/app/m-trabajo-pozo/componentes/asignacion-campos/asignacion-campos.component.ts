@@ -10,6 +10,7 @@ import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { BuscarPortafolioService } from '../../servicios/buscar-portafolio.service';
 import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
 import { BusquedaParametros } from 'src/app/entidades/busquedaParametros';
+import { Regional } from 'src/app/entidades/regional';
 
 
 @Component({
@@ -32,6 +33,8 @@ export class AsignacionCamposComponent implements OnInit {
   page_size2: number = 10;
   page_number2: number = 1;
 
+  regionalList: SelectItem[] = [];
+  regional: Regional = new Regional;
   campoList: SelectItem[] = [];
   campo: Campo;
   bloqueList: SelectItem[] = [];
@@ -56,6 +59,7 @@ export class AsignacionCamposComponent implements OnInit {
     this.estadoList = [{ label: "Seleccione", value: null, disabled: true }, { label: "Activo", value: 1 }, { label: "Inactivo", value: 0 }];
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.bloqueList = [{ label: "Seleccione", value: null, disabled: true }];
+    this.regionalList = [{ label: "Seleccione", value: null, disabled: true }];
   }
 
   ngOnInit() {
@@ -66,6 +70,7 @@ export class AsignacionCamposComponent implements OnInit {
     }
     this.getBloqueList();
     this.getCamposListNoAsignados();
+    this.getRegionalList();
 
     this.busquedaParametros.usuario = new Usuario;
 
@@ -95,6 +100,21 @@ export class AsignacionCamposComponent implements OnInit {
 
     });
   }
+
+  getRegionalList() {
+    this.buscarService.findRegionalList().subscribe((data: Regional[]) => {
+      let b: Regional;
+      for (let i in data) {
+        b = data[i];
+        this.regionalList.push({ label: b.rdhDescripcion, value: b });
+      }
+    }, (err) => {
+      this.messageService.add({ severity: 'error', detail: 'Error interno' });
+      this.loading = false;
+
+    });
+  }
+
 
   getCamposListNoAsignados() {
     this.buscarService.findCamposListNoAsignados().subscribe((data: Campo[]) => {
@@ -203,6 +223,7 @@ export class AsignacionCamposComponent implements OnInit {
     this.personaPorCampoEdit.campo = ppc.campo;
     this.personaPorCampoEdit.funcionario = ppc.funcionario;
     this.personaPorCampoEdit.estado = ppc.estado;
+    this.personaPorCampoEdit.regional = ppc.regional;
     this.editPersonaPorCampoModalRef = this.modalService.show(template, { class: 'modal-xl', backdrop: 'static', keyboard: false });
 
     setTimeout(() => {
@@ -236,7 +257,7 @@ export class AsignacionCamposComponent implements OnInit {
     this.personaPorCampo.campo = this.campo;
     this.personaPorCampo.funcionario = this.usuarioFuncionario;
     this.personaPorCampo.correo = this.usuarioFuncionario.correo;
-    //this.personaPorCampo.rdhCodigo = this.rdh 
+    this.personaPorCampo.rdhCodigo = this.regional.rdhCodigo;
     this.personaPorCampo.estado = 1;
     this.personaPorCampo.fechaAsignacion = new Date;
     this.personaPorCampo.fechaInicio = new Date;
@@ -247,7 +268,7 @@ export class AsignacionCamposComponent implements OnInit {
 
     if (this.bloque.blqCodigo && this.campo.camCodigo && this.usuarioFuncionario.idUsuario) {
       this.crearPortafolioService.transCrearPersonaPorCampo(this.personaPorCampo).subscribe(data => {
-        debugger
+
         if (data) {
           this.loading = false;
           this.messageService.add({ severity: 'success', detail: 'Se creo correctamente el registro' });
@@ -278,14 +299,14 @@ export class AsignacionCamposComponent implements OnInit {
   }
 
   guardarEditPersonaPorCampo() {
-    debugger
+
     this.personaPorCampoEdit.estado = this.estado;
     if (this.estado == 0) {
       this.personaPorCampoEdit.fechaFin = new Date;
     }
     this.loading = true;
     this.crearPortafolioService.transUpdatePersonaPorCampo(this.personaPorCampoEdit).subscribe(data => {
-      debugger
+
       if (data) {
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se actualizo correctamente el registro' });

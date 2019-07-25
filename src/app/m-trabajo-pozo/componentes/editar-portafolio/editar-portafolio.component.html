@@ -1,10 +1,34 @@
 <p-fieldset legend="Creación portafoilo trabajo en Pozo" [toggleable]="true">
+  <div class="row justify-content-end">
+    <div class="col-md-2">
+      <button type="button" class="btn btn-sm btn-success btn-block " (click)="guardarPortafolio()">
+        Actualizar
+      </button>
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-sm btn-primary btn-block" (click)="openConfirmModal(confirmDialog)">
+        Anular
+      </button>
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-sm btn-danger btn-block" (click)="goToBuscarPortafolio()">
+        Cancelar
+      </button>
+    </div>
+  </div>
+
+  <hr />
+
   <div class="row">
     <div class="col-md-12">
       <p class="float-right"><b>Fecha registro:&nbsp;&nbsp;</b> {{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
     </div>
+    <div class="col-md-12">
+      <p class="float-right"><b>Funcionario:&nbsp;&nbsp;</b> {{portafolio.funcionario.nombres }} &nbsp;
+        {{portafolio.funcionario.apellidos }}</p>
+    </div>
   </div>
-  <hr />
+
 
   <div class="row">
     <div class="col-md-6">
@@ -13,7 +37,8 @@
           <label for="campo"><b>Campo:*</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown [options]="campoList" [(ngModel)]="campo" placeholder="Hola" (onChange)="cargarCampoPozo(campo);"></p-dropdown>
+          <input type="text" [(ngModel)]="portafolio.campo.camNombre" pInputText disabled>
+
         </div>
       </div>
     </div>
@@ -82,43 +107,70 @@
         </div>
         <div class="col-md">
           <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo"
-            (onChange)="verficarTrabajoSinTorre(tipoTrabajo);"></p-dropdown>
+            (onChange)="verificacionTipoTrabajo(tipoTrabajo);"></p-dropdown>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" [hidden]="!campoNumero">
       <div class="row">
         <div class="col-md-4">
           <label for="campo"><b>Numero:</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown [options]="numeroList"></p-dropdown>
+          <p-dropdown [options]="numeroList" [(ngModel)]="numeroTrabajo"></p-dropdown>
         </div>
       </div>
     </div>
   </div>
-  <div class="row" [hidden]="tst">
+  <div class="row" [hidden]="!campoTst">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
           <label for="campo"><b>Fecha trabajo sin torre:</b></label>
         </div>
         <div class="col-md">
-          <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"
+          <p-calendar [style]="{ width: '100%' }" [maxDate]="maxDate" [inputStyle]="{ width: '100%' }"
             [(ngModel)]="portafolio.fechaTrabajoSinTorre"></p-calendar>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Estado:</b></label>
+        </div>
+        <div class="col-md">
+          <p-dropdown [options]="estadoList" [(ngModel)]="estado"></p-dropdown>
         </div>
       </div>
     </div>
   </div>
   <hr />
-  <div class="row justify-content-end">
-    <div class="col-md-4">
-      <button type="button" class="button">
-        Guardar
-      </button>
-    </div>
-  </div>
+
 </p-fieldset>
 <ng-template #customLoadingTemplate> </ng-template>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
 </ngx-loading>
+
+
+
+<ng-template #confirmDialog>
+  <div class="container">
+    <div class="row mt-2" style="background-color: var(--btnColor); height: 28px;">
+      <div class="col-md-12">
+        <h5> ¿Desea anular el portafolio? </h5>
+      </div>
+    </div>
+    <div class="row mt-1 mb-3">
+      <div class="col-md-6 ">
+        <button type="button" class="btn btn-sm btn-success btn-block" (click)="anularPortafolio()">Si</button>
+      </div>
+      <div class="col-md-6 ">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="confirmModalRef.hide()">No</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -14,6 +14,7 @@ import { AsignacionCamposComponent } from './componentes/asignacion-campos/asign
 import { BuscarPortafolioComponent } from './componentes/buscar-portafolio/buscar-portafolio.component';
 import { CrearPortafolioComponent } from "./componentes/crear-portafolio/crear-portafolio.component";
 import { EditarPortafolioComponent } from "./componentes/editar-portafolio/editar-portafolio.component";
+import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-diario/registro-trabajo-diario.component';
 
 
 
@@ -25,7 +26,8 @@ import { EditarPortafolioComponent } from "./componentes/editar-portafolio/edita
     AnularPortafolioComponent,
     BuscarPortafolioComponent,
     AsignacionCamposComponent,
-    FilterSearchPipe
+    FilterSearchPipe,
+    RegistroTrabajoDiarioComponent
 
   ],
   imports: [

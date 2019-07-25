@@ -11,6 +11,7 @@ import { ReportesDiariosComponent } from './m-trabajo-bitacora/componentes/repor
 import { VerificacionFechasComponent } from './m-trabajo-bitacora/componentes/verificacion-fechas/verificacion-fechas.component';
 import { VerificacionProduccionComponent } from './m-trabajo-bitacora/componentes/verificacion-produccion/verificacion-produccion.component';
 import { AsignacionCamposComponent } from './m-trabajo-pozo/componentes/asignacion-campos/asignacion-campos.component';
+import { RegistroTrabajoDiarioComponent } from './m-trabajo-pozo/componentes/registro-trabajo-diario/registro-trabajo-diario.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -22,6 +23,8 @@ const routes: Routes = [
       { path: 'editarPortafolio', component: EditarPortafolioComponent, outlet: 'sitp' },
       { path: 'anularPortafolio', component: AnularPortafolioComponent, outlet: 'sitp' },
       { path: 'asignacionCampos', component: AsignacionCamposComponent, outlet: 'sitp' },
+      { path: 'registroDiario', component: RegistroTrabajoDiarioComponent, outlet: 'sitp' },
+
 
 
 
