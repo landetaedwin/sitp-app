@@ -198,11 +198,7 @@ export class CrearPortafolioComponent implements OnInit {
     this.portafolio.bqlCodigo = this.bloque.blqCodigo;
     this.portafolio.camCodigo = this.campo.camCodigo;
     this.portafolio.pozCodigo = this.pozo.pozCodigo;
-<<<<<<< HEAD
-    this.portafolio.numeroTrabajo = 1;
-=======
     this.portafolio.numeroTrabajo = this.numeroTrabajo;
->>>>>>> 7a4b66934cc49478ed0e9f3c6207d758037de73d
     this.portafolio.estado = 3;
     this.portafolio.fechaRegistro = this.today;
     this.portafolio.idUsuario = this.usuario.idUsuario;
