@@ -15,8 +15,8 @@ export class MenuComponent implements OnInit {
   items: MenuItem[];
   usuario: Usuario = new Usuario;
   display: boolean = true;
-  userNom:string;
-  userCI:string;
+  userNom: string = '';
+  userCI: string;
 
   /**
    * Variables para menu dinamico.
@@ -64,11 +64,18 @@ export class MenuComponent implements OnInit {
 
     this.usuario = this.loginService.sessionValue;
 
-    if(!this.usuario){
+    if (!this.usuario) {
       this.router.navigate(['/login'])
     }
 
-    this.userNom = this.usuario.nombres + " " +this.usuario.apellidos;
+    
+    if (this.usuario.nombres) {
+      this.userNom = this.usuario.nombres;
+    }
+    if (this.usuario.apellidos) {
+      this.userNom = this.userNom + " " + this.usuario.apellidos;
+    }
+
     this.userCI = this.usuario.usuarioLogin;
 
     if (this.usuario.perfil.codigoPerfil == '1') {
@@ -168,10 +175,7 @@ export class MenuComponent implements OnInit {
         label: 'Portafolio',
         visible: this.m1,
         items: [
-          { label: 'Buscar portafolio', routerLink: [{ outlets: { sitp: ['buscarPortafolio'] } }], visible: this.i0},
-          { label: 'Crear portafolio', routerLink: [{ outlets: { sitp: ['crearPortafolio'] } }], visible: this.i1 },
-          { label: 'Editar portafolio', routerLink: [{ outlets: { sitp: ['editarPortafolio'] } }], visible: this.i2 },
-          { label: 'Anular portafolio', routerLink: [{ outlets: { sitp: ['anularPortafolio'] } }], visible: this.i3 },
+          { label: 'Buscar portafolio', routerLink: [{ outlets: { sitp: ['buscarPortafolio'] } }], visible: this.i0 },
         ]
       },
       {
@@ -188,7 +192,11 @@ export class MenuComponent implements OnInit {
         label: 'Busqueda de portafolio para verificación',
         visible: this.m3,
         items: [
+<<<<<<< HEAD
           { label: 'Buscar portfolio Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioBitacora'] } }], visible: this.i0},
+=======
+          { label: 'Buscar portafolio Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioVerificacion'] } }], visible: this.i0 },
+>>>>>>> 7a4b66934cc49478ed0e9f3c6207d758037de73d
           { label: 'Verrificación de fechas', routerLink: [{ outlets: { sitp: ['verificacionFechas'] } }], visible: this.i8 },
           { label: 'Verificación de cumplimiento de tasas', command: () => this.imprimirMensaje(), visible: this.i9 },
           { label: 'Verificación de producción', routerLink: [{ outlets: { sitp: ['verificacionProduccion'] } }], visible: this.i10 },
@@ -231,7 +239,7 @@ export class MenuComponent implements OnInit {
         items: [
           { label: 'Editar datos', style: "", command: () => this.imprimirMensaje(), visible: true },
           { label: 'Anular datos', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Asignación de Campos', command: () => this.imprimirMensaje(), visible: true },
+          { label: 'Asignación de Campos', routerLink: [{ outlets: { sitp: ['asignacionCampos'] } }], visible: true },
         ]
       },
 
@@ -262,12 +270,11 @@ export class MenuComponent implements OnInit {
   }
 
 
-  closeSession(){
-    this.loginService.sessionValue = null;
+  closeSession() {
+    
+    this.loginService.clearSession();
     this.router.navigate(['/login'])
   }
-
-
 
   imprimirMensaje() {
     console.log("Hola");

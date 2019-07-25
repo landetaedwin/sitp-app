@@ -6,6 +6,7 @@ export class Usuario {
     password: string;
     apellidos: string;
     nombres: string;
+    correo: string;
 
     perfil:Perfil;
 

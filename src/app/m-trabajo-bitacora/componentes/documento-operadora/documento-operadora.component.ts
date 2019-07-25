@@ -32,7 +32,7 @@ export class DocumentoOperadoraComponent implements OnInit {
   }
 
   guardarDocumentoOperadora(){
-    debugger;
+    ;
     this.loading = true;
    // this.documentoOperadora.asunto= this.as
   }

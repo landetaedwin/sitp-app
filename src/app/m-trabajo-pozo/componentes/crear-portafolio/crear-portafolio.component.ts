@@ -32,13 +32,14 @@ export class CrearPortafolioComponent implements OnInit {
   tipoTrabajo: TipoTrabajo = new TipoTrabajo;
   bloque: Bloque = new Bloque;
   operadora: Operadora = new Operadora;
-  tst: boolean = true;
+
 
   today = new Date();
   usuario: Usuario;
   portafolio: Portafolio = new Portafolio;
 
-
+  minDate: Date;
+  maxDate: Date;
 
   constructor(public crearPortafolioService: CrearPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
@@ -60,7 +61,8 @@ export class CrearPortafolioComponent implements OnInit {
       this.router.navigate(['/login']);
     }
 
-
+    this.maxDate = new Date();
+    this.minDate = new Date(2010, 0, 1);
     this.crearPortafolioService.findCamposList().subscribe(
       (data: Campo[]) => {
         let c: Campo;
@@ -107,7 +109,7 @@ export class CrearPortafolioComponent implements OnInit {
   }
 
   cargarNumeroList() {
-    debugger
+
     for (let i: number = 0; i < 10; i++) {
       this.numeroList.push({ label: i.toString(), value: i });
     }
@@ -168,52 +170,60 @@ export class CrearPortafolioComponent implements OnInit {
     }
   }
 
-  verficarTrabajoSinTorre(tipoTrabajo: TipoTrabajo) {
+
+  campoTst: boolean = false;
+  campoNumero: boolean = true;
+  verificacionTipoTrabajo(tipoTrabajo: TipoTrabajo) {
+    if (tipoTrabajo.codigoTipoTrabajo == 3) {
+      this.campoTst = true;
+    }
     if (tipoTrabajo.codigoTipoTrabajo == 2) {
-      this.tst = false;
-    } else {
-      this.tst = true;
+      this.campoNumero = true;
+    }
+
+    if (tipoTrabajo.codigoTipoTrabajo == 1) {
+      this.campoNumero = false;
+      this.campoTst = false;
     }
   }
 
+  numeroTrabajo: number;
   guardarPortafolio() {
 
-    debugger
     this.loading = true;
     this.portafolio.codigoConsorcio = this.consorcio.codigoConsorcio;
     this.portafolio.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
     this.portafolio.codigoTipoPozo = this.tipoPozo.codigoTipoPozo;
     this.portafolio.cexCodigo = this.operadora.cexCodigo;
-    this.portafolio.bqlCodigo = this.bloque.bqlCodigo;
+    this.portafolio.bqlCodigo = this.bloque.blqCodigo;
     this.portafolio.camCodigo = this.campo.camCodigo;
     this.portafolio.pozCodigo = this.pozo.pozCodigo;
+<<<<<<< HEAD
     this.portafolio.numeroTrabajo = 1;
+=======
+    this.portafolio.numeroTrabajo = this.numeroTrabajo;
+>>>>>>> 7a4b66934cc49478ed0e9f3c6207d758037de73d
     this.portafolio.estado = 3;
     this.portafolio.fechaRegistro = this.today;
     this.portafolio.idUsuario = this.usuario.idUsuario;
 
-    console.log(this.portafolio);
     this.crearPortafolioService.transCrearPortafolio(this.portafolio).subscribe(data => {
 
       if (data) {
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se creo el portafolio' });
-        this.router.navigate(['/menu',{outlets: {sitp: ['buscarPortafolio']}}]);
+        this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
       } else {
         this.loading = false;
         this.messageService.add({ severity: 'info', detail: 'No se pudo crear el portafolio' });
 
       }
-
-
-
-
     });
 
   }
 
-
-  prueba() {
+  goToBuscarPortafolio() {
+    this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
   }
 
 }

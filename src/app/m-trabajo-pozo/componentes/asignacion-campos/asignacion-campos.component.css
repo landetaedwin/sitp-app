@@ -38,20 +38,9 @@ body .ui-dropdown .ui-dropdown-label {
   width: 100%;
 }
 
-span {
-  font-size: 14px;
-  margin-left: 1px;
-  margin-right: 1px;
-}
-
 td {
   font-size: 12px;
 }
 th {
   font-size: 12px;
-}
-
-li {
-  margin-left: 3px;
-  margin-right: 3px;
 }
