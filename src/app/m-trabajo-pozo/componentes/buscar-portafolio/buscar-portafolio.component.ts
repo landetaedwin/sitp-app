@@ -36,7 +36,8 @@ export class BuscarPortafolioComponent implements OnInit {
 
   buscarPortafolio() {
     this.loading = true;
-    this.buscarPortafolioService.findPortafolioList(this.busquedaParametros).subscribe((data: Portafolio[]) => {
+    this.buscarPortafolioService.findPortafolioList(this.busquedaParametros).
+    subscribe((data: Portafolio[]) => {
       if (data) {
         this.portafolioList = data;
         this.busquedaParametros.numeroPortafolio = null;

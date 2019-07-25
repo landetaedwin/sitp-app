@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -6,22 +7,22 @@ import { Portafolio } from 'src/app/entidades/portafolio';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { BuscarPortafolioService } from '../../servicios/buscar-portafolio.service';
+import { EditarPortafolioService } from '../../servicios/editar-portafolio.service';
+import { InformeTrabajoOperadoraService} from '../../servicios/informe-trabajo-operadora.service';
 
 @Component({
-  selector: 'app-buscar-portafolio',
-  templateUrl: './buscar-portafolio.component.html',
-  styleUrls: ['./buscar-portafolio.component.css']
+  selector: 'app-buscar-portafolio-bitacora',
+  templateUrl: './buscar-portafolio-bitacora.component.html',
+  styleUrls: ['./buscar-portafolio-bitacora.component.css']
 })
-export class BuscarPortafolioComponent implements OnInit {
-
+export class BuscarPortafolioBitacoraComponent implements OnInit {
   public loading = false;
+
 
   busquedaParametros: BusquedaParametros = new BusquedaParametros;
   usuario: Usuario;
   portafolioList: Portafolio[] = [];
-
-  constructor(public buscarPortafolioService: BuscarPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
-  }
+  constructor(public buscarPortafolioService: BuscarPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router, public informeOperadoraService: InformeTrabajoOperadoraService) { }
 
   ngOnInit() {
     this.loading = true;
@@ -30,9 +31,7 @@ export class BuscarPortafolioComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     this.loading = false;
-
   }
-
 
   buscarPortafolio() {
     this.loading = true;
@@ -50,4 +49,9 @@ export class BuscarPortafolioComponent implements OnInit {
     });
   }
 
+  informeOperadora(portafolio: Portafolio) {
+  //  this.editarPortafolioService.portafolio = portafolio;
+    this.informeOperadoraService.portafolio= portafolio;
+      this.router.navigate(['/menu', { outlets: { sitp: ['informeOperadora'] } }]);
+  }
 }

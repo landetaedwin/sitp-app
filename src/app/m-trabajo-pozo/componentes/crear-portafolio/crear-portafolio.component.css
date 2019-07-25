@@ -13,6 +13,13 @@ input{
     font-size: 12px;
 }
 
+file{
+    height: 20px;
+    width: 100%;
+    margin-top: 4px;
+    font-size: 12px;
+}
+
 p{
     font-size: 12px;
 }
@@ -26,7 +33,7 @@ body .ui-dropdown .ui-dropdown-label {
 }
 
 .mtop{
-    margin-top: 4px; 
+    margin-top: 4px;
 }
 
 .button {

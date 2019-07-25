@@ -9,14 +9,14 @@ import { MMenuModule } from './m-menu/m-menu.module';
 import { MTrabajoPozoModule } from './m-trabajo-pozo/m-trabajo-pozo.module';
 import { Constantes } from './resources/constantes';
 import { AngularWebStorageModule } from 'angular-web-storage';
-import {MTrabajoBitacoraModule} from './m-trabajo-bitacora/m-trabajo-bitacora.module'
+import {MTrabajoBitacoraModule} from './m-trabajo-bitacora/m-trabajo-bitacora.module';
 
 
 
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
 
   ],
   imports: [

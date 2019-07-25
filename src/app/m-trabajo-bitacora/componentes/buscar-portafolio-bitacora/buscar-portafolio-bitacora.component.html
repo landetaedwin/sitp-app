@@ -1,4 +1,4 @@
-<p-fieldset legend="Busqueda de portafolio trabajo en Pozo" [toggleable]="true">
+<p-fieldset legend="Busqueda de portafolio trabajo en Bitacora" [toggleable]="true">
 
   <div class="row">
     <div class="col-md-6">
@@ -104,7 +104,7 @@
             <td>{{portafolio.numeroTrabajo}}</td>
             <td>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">
-              <i class="fa fa-pencil-square-o fa-2x" (click)="editarPortafolio(portafolio);"></i>
+              <i class="fa fa-pencil-square-o fa-2x" (click)="informeOperadora(portafolio);"></i>
             </td>
 
           </tr>

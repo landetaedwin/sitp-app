@@ -53,7 +53,7 @@ export class MenuComponent implements OnInit {
   i20: boolean = false;
   i21: boolean = false;
   i22: boolean = false;
-
+  i23: boolean = false;
 
 
   constructor(public loginService: LoginService, public router: Router) {
@@ -102,6 +102,8 @@ export class MenuComponent implements OnInit {
       this.i19 = true;
       this.i20 = true;
       this.i21 = true;
+      this.i22 = true;
+      this.i23 = true;
       this.i2 = true;
 
     }
@@ -186,7 +188,7 @@ export class MenuComponent implements OnInit {
         label: 'Busqueda de portafolio para verificación',
         visible: this.m3,
         items: [
-          { label: 'Buscar portafolio Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioVerificacion'] } }], visible: this.i0},
+          { label: 'Buscar portfolio Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioBitacora'] } }], visible: this.i0},
           { label: 'Verrificación de fechas', routerLink: [{ outlets: { sitp: ['verificacionFechas'] } }], visible: this.i8 },
           { label: 'Verificación de cumplimiento de tasas', command: () => this.imprimirMensaje(), visible: this.i9 },
           { label: 'Verificación de producción', routerLink: [{ outlets: { sitp: ['verificacionProduccion'] } }], visible: this.i10 },
@@ -220,6 +222,7 @@ export class MenuComponent implements OnInit {
         items: [
           { label: 'Registro de novedad', command: () => this.imprimirMensaje(), visible: this.i21 },
           { label: 'Seguimiento de la novedad', command: () => this.imprimirMensaje(), visible: this.i22 },
+          { label: 'Informe Trabajo de Operadora', command: () => this.imprimirMensaje(), visible: this.i23 },
         ]
       },
       {
