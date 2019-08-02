@@ -11,18 +11,38 @@
         </div>
       </div>
     </div>
+    
+  </div>
+
+  <div class="row">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
-          <label for="campo"><b>Pozo:</b></label>
+          <label for="campo"><b>Campo:*</b></label>
         </div>
         <div class="col-md">
-          <input [(ngModel)]="busquedaParametros.pozo" pInputText />
-
+          <p-dropdown [options]="campoList" [(ngModel)]="campo" (onChange)="cargarPozosByCamCodigo(campo);"
+            [filter]="true">
+          </p-dropdown>
         </div>
       </div>
     </div>
+
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Pozo:*</b></label>
+        </div>
+        <div class="col-md">
+          <p-dropdown [options]="pozoList" [(ngModel)]="pozo" [filter]="true">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+
+
   </div>
+  
   <div class="row">
     <div class="col-md-6">
       <div class="row">
@@ -77,6 +97,21 @@
 
 <p-fieldset legend="Resultados" [toggleable]="true">
 
+    <div class="row">
+        <div class="col-md-12">
+          <ul class="nav justify-content-end">
+            <li>
+              <i class="fa fa-pencil-square-o" aria-hidden="true"> Crear Informe Operadora</i>
+            </li>
+            <li>
+                <i class="fa fa-calendar-o" aria-hidden="true"> Verificar Fechas</i>
+              </li>
+          </ul>
+        </div>
+      </div>
+      <br>
+
+
   <div class="row">
     <div class="col-md-12">
       <table class="table table-bordered table-sm">
@@ -94,7 +129,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let portafolio of portafolioList; let i = index" style="font-size: 11px">
+          <tr *ngFor="let portafolio of portafolioList| paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;">
             <td>{{i+1}} </td>
             <td>{{portafolio.operadora.cexApellidoPaterno}} </td>
             <td>{{portafolio.bloque.bqlNombre}}</td>
@@ -106,6 +141,10 @@
             <td class="text-center">
               <i class="fa fa-pencil-square-o fa-2x" (click)="informeOperadora(portafolio);"></i>
             </td>
+            <td class="text-center">
+          
+                <i class="fa fa-calendar-o fa-2x" (click)="verificarFechas(portafolio);"></i>            
+            </td>
 
           </tr>
 
@@ -114,7 +153,13 @@
     </div>
 
   </div>
-
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <pagination-controls id="paginator" (pageChange)="page_number = $event" previousLabel="Anterior"
+        nextLabel="Siguiente" responsive="true">
+        ></pagination-controls>
+    </div>
+  </div>
 </p-fieldset>
 
 <ng-template #customLoadingTemplate> </ng-template>

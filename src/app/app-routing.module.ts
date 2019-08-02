@@ -10,6 +10,7 @@ import { BuscarPortafolioBitacoraComponent } from './m-trabajo-bitacora/componen
 import { ReportesDiariosComponent } from './m-trabajo-bitacora/componentes/reportes-diarios/reportes-diarios.component';
 import { VerificacionFechasComponent } from './m-trabajo-bitacora/componentes/verificacion-fechas/verificacion-fechas.component';
 import { VerificacionProduccionComponent } from './m-trabajo-bitacora/componentes/verificacion-produccion/verificacion-produccion.component';
+import { EditarInformeOperadoraComponent } from './m-trabajo-bitacora/componentes/editar-informe-operadora/editar-informe-operadora.component';
 import { InformeTrabajosOperadoraComponent } from './m-trabajo-bitacora/componentes/informe-trabajos-operadora/informe-trabajos-operadora.component';
 import { RegistroTrabajoDiarioComponent } from './m-trabajo-pozo/componentes/registro-trabajo-diario/registro-trabajo-diario.component';
 import { AsignacionCamposComponent } from './m-trabajo-pozo/componentes/asignacion-campos/asignacion-campos.component';
@@ -33,6 +34,7 @@ const routes: Routes = [
       { path: 'reportesDiarios', component: ReportesDiariosComponent, outlet: 'sitp' },
       { path: 'verificacionFechas', component: VerificacionFechasComponent, outlet: 'sitp' },
       { path: 'verificacionProduccion', component: VerificacionProduccionComponent, outlet: 'sitp' },
+      { path: 'editarInformeOperadora', component: EditarInformeOperadoraComponent, outlet: 'sitp' },
     ]
   }
 

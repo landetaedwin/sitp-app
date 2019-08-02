@@ -5,6 +5,14 @@
     </div>
   </div>
 
+  <div class="row">
+      <div class="col-md-4">
+        <label for="campo"><b> Numero Portafolio: </b></label>
+      </div>
+      <div class="col-md">
+        <p class="mtop">{{verificarFechas.codPortafolio}}</p>
+      </div>
+      </div>
 
 
   <div class="row">
@@ -12,10 +20,11 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
-          <label for="InformeOperadora"><b>Fecha Inicio de Trabajo:</b></label>
+          <label for="verificacionFechas"><b>Fecha Inicio de Trabajo:</b></label>
         </div>
         <div class="col-md">
-          <input type="text" class="form-control" [(ngModel)]="informeOperadora.numeroOficio">
+            <p class="mtop">{{verificarFechas.fechaInicio}}</p>
+          
         </div>
       </div>
     </div>
@@ -23,10 +32,10 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
-          <label for="InformeOperadora"><b>Fecha Fin de Trabajo:*</b></label>
+          <label for="verificacionFechas"><b>Fecha Fin de Trabajo:</b></label>
         </div>
         <div class="col-md">
-          <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }" [(ngModel)]="informeOperadora.fechaOficio" required></p-calendar>
+            <p class="mtop">{{verificarFechas.fechaFin}}</p>
         </div>
       </div>
     </div>
@@ -36,58 +45,58 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
-          <label for="InformeOperadora"><b>Fecha Presentacion Informe de Operadora:*</b></label>
+          <label for="verificacionFechas"><b>Fecha Presentacion Informe de Operadora:*</b></label>
         </div>
         <div class="col-md">
-        <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }" [(ngModel)]="informeOperadora.fechaOficio" required></p-calendar>
+        <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }" [(ngModel)]="verificarFechas.fechaPresentacion" required></p-calendar>
         </div>
       </div>
     </div>
+
     <div class="col-md-6">
-      <div class="row">
+      <div class="row">       
         <div class="col-md-4">
-          <label for="InformeOperadora"><b>Justificao:*</b></label>
+          <label for="verificacionFechas"><b>Justificado:*</b></label>
         </div>
         <div class="col-md">
-        <p-dropdown [options]="estadolist" [(ngModel)]="informeOperadora.estado" readonly></p-dropdown>
+        <p-dropdown [options]="estadolist" [(ngModel)]="verificarFechas.justificado" readonly></p-dropdown>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row">
+<div class="row">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
-          <label for="InformeOperadora"><b>Fecha Actualizacion:*</b></label>
+          <label for="verificacionFechas"><b>Observacion:*</b></label>
         </div>
         <div class="col-md">
-          <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }" [(ngModel)]="informeOperadora.fechaArch" required></p-calendar>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="InformeOperadora"><b>Usuario:*</b></label>
-        </div>
-        <div class="col-md">
-          <input type="number" class="form-control" [(ngModel)]="informeOperadora.costo_real" required>
+            <textarea id="verificacionFechas"   [(ngModel)]="verificarFechas.observacion"  class="md-textarea form-control" rows="3"></textarea>       
         </div>
       </div>
     </div>
   </div>
+
+
+
   <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="InformeOperadora"><b>Estado:*</b></label>
+      <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="verificarFechas"><b>Estado:*</b></label>
+            </div>
+            <div class="col-md">
+            <p-dropdown [options]="estadolist" [(ngModel)]="verificarFechas.estado" readonly></p-dropdown>
+            </div>
+          </div>
         </div>
-        <div class="col-md">
-        <p-dropdown [options]="estadolist" [(ngModel)]="informeOperadora.estado" readonly></p-dropdown>
-        </div>
-      </div>
-    </div>
+
+
+</div>
+
+  <div class="row">
+      
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
@@ -99,29 +108,8 @@
       </div>
     </div>
   </div>
+ 
 
-  <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="InformeOperadora"><b>RIG:*</b></label>
-        </div>
-        <div class="col-md">
-          <input type="text" class="form-control" [(ngModel)]="informeOperadora.rig" required>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="InformeOperadora"><b>Anexo Informe:*</b></label>
-        </div>
-        <div class="col-md">
-          <input type="file" accept=".pdf" [(ngModel)]="informeOperadora.anexoInforme" required>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="row" [hidden]="tst">
   </div>
@@ -144,15 +132,11 @@
         <thead>
           <tr>
 
-            <th>Nro. Informe</th>
-            <th>Nro. SGC</th>
-            <th>Nro Oficio</th>
-            <th>Anexo Documento</th>
-            <th>Fecha Oficio</th>
-            <th>Fecha ARCH</th>
-            <th>Costo Real</th>
+            <th>Nro. Verificación Fecha</th>
+            <th>Cumple</th>
             <th>Estado</th>
-            <th>Fecha Actualizacion</th>
+            <th>Fecha Actualización</th>
+  
           </tr>
         </thead>
         <tbody>
@@ -162,12 +146,7 @@
           <td>{{informeOperadora.numeroSgc}} </td>
             <td>{{informeOperadora.numeroOficio}} </td>
               <td><a href>{{informeOperadora.anexoDocumento}}</a> </td>
-                <td>{{informeOperadora.fechaOficio | date:'dd/MM/yyyy'}} </td>
-            <td>{{informeOperadora.fechaArch | date:'dd/MM/yyyy'}} </td>
-              <td>{{informeOperadora.costo_real}} </td>
-                <td>{{informeOperadora.estado}} </td>
-                <td>{{informeOperadora.fecha_actualizacion | date:'dd/MM/yyyy'}} </td>
-
+            
 
           </tr>
 
@@ -178,6 +157,7 @@
   </div>
 
 </p-fieldset>
+
 <ng-template #customLoadingTemplate> </ng-template>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
 </ngx-loading>

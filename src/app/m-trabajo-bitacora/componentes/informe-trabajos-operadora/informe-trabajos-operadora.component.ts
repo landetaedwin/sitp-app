@@ -3,7 +3,7 @@ import { MessageService, SelectItem } from "primeng/api";
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import {InformeOperadora} from 'src/app/entidades/informe-operadora';
 import {Portafolio} from 'src/app/entidades/portafolio';
-
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { InformeTrabajoOperadoraService } from 'src/app/m-trabajo-bitacora/servicios/informe-trabajo-operadora.service';
 import { Router, RouterLink } from '@angular/router';
@@ -24,10 +24,12 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
   today= new Date();
   informeOperadora = new InformeOperadora();
   selectedEstado: string = 'Registrado';
+  buttonDisabled: boolean = false;
+  private archivoSeleccioando: File;
 
 
 
-  constructor(public informeTrabajoOperadoraService: InformeTrabajoOperadoraService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
+  constructor(public http:HttpClient, public informeTrabajoOperadoraService: InformeTrabajoOperadoraService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
     this.portafolio = this.informeTrabajoOperadoraService.portafolio;
     this.informeOperadora.codPortafolio= this.portafolio.codigoPortafolio;
 
@@ -46,7 +48,7 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
    //this.informeOperadora.codPortafolio= this.portafolio.codigoPortafolio;
     //this.informeOperadora.codPortafolio = this.portafolio.codigoPortafolio;
     this.usuario = this.loginService.sessionValue;
-
+   this.informelist= [];
     //this.informeOperadora= this.informeOperadora.cod_informe_operadora;
 
     if(!this.usuario){
@@ -54,8 +56,15 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
     }
     this.informeTrabajoOperadoraService.findDocument;
     this.informeTrabajoOperadoraService.buscarporId(this.informeOperadora.codPortafolio).subscribe(
-      (data: InformeOperadora[]) => {
+      (data: InformeOperadora[]) => {   
       if (data) {
+            console.log(data.length);
+           
+           if (data.length!==0) {
+            this.messageService.add({ severity: 'warn', detail: 'Ya existe un informe asignado en este pozo' });
+            this.buttonDisabled = true;
+          }
+
         this.informelist = data;
         this.informeOperadora.numeroOficio= null;
         this.informeOperadora.estado=1;
@@ -68,8 +77,10 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
          this.informeOperadora.anexo_Oficio=null;
          this.informeOperadora.codPortafolio;
          this.informeOperadora.costo_real=null;
-      //   this.informeOperadora.cod_informe_operadora= t
           }
+
+         
+         
         this.loading = false;
 
       });
@@ -77,7 +88,7 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
 
   }
 
-
+  
 
 guardarInformeTrabajo(){
 
@@ -89,10 +100,8 @@ guardarInformeTrabajo(){
   this.informeOperadora.codPortafolio= this.portafolio.codigoPortafolio;
   console.log("Clicked");
   console.log(this.informeOperadora);
-
+  this.buttonDisabled = true;
   this.informeTrabajoOperadoraService.transCrearTrabajoOperdora(this.informeOperadora).subscribe(data =>{
-
-
     if (data) {
       this.loading = false;
       this.messageService.add({ severity: 'success', detail: 'Se creo el Informe' });
@@ -107,12 +116,14 @@ guardarInformeTrabajo(){
 
   });
 
-  this.informeTrabajoOperadoraService.buscarporId(9).subscribe(
+  this.informeTrabajoOperadoraService.buscarporId(this.informeOperadora.codPortafolio).subscribe(
 
     (data: InformeOperadora[]) => {
 
 
     if (data) {
+    this.subirArchivo;
+    console.log("PARTE 1");
      this.informelist = data;
      this.informeOperadora.numeroOficio= null;
      this.informeOperadora.fechaArch=null;
@@ -130,30 +141,26 @@ guardarInformeTrabajo(){
 
 
 
-
-}
 }
 
+subirArchivo(){
+  this.informeTrabajoOperadoraService.subirArchivo(this.archivoSeleccioando, this.informeOperadora.codPortafolio).subscribe(informeOperadora=>{
+    this.informeOperadora = this.informeOperadora;
+    console.log("Se ha subido el archivo exitosamente");
+  }
+    
+    )
+} 
+
+seleccionarArchivo(event){
+this.archivoSeleccioando = event.target.files[0];
+}
+
+editarInformeOperadora(informeOperadora: InformeOperadora) {
+  console.log("click");
+  this.informeTrabajoOperadoraService.informeOperadora = informeOperadora;
+  this.router.navigate(['/menu', { outlets: { sitp: ['editarInformeOperadora'] } }]);
+}
 
 
-                                                    //this.informeTrabajoOperadoraService.findDocument(this.informeOperadora.cod_informe_operadora).subscribe(
-
-                                                    //  (data: InformeOperadora[]) => {
-
-
-                                                    //  if (data) {
-                                                      // this.informelist = data;
-                                                        //this.informeOperadora.anexoDocumento
-                                                        //this.informeOperadora.cod_porafolio=null;
-                                                        //  this.informeOperadora.costo_real=null
-                                                          //this.informeOperadora.estado=null;
-                                                          //this.informeOperadora.fecha_actualizacion=null;
-                                                        //}
-                                                        //this.loading = false;
-
-                                                      //});
-                                                  //}
-
-                                                  //this.informeTrabajoOperadoraService.findDocument(this.informeOperadora.cod_informe_operadora).subscribe(
-
-                                                  //  (data: InformeOperadora[]) => {
+}

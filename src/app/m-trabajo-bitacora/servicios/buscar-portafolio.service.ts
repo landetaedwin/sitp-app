@@ -33,6 +33,14 @@ export class BuscarPortafolioService {
     const url = this.prop.PATH + "/sitp/buscarPortafolio/findPortafolioList";
     return this.http.post(url, param, httpOptions);
   }
+  findCamposList() {
+    const url = this.prop.PATH + "/sitp/crearPortafolio/findCampoList";
+    return this.http.get(url, httpOptions);
+  }
+  findPozoByCamCodigo(camCodigo: string) {
+    const url = this.prop.PATH + "/sitp/crearPortafolio/findPozoByCamCodigo?camCodigo=" + camCodigo;
+    return this.http.get(url, httpOptions);
+  }
 
 
 }

@@ -5,7 +5,14 @@
     </div>
   </div>
 
-
+  <div class="row">
+  <div class="col-md-4">
+    <label for="campo"><b> Numero Portafolio: </b></label>
+  </div>
+  <div class="col-md">
+    <p class="mtop">{{informeOperadora.codPortafolio}}</p>
+  </div>
+  </div>
 
   <div class="row">
 
@@ -40,7 +47,12 @@
           <label for="InformeOperadora"><b>Anexo Documento:*</b></label>
         </div>
         <div class="col-md">
-          <input type="file" accept=".pdf" [(ngModel)]="informeOperadora.anexoDocumento" required>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" [(ngModel)]="informeOperadora.anexoDocumento" aria-describedby="inputGroupFileAddon04">
+                <label class="custom-file-label" for="inputGroupFile04">Seleccione Archivo</label>
+              </div>
+           
+   
         </div>
       </div>
     </div>
@@ -54,6 +66,13 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="row">
+   
+  
+ 
+
   </div>
 
   <div class="row">
@@ -118,7 +137,13 @@
           <label for="InformeOperadora"><b>Anexo Informe:*</b></label>
         </div>
         <div class="col-md">
-          <input type="file" accept=".pdf" [(ngModel)]="informeOperadora.anexoInforme" required>
+
+            <div class="custom-file">
+                <input (change)="seleccionarArchivo($event)" type="file" class="custom-file-input" [(ngModel)]="informeOperadora.anexoInforme">
+                <label class="custom-file-label" accept=".pdf" >Choose file</label>
+              </div>
+             
+         
         </div>
       </div>
     </div>
@@ -129,16 +154,19 @@
   <hr />
   <div class="row justify-content-end">
     <div class="col-md-4">
-      <button type="button" class="button" (click)="guardarInformeTrabajo()">
-        Guardar
-      </button>
+        <button type="button" class="button" *ngIf="!buttonDisabled"
+        (click)="buttonDisabled = true"
+        Disable Button (click)="guardarInformeTrabajo()">
+          Guardar
+        </button>
     </div>
+
   </div>
 </p-fieldset>
 
 <br>
 <p-fieldset legend="Resultados" [toggleable]="true">
-
+  <i class="fa fa-pencil-square-o fa-2x " aria-hidden="true"> Editar Informe Operadora</i>
   <div class="row">
     <div class="col-md-12">
       <table class="table table-bordered table-sm">
@@ -168,6 +196,11 @@
               <td>{{informeOperadora.costo_real}} </td>
                 <td>{{informeOperadora.estado}} </td>
                 <td>{{informeOperadora.fecha_actualizacion | date:'dd/MM/yyyy'}} </td>
+                
+          <td class="text-center">
+              <i class="fa fa-pencil-square-o fa-2x" (click)="editarInformeOperadora(informeOperadora);"></i>            
+          </td>
+       
 
 
           </tr>
