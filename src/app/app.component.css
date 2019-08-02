@@ -1,0 +1,17 @@
+p {
+    font-size: 10px;
+  }
+    
+  .separator-top {
+    height: 2px;
+    width: 100%;
+    background-color: var(--sitp-color);
+  }
+  
+  .separator-botton {
+    margin-top: 5%;
+    height: 1px;
+    width: 100%;
+    background-color: var(--sep-botton);
+  }
+  

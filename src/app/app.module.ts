@@ -1,34 +1,43 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { InputTextModule } from 'primeng/inputtext';
-import { PanelMenuModule } from 'primeng/panelmenu';
+import { AngularWebStorageModule } from 'angular-web-storage';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { MenuComponent } from './menu/menu.component';
+import { MLoginModule } from './m-login/m-login.module';
+import { MMenuModule } from './m-menu/m-menu.module';
+import { MTrabajoBitacoraModule } from './m-trabajo-bitacora/m-trabajo-bitacora.module';
+import { MTrabajoPozoModule } from './m-trabajo-pozo/m-trabajo-pozo.module';
 import { Constantes } from './resources/constantes';
-
 
 
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    MenuComponent,
-    
+    AppComponent
+
+
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
+    HttpClientModule,
+    MLoginModule,
+    MMenuModule,
+    MTrabajoPozoModule,
+    MTrabajoBitacoraModule,
     AppRoutingModule,
-    InputTextModule,
-    PanelMenuModule
+    AngularWebStorageModule,
+    ToastModule
+
+
+
+
   ],
-  providers: [Constantes],
+  providers: [Constantes, MessageService],
   bootstrap: [AppComponent],
-  
+
 })
 export class AppModule { }
