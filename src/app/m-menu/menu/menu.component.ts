@@ -68,7 +68,7 @@ export class MenuComponent implements OnInit {
       this.router.navigate(['/login'])
     }
 
-    
+
     if (this.usuario.nombres) {
       this.userNom = this.usuario.nombres;
     }
@@ -182,9 +182,6 @@ export class MenuComponent implements OnInit {
         label: 'Busqueda de portafolio anexo información',
         visible: this.m2,
         items: [
-          { label: 'Reportes diarios', routerLink: [{ outlets: { sitp: ['reportesDiarios'] } }], visible: this.i4 },
-          { label: 'Registro de Documentos Operadora', command: () => this.imprimirMensaje(), visible: this.i5 },
-          { label: 'Registro de Documentos Ministerio', command: () => this.imprimirMensaje(), visible: this.i6 },
           { label: 'Infome de resultados', command: () => this.imprimirMensaje(), visible: this.i7 },
         ]
       },
@@ -192,7 +189,7 @@ export class MenuComponent implements OnInit {
         label: 'Busqueda de portafolio para verificación',
         visible: this.m3,
         items: [
-          { label: 'Buscar portfolio Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioBitacora'] } }], visible: this.i0},
+          { label: 'Buscar portfolio Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioBitacora'] } }], visible: this.i0 },
           { label: 'Verrificación de fechas', routerLink: [{ outlets: { sitp: ['verificacionFechas'] } }], visible: this.i8 },
           { label: 'Verificación de cumplimiento de tasas', command: () => this.imprimirMensaje(), visible: this.i9 },
           { label: 'Verificación de producción', routerLink: [{ outlets: { sitp: ['verificacionProduccion'] } }], visible: this.i10 },
@@ -246,7 +243,7 @@ export class MenuComponent implements OnInit {
           { label: 'Tipo de trabajo', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Número de trabajo', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Categorización de trabajo', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Tipo de pozo', command: () => this.imprimirMensaje(), visible: true },
+          { label: 'Tipo de pozo', routerLink: [{ outlets: { sitp: ['mantenimiento-tipo-pozo'] } }], visible: true },
           { label: 'Asunto de documento Operadora', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Asunto de documento Ministerio', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Yacimiento', command: () => this.imprimirMensaje(), visible: true },
@@ -267,7 +264,7 @@ export class MenuComponent implements OnInit {
 
 
   closeSession() {
-    
+
     this.loginService.clearSession();
     this.router.navigate(['/login'])
   }

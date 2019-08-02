@@ -15,6 +15,8 @@ import { BuscarPortafolioComponent } from './componentes/buscar-portafolio/busca
 import { CrearPortafolioComponent } from "./componentes/crear-portafolio/crear-portafolio.component";
 import { EditarPortafolioComponent } from "./componentes/editar-portafolio/editar-portafolio.component";
 import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-diario/registro-trabajo-diario.component';
+import { DocumentoOperadoraComponent } from './componentes/documento-operadora/documento-operadora.component';
+import { DocumentoMinisterioComponent } from './componentes/documento-ministerio/documento-ministerio.component';
 
 
 
@@ -27,7 +29,9 @@ import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-d
     BuscarPortafolioComponent,
     AsignacionCamposComponent,
     FilterSearchPipe,
-    RegistroTrabajoDiarioComponent
+    RegistroTrabajoDiarioComponent,
+    DocumentoOperadoraComponent,
+    DocumentoMinisterioComponent
 
   ],
   imports: [
