@@ -13,11 +13,14 @@ import { VerificacionProduccionComponent } from './m-trabajo-bitacora/componente
 import { InformeTrabajosOperadoraComponent } from './m-trabajo-bitacora/componentes/informe-trabajos-operadora/informe-trabajos-operadora.component';
 import { RegistroTrabajoDiarioComponent } from './m-trabajo-pozo/componentes/registro-trabajo-diario/registro-trabajo-diario.component';
 import { AsignacionCamposComponent } from './m-trabajo-pozo/componentes/asignacion-campos/asignacion-campos.component';
+import { TipoPozoComponent } from './m-mantenimiento/componentes/tipo-pozo/tipo-pozo.component';
+import { DocumentoOperadoraComponent } from './m-trabajo-pozo/componentes/documento-operadora/documento-operadora.component';
+import { DocumentoMinisterioComponent } from './m-trabajo-pozo/componentes/documento-ministerio/documento-ministerio.component';
 
 const routes: Routes = [
-{ path: '',   redirectTo: '/login', pathMatch: 'full' },
-{path: 'login', component: LoginComponent},
-{path: 'menu', component: MenuComponent},
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'menu', component: MenuComponent },
 
 
   {
@@ -29,10 +32,14 @@ const routes: Routes = [
       { path: 'registroDiario', component: RegistroTrabajoDiarioComponent, outlet: 'sitp' },
       { path: 'asignacionCampos', component: AsignacionCamposComponent, outlet: 'sitp' },
       { path: 'buscarPortafolioBitacora', component: BuscarPortafolioBitacoraComponent, outlet: 'sitp' },
-      { path: 'informeOperadora', component: InformeTrabajosOperadoraComponent, outlet: 'sitp'  },
+      { path: 'informeOperadora', component: InformeTrabajosOperadoraComponent, outlet: 'sitp' },
       { path: 'reportesDiarios', component: ReportesDiariosComponent, outlet: 'sitp' },
       { path: 'verificacionFechas', component: VerificacionFechasComponent, outlet: 'sitp' },
       { path: 'verificacionProduccion', component: VerificacionProduccionComponent, outlet: 'sitp' },
+      { path: 'mantenimiento-tipo-pozo', component: TipoPozoComponent, outlet: 'sitp' },
+      { path: 'reporte-documentos-operadora', component: DocumentoOperadoraComponent, outlet: 'sitp' },
+      { path: 'reporte-documentos-ministerio', component: DocumentoMinisterioComponent, outlet: 'sitp' },
+
     ]
   }
 

@@ -123,5 +123,15 @@ export class BuscarPortafolioComponent implements OnInit {
     this.router.navigate(['/menu', { outlets: { sitp: ['registroDiario'] } }]);
   }
 
+  goToInformeOperadora(portafolio: Portafolio) {
+    this.editarPortafolioService.portafolio = portafolio;
+    this.router.navigate(['/menu', { outlets: { sitp: ['reporte-documentos-operadora'] } }]);
+  }
+
+  goToDocumentoMinisterio(portafolio: Portafolio) {
+    this.editarPortafolioService.portafolio = portafolio;
+    this.router.navigate(['/menu', { outlets: { sitp: ['reporte-documentos-ministerio'] } }]);
+  }
+
 
 }

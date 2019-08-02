@@ -1,0 +1,224 @@
+<p-fieldset legend="Registro documentos habilitantes ministerio">
+  <div class="row">
+    <div class="col-md-2">
+      <button type="button" class="btn btn-sm btn-primary btn-block">
+        {{cs.guardar}}
+      </button>
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-sm btn-success btn-block">
+        {{cs.cancelar}}
+      </button>
+    </div>
+  </div>
+  <hr>
+  <p-fieldset legend="Datos del portafolio" [toggleable]="true">
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>{{cs.numeroPortafolio}}:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.codigoPortafolio}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>{{cs.fechaRegistro}}:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>{{cs.funcionario}}:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>{{cs.pozo}}:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.pozo.pozNombre}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>{{cs.trabajo}}:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.tipoTrabajo.tipoTrabajo}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>{{cs.fechaTST}}:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaTrabajoSinTorre | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>{{cs.numeroTrabajo}}:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.numeroTrabajo}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>{{cs.fechaInicio}}:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaInicio | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </p-fieldset>
+  <br>
+
+  <p-fieldset legend="Documentos operadora" [toggleable]="true">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Nro. SGC:</b></label>
+        </div>
+        <div class="col-md">
+          <input pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Nro. Oficio:</b></label>
+        </div>
+        <div class="col-md">
+          <input pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Dir. Oficio:</b></label>
+        </div>
+        <div class="col-md">
+          <input type="file" accept=".pdf" required>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Adjuntar anexos:</b></label>
+        </div>
+        <div class="col-md">
+          <input type="file" accept=".pdf" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Fecha oficio:</b></label>
+        </div>
+        <div class="col-md">
+          <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }">
+          </p-calendar>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Fecha Oficio:</b></label>
+        </div>
+        <div class="col-md">
+          <input pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Asunto:</b></label>
+        </div>
+        <div class="col-md">
+          <p-dropdown [filter]="true">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Nro Resolución:</b></label>
+        </div>
+        <div class="col-md">
+          <input pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Objetivo:</b></label>
+        </div>
+        <div class="col-md">
+          <input pInputText />
+        </div>
+      </div>
+    </div>
+
+  </p-fieldset>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nro SGC</th>
+            <th>Nro Oficio</th>
+            <th>Anexo</th>
+            <th>Fecha oficio</th>
+            <th>Asunto</th>
+            <th>Resolución</th>
+            <th>Objetivo</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+
+      </table>
+    </div>
+
+  </div>

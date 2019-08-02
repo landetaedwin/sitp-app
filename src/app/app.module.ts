@@ -11,6 +11,7 @@ import { MMenuModule } from './m-menu/m-menu.module';
 import { MTrabajoBitacoraModule } from './m-trabajo-bitacora/m-trabajo-bitacora.module';
 import { MTrabajoPozoModule } from './m-trabajo-pozo/m-trabajo-pozo.module';
 import { Constantes } from './resources/constantes';
+import { MMantenimientoModule } from './m-mantenimiento/m-mantenimiento.module';
 
 
 
@@ -28,6 +29,7 @@ import { Constantes } from './resources/constantes';
     MMenuModule,
     MTrabajoPozoModule,
     MTrabajoBitacoraModule,
+    MMantenimientoModule,
     AppRoutingModule,
     AngularWebStorageModule,
     ToastModule
