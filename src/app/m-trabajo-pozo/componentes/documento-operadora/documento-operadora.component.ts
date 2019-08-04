@@ -7,8 +7,8 @@ import { Constantes } from 'src/app/resources/constantes';
 import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { BuscarPortafolioService } from '../../servicios/buscar-portafolio.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { BuscarPortafolioService } from 'src/app/m-trabajo-bitacora/servicios/buscar-portafolio.service';
 
 @Component({
   selector: 'app-documento-operadora',

@@ -8,7 +8,6 @@ import { InformeTrabajosOperadoraComponent } from './m-trabajo-bitacora/componen
 import { ReportesDiariosComponent } from './m-trabajo-bitacora/componentes/reportes-diarios/reportes-diarios.component';
 import { VerificacionFechasComponent } from './m-trabajo-bitacora/componentes/verificacion-fechas/verificacion-fechas.component';
 import { VerificacionProduccionComponent } from './m-trabajo-bitacora/componentes/verificacion-produccion/verificacion-produccion.component';
-import { AnularPortafolioComponent } from './m-trabajo-pozo/componentes/anular-portafolio/anular-portafolio.component';
 import { AsignacionCamposComponent } from './m-trabajo-pozo/componentes/asignacion-campos/asignacion-campos.component';
 import { BuscarPortafolioComponent } from './m-trabajo-pozo/componentes/buscar-portafolio/buscar-portafolio.component';
 import { CrearPortafolioComponent } from './m-trabajo-pozo/componentes/crear-portafolio/crear-portafolio.component';
@@ -28,7 +27,6 @@ const routes: Routes = [
       { path: 'buscarPortafolio', component: BuscarPortafolioComponent, outlet: 'sitp' },
       { path: 'crearPortafolio', component: CrearPortafolioComponent, outlet: 'sitp' },
       { path: 'editarPortafolio', component: EditarPortafolioComponent, outlet: 'sitp' },
-      { path: 'anularPortafolio', component: AnularPortafolioComponent, outlet: 'sitp' },
       { path: 'registroDiario', component: RegistroTrabajoDiarioComponent, outlet: 'sitp' },
       { path: 'asignacionCampos', component: AsignacionCamposComponent, outlet: 'sitp' },
       { path: 'buscarPortafolioBitacora', component: BuscarPortafolioBitacoraComponent, outlet: 'sitp' },

@@ -10,8 +10,50 @@ const httpOptions = {
 @Injectable({
   providedIn: "root"
 })
-export class BuscarPortafolioService {
+export class BusquedaService {
   constructor(readonly http: HttpClient, public prop: Constantes) { }
+
+
+  //Metodos nuevos
+  getCampoList() {
+    const url = this.prop.PATH + this.prop.SYS + "/campo-service/campo-list";
+    return this.http.get(url, httpOptions);
+  }
+
+  getPozoListByCamCodigo(camCodigo: string) {
+    const url = this.prop.PATH + this.prop.SYS + "/pozo-service/pozo-list-by-campo-codigo?camCodigo=" + camCodigo;
+    return this.http.get(url, httpOptions);
+  }
+
+  getBloqueByBloqueCodigo(blqCodigo: string) {
+    const url = this.prop.PATH + this.prop.SYS + "/bloque-service/bloque-by-bloque-codigo?blqCodigo=" + blqCodigo;
+    return this.http.get(url, httpOptions);
+  }
+
+
+  getOperadoraByCompaniaPetrolera(pozCompaniaPetrolera: string) {
+    const url = this.prop.PATH + this.prop.SYS + "/cliente-externo-service/cliente-externo-by-compania-petrolera?pozCompaniaPetrolera=" + pozCompaniaPetrolera;
+    return this.http.get(url, httpOptions);
+  }
+
+  getTipoPozoList() {
+    const url = this.prop.PATH + this.prop.SYS + "/tipo-pozo-service/tipo-pozo-list";
+    return this.http.get(url, httpOptions);
+  }
+
+  getConsorcioList() {
+    const url = this.prop.PATH + this.prop.SYS + "/consorcio-service/consorcio-list";
+    return this.http.get(url, httpOptions);
+  }
+
+  getTipoTrabajoList() {
+    const url = this.prop.PATH + this.prop.SYS + "/tipo-trabajo-service/tipo-trabajo-list";
+    return this.http.get(url, httpOptions);
+  }
+
+
+
+  //Metodos antiguos
 
   findPozoByPozCodigo(pozCodigo: string) {
     const url = this.prop.PATH + "/sitp/buscarPortafolio/findPozoByPozCodigo?pozCodigo=" + pozCodigo;

@@ -7,9 +7,9 @@ import { Portafolio } from 'src/app/entidades/portafolio';
 import { Pozo } from 'src/app/entidades/pozo';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
-import { BuscarPortafolioService } from '../../servicios/buscar-portafolio.service';
 import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
 import { EditarPortafolioService } from '../../servicios/editar-portafolio.service';
+import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 
 @Component({
   selector: 'app-buscar-portafolio',
@@ -30,7 +30,7 @@ export class BuscarPortafolioComponent implements OnInit {
   page_size: number = 8;
   page_number: number = 1;
 
-  constructor(public buscarPortafolioService: BuscarPortafolioService, private crearPortafolioService: CrearPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router, public editarPortafolioService: EditarPortafolioService) {
+  constructor(public buscarPortafolioService: BusquedaService, private crearPortafolioService: CrearPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router, public editarPortafolioService: EditarPortafolioService) {
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
   }

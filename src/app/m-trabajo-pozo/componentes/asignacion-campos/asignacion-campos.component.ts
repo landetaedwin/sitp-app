@@ -3,14 +3,15 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MessageService, SelectItem } from 'primeng/api';
 import { Bloque } from 'src/app/entidades/bloque';
+import { BusquedaParametros } from 'src/app/entidades/busquedaParametros';
 import { Campo } from 'src/app/entidades/campo';
 import { PersonaPorCampo } from 'src/app/entidades/persona-por-campo';
+import { Regional } from 'src/app/entidades/regional';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
-import { BuscarPortafolioService } from '../../servicios/buscar-portafolio.service';
 import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
-import { BusquedaParametros } from 'src/app/entidades/busquedaParametros';
-import { Regional } from 'src/app/entidades/regional';
+import { BuscarPortafolioService } from 'src/app/m-trabajo-bitacora/servicios/buscar-portafolio.service';
+import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 
 
 @Component({
@@ -54,7 +55,7 @@ export class AsignacionCamposComponent implements OnInit {
 
   camposListNoAsing: Campo[] = [];
 
-  constructor(public loginService: LoginService, private crearPortafolioService: CrearPortafolioService, public messageService: MessageService, public router: Router, private buscarService: BuscarPortafolioService, private modalService: BsModalService) {
+  constructor(public loginService: LoginService, private crearPortafolioService: CrearPortafolioService, public messageService: MessageService, public router: Router, private buscarService: BusquedaService, private modalService: BsModalService) {
 
     this.estadoList = [{ label: "Seleccione", value: null, disabled: true }, { label: "Activo", value: 1 }, { label: "Inactivo", value: 0 }];
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];

@@ -7,8 +7,8 @@ import { Constantes } from 'src/app/resources/constantes';
 import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { BuscarPortafolioService } from '../../servicios/buscar-portafolio.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 
 @Component({
   selector: 'app-documento-ministerio',
@@ -21,7 +21,7 @@ export class DocumentoMinisterioComponent implements OnInit {
   usuario: Usuario;
   portafolio: Portafolio = new Portafolio;
 
-  constructor(public loginService: LoginService, public editarPortafolioService: EditarPortafolioService, public cs: Constantes, private crearPortafolioService: CrearPortafolioService, public messageService: MessageService, public router: Router, public buscarService: BuscarPortafolioService, private modalService: BsModalService) {
+  constructor(public loginService: LoginService, public editarPortafolioService: EditarPortafolioService, public cs: Constantes, private crearPortafolioService: CrearPortafolioService, public messageService: MessageService, public router: Router, public buscarService: BusquedaService, private modalService: BsModalService) {
   }
   ngOnInit() {
 

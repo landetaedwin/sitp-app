@@ -12,6 +12,7 @@ import { Portafolio } from 'src/app/entidades/portafolio';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { Router, RouterLink } from '@angular/router';
+import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 @Component({
   selector: "app-crear-portafolio",
   templateUrl: "./crear-portafolio.component.html",
@@ -24,7 +25,6 @@ export class CrearPortafolioComponent implements OnInit {
   tipoPozoList: SelectItem[] = [];
   consorcioList: SelectItem[] = [];
   tipoTrabajoList: SelectItem[] = [];
-  numeroList: SelectItem[] = [];
   campo: Campo;
   pozo: Pozo;
   consorcio: Consorcio;
@@ -32,7 +32,8 @@ export class CrearPortafolioComponent implements OnInit {
   tipoTrabajo: TipoTrabajo = new TipoTrabajo;
   bloque: Bloque = new Bloque;
   operadora: Operadora = new Operadora;
-
+  campoTst: boolean = false;
+  campoNumero: boolean = true;
 
   today = new Date();
   usuario: Usuario;
@@ -41,13 +42,17 @@ export class CrearPortafolioComponent implements OnInit {
   minDate: Date;
   maxDate: Date;
 
-  constructor(public crearPortafolioService: CrearPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
+  constructor(
+    public crearPortafolioService: CrearPortafolioService,
+    public busquedaService: BusquedaService,
+    private messageService: MessageService,
+    public loginService: LoginService,
+    public router: Router) {
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.tipoPozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.consorcioList = [{ label: "Seleccione", value: null, disabled: true }];
     this.tipoTrabajoList = [{ label: "Seleccione", value: null, disabled: true }];
-    this.numeroList = [{ label: "Seleccione", value: null, disabled: true }];
 
 
   }
@@ -61,9 +66,17 @@ export class CrearPortafolioComponent implements OnInit {
       this.router.navigate(['/login']);
     }
 
-    this.maxDate = new Date();
-    this.minDate = new Date(2010, 0, 1);
-    this.crearPortafolioService.findCamposList().subscribe(
+    this.onLimitDate();
+
+    this.initComponentes();
+    this.bloque.bqlNombre = "n/a";
+    this.operadora.cexApellidoPaterno = "n/a";
+  }
+
+
+  //Servicios web
+  initComponentes() {
+    this.busquedaService.getCampoList().subscribe(
       (data: Campo[]) => {
         let c: Campo;
         for (let i in data) {
@@ -71,7 +84,7 @@ export class CrearPortafolioComponent implements OnInit {
           this.campoList.push({ label: c.camNombre, value: c });
         }
 
-        this.crearPortafolioService.findTipoPozoList().subscribe(
+        this.busquedaService.getTipoPozoList().subscribe(
           (data: TipoPozo[]) => {
             let tp: TipoPozo;
             for (let i in data) {
@@ -81,14 +94,14 @@ export class CrearPortafolioComponent implements OnInit {
                 value: tp
               });
             }
-            this.crearPortafolioService.findConsorcioList().subscribe(
+            this.busquedaService.getConsorcioList().subscribe(
               (data: Consorcio[]) => {
                 let con: Consorcio;
                 for (let i in data) {
                   con = data[i];
                   this.consorcioList.push({ label: con.consorcio, value: con });
                 }
-                this.crearPortafolioService.findTrabajoList().subscribe(
+                this.busquedaService.getTipoTrabajoList().subscribe(
                   (data: TipoTrabajo[]) => {
                     let tt: TipoTrabajo;
                     for (let i in data) {
@@ -101,32 +114,12 @@ export class CrearPortafolioComponent implements OnInit {
           }
         );
       });
-
-    this.cargarNumeroList();
-
-    this.bloque.bqlNombre = "n/a";
-    this.operadora.cexApellidoPaterno = "n/a";
-  }
-
-  cargarNumeroList() {
-
-    for (let i: number = 0; i < 10; i++) {
-      this.numeroList.push({ label: i.toString(), value: i });
-    }
-
-  }
-
-  cargarCampoPozo(campo: Campo) {
-    this.bloque.bqlNombre = "n/a";
-    this.operadora.cexApellidoPaterno = "n/a";
-    this.cargarBloqueByBlqCodigo(campo);
-    this.cargarPozosByCamCodigo(campo);
   }
 
   cargarPozosByCamCodigo(campo: Campo) {
     if (campo.camCodigo) {
       this.loading = true;
-      this.crearPortafolioService.findPozoByCamCodigo(campo.camCodigo).subscribe(
+      this.busquedaService.getPozoListByCamCodigo(campo.camCodigo).subscribe(
         (data: Pozo[]) => {
           let p: Pozo;
           this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
@@ -140,12 +133,18 @@ export class CrearPortafolioComponent implements OnInit {
 
   }
 
+  cargarCampoPozo(campo: Campo) {
+    this.operadora.cexApellidoPaterno = "n/a";
+    this.cargarBloqueByBlqCodigo(campo);
+    this.cargarPozosByCamCodigo(campo);
+  }
+
   cargarBloqueByBlqCodigo(campo: Campo) {
     this.bloque.bqlNombre = "n/a";
     this.loading = true;
     if (campo.bqlCodigo) {
       this.loading = true;
-      this.crearPortafolioService.findBloque(campo.bqlCodigo).subscribe(
+      this.busquedaService.getBloqueByBloqueCodigo(campo.bqlCodigo).subscribe(
         (data: Bloque) => {
           if (data) {
             this.bloque = data;
@@ -153,14 +152,13 @@ export class CrearPortafolioComponent implements OnInit {
           this.loading = false;
         });
     }
-
   }
 
   cargarOperadoraByPozCompaniaPetrolera(pozo: Pozo) {
     this.operadora.cexApellidoPaterno = "n/a";
     if (pozo.pozCompaniaPetrolera) {
       this.loading = true;
-      this.crearPortafolioService.findOperadoraByCompaniaPetrolera(pozo.pozCompaniaPetrolera).subscribe(
+      this.busquedaService.getOperadoraByCompaniaPetrolera(pozo.pozCompaniaPetrolera).subscribe(
         (data: Operadora) => {
           if (data) {
             this.operadora = data;
@@ -171,8 +169,8 @@ export class CrearPortafolioComponent implements OnInit {
   }
 
 
-  campoTst: boolean = false;
-  campoNumero: boolean = true;
+  //Logica de pantalla
+
   verificacionTipoTrabajo(tipoTrabajo: TipoTrabajo) {
     if (tipoTrabajo.codigoTipoTrabajo == 3) {
       this.campoTst = true;
@@ -180,12 +178,18 @@ export class CrearPortafolioComponent implements OnInit {
     if (tipoTrabajo.codigoTipoTrabajo == 2) {
       this.campoNumero = true;
     }
-
     if (tipoTrabajo.codigoTipoTrabajo == 1) {
       this.campoNumero = false;
       this.campoTst = false;
     }
   }
+
+  onLimitDate() {
+    this.maxDate = new Date();
+    this.minDate = new Date(2010, 0, 1);
+  }
+
+  //Transacciones
 
   numeroTrabajo: number;
   guardarPortafolio() {

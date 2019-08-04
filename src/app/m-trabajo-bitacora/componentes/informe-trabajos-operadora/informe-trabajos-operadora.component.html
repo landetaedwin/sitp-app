@@ -139,7 +139,7 @@
         <div class="col-md">
 
             <div class="custom-file">
-                <input (change)="seleccionarArchivo($event)" type="file" class="custom-file-input" [(ngModel)]="informeOperadora.anexoInforme">
+                <input (change)="seleccionarArchivo($event)" type="file" class="custom-file-input" >
                 <label class="custom-file-label" accept=".pdf" >Choose file</label>
               </div>
              
@@ -149,7 +149,7 @@
     </div>
   </div>
 
-  <div class="row" [hidden]="tst">
+  <div class="row" [hidden]="">
   </div>
   <hr />
   <div class="row justify-content-end">
