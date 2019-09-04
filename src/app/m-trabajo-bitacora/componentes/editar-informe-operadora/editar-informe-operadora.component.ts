@@ -5,19 +5,11 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MessageService, SelectItem } from 'primeng/api';
 
 import { InformeTrabajoOperadoraService } from '../../servicios/informe-trabajo-operadora.service';
-import { EditarInformeOperadoraService } from '../../servicios/editar-informeOperadora.service';
 
-import { Bloque } from 'src/app/entidades/bloque';
-import { Campo } from 'src/app/entidades/campo';
-import { Consorcio } from 'src/app/entidades/consorcio';
-import { Operadora } from 'src/app/entidades/operadora';
-import { Portafolio } from 'src/app/entidades/portafolio';
-import { Pozo } from 'src/app/entidades/pozo';
-import { TipoPozo } from 'src/app/entidades/tipo-pozo';
-import { TipoTrabajo } from 'src/app/entidades/tipo-trabajo';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { InformeOperadora } from 'src/app/entidades/informe-operadora';
+import { EditarInformeOperadoraService } from '../../servicios/editar-InformeOperadora.service';
   minDate: Date;
   maxDate: Date;
   confirmModalRef: BsModalRef;
@@ -28,6 +20,7 @@ import { InformeOperadora } from 'src/app/entidades/informe-operadora';
   styleUrls: ['./editar-informe-operadora.component.css']
 })
 export class EditarInformeOperadoraComponent implements OnInit {
+  estadolist: SelectItem[]=[];
   usuario: Usuario;
   today = new Date();
   informeOperadora: InformeOperadora = new InformeOperadora;
@@ -50,32 +43,40 @@ export class EditarInformeOperadoraComponent implements OnInit {
   maxDate: Date;
   confirmModalRef: BsModalRef;
   
-  constructor(public editarInforeOperadoraService: EditarInformeOperadoraService,  private messageService: MessageService, private modalService: BsModalService, public crearInformeOperadora: InformeTrabajoOperadoraService, public loginService: LoginService, public router: Router) { }
+  constructor( public editarOperadora: EditarInformeOperadoraService,  private messageService: MessageService, private modalService: BsModalService, public crearInformeOperadora: InformeTrabajoOperadoraService, public loginService: LoginService, public router: Router) { 
+    this.estadolist= [
+      { label: "Registrado", value: 1, disabled: false },
+
+];
+
+  }
 
   ngOnInit() {
 
     this.usuario = this.loginService.sessionValue;
+    
 //debugger
     if (!this.usuario) {
       
       this.router.navigate(['/login']);
     }
-    if (!this.crearInformeOperadora.informeOperadora) {
+    this.informeOperadora= this.editarOperadora.informeOperadora;
+  
+    if (!this.editarOperadora.informeOperadora) {
       this.router.navigate(['/menu', { outlets: { sitp: ['informeOperadora'] } }]);
     }
     
     this.maxDate = new Date();
     this.minDate = new Date(2010, 0, 1);
     
-    this.informeOperadora= this.crearInformeOperadora.informeOperadora;
+  
     this.informeOperadora.fechaArch = new Date(this.informeOperadora.fechaArch);
     this.informeOperadora.fechaOficio = new Date(this.informeOperadora.fechaOficio);
     this.informeOperadora.fecha_actualizacion = new Date(this.informeOperadora.fecha_actualizacion);
     
 
 
-    console.log(this.informeOperadora);
-    
+
    
   }
 
@@ -86,11 +87,11 @@ export class EditarInformeOperadoraComponent implements OnInit {
 
       if (data) {
        // this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se actualizo el portafolio' });
+        this.messageService.add({ severity: 'success', detail: 'Se actualizo el informe' });
         this.router.navigate(['/menu', { outlets: { sitp: ['informeOperadora'] } }]);
       } else {
         //this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo actualizar el portafolio' });
+        this.messageService.add({ severity: 'info', detail: 'No se pudo actualizar el informe' });
 
       }
     });

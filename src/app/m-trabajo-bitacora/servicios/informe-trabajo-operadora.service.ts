@@ -54,7 +54,8 @@ export class InformeTrabajoOperadoraService {
       let formData = new FormData();
       formData.append("archivo", archivo);
       formData.append("id", id);
-      return this.http.post('/sitp/InformeOperadora/subidaArchivo/', formData).pipe(
+      const url = this.prop.PATH + "/sitp/InformeOperadora/subidaArchivo/";
+      return this.http.post(url, formData).pipe(
         map((response:any)=> response.informeOperadora as InformeOperadora)
       );
       }

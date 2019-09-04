@@ -9,6 +9,8 @@ import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { BuscarPortafolioService } from '../../servicios/buscar-portafolio.service';
 //import { EditarPortafolioService } from '../../servicios/editar-portafolio.service';
 import { InformeTrabajoOperadoraService} from '../../servicios/informe-trabajo-operadora.service';
+import{VerificarFechasService} from '../../servicios/verificar-fechas.service';
+import{VerificarNovedadService} from '../../servicios/verificarNovedad.service';
 import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
 import { Campo } from 'src/app/entidades/campo';
 import { Pozo } from 'src/app/entidades/pozo';
@@ -34,14 +36,14 @@ export class BuscarPortafolioBitacoraComponent implements OnInit {
   campo: Campo;
 
 
-  constructor(public buscarPortafolioService: BuscarPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router, public informeOperadoraService: InformeTrabajoOperadoraService) { 
+  constructor(public buscarPortafolioService: BuscarPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router, public informeOperadoraService: InformeTrabajoOperadoraService, public verificarFechasService: VerificarFechasService, public verificarNovedadService :VerificarNovedadService) { 
 
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
   }
 
   ngOnInit() {
-    this.loading = true;
+ 
     this.usuario = this.loginService.sessionValue;
     if (!this.usuario) {
       this.router.navigate(['/login']);
@@ -55,7 +57,6 @@ export class BuscarPortafolioBitacoraComponent implements OnInit {
         }
       });
 
-    this.buscarPortafolio();
   }
    
   buscarPortafolio() {
@@ -78,7 +79,7 @@ export class BuscarPortafolioBitacoraComponent implements OnInit {
         this.pozo = null;
         this.loading = false;
       } else {
-        console.log(data.length);
+       // console.log(data.length);
         this.messageService.add({ severity: 'info', detail: 'No se encontraron datos' });
         this.busquedaParametros.numeroPortafolio = null;
         this.busquedaParametros.pozo = null;
@@ -119,7 +120,49 @@ export class BuscarPortafolioBitacoraComponent implements OnInit {
   verificarFechas(portafolio: Portafolio) {
     console.log("click");
     console.log(portafolio);
-    this.informeOperadoraService.portafolio= portafolio;
+    this.verificarFechasService.portafolio= portafolio;
     this.router.navigate(['/menu', { outlets: { sitp: ['verificacionFechas'] } }]);
+  }
+
+  verificarNovedad(portafolio: Portafolio) {
+    console.log("click");
+    console.log(portafolio);
+    this.verificarNovedadService.portafolio= portafolio;
+    this.router.navigate(['/menu', { outlets: { sitp: ['verificarNovedad'] } }]);
+  }
+
+  verificarProduccion(portafolio: Portafolio) {
+    console.log("click");
+    console.log(portafolio);
+    this.verificarNovedadService.portafolio= portafolio;
+    this.router.navigate(['/menu', { outlets: { sitp: ['verificacionProduccion'] } }]);
+  }
+
+
+  verificarTasa(portafolio: Portafolio) {
+    console.log("click");
+    console.log(portafolio);
+    this.verificarNovedadService.portafolio= portafolio;
+    this.router.navigate(['/menu', { outlets: { sitp: ['verificarTasa'] } }]);
+  }
+
+  verificarInyector(portafolio: Portafolio) {
+    console.log("click");
+    console.log(portafolio);
+    this.verificarNovedadService.portafolio= portafolio;
+    this.router.navigate(['/menu', { outlets: { sitp: ['verificarInyector'] } }]);
+  }
+
+  verificarReinyector(portafolio: Portafolio) {
+    console.log("click");
+    console.log(portafolio);
+    this.verificarNovedadService.portafolio= portafolio;
+    this.router.navigate(['/menu', { outlets: { sitp: ['verificarReinyector'] } }]);
+  }
+  verificarTrabajo(portafolio: Portafolio) {
+    console.log("click");
+    console.log(portafolio);
+    this.verificarNovedadService.portafolio= portafolio;
+    this.router.navigate(['/menu', { outlets: { sitp: ['verificarTrabajo'] } }]);
   }
 }

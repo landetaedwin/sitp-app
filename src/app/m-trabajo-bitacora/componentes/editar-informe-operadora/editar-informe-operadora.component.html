@@ -1,4 +1,4 @@
-<p-fieldset legend="Informe de trabajos de Operadora" [toggleable]="true">
+<p-fieldset legend="Editar Informe de trabajos de Operadora" [toggleable]="true">
     <div class="row">
       <div class="col-md-12">
   
@@ -127,13 +127,13 @@
             <label for="InformeOperadora"><b>Anexo Informe:*</b></label>
           </div>
           <div class="col-md">
-            <input type="file" accept=".pdf" [(ngModel)]="informeOperadora.anexoInforme" required>
+            <input type="file" accept=".pdf" [(ngModel)]="informeOperadora.anexo_Oficio" required>
           </div>
         </div>
       </div>
     </div>
   
-    <div class="row" [hidden]="tst">
+    <div class="row">
     </div>
     <hr />
     <div class="row justify-content-end">
@@ -146,6 +146,5 @@
   </p-fieldset>
   
   <ng-template #customLoadingTemplate> </ng-template>
-  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
-  </ngx-loading>
+ 
   

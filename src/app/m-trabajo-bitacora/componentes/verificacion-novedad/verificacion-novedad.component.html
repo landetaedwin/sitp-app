@@ -1,4 +1,4 @@
-<p-fieldset legend="Verificar Fechas" [toggleable]="true">
+<p-fieldset legend="Verificar Novedades" [toggleable]="true">
   <div class="row">
     <div class="col-md-12">
 
@@ -12,20 +12,10 @@
                 <label for="campo"><b> Numero Portafolio: </b></label>
             </div>
             <div class="col-md">
-                <p class="mtop">{{verificarFechas.codPortafolio}}</p>
+                <p class="mtop">{{verificacioNovedad.codPortafolio}}</p>
             </div>
           </div>
-        </div>
-        <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-4">
-                <label for="verificacion Fechas"><b>Valoración:</b></label>
-              </div>
-              <div class="col-md">
-                  <p class="mtop">{{verificarFechas.visualizar_valoraciom}}</p>
-              </div>
-            </div>
-          </div>      
+        </div>    
     </div>
 
 
@@ -34,7 +24,7 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
-          <label for="verificacionFechas"><b>Fecha Inicio de Trabajo:</b></label>
+          <label for="verificacionNovedad"><b>Fecha Inicio de Trabajo:</b></label>
         </div>
         <div class="col-md">
             <p class="mtop">{{portafolio.fechaInicio | date:'MM-dd-yyyy'}}</p>
@@ -46,23 +36,10 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
-          <label for="verificacionFechas"><b>Fecha Fin de Trabajo:</b></label>
+          <label for="verificacionNovedad"><b>Fecha Fin de Trabajo:</b></label>
         </div>
         <div class="col-md">
             <p class="mtop">{{portafolio.fechaFin | date:'MM-dd-yyyy'}}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="verificacionFechas"><b>Fecha Presentacion Informe de Operadora:*</b></label>
-        </div>
-        <div class="col-md">
-            <p class="label">{{verificarFechas.fechaPresentacion | date:'MM-dd-yyyy'}}</p>
         </div>
       </div>
     </div>
@@ -70,10 +47,36 @@
     <div class="col-md-6">
       <div class="row">       
         <div class="col-md-4">
-          <label for="verificacionFechas"><b>Justificado:*</b></label>
+          <label for="verificacionNovedad"><b>Nro de Novedad:*</b></label>
         </div>
         <div class="col-md">
-        <p-dropdown [options]="justificadoList" [(ngModel)]="verificarFechas.justificado" readonly></p-dropdown>
+          <p class="mtop">{{verificacioNovedad.codVerfTrabajo}}</p>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">       
+        <div class="col-md-4">
+          <label for="verificacionNovedad"><b>Novedad:</b></label>
+        </div>
+        <div class="col-md">
+        <p-dropdown [options]="novedad" [(ngModel)]="verificacioNovedad.valoracion" readonly></p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="row">       
+        <div class="col-md-4">
+          <label for="verificacionNovedad"><b>Justificado:*</b></label>
+        </div>
+        <div class="col-md">
+        <p-dropdown [options]="justificadoList" [(ngModel)]="verificacioNovedad.justificado" readonly></p-dropdown>
         </div>
       </div>
     </div>
@@ -83,10 +86,10 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
-          <label for="verificacionFechas"><b>Observacion:*</b></label>
+          <label for="verificacionNovedad"><b>Observacion:*</b></label>
         </div>
         <div class="col-md">
-            <textarea id="verificacionFechas"   [(ngModel)]="verificarFechas.observacion"  class="md-textarea form-control" rows="3"></textarea>       
+            <textarea id="verificacionNovedad"   [(ngModel)]="verificacioNovedad.observacion"  class="md-textarea form-control" rows="3"></textarea>       
         </div>
       </div>
     </div>
@@ -96,7 +99,7 @@
           <label for="verificarFechas"><b>Estado:*</b></label>
         </div>
         <div class="col-md">
-        <p-dropdown [options]="estadolist" [(ngModel)]="verificarFechas.estado" readonly></p-dropdown>
+        <p-dropdown [options]="estadolist" [(ngModel)]="verificacioNovedad.estado" readonly></p-dropdown>
         </div>
       </div>
     </div>
@@ -113,7 +116,7 @@
         <label for="campo"><b>Fecha de Actualización:</b></label>
       </div>
       <div class="col-md">
-        <p class="mtop">{{verificarFechas.fecha_actualizacion | date:'MM-dd-yyyy'}}</p>
+        <p class="mtop">{{verificacioNovedad.fecha_actualizacion | date:'MM-dd-yyyy'}}</p>
       </div>
     </div>
   </div>
@@ -137,7 +140,7 @@
   <hr />
   <div class="row justify-content-end">
     <div class="col-md-4">
-      <button type="button" class="button" (click)="guardarVerificarFechas()">
+      <button type="button" class="button" (click)="guardar()">
         Guardar
       </button>
     </div>
@@ -159,19 +162,18 @@
             <th>Justificado</th>
             <th>Fecha Actualización</th>
             <th>Observacion</th>
+            <th>Seguimiento</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let verificacionFechas of fechasList" style="font-size: 11px">
+          <tr *ngFor="let verificacionNovedad of novedadList" style="font-size: 11px">
 
-            <td>{{verificacionFechas.codVerificacionFechas}} </td>
-            <td>{{verificacionFechas.estado}} </td>
-            <td>{{verificacionFechas.visualizar_valoraciom}} </td>
-            <td>{{verificacionFechas.justificado}} </td>
-            <td>{{verificacionFechas.fecha_actualizacion  | date:'MM-dd-yyyy' }} </td>
-            <td>{{verificacionFechas.observacion }} </td>
-            
-
+            <td>{{verificacionNovedad.codVerfTrabajo}} </td>
+            <td>{{verificacionNovedad.estado}} </td>
+            <td>{{verificacionNovedad.valoracion}} </td>
+            <td>{{verificacionNovedad.justificado}} </td>
+            <td>{{verificacionNovedad.fecha_actualizacion  | date:'MM-dd-yyyy' }} </td>
+            <td>{{verificacionNovedad.observacion }} </td>
           </tr>
 
         </tbody>
@@ -185,3 +187,4 @@
 <ng-template #customLoadingTemplate> </ng-template>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
 </ngx-loading>
+

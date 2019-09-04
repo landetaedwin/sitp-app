@@ -1,3 +1,215 @@
-<p>
-  verificacion-produccion works!
-</p>
+
+<h1>Verificación de Pozo Productor</h1>
+
+<p-fieldset legend="Informacion" [style]="{width: '90%'}">
+  <div class="row">
+    <div class="col-md-4">
+      Numero de portafolio:
+      <input id="input" type="text" pInputText  [disabled]="true">
+    </div>
+    <div class="col-md-4">
+      Fecha de registro:
+      <input id="input" type="text"  pInputText [disabled]="true">
+    </div>
+    <div class="col-md-4">
+      Funcionario:
+      <input id="input" type="text" pInputText [disabled]="true">
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-sm-2">
+      Pozo:
+      <input id="input" type="text" pInputText [disabled]="true">
+    </div>
+    <div class="col-sm-3">
+      Trabajo:
+      <input id="input" type="text"  pInputText [disabled]="true">
+    </div>
+    <div class="col-sm-3">
+      Numero:
+      <input id="input" type="text"  pInputText [disabled]="true">
+    </div>
+    <div class="col-sm">
+      Fecha de trabajo sin torre:
+      <input id="input" type="text"  pInputText  [disabled]="true">
+    </div>
+
+  </div>
+
+
+</p-fieldset>
+
+
+
+<br>
+
+<div class="col-md">
+  <h3>Tipo pozo productor</h3>
+</div>
+
+<p-fieldset legend="Tipo Pozo Productor" [style]="{width: '90%'}">
+  <div class="row">
+
+    <div class="col-md-6">
+      Fecha inicio trabajo:
+      <input id="input" type="text" size="15" pInputText [disabled]="true">
+    </div>
+    <div class="col-md-6">
+      Fecha fin trabajo:
+      <input id="input" type="text" size="15" pInputText [disabled]="true">
+    </div>
+  </div>
+
+    <br>
+
+    <div class="row">
+      <br>
+      <div class="col-md-6">
+        Numero de registros:
+        <p-dropdown [options]="" readonly></p-dropdown>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div class="col-md-4">
+        <button pButton type="button" label="Cargar ANTES de inicio de trabajo" class="ui-button-success"></button>
+      </div>
+      <div class="col-md-4">
+        <button pButton type="button" label="Cargar DESPUES de fin de trabajo" class="ui-button-warning"></button>
+      </div>
+    </div>
+
+
+
+</p-fieldset>
+
+<p-fieldset legend="Produccion ANTES de trabajo" [style]="{width: '90%'}" >
+  <table class="table table-bordered table-sm">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Fecha</th>
+            <th>Yacimiento</th>
+            <th>BPPD</th>
+            <th>BFPD</th>
+            <th>BSW%</th>
+            <th>*API</th>
+            <th>Salinidad(PPM)</th>
+            <th>Equipo</th>
+            <th>RANGO-MIN-MAX</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body">
+        <tr>
+            <td>asdasdas</td>
+            <td>sadasd</td>
+            <td>asdad</td>
+            <td>asdasda</td>
+        </tr>
+    </ng-template>
+  </table>
+<br>
+Ultimo antes:
+<input id="input" type="text" size="20" pInputText [disabled]="true">
+</p-fieldset>
+
+
+<p-fieldset legend="Produccion DESPUES de trabajo"  [style]="{width: '90%'}">
+  <table class="table table-bordered table-sm">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Fecha</th>
+            <th>Yacimiento</th>
+            <th>BPPD</th>
+            <th>BFPD</th>
+            <th>BSW%</th>
+            <th>*API</th>
+            <th>Salinidad(PPM)</th>
+            <th>Equipo</th>
+            <th>RANGO-MIN-MAX</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body">
+        <tr>
+            <td>asdasdas</td>
+            <td>sadasd</td>
+            <td>asdad</td>
+            <td>asdasda</td>
+        </tr>
+    </ng-template>
+  </table>
+<br>
+<div class="col-md">
+Ultimo despues:
+<input id="input" type="text" size="20" pInputText [disabled]="true">
+</div>
+<br>
+<div class="col-md">
+Porcentaje de control:
+<input id="input" type="text" size="20" pInputText [disabled]="true">
+</div>
+<br>
+<div class="col-md">
+Valoracion:
+<input id="input" type="text" size="20" pInputText  [disabled]="true">
+</div>
+<br>
+<div class="col-md">
+Justificado:
+<p-dropdown >  readonly></p-dropdown>
+</div>
+<br>
+<div class="col-md">
+  <textarea id="observacion"  class="md-textarea form-control" rows="3"></textarea> 
+  
+</div>
+<br>
+<div class="col-md">
+Estado:
+<p-dropdown  readonly></p-dropdown>
+</div>
+<br>
+<div class="col-md">
+Fecha Actualizacion:
+<input id="input" type="text" size="20" pInputText  [disabled]="true">
+</div>
+<br>
+<div class="col-md">
+Usuario:
+<input id="input" type="text" size="20" pInputText  [disabled]="true">
+</div>
+<br>
+<div class="row">
+  <div class="col-md-4">
+    <button pButton type="button" label="Guardar" class="ui-button-success"></button>
+  </div>
+</div>
+<br>
+<table class="table table-bordered table-sm">
+  <ng-template pTemplate="header">
+      <tr>
+          <th>Nro Verificacion</th>
+          <th>Valor Antes</th>
+          <th>Valor Despues</th>
+          <th>Porcentaje</th>
+          <th>Valoracion</th>
+          <th>Justificado</th>
+          <th>Estado</th>
+          <th>Fecha Actualizacion</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body">
+      <tr>
+          <td>asdasdas</td>
+          <td>sadasd</td>
+          <td>asdad</td>
+          <td>asdasda</td>
+      </tr>
+  </ng-template>
+</table>
+
+

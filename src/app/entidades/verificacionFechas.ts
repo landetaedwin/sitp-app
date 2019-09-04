@@ -1,13 +1,16 @@
 export class VerificacionFechas{
-codigoVerificacionFecha: Number;
+codVerificacionFechas: number;
 codPortafolio: number;
-valoracion: String;
-justificado: String;
+valoracion: number;
+justificado: number;
 observacion :String;
 fecha_actualizacion: Date;
 fecha_inicio_trabajo: Date;
 fecha_fin_trabajo: Date;
 estado: number;
 fechaPresentacion: Date;
-id_usuario: Number;
+id_usuario: number;
+visualizar_estado: String;
+visualizar_justificado: String;
+visualizar_valoraciom: String;
 }
