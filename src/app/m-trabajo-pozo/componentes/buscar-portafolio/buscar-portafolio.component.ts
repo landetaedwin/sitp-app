@@ -29,8 +29,9 @@ export class BuscarPortafolioComponent implements OnInit {
 
   page_size: number = 8;
   page_number: number = 1;
+  total: number = 8;
 
-  constructor(public buscarPortafolioService: BusquedaService, private crearPortafolioService: CrearPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router, public editarPortafolioService: EditarPortafolioService) {
+  constructor(public busquedaService: BusquedaService, private crearPortafolioService: CrearPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router, public editarPortafolioService: EditarPortafolioService) {
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
   }
@@ -41,22 +42,27 @@ export class BuscarPortafolioComponent implements OnInit {
     if (!this.usuario) {
       this.router.navigate(['/login']);
     }
-    this.crearPortafolioService.findCamposList().subscribe(
+    this.getCampoList();
+    //this.buscarPortafolio();
+
+  }
+
+  getCampoList() {
+    this.busquedaService.getCampoList().subscribe(
       (data: Campo[]) => {
         let c: Campo;
         for (let i in data) {
           c = data[i];
           this.campoList.push({ label: c.camNombre, value: c });
         }
+        this.loading = false;
       });
-    this.buscarPortafolio();
-
   }
 
-  cargarPozosByCamCodigo(campo: Campo) {
+  getPozoListByCamCodigo(campo: Campo) {
     if (campo.camCodigo) {
       this.loading = true;
-      this.crearPortafolioService.findPozoByCamCodigo(campo.camCodigo).subscribe(
+      this.busquedaService.getPozoListByCamCodigo(campo.camCodigo).subscribe(
         (data: Pozo[]) => {
           let p: Pozo;
           this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
@@ -78,7 +84,7 @@ export class BuscarPortafolioComponent implements OnInit {
     if (this.pozo) {
       this.busquedaParametros.pozo = this.pozo.pozNombre;
     }
-    this.buscarPortafolioService.findPortafolioList(this.busquedaParametros).subscribe((data: Portafolio[]) => {
+    this.busquedaService.findPortafolioList(this.busquedaParametros).subscribe((data: Portafolio[]) => {
       if (data) {
         this.portafolioList = data;
         this.busquedaParametros.numeroPortafolio = null;

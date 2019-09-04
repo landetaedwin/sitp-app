@@ -73,7 +73,7 @@
           <label for="campo"><b>Campo:*</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown [options]="campoList" [(ngModel)]="campo" (onChange)="cargarPozosByCamCodigo(campo);"
+          <p-dropdown [options]="campoList" [(ngModel)]="campo" (onChange)="getPozoListByCamCodigo(campo);"
             [filter]="true">
           </p-dropdown>
         </div>

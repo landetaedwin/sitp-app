@@ -30,7 +30,6 @@ export class BusquedaService {
     return this.http.get(url, httpOptions);
   }
 
-
   getOperadoraByCompaniaPetrolera(pozCompaniaPetrolera: string) {
     const url = this.prop.PATH + this.prop.SYS + "/cliente-externo-service/cliente-externo-by-compania-petrolera?pozCompaniaPetrolera=" + pozCompaniaPetrolera;
     return this.http.get(url, httpOptions);
@@ -51,6 +50,10 @@ export class BusquedaService {
     return this.http.get(url, httpOptions);
   }
 
+  getPortafolioList() {
+    const url = this.prop.PATH + this.prop.SYS + "/tipo-trabajo-service/tipo-trabajo-list";
+    return this.http.get(url, httpOptions);
+  }
 
 
   //Metodos antiguos

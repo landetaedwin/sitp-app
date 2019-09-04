@@ -9,9 +9,8 @@ import { PersonaPorCampo } from 'src/app/entidades/persona-por-campo';
 import { Regional } from 'src/app/entidades/regional';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
-import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
-import { BuscarPortafolioService } from 'src/app/m-trabajo-bitacora/servicios/buscar-portafolio.service';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
+import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
 
 
 @Component({
@@ -33,6 +32,9 @@ export class AsignacionCamposComponent implements OnInit {
 
   page_size2: number = 10;
   page_number2: number = 1;
+
+  total: number = 8;
+
 
   regionalList: SelectItem[] = [];
   regional: Regional = new Regional;

@@ -6,7 +6,6 @@ import { Accion } from 'src/app/entidades/accion';
 import { Portafolio } from 'src/app/entidades/portafolio';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
-import { BuscarPortafolioService } from 'src/app/m-trabajo-bitacora/servicios/buscar-portafolio.service';
 import { Constantes } from 'src/app/resources/constantes';
 import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
 import { EditarPortafolioService } from '../../servicios/editar-portafolio.service';
@@ -40,7 +39,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
   aSuspencion: Accion = new Accion;
   aReinicio: Accion = new Accion;
 
-  constructor(public loginService: LoginService, public editarPortafolioService: EditarPortafolioService, public cs: Constantes, private crearPortafolioService: CrearPortafolioService, public messageService: MessageService, public router: Router, public buscarService: BuscarPortafolioService, private modalService: BsModalService) {
+  constructor(public loginService: LoginService, public editarPortafolioService: EditarPortafolioService, public cs: Constantes, private crearPortafolioService: CrearPortafolioService, public messageService: MessageService, public router: Router, private modalService: BsModalService) {
   }
   ngOnInit() {
     this.loading = true;
