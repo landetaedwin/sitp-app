@@ -13,7 +13,7 @@ import { TipoTrabajo } from 'src/app/entidades/tipo-trabajo';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
-import { EditarPortafolioService } from '../../servicios/editar-portafolio.service';
+import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 
 @Component({
   selector: 'app-editar-portafolio',
@@ -50,7 +50,7 @@ export class EditarPortafolioComponent implements OnInit {
 
   confirmModalRef: BsModalRef;
 
-  constructor(public editarPortafolioService: EditarPortafolioService, private messageService: MessageService, private modalService: BsModalService, public crearPortafolioService: CrearPortafolioService, public loginService: LoginService, public router: Router) {
+  constructor(public busquedaService: BusquedaService, private messageService: MessageService, private modalService: BsModalService, public crearPortafolioService: CrearPortafolioService, public loginService: LoginService, public router: Router) {
 
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.tipoPozoList = [{ label: "Seleccione", value: null, disabled: true }];
@@ -67,14 +67,14 @@ export class EditarPortafolioComponent implements OnInit {
     if (!this.usuario) {
       this.router.navigate(['/login']);
     }
-    if (!this.editarPortafolioService.portafolio) {
+    if (!this.busquedaService.portafolio) {
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
     }
     this.maxDate = new Date();
     this.minDate = new Date(2010, 0, 1);
 
 
-    this.portafolio = this.editarPortafolioService.portafolio;
+    this.portafolio = this.busquedaService.portafolio;
 
     this.pozo = this.portafolio.pozo;
     this.consorcio = this.portafolio.consorcio;
@@ -246,7 +246,7 @@ export class EditarPortafolioComponent implements OnInit {
   }
 
   goToBuscarPortafolio() {
-    this.editarPortafolioService.portafolio = null;
+    this.busquedaService.portafolio = null;
     this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
   }
 

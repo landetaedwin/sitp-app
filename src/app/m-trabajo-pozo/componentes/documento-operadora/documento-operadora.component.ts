@@ -6,8 +6,7 @@ import { Portafolio } from 'src/app/entidades/portafolio';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { Constantes } from 'src/app/resources/constantes';
-import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
-import { EditarPortafolioService } from '../../servicios/editar-portafolio.service';
+import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 
 @Component({
   selector: 'app-documento-operadora',
@@ -19,7 +18,7 @@ export class DocumentoOperadoraComponent implements OnInit {
   usuario: Usuario;
   portafolio: Portafolio = new Portafolio;
 
-  constructor(public loginService: LoginService, public editarPortafolioService: EditarPortafolioService, public cs: Constantes, private crearPortafolioService: CrearPortafolioService, public messageService: MessageService, public router: Router, private modalService: BsModalService) {
+  constructor(public loginService: LoginService, public cs: Constantes, public busquedaService: BusquedaService, public messageService: MessageService, public router: Router, private modalService: BsModalService) {
   }
   ngOnInit() {
 
@@ -28,11 +27,11 @@ export class DocumentoOperadoraComponent implements OnInit {
     if (!this.usuario) {
       this.router.navigate(['/login']);
     }
-    if (!this.editarPortafolioService.portafolio) {
+    if (!this.busquedaService.portafolio) {
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
     }
 
-    this.portafolio = this.editarPortafolioService.portafolio;
+    this.portafolio = this.busquedaService.portafolio;
 
 
 

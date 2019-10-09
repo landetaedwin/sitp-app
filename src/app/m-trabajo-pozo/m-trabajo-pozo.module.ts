@@ -39,7 +39,6 @@ import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-d
     BrowserAnimationsModule,
     DropdownModule,
     CalendarModule,
-
     NgxPaginationModule,
 
 

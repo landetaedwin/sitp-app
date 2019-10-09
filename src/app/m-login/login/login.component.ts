@@ -31,9 +31,10 @@ export class LoginComponent implements OnInit {
     this.messageService.clear();
     this.loading = true;
     this.loginService.loginUser(this.usuario).subscribe((data: Usuario) => {
-      if (data) {
+      debugger
+      if (data.idUsuario) {
         this.loginService.sessionValue = data;
-        this.router.navigate(['/menu',{outlets: {sitp: ['buscarPortafolio']}}]);
+        this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
         this.loading = false;
       } else {
         this.messageService.add({ severity: 'info', detail: 'Usuario y Contraseña incorrecta' });

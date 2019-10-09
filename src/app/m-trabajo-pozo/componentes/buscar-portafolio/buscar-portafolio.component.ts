@@ -7,8 +7,6 @@ import { Portafolio } from 'src/app/entidades/portafolio';
 import { Pozo } from 'src/app/entidades/pozo';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
-import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
-import { EditarPortafolioService } from '../../servicios/editar-portafolio.service';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 
 @Component({
@@ -31,7 +29,7 @@ export class BuscarPortafolioComponent implements OnInit {
   page_number: number = 1;
   total: number = 8;
 
-  constructor(public busquedaService: BusquedaService, private crearPortafolioService: CrearPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router, public editarPortafolioService: EditarPortafolioService) {
+  constructor(public busquedaService: BusquedaService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
   }
@@ -82,9 +80,15 @@ export class BuscarPortafolioComponent implements OnInit {
     this.portafolioList = [];
 
     if (this.pozo) {
-      this.busquedaParametros.pozo = this.pozo.pozNombre;
+      this.busquedaParametros.pozo = this.pozo.pozCodigo;
     }
-    this.busquedaService.findPortafolioList(this.busquedaParametros).subscribe((data: Portafolio[]) => {
+
+    if (this.campo) {
+      this.busquedaParametros.campo = this.campo.camCodigo;
+    }
+
+
+    this.busquedaService.getPortafolioList(this.busquedaParametros).subscribe((data: Portafolio[]) => {
       if (data) {
         this.portafolioList = data;
         this.busquedaParametros.numeroPortafolio = null;
@@ -119,23 +123,23 @@ export class BuscarPortafolioComponent implements OnInit {
   }
 
   editarPortafolio(portafolio: Portafolio) {
-    this.editarPortafolioService.portafolio = portafolio;
+    this.busquedaService.portafolio = portafolio;
     this.router.navigate(['/menu', { outlets: { sitp: ['editarPortafolio'] } }]);
   }
 
 
   goToRegistroDiario(portafolio: Portafolio) {
-    this.editarPortafolioService.portafolio = portafolio;
+    this.busquedaService.portafolio = portafolio;
     this.router.navigate(['/menu', { outlets: { sitp: ['registroDiario'] } }]);
   }
 
   goToInformeOperadora(portafolio: Portafolio) {
-    this.editarPortafolioService.portafolio = portafolio;
+    this.busquedaService.portafolio = portafolio;
     this.router.navigate(['/menu', { outlets: { sitp: ['reporte-documentos-operadora'] } }]);
   }
 
   goToDocumentoMinisterio(portafolio: Portafolio) {
-    this.editarPortafolioService.portafolio = portafolio;
+    this.busquedaService.portafolio = portafolio;
     this.router.navigate(['/menu', { outlets: { sitp: ['reporte-documentos-ministerio'] } }]);
   }
 

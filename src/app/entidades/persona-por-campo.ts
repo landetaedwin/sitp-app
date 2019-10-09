@@ -11,7 +11,7 @@ export class PersonaPorCampo {
     regional: Regional
     rdhCodigo: string
     correo: string
-    fechaInicio: Date
+    fechaInicio: Date;
     fechaFin: Date
     fechaAsignacion: Date
     estado: number

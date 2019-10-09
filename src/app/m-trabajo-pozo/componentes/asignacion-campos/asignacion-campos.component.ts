@@ -33,7 +33,9 @@ export class AsignacionCamposComponent implements OnInit {
   page_size2: number = 10;
   page_number2: number = 1;
 
-  total: number = 8;
+  total: number = 3;
+  total2: number = 10;
+
 
 
   regionalList: SelectItem[] = [];
@@ -91,7 +93,7 @@ export class AsignacionCamposComponent implements OnInit {
   }
 
   getBloqueList() {
-    this.buscarService.findBloqueList().subscribe((data: Bloque[]) => {
+    this.buscarService.getBloqueList().subscribe((data: Bloque[]) => {
       let b: Bloque;
       for (let i in data) {
         b = data[i];
@@ -105,7 +107,7 @@ export class AsignacionCamposComponent implements OnInit {
   }
 
   getRegionalList() {
-    this.buscarService.findRegionalList().subscribe((data: Regional[]) => {
+    this.buscarService.getRegionalList().subscribe((data: Regional[]) => {
       let b: Regional;
       for (let i in data) {
         b = data[i];
@@ -120,7 +122,7 @@ export class AsignacionCamposComponent implements OnInit {
 
 
   getCamposListNoAsignados() {
-    this.buscarService.findCamposListNoAsignados().subscribe((data: Campo[]) => {
+    this.buscarService.getPersonaPorCampoAsignadosList().subscribe((data: Campo[]) => {
       this.camposListNoAsing = data;
       this.loading = false;
     }, (err) => {
@@ -134,7 +136,7 @@ export class AsignacionCamposComponent implements OnInit {
     this.loading = true;
     this.campoList = [];
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
-    this.buscarService.findCampoListByBlqCodigo(bloque.blqCodigo).subscribe((data: Campo[]) => {
+    this.buscarService.getCampoListByBlqCodigo(bloque.blqCodigo).subscribe((data: Campo[]) => {
       let c: Campo;
       for (let i in data) {
         c = data[i];
@@ -151,12 +153,24 @@ export class AsignacionCamposComponent implements OnInit {
 
   getPersonaPorCampoList() {
     this.loading = true;
-    this.buscarService.findPersonaPorCampo(this.busquedaParametros).subscribe((data: PersonaPorCampo[]) => {
-      if (data) {
+    if (this.bloque) {
+      this.busquedaParametros.bloque = this.bloque.blqCodigo;
+    }
+    if (this.campo) {
+      this.busquedaParametros.campo = this.campo.camCodigo;
+    }
+
+
+    this.buscarService.getPersonaPorCampoList(this.busquedaParametros).subscribe((data: PersonaPorCampo[]) => {
+
+      debugger
+      if (data.length > 0) {
         this.personaPorCampoList = data;
         this.messageService.add({ severity: 'success', detail: 'Datos encontrados correctamente' });
         this.busquedaParametros.bloque = null;
         this.busquedaParametros.campo = null;
+        this.bloque = null;
+        this.campo = null;
         this.busquedaParametros.fechaDesde = null;
         this.busquedaParametros.fechaHasta = null;
         this.busquedaParametros.estado = null;
@@ -166,6 +180,8 @@ export class AsignacionCamposComponent implements OnInit {
         this.messageService.add({ severity: 'info', detail: 'No se encontraron datos' });
         this.busquedaParametros.bloque = null;
         this.busquedaParametros.campo = null;
+        this.bloque = null;
+        this.campo = null;
         this.busquedaParametros.fechaDesde = null;
         this.busquedaParametros.fechaHasta = null;
         this.busquedaParametros.estado = null;
@@ -204,6 +220,7 @@ export class AsignacionCamposComponent implements OnInit {
     this.campo = new Campo;
     this.bloque = new Bloque;
     this.usuarioFuncionario = new Usuario;
+    // this.getBloqueList()
     this.newPersonaPorCampoModalRef = this.modalService.show(template, { class: 'modal-xl', backdrop: 'static', keyboard: false });
     setTimeout(() => {
       this.loading = false;
@@ -216,22 +233,11 @@ export class AsignacionCamposComponent implements OnInit {
   }
 
   openModalEditPersonaPorCampo(template: TemplateRef<any>, ppc: PersonaPorCampo) {
-    this.personaPorCampo = ppc;
-    this.personaPorCampoEdit.correo = ppc.funcionario.correo;
-    this.personaPorCampoEdit.fechaAsignacion = ppc.fechaAsignacion
-    this.personaPorCampoEdit.fechaInicio = ppc.fechaInicio;
-    this.personaPorCampoEdit.idUsuario = ppc.idUsuario;
-    this.personaPorCampoEdit.codigoPersonaPorCampo = ppc.codigoPersonaPorCampo;
-    this.personaPorCampoEdit.bloque = ppc.bloque;
-    this.personaPorCampoEdit.campo = ppc.campo;
-    this.personaPorCampoEdit.funcionario = ppc.funcionario;
-    this.personaPorCampoEdit.estado = ppc.estado;
-    this.personaPorCampoEdit.regional = ppc.regional;
+    this.personaPorCampoEdit = ppc;
     this.editPersonaPorCampoModalRef = this.modalService.show(template, { class: 'modal-xl', backdrop: 'static', keyboard: false });
-
     setTimeout(() => {
       this.loading = false;
-    }, 2000);
+    }, 1000);
   }
 
   closeModalEditPersonaPorCampo() {
@@ -262,13 +268,13 @@ export class AsignacionCamposComponent implements OnInit {
     this.personaPorCampo.correo = this.usuarioFuncionario.correo;
     this.personaPorCampo.rdhCodigo = this.regional.rdhCodigo;
     this.personaPorCampo.estado = 1;
-    this.personaPorCampo.fechaAsignacion = new Date;
-    this.personaPorCampo.fechaInicio = new Date;
+    this.personaPorCampo.fechaAsignacion = new Date();
+    this.personaPorCampo.fechaInicio = new Date();
     this.personaPorCampo.idUsuario = this.usuario.idUsuario;
 
     this.loading = true;
 
-
+    debugger
     if (this.bloque.blqCodigo && this.campo.camCodigo && this.usuarioFuncionario.idUsuario) {
       this.crearPortafolioService.transCrearPersonaPorCampo(this.personaPorCampo).subscribe(data => {
 
@@ -305,8 +311,16 @@ export class AsignacionCamposComponent implements OnInit {
 
     this.personaPorCampoEdit.estado = this.estado;
     if (this.estado == 0) {
-      this.personaPorCampoEdit.fechaFin = new Date;
+      this.personaPorCampoEdit.fechaFin = new Date();
     }
+
+    if (this.personaPorCampoEdit.fechaInicio) {
+      this.personaPorCampoEdit.fechaInicio = new Date(this.personaPorCampoEdit.fechaInicio);
+    }
+    if (this.personaPorCampoEdit.fechaAsignacion) {
+      this.personaPorCampoEdit.fechaAsignacion = new Date(this.personaPorCampoEdit.fechaAsignacion);
+    }
+
     this.loading = true;
     this.crearPortafolioService.transUpdatePersonaPorCampo(this.personaPorCampoEdit).subscribe(data => {
 

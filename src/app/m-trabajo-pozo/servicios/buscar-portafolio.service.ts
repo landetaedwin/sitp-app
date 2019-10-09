@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Constantes } from "src/app/resources/constantes";
 import { BusquedaParametros } from 'src/app/entidades/busquedaParametros';
+import { Portafolio } from 'src/app/entidades/portafolio';
 
 const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -13,6 +14,7 @@ const httpOptions = {
 export class BusquedaService {
   constructor(readonly http: HttpClient, public prop: Constantes) { }
 
+  public portafolio: Portafolio;
 
   //Metodos nuevos
   getCampoList() {
@@ -50,57 +52,81 @@ export class BusquedaService {
     return this.http.get(url, httpOptions);
   }
 
-  getPortafolioList() {
-    const url = this.prop.PATH + this.prop.SYS + "/tipo-trabajo-service/tipo-trabajo-list";
+  getPortafolioList(param: BusquedaParametros) {
+    const url = this.prop.PATH + this.prop.SYS + "/portafolio-service/portafolio-list";
+    return this.http.post(url, param, httpOptions);
+  }
+
+  getBloqueList() {
+    const url = this.prop.PATH + "/sitp/bloque-service/bloque-list";
     return this.http.get(url, httpOptions);
   }
 
+  getRegionalList() {
+    const url = this.prop.PATH + "/sitp/regional-service/regional-list";
+    return this.http.get(url, httpOptions);
+  }
+
+  getCampoListByBlqCodigo(blqCodigo: string) {
+    const url = this.prop.PATH + "/sitp/campo-service/campo-list-by-bloque-codigo?blqCodigo=" + blqCodigo;
+    return this.http.get(url, httpOptions);
+  }
+
+  getPersonaPorCampoList(param: BusquedaParametros) {
+    const url = this.prop.PATH + "/sitp/persona-campo-service/persona-campo-list";
+    return this.http.post(url, param, httpOptions);
+  }
+
+  getPersonaPorCampoAsignadosList() {
+    const url = this.prop.PATH + "/sitp/persona-campo-service/persona-campo-asignado-list";
+    return this.http.get(url, httpOptions);
+  }
 
   //Metodos antiguos
 
-  findPozoByPozCodigo(pozCodigo: string) {
-    const url = this.prop.PATH + "/sitp/buscarPortafolio/findPozoByPozCodigo?pozCodigo=" + pozCodigo;
-    return this.http.get(url, httpOptions);
-  }
+  // findPozoByPozCodigo(pozCodigo: string) {
+  //   const url = this.prop.PATH + "/sitp/buscarPortafolio/findPozoByPozCodigo?pozCodigo=" + pozCodigo;
+  //   return this.http.get(url, httpOptions);
+  // }
 
-  findOperadorabYCexCodigo(cexCodigo: number) {
-    const url = this.prop.PATH + "/sitp/buscarPortafolio/findOperadorabYCexCodigo?cexCodigo=" + cexCodigo;
-    return this.http.get(url, httpOptions);
-  }
+  // findOperadorabYCexCodigo(cexCodigo: number) {
+  //   const url = this.prop.PATH + "/sitp/buscarPortafolio/findOperadorabYCexCodigo?cexCodigo=" + cexCodigo;
+  //   return this.http.get(url, httpOptions);
+  // }
 
-  findBloqueList() {
-    const url = this.prop.PATH + "/sitp/buscarPortafolio/findBloqueList";
-    return this.http.get(url, httpOptions);
-  }
+  // findBloqueList() {
+  //   const url = this.prop.PATH + "/sitp/buscarPortafolio/findBloqueList";
+  //   return this.http.get(url, httpOptions);
+  // }
 
-  findRegionalList() {
-    const url = this.prop.PATH + "/sitp/buscarPortafolio/findRegionalList";
-    return this.http.get(url, httpOptions);
-  }
+  // findRegionalList() {
+  //   const url = this.prop.PATH + "/sitp/buscarPortafolio/findRegionalList";
+  //   return this.http.get(url, httpOptions);
+  // }
 
-  findPortafolioList(param: BusquedaParametros) {
-    const url = this.prop.PATH + "/sitp/buscarPortafolio/findPortafolioList";
-    return this.http.post(url, param, httpOptions);
-  }
+  // findPortafolioList(param: BusquedaParametros) {
+  //   const url = this.prop.PATH + "/sitp/buscarPortafolio/findPortafolioList";
+  //   return this.http.post(url, param, httpOptions);
+  // }
 
-  findCampoListByBlqCodigo(blqCodigo: string) {
-    const url = this.prop.PATH + "/sitp/buscarPortafolio/findCampoListByBlqCodigo?blqCodigo=" + blqCodigo;
-    return this.http.get(url, httpOptions);
-  }
+  // findCampoListByBlqCodigo(blqCodigo: string) {
+  //   const url = this.prop.PATH + "/sitp/buscarPortafolio/findCampoListByBlqCodigo?blqCodigo=" + blqCodigo;
+  //   return this.http.get(url, httpOptions);
+  // }
 
-  findPersonaPorCampo(param: BusquedaParametros) {
-    const url = this.prop.PATH + "/sitp/buscarPortafolio/findPersonaPorCampoList";
-    return this.http.post(url, param, httpOptions);
-  }
+  // findPersonaPorCampo(param: BusquedaParametros) {
+  //   const url = this.prop.PATH + "/sitp/buscarPortafolio/findPersonaPorCampoList";
+  //   return this.http.post(url, param, httpOptions);
+  // }
 
-  findCamposListNoAsignados() {
-    const url = this.prop.PATH + "/sitp/buscarPortafolio/findCamposListNoAsignados";
-    return this.http.get(url, httpOptions);
-  }
+  // findCamposListNoAsignados() {
+  //   const url = this.prop.PATH + "/sitp/buscarPortafolio/findCamposListNoAsignados";
+  //   return this.http.get(url, httpOptions);
+  // }
 
-  findPozoList() {
-    const url = this.prop.PATH + "/sitp/buscarPortafolio/findPozoList";
-    return this.http.get(url, httpOptions);
-  }
+  // findPozoList() {
+  //   const url = this.prop.PATH + "/sitp/buscarPortafolio/findPozoList";
+  //   return this.http.get(url, httpOptions);
+  // }
 
 }

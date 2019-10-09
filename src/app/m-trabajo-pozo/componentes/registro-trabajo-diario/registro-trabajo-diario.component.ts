@@ -4,12 +4,12 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MessageService } from 'primeng/api';
 import { Accion } from 'src/app/entidades/accion';
 import { Portafolio } from 'src/app/entidades/portafolio';
+import { RegistroDiario } from 'src/app/entidades/registro-diario';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { Constantes } from 'src/app/resources/constantes';
+import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
-import { EditarPortafolioService } from '../../servicios/editar-portafolio.service';
-import { RegistroDiario } from 'src/app/entidades/registro-diario';
 
 @Component({
   selector: 'app-registro-trabajo-diario',
@@ -39,7 +39,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
   aSuspencion: Accion = new Accion;
   aReinicio: Accion = new Accion;
 
-  constructor(public loginService: LoginService, public editarPortafolioService: EditarPortafolioService, public cs: Constantes, private crearPortafolioService: CrearPortafolioService, public messageService: MessageService, public router: Router, private modalService: BsModalService) {
+  constructor(public loginService: LoginService, public busquedaService: BusquedaService, public cs: Constantes, private crearPortafolioService: CrearPortafolioService, public messageService: MessageService, public router: Router, private modalService: BsModalService) {
   }
   ngOnInit() {
     this.loading = true;
@@ -47,12 +47,12 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
     if (!this.usuario) {
       this.router.navigate(['/login']);
     }
-    if (!this.editarPortafolioService.portafolio) {
+    if (!this.busquedaService.portafolio) {
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
     }
     this.maxDate = new Date();
     this.minDate = new Date(2010, 0, 1);
-    this.portafolio = this.editarPortafolioService.portafolio;
+    this.portafolio = this.busquedaService.portafolio;
     this.getAccionList();
 
     if (this.portafolio.fechaInicio) {
