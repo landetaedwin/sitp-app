@@ -1,15 +1,10 @@
 <p-fieldset legend="Registro documentos habilitantes operadora">
-  <div class="row">
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-primary btn-block">
-        {{cs.guardar}}
-      </button>
+  <div class="row justify-content-end">
+    <div class="col-md-3">
+      <button type="button" class="btn btn-sm btn-primary btn-block"
+        (click)="openModalDocumeto(documentoTemplate)">{{cs.adjuntarDocumento}}</button>
     </div>
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-success btn-block">
-        {{cs.cancelar}}
-      </button>
-    </div>
+
   </div>
   <hr>
   <p-fieldset legend="Datos del portafolio" [toggleable]="true">
@@ -105,147 +100,298 @@
   <br>
 
   <p-fieldset legend="Documentos operadora" [toggleable]="true">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Nro. SGC:</b></label>
-        </div>
-        <div class="col-md">
-          <input pInputText />
-        </div>
+
+    <div class="row">
+      <div class="col-md-12 table-responsive">
+        <table class="table table-bordered table-sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nro. SGC</th>
+              <th>Nro. Oficio</th>
+              <th>Anexos</th>
+              <th>Fecha oficio</th>
+              <th>Fecha ARCH</th>
+              <th>Asunto</th>
+              <th>Onjetivo</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <!-- <tbody>
+            <tr
+              *ngFor="let portafolio of portafolioList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
+
+              <td>{{i+1}} </td>
+              <td>{{portafolio.operadora.cexApellidoPaterno}} </td>
+              <td>{{portafolio.bloque.bqlNombre}}</td>
+              <td>{{portafolio.campo.camNombre}}</td>
+              <td>{{portafolio.pozo.pozNombre}}</td>
+              <td>{{portafolio.tipoTrabajo.tipoTrabajo}}</td>
+              <td>{{portafolio.numeroTrabajo}}</td>
+              <td>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</td>
+              <td>{{portafolio.estado}}</td>
+
+            </tr>
+
+          </tbody> -->
+        </table>
       </div>
+
     </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Nro. Oficio:</b></label>
-        </div>
-        <div class="col-md">
-          <input pInputText />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Nro. Oficio:</b></label>
-        </div>
-        <div class="col-md">
-          <input type="file" accept=".pdf" required>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Adjuntar anexo 1:</b></label>
-        </div>
-        <div class="col-md">
-          <input type="file" accept=".pdf" required>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Adjuntar anexo 2:</b></label>
-        </div>
-        <div class="col-md">
-          <input type="file" accept=".pdf" required>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Adjuntar anexo 3:</b></label>
-        </div>
-        <div class="col-md">
-          <input type="file" accept=".pdf" required>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Adjuntar anexo 4:</b></label>
-        </div>
-        <div class="col-md">
-          <input type="file" accept=".pdf" required>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Doc. Pagos:</b></label>
-        </div>
-        <div class="col-md">
-          <input type="file" accept=".pdf" required>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Fecha Oficio:</b></label>
-        </div>
-        <div class="col-md">
-          <input pInputText />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Fecha ARCH:</b></label>
-        </div>
-        <div class="col-md">
-          <input pInputText />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Categorización:</b></label>
-        </div>
-        <div class="col-md">
-          <p-dropdown [filter]="true">
-          </p-dropdown>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Asunto:</b></label>
-        </div>
-        <div class="col-md">
-          <p-dropdown [filter]="true">
-          </p-dropdown>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Objetivo:</b></label>
-        </div>
-        <div class="col-md">
-          <input pInputText />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Estado:</b></label>
-        </div>
-        <div class="col-md">
-          <label for="campo">Registrado</label>
-        </div>
+
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <pagination-controls id="foo" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+          responsive="true">
+          ></pagination-controls>
       </div>
     </div>
 
   </p-fieldset>
+
+
+  <ng-template #documentoTemplate>
+    <div class="container mt-3 mb-3">
+
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h4>Documentos habilitantes operadora</h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label><b>Nro. SGC:</b></label>
+            </div>
+            <div class="col-md-8">
+              <input pInputText />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label><b>Nro. Oficio:</b></label>
+            </div>
+            <div class="col-md-8">
+              <input pInputText />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anexos -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Nro. Oficio:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeDocNroOficio($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Adjuntar anexo 1:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeAnexo1($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Adjuntar anexo 2:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeAnexo2($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Adjuntar anexo 3:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeAnexo3($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Adjuntar anexo 4:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeAnexo4($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Doc. Pagos:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeDocPagos($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm"> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Fecha Oficio:</b></label>
+            </div>
+            <div class="col-md-8">
+              <input pInputText />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Fecha ARCH:</b></label>
+            </div>
+            <div class="col-md-8">
+              <input pInputText />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Categorización:</b></label>
+            </div>
+            <div class="col-md">
+              <p-dropdown [options]="categoriaList" [(ngModel)]="categoria" [filter]="true"> </p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Asunto:</b></label>
+            </div>
+            <div class="col-md">
+              <p-dropdown [filter]="true">
+              </p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Objetivo:</b></label>
+            </div>
+            <div class="col-md">
+              <input pInputText />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Estado:</b></label>
+            </div>
+            <div class="col-md">
+              <label for="campo">Registrado</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-primary btn-block">Guardar</button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-danger btn-block"
+            (click)="closeModalDocumento()">Cancelar</button>
+        </div>
+
+      </div>
+
+    </div>
+  </ng-template>
+
+
+  <ng-template #pdfViewer>
+    <app-pdf-visual></app-pdf-visual>
+  </ng-template>
+
+
+
+
+  <ng-template #customLoadingTemplate> </ng-template>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+  </ngx-loading>

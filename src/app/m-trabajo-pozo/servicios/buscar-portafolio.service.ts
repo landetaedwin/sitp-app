@@ -15,6 +15,7 @@ export class BusquedaService {
   constructor(readonly http: HttpClient, public prop: Constantes) { }
 
   public portafolio: Portafolio;
+  public link: string;
 
   //Metodos nuevos
   getCampoList() {
@@ -93,6 +94,11 @@ export class BusquedaService {
 
   getRegistroDiarioList(codigoPortafolio: number) {
     const url = this.prop.PATH + "/sitp/registro-diario-service/registro-diario-list?codigoPortafolio=" + codigoPortafolio;
+    return this.http.get(url, httpOptions);
+  }
+
+  getCategoriaListByCodigoTipoTrabajo(codigoTipoTrabajo: number) {
+    const url = this.prop.PATH + "/sitp/categoria-service/categoria-list-by-codigo-tipo-trabajo?codigoTipoTrabajo=" + codigoTipoTrabajo;
     return this.http.get(url, httpOptions);
   }
 

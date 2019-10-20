@@ -36,6 +36,8 @@ export class Constantes {
     guardar = 'Guardar'
     cancelar = 'Cancelar'
 
+    adjuntarDocumento = "Adjuntar Documento"
+
 
 
     codigoPerfilAdministrador = "21";

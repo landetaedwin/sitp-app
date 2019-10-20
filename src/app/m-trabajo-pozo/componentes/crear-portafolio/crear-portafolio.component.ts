@@ -197,7 +197,6 @@ export class CrearPortafolioComponent implements OnInit {
     this.portafolio.codigoConsorcio = this.consorcio.codigoConsorcio;
     this.portafolio.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
     this.portafolio.codigoTipoPozo = this.tipoPozo.codigoTipoPozo;
-    this.portafolio.cexCodigo = this.operadora.cexCodigo;
     this.portafolio.bqlCodigo = this.bloque.blqCodigo;
     this.portafolio.camCodigo = this.campo.camCodigo;
     this.portafolio.pozCodigo = this.pozo.pozCodigo;

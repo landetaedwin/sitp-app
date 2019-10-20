@@ -9,6 +9,7 @@ import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 import { Constantes } from 'src/app/resources/constantes';
+import { Operadora } from 'src/app/entidades/operadora';
 
 @Component({
   selector: 'app-buscar-portafolio',
@@ -79,19 +80,27 @@ export class BuscarPortafolioComponent implements OnInit {
   buscarPortafolio() {
     this.loading = true;
     this.portafolioList = [];
-
     if (this.pozo) {
       this.busquedaParametros.pozo = this.pozo.pozCodigo;
     }
-
     if (this.campo) {
       this.busquedaParametros.campo = this.campo.camCodigo;
     }
-
-
     this.busquedaService.getPortafolioList(this.busquedaParametros).subscribe((data: Portafolio[]) => {
       if (data) {
-        this.portafolioList = data;
+
+        let dataAux: Portafolio[] = [];
+
+        for (let i: number = 0; i < data.length; i++) {
+          debugger
+          if (!data[i].operadora) {
+            data[i].operadora = new Operadora;
+            data[i].operadora.cexCodigo = null;
+            data[i].operadora.cexApellidoPaterno = "N/A";
+          }
+          dataAux.push(data[i]);
+        }
+        this.portafolioList = dataAux;
         this.busquedaParametros.numeroPortafolio = null;
         this.busquedaParametros.pozo = null;
         this.busquedaParametros.campo = null;

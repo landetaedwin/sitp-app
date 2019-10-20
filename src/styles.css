@@ -50,7 +50,7 @@ body .ui-panelmenu .ui-panelmenu-content .ui-menuitem .ui-menuitem-link {
  *Estilo dropdown 
  */
 body .ui-dropdown .ui-dropdown-label {
-  height: 20px;
+  height: 24px;
   width: 100%;
   padding:0 0 0 0.5rem;
 }
@@ -61,7 +61,7 @@ body .ui-dropdown {
 
 body .ui-inputtext {
   font-size: 12px;
-  height: 22px;
+  height: 24px;
 }
 
 body .ui-fieldset {

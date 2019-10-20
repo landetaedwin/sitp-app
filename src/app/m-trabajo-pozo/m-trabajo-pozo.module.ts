@@ -19,7 +19,6 @@ import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-d
 
 
 
-
 @NgModule({
   declarations: [
     CrearPortafolioComponent,
@@ -29,7 +28,8 @@ import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-d
     FilterSearchPipe,
     RegistroTrabajoDiarioComponent,
     DocumentoOperadoraComponent,
-    DocumentoMinisterioComponent
+    DocumentoMinisterioComponent,
+    
 
   ],
   imports: [
@@ -40,8 +40,6 @@ import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-d
     DropdownModule,
     CalendarModule,
     NgxPaginationModule,
-
-
     ModalModule.forRoot(),
     NgxLoadingModule.forRoot({})
   ]
