@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Constantes } from "src/app/resources/constantes";
 import { Portafolio } from 'src/app/entidades/portafolio';
-import { PersonaPorCampo } from 'src/app/entidades/persona-por-campo';
+import { Constantes } from "src/app/resources/constantes";
 import { RegistroDiario } from 'src/app/entidades/registro-diario';
 
 const httpOptions = {
@@ -19,6 +18,20 @@ export class CreateUpdateService {
         const url = this.prop.PATH + "/sitp/crearPortafolio/transCrearPortafolio";
         return this.http.post(url, portafolio, httpOptions);
     }
+
+    transUpdatePortafolio(portafolio: Portafolio) {
+        const url = this.prop.PATH + "/sitp/portafolio-service/update-portafolio";
+        return this.http.post(url, portafolio, httpOptions);
+    }
+
+    transCrearRegistroDiario(rs: RegistroDiario) {
+        const url = this.prop.PATH + "/sitp/registro-diario-service/crear-registro-diario";
+        return this.http.post(url, rs, httpOptions);
+    }
+
+
+
+
 
 
 }

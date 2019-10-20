@@ -163,7 +163,6 @@ export class AsignacionCamposComponent implements OnInit {
 
     this.buscarService.getPersonaPorCampoList(this.busquedaParametros).subscribe((data: PersonaPorCampo[]) => {
 
-      debugger
       if (data.length > 0) {
         this.personaPorCampoList = data;
         this.messageService.add({ severity: 'success', detail: 'Datos encontrados correctamente' });
@@ -274,7 +273,7 @@ export class AsignacionCamposComponent implements OnInit {
 
     this.loading = true;
 
-    debugger
+    
     if (this.bloque.blqCodigo && this.campo.camCodigo && this.usuarioFuncionario.idUsuario) {
       this.crearPortafolioService.transCrearPersonaPorCampo(this.personaPorCampo).subscribe(data => {
 

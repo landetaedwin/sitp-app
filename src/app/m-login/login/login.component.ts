@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
     this.messageService.clear();
     this.loading = true;
     this.loginService.loginUser(this.usuario).subscribe((data: Usuario) => {
-      debugger
       if (data.idUsuario) {
         this.loginService.sessionValue = data;
         this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);

@@ -82,6 +82,20 @@ export class BusquedaService {
     return this.http.get(url, httpOptions);
   }
 
+  getAccionList() {
+    const url = this.prop.PATH + "/sitp/accion-service/accion-list";
+    return this.http.get(url, httpOptions);
+  }
+  getAccionById(codigoAccion: number) {
+    const url = this.prop.PATH + "/sitp/accion-service/accion-by-id?codigoAccion=" + codigoAccion;
+    return this.http.get(url, httpOptions);
+  }
+
+  getRegistroDiarioList(codigoPortafolio: number) {
+    const url = this.prop.PATH + "/sitp/registro-diario-service/registro-diario-list?codigoPortafolio=" + codigoPortafolio;
+    return this.http.get(url, httpOptions);
+  }
+
   //Metodos antiguos
 
   // findPozoByPozCodigo(pozCodigo: string) {

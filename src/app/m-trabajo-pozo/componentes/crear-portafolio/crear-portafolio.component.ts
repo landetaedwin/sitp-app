@@ -67,7 +67,6 @@ export class CrearPortafolioComponent implements OnInit {
     }
 
     this.onLimitDate();
-
     this.initComponentes();
     this.bloque.bqlNombre = "n/a";
     this.operadora.cexApellidoPaterno = "n/a";

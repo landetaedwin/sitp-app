@@ -35,4 +35,10 @@ export class Constantes {
     //Acciones
     guardar = 'Guardar'
     cancelar = 'Cancelar'
+
+
+
+    codigoPerfilAdministrador = "21";
+    codigoPerfilMatriz = "16";
+    codigoPerfilRegional = "17";
 }

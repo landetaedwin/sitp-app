@@ -118,7 +118,6 @@ export class MenuComponent implements OnInit {
     //matriz
     if (this.usuario.perfil.codigoPerfil == '16') {
       this.m1 = true;
-      this.m2 = true;
       this.m3 = true;
       this.m6 = true;
       this.i0 = true;
@@ -136,7 +135,6 @@ export class MenuComponent implements OnInit {
     //regional
     if (this.usuario.perfil.codigoPerfil == '17') {
       this.m1 = true;
-      this.m2 = true;
       this.m6 = true;
       this.i0 = true;
       this.i1 = true;

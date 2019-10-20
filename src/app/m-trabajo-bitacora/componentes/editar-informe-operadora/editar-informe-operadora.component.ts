@@ -55,7 +55,6 @@ export class EditarInformeOperadoraComponent implements OnInit {
 
     this.usuario = this.loginService.sessionValue;
     
-//debugger
     if (!this.usuario) {
       
       this.router.navigate(['/login']);

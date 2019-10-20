@@ -1,11 +1,11 @@
 <p-fieldset legend="Creación portafoilo trabajo en Pozo" [toggleable]="true">
   <div class="row justify-content-end">
-    <div class="col-md-2">
+    <div class="col-md-2" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
       <button type="button" class="btn btn-sm btn-success btn-block " (click)="guardarPortafolio()">
         Actualizar
       </button>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
       <button type="button" class="btn btn-sm btn-primary btn-block" (click)="openConfirmModal(confirmDialog)">
         Anular
       </button>

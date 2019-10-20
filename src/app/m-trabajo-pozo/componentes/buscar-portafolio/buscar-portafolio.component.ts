@@ -8,6 +8,7 @@ import { Pozo } from 'src/app/entidades/pozo';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
+import { Constantes } from 'src/app/resources/constantes';
 
 @Component({
   selector: 'app-buscar-portafolio',
@@ -29,7 +30,7 @@ export class BuscarPortafolioComponent implements OnInit {
   page_number: number = 1;
   total: number = 8;
 
-  constructor(public busquedaService: BusquedaService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
+  constructor(public busquedaService: BusquedaService, private messageService: MessageService, public loginService: LoginService, public router: Router, public prop: Constantes) {
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
   }
@@ -93,6 +94,7 @@ export class BuscarPortafolioComponent implements OnInit {
         this.portafolioList = data;
         this.busquedaParametros.numeroPortafolio = null;
         this.busquedaParametros.pozo = null;
+        this.busquedaParametros.campo = null;
         this.busquedaParametros.fechaDesde = null;
         this.busquedaParametros.fechaHasta = null;
         this.busquedaParametros.funcionario = null;
@@ -103,6 +105,7 @@ export class BuscarPortafolioComponent implements OnInit {
         this.messageService.add({ severity: 'info', detail: 'No se encontraron datos' });
         this.busquedaParametros.numeroPortafolio = null;
         this.busquedaParametros.pozo = null;
+        this.busquedaParametros.campo = null;
         this.busquedaParametros.fechaDesde = null;
         this.busquedaParametros.fechaHasta = null;
         this.busquedaParametros.funcionario = null;
@@ -110,16 +113,11 @@ export class BuscarPortafolioComponent implements OnInit {
         this.pozo = null;
         this.loading = false;
       }
-
     });
   }
 
   crearPortafolio() {
-    this.loading = true;
     this.router.navigate(['/menu', { outlets: { sitp: ['crearPortafolio'] } }]);
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
   }
 
   editarPortafolio(portafolio: Portafolio) {

@@ -66,19 +66,17 @@ export class CrearPortafolioService {
     const url = this.prop.PATH + "/sitp/crearPortafolio/transUpdatePersonaPorCampo";
     return this.http.post(url, personaPorCampo, httpOptions);
   }
-
+  //Eliminar este metodo
   transUpdatePortafolio(portafolio: Portafolio) {
     const url = this.prop.PATH + "/sitp/crearPortafolio/transActualizarPortafolio";
     return this.http.post(url, portafolio, httpOptions);
   }
 
-  transCrearRegistroDiario(rs: RegistroDiario) {
-    const url = this.prop.PATH + "/sitp/crearPortafolio/transCrearRegistroDiario";
-    return this.http.post(url, rs, httpOptions);
-  }
+  // transCrearRegistroDiario(rs: RegistroDiario) {
+  //   const url = this.prop.PATH + "/sitp/crearPortafolio/transCrearRegistroDiario";
+  //   return this.http.post(url, rs, httpOptions);
+  // }
 
-  findAccionList() {
-    const url = this.prop.PATH + "/sitp/buscarPortafolio/findAccionList";
-    return this.http.get(url, httpOptions);
-  }
+
 }
+
