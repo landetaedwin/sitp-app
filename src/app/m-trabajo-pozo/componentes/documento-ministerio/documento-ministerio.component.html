@@ -141,7 +141,7 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="docu">
+    <div class="row" *ngIf="documentoMinisterioList.length > 9">
       <div class="col-md-12 text-center">
         <pagination-controls id="foo" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
           responsive="true">

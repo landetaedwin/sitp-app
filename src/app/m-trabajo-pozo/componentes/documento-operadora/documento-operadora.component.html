@@ -170,7 +170,7 @@
 
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="documentoOperadoraList.length > 9">
       <div class="col-md-12 text-center">
         <pagination-controls id="foo" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
           responsive="true">
