@@ -56,7 +56,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
     this.maxDate = new Date();
     this.minDate = new Date(2010, 0, 1);
     this.portafolio = this.busquedaService.portafolio;
-    debugger
+
     if (this.portafolio.fechaInicio) {
       this.fechaInicio = new Date(this.portafolio.fechaInicio);
       this.bIniciar = true;
@@ -134,7 +134,6 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
     this.registroDiario.codigoPortafolio = this.portafolio.codigoPortafolio;
     this.registroDiario.idUsuario = this.usuario.idUsuario;
     this.registroDiario.estado = 1;
-    debugger
     if (this.registroDiarioList.length > 0 && this.registroDiarioList[0].fechaAccion) {
       this.minDateTrabajo = new Date(this.registroDiarioList[0].fechaAccion);
     } else {

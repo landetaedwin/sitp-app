@@ -1,3 +1,5 @@
+import { Archivo } from './archivo'
+
 export class DocumentoOperadora {
 
     codigoDocumentoOperadora: number
@@ -14,8 +16,17 @@ export class DocumentoOperadora {
     fechaOficio: Date
     fechaARCH: string
     asunto: string
+    objetivo:string
     estado: number
-    idUsuario: string
+    fechaRegistro:Date;
+    idUsuario: number
+
+    fileOficio: Archivo
+    fileAnexo1: Archivo
+    fileAnexo2: Archivo
+    fileAnexo3: Archivo
+    fileAnexo4: Archivo
+    filePago: Archivo
 
 
 }

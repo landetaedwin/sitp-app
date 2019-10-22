@@ -102,6 +102,20 @@ export class BusquedaService {
     return this.http.get(url, httpOptions);
   }
 
+  getDocumentoOperadoraList() {
+    const url = this.prop.PATH + "/sitp/documento-operadora-service/documento-operadora-list";
+    return this.http.get(url, httpOptions);
+  }
+
+  getPagoListByCodigoDocumentoOperadora(codigoDocumentoOperadora: number) {
+    const url = this.prop.PATH + "/sitp/pago-service/pago-list-by-codigo-documento-operadora?codigoDocumentoOperadora=" + codigoDocumentoOperadora;
+    return this.http.get(url, httpOptions);
+  }
+
+
+
+
+
   //Metodos antiguos
 
   // findPozoByPozCodigo(pozCodigo: string) {

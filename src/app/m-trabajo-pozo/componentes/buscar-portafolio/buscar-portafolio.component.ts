@@ -92,7 +92,6 @@ export class BuscarPortafolioComponent implements OnInit {
         let dataAux: Portafolio[] = [];
 
         for (let i: number = 0; i < data.length; i++) {
-          debugger
           if (!data[i].operadora) {
             data[i].operadora = new Operadora;
             data[i].operadora.cexCodigo = null;

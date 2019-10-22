@@ -16,6 +16,7 @@ import { DocumentoMinisterioComponent } from './componentes/documento-ministerio
 import { DocumentoOperadoraComponent } from './componentes/documento-operadora/documento-operadora.component';
 import { EditarPortafolioComponent } from "./componentes/editar-portafolio/editar-portafolio.component";
 import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-diario/registro-trabajo-diario.component';
+import { NumerosDocDirective } from '../resources/directivas/numeros-doc.directive';
 
 
 
@@ -25,11 +26,12 @@ import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-d
     EditarPortafolioComponent,
     BuscarPortafolioComponent,
     AsignacionCamposComponent,
-    FilterSearchPipe,
     RegistroTrabajoDiarioComponent,
     DocumentoOperadoraComponent,
     DocumentoMinisterioComponent,
-    
+    FilterSearchPipe,
+    NumerosDocDirective,
+
 
   ],
   imports: [
@@ -40,6 +42,7 @@ import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-d
     DropdownModule,
     CalendarModule,
     NgxPaginationModule,
+
     ModalModule.forRoot(),
     NgxLoadingModule.forRoot({})
   ]
