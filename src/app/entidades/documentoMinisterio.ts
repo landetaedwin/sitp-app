@@ -1,4 +1,5 @@
 import { Archivo } from './archivo'
+import { Asunto } from './asunto'
 
 export class DocumentoMinisterio {
     
@@ -9,7 +10,8 @@ export class DocumentoMinisterio {
     urlOficio: String
     urlAnexo1: String
     fechaOficio: Date
-    asunto: number
+    codigoAsunto: number
+    asunto:Asunto
     numeroResolucion: String
     objetivo: String
     estado: number

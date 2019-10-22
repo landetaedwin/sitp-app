@@ -82,6 +82,7 @@ export class DocumentoMinisterioComponent implements OnInit {
 
   openModalDocumeto(template: TemplateRef<any>) {
     this.loading = true;
+    this.documentoMinisterio = new DocumentoMinisterio;
     this.getAsuntoList();
     this.documentoModalRef = this.modalService.show(template, { class: 'modal-md', backdrop: 'static', keyboard: false });
   }
@@ -132,7 +133,7 @@ export class DocumentoMinisterioComponent implements OnInit {
     this.documentoMinisterio.idUsuario = this.usuario.idUsuario;
     this.documentoMinisterio.estado = 1;
     this.documentoMinisterio.fechaRegistro = new Date();
-    this.documentoMinisterio.asunto = this.asunto.codigoAsunto;
+    this.documentoMinisterio.codigoAsunto = this.asunto.codigoAsunto;
     this.documentoMinisterio.fechaOficio = new Date(this.documentoMinisterio.fechaOficio);
 
     this.documentoMinisterio.fileOficio = new Archivo;
@@ -152,6 +153,7 @@ export class DocumentoMinisterioComponent implements OnInit {
         this.getDocumentoMinisterioList();
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se agrego el documento de ministerio' });
+        this.asunto = null;
         this.closeModalDocumento();
 
       } else {

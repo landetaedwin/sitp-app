@@ -12,6 +12,7 @@ import { Constantes } from 'src/app/resources/constantes';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 import { CreateUpdateService } from '../../servicios/create-update.service';
 import { Pago } from 'src/app/entidades/pago';
+import { Asunto } from 'src/app/entidades/asunto';
 
 @Component({
   selector: 'app-documento-operadora',
@@ -50,10 +51,15 @@ export class DocumentoOperadoraComponent implements OnInit {
   ntrans: boolean = false;
   ncomp: boolean = false;
 
+  asuntoList: SelectItem[] = [];
+  asunto: Asunto;
+
 
 
   constructor(public loginService: LoginService, public cs: Constantes, public busquedaService: BusquedaService, public dataApi: CreateUpdateService, public messageService: MessageService, public router: Router, private modalService: BsModalService) {
     this.categoriaList = [{ label: "Seleccione", value: null, disabled: true }];
+    this.asuntoList = [{ label: "Seleccione", value: null, disabled: true }];
+
 
   }
   ngOnInit() {
@@ -76,6 +82,18 @@ export class DocumentoOperadoraComponent implements OnInit {
 
   }
 
+  getAsuntoList() {
+    this.busquedaService.getAsuntoList().subscribe((data: Asunto[]) => {
+      let c: Asunto;
+      this.asuntoList = [{ label: "Seleccione", value: null, disabled: true }];
+
+      for (let i in data) {
+        c = data[i];
+        this.asuntoList.push({ label: c.asunto, value: c });
+      }
+      this.loading = false;
+    })
+  }
 
   getListDocumentoOperadora() {
     this.busquedaService.getDocumentoOperadoraByCodigoPortafolioList(this.portafolio.codigoPortafolio).subscribe((data: DocumentoOperadora[]) => {
@@ -85,8 +103,10 @@ export class DocumentoOperadoraComponent implements OnInit {
   }
 
   getListCategoriaByCodigoTipoTrabajo() {
+
     this.busquedaService.getCategoriaListByCodigoTipoTrabajo(this.portafolio.codigoTipoTrabajo).subscribe((data: Categoria[]) => {
       let c: Categoria;
+      this.categoriaList = [{ label: "Seleccione", value: null, disabled: true }];
       for (let i in data) {
         c = data[i];
         this.categoriaList.push({ label: c.categoria, value: c });
@@ -99,6 +119,7 @@ export class DocumentoOperadoraComponent implements OnInit {
 
   openModalDocumeto(template: TemplateRef<any>) {
     this.documentoOperadora = new DocumentoOperadora;
+    this.getAsuntoList();
     if (this.portafolio.codigoTipoTrabajo != 1) {
       this.getListCategoriaByCodigoTipoTrabajo();
     }
@@ -230,6 +251,8 @@ export class DocumentoOperadoraComponent implements OnInit {
     this.documentoOperadora.fechaRegistro = new Date();
     this.documentoOperadora.fechaOficio = new Date(this.documentoOperadora.fechaOficio);
 
+    this.documentoOperadora.codigoAsunto = this.asunto.codigoAsunto;
+
     this.documentoOperadora.fileOficio = new Archivo;
     this.documentoOperadora.fileAnexo1 = new Archivo;
     this.documentoOperadora.fileAnexo2 = new Archivo;
@@ -272,6 +295,8 @@ export class DocumentoOperadoraComponent implements OnInit {
         this.getListDocumentoOperadora()
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se agrego el documento de operadora' });
+        this.asunto = null;
+        this.categoria = null;
         this.closeModalDocumento();
 
       } else {

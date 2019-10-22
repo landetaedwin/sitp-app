@@ -146,17 +146,19 @@
               </td>
               <td>{{doc.fechaOficio  | date:'dd/MM/yyyy'}} </td>
               <td>{{doc.fechaARCH  | date:'dd/MM/yyyy'}} </td>
-              <td>{{doc.asunto}} </td>
+              <td>{{doc.asunto.asunto}} </td>
               <td>{{doc.objetivo}} </td>
               <td>{{doc.estado}} </td>
               <td>
                 <div class="row">
                   <div class="col-md-12">
                     <ul class="nav">
-                      <li (click)="openModalPagos(pagosTemplate, doc.codigoDocumentoOperadora)"><i
+                      <li *ngIf="doc.codigoAsunto == 1 || doc.codigoAsunto == 2 || doc.codigoAsunto == 3 || doc.codigoAsunto == 4"
+                        (click)="openModalPagos(pagosTemplate, doc.codigoDocumentoOperadora)"><i
                           class="fa fa-usd fa-2x"></i>
                       </li>
-                      <li (click)="openModalPagosList(pagoListTemplate, doc.codigoDocumentoOperadora)"><i
+                      <li *ngIf="doc.codigoAsunto == 1 || doc.codigoAsunto == 2 || doc.codigoAsunto == 3 || doc.codigoAsunto == 4"
+                        (click)="openModalPagosList(pagoListTemplate, doc.codigoDocumentoOperadora)"><i
                           class="fa fa-list-ol fa-2x"></i>
                       </li>
                     </ul>
@@ -377,7 +379,7 @@
               <label for="campo"><b>Asunto:</b></label>
             </div>
             <div class="col-md">
-              <input [(ngModel)]="documentoOperadora.asunto" pInputText />
+              <p-dropdown [options]="asuntoList" [(ngModel)]="asunto" [filter]="true"> </p-dropdown>
             </div>
           </div>
         </div>
