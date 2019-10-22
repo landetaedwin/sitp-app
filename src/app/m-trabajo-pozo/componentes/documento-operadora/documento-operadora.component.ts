@@ -78,7 +78,7 @@ export class DocumentoOperadoraComponent implements OnInit {
 
 
   getListDocumentoOperadora() {
-    this.busquedaService.getDocumentoOperadoraList().subscribe((data: DocumentoOperadora[]) => {
+    this.busquedaService.getDocumentoOperadoraByCodigoPortafolioList(this.portafolio.codigoPortafolio).subscribe((data: DocumentoOperadora[]) => {
       this.documentoOperadoraList = data;
       this.loading = false;
     });

@@ -102,8 +102,8 @@ export class BusquedaService {
     return this.http.get(url, httpOptions);
   }
 
-  getDocumentoOperadoraList() {
-    const url = this.prop.PATH + "/sitp/documento-operadora-service/documento-operadora-list";
+  getDocumentoOperadoraByCodigoPortafolioList(codigoPortafolio: number) {
+    const url = this.prop.PATH + "/sitp/documento-operadora-service/documento-operadora-list-by-codigo-portafolio?codigoPortafolio=" + codigoPortafolio;
     return this.http.get(url, httpOptions);
   }
 
@@ -111,6 +111,17 @@ export class BusquedaService {
     const url = this.prop.PATH + "/sitp/pago-service/pago-list-by-codigo-documento-operadora?codigoDocumentoOperadora=" + codigoDocumentoOperadora;
     return this.http.get(url, httpOptions);
   }
+
+  getAsuntoList() {
+    const url = this.prop.PATH + "/sitp/asunto-service/asunto-list";
+    return this.http.get(url, httpOptions);
+  }
+
+  getDocumentoMinisterioByCodigoPortafolioList(codigoPortafolio: number) {
+    const url = this.prop.PATH + "/sitp/documento-ministerio-service/documento-ministerio-list-by-codigo-portafolio?codigoPortafolio=" + codigoPortafolio;
+    return this.http.get(url, httpOptions);
+  }
+
 
 
 

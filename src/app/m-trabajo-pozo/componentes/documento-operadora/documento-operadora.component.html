@@ -127,43 +127,43 @@
               <th>Accion</th>
             </tr>
           </thead>
+          <tbody>
+            <tr
+              *ngFor="let doc of documentoOperadoraList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
 
-          <tr
-            *ngFor="let doc of documentoOperadoraList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
-
-            <td>{{i+1}} </td>
-            <td>{{doc.numeroSGC}} </td>
-            <td>{{doc.numeroOficio}} </td>
-            <td>
-              <ul>
-                <li *ngIf="doc.urlOficio">{{doc.urlOficio}}</li>
-                <li *ngIf="doc.urlAnexo1">{{doc.urlAnexo1}}</li>
-                <li *ngIf="doc.urlAnexo2">{{doc.urlAnexo2}}</li>
-                <li *ngIf="doc.urlAnexo3">{{doc.urlAnexo3}}</li>
-                <li *ngIf="doc.urlAnexo4">{{doc.urlAnexo4}}</li>
-                <li *ngIf="doc.urlPagos">{{doc.urlPagos}}</li>
-              </ul>
-            </td>
-            <td>{{doc.fechaOficio  | date:'dd/MM/yyyy'}} </td>
-            <td>{{doc.fechaARCH  | date:'dd/MM/yyyy'}} </td>
-            <td>{{doc.asunto}} </td>
-            <td>{{doc.objetivo}} </td>
-            <td>{{doc.estado}} </td>
-            <td>
-              <div class="row">
-                <div class="col-md-12">
-                  <ul class="nav">
-                    <li (click)="openModalPagos(pagosTemplate, doc.codigoDocumentoOperadora)"><i
-                        class="fa fa-usd fa-2x"></i>
-                    </li>
-                    <li (click)="openModalPagosList(pagoListTemplate, doc.codigoDocumentoOperadora)"><i
-                        class="fa fa-list-ol fa-2x"></i>
-                    </li>
-                  </ul>
+              <td>{{i+1}} </td>
+              <td>{{doc.numeroSGC}} </td>
+              <td>{{doc.numeroOficio}} </td>
+              <td>
+                <ul>
+                  <li *ngIf="doc.urlOficio">{{doc.urlOficio}}</li>
+                  <li *ngIf="doc.urlAnexo1">{{doc.urlAnexo1}}</li>
+                  <li *ngIf="doc.urlAnexo2">{{doc.urlAnexo2}}</li>
+                  <li *ngIf="doc.urlAnexo3">{{doc.urlAnexo3}}</li>
+                  <li *ngIf="doc.urlAnexo4">{{doc.urlAnexo4}}</li>
+                  <li *ngIf="doc.urlPagos">{{doc.urlPagos}}</li>
+                </ul>
+              </td>
+              <td>{{doc.fechaOficio  | date:'dd/MM/yyyy'}} </td>
+              <td>{{doc.fechaARCH  | date:'dd/MM/yyyy'}} </td>
+              <td>{{doc.asunto}} </td>
+              <td>{{doc.objetivo}} </td>
+              <td>{{doc.estado}} </td>
+              <td>
+                <div class="row">
+                  <div class="col-md-12">
+                    <ul class="nav">
+                      <li (click)="openModalPagos(pagosTemplate, doc.codigoDocumentoOperadora)"><i
+                          class="fa fa-usd fa-2x"></i>
+                      </li>
+                      <li (click)="openModalPagosList(pagoListTemplate, doc.codigoDocumentoOperadora)"><i
+                          class="fa fa-list-ol fa-2x"></i>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </td>
-          </tr>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -395,7 +395,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row mt-3">
         <div class="col-md-6">
           <button type="button" class="btn btn-sm btn-primary btn-block" (click)="guardar()">Guardar</button>
         </div>

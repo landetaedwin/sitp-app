@@ -5,6 +5,7 @@ import { Portafolio } from 'src/app/entidades/portafolio';
 import { RegistroDiario } from 'src/app/entidades/registro-diario';
 import { Constantes } from "src/app/resources/constantes";
 import { Pago } from 'src/app/entidades/pago';
+import { DocumentoMinisterio } from 'src/app/entidades/documentoMinisterio';
 
 const httpOptions = {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -41,6 +42,10 @@ export class CreateUpdateService {
         return this.http.post(url, pago, httpOptions);
     }
 
+    transCrearDocumentoMinisterio(documentoMinisterio: DocumentoMinisterio) {
+        const url = this.prop.PATH + "/sitp/documento-ministerio-service/crear-documento-ministerio";
+        return this.http.post(url, documentoMinisterio, httpOptions);
+    }
 
 
 
