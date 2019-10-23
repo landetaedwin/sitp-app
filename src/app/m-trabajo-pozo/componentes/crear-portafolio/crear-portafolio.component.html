@@ -103,7 +103,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6" [hidden]="!campoNumero">
+    <div class="col-md-6" *ngIf="tipoTrabajo.codigoTipoTrabajo != 1">
       <div class="row">
         <div class="col-md-4">
           <label for="campo"><b>Numero:</b></label>
@@ -114,7 +114,7 @@
       </div>
     </div>
   </div>
-  <div class="row" [hidden]="!campoTst">
+  <div class="row" *ngIf="tipoTrabajo.codigoTipoTrabajo == 3">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
