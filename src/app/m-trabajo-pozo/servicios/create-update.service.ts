@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { DocumentoMinisterio } from 'src/app/entidades/documentoMinisterio';
 import { DocumentoOperadora } from 'src/app/entidades/documentoOperadora';
+import { HistorialPozo } from 'src/app/entidades/historialPozo';
+import { Pago } from 'src/app/entidades/pago';
 import { Portafolio } from 'src/app/entidades/portafolio';
 import { RegistroDiario } from 'src/app/entidades/registro-diario';
 import { Constantes } from "src/app/resources/constantes";
-import { Pago } from 'src/app/entidades/pago';
-import { DocumentoMinisterio } from 'src/app/entidades/documentoMinisterio';
 
 const httpOptions = {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -18,7 +19,7 @@ export class CreateUpdateService {
     constructor(readonly http: HttpClient, public prop: Constantes) { }
 
     transCrearPortafolio(portafolio: Portafolio) {
-        const url = this.prop.PATH + "/sitp/crearPortafolio/transCrearPortafolio";
+        const url = this.prop.PATH + "/sitp/portafolio-service/crear-portafolio";
         return this.http.post(url, portafolio, httpOptions);
     }
 
@@ -47,8 +48,10 @@ export class CreateUpdateService {
         return this.http.post(url, documentoMinisterio, httpOptions);
     }
 
-
-
+    transCrearHistorialPozo(historialPozo: HistorialPozo) {
+        const url = this.prop.PATH + "/sitp/historial-pozo-service/crear-historial-pozo";
+        return this.http.post(url, historialPozo, httpOptions);
+    }
 
 
 }

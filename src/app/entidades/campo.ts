@@ -1,6 +1,6 @@
 export class Campo {
   camCodigo: string;
-  bqlCodigo: string;
+  blqCodigo: string;
   camNombre: string;
   estCodigo: number;
 }

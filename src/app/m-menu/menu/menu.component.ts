@@ -175,6 +175,7 @@ export class MenuComponent implements OnInit {
         visible: this.m1,
         items: [
           { label: 'Buscar portafolio', routerLink: [{ outlets: { sitp: ['buscarPortafolio'] } }], visible: this.i0 },
+          { label: 'Historial de pozo', routerLink: [{ outlets: { sitp: ['historialPozo'] } }], visible: this.i0 },
         ]
       },
       {

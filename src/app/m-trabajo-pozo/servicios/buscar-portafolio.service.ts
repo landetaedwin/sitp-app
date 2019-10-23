@@ -122,6 +122,11 @@ export class BusquedaService {
     return this.http.get(url, httpOptions);
   }
 
+  getHistorialPozoList() {
+    const url = this.prop.PATH + "/sitp/historial-pozo-service/historial-pozo-list";
+    return this.http.get(url, httpOptions);
+  }
+
 
 
 

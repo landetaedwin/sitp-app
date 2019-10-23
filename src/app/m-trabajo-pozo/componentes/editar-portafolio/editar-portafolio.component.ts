@@ -12,8 +12,8 @@ import { TipoPozo } from 'src/app/entidades/tipo-pozo';
 import { TipoTrabajo } from 'src/app/entidades/tipo-trabajo';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
-import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
+import { CreateUpdateService } from '../../servicios/create-update.service';
 
 @Component({
   selector: 'app-editar-portafolio',
@@ -50,7 +50,7 @@ export class EditarPortafolioComponent implements OnInit {
 
   confirmModalRef: BsModalRef;
 
-  constructor(public busquedaService: BusquedaService, private messageService: MessageService, private modalService: BsModalService, public crearPortafolioService: CrearPortafolioService, public loginService: LoginService, public router: Router) {
+  constructor(public busquedaService: BusquedaService, private messageService: MessageService, private modalService: BsModalService, public dataApi: CreateUpdateService, public loginService: LoginService, public router: Router) {
 
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.tipoPozoList = [{ label: "Seleccione", value: null, disabled: true }];
@@ -99,7 +99,7 @@ export class EditarPortafolioComponent implements OnInit {
   }
 
   cargarTipoTrabajoList() {
-    this.crearPortafolioService.findTrabajoList().subscribe(
+    this.busquedaService.getTipoTrabajoList().subscribe(
       (data: TipoTrabajo[]) => {
         let tt: TipoTrabajo;
         this.tipoTrabajoList = [{ label: "Seleccione", value: null, disabled: true }];
@@ -111,7 +111,7 @@ export class EditarPortafolioComponent implements OnInit {
   }
 
   cargarConsorcioList() {
-    this.crearPortafolioService.findConsorcioList().subscribe(
+    this.busquedaService.getConsorcioList().subscribe(
       (data: Consorcio[]) => {
         let con: Consorcio;
         this.consorcioList = [{ label: "Seleccione", value: null, disabled: true }];
@@ -124,7 +124,7 @@ export class EditarPortafolioComponent implements OnInit {
   }
 
   cargarTipoPozoList() {
-    this.crearPortafolioService.findTipoPozoList().subscribe((data: TipoPozo[]) => {
+    this.busquedaService.getTipoPozoList().subscribe((data: TipoPozo[]) => {
       let tp: TipoPozo;
       this.tipoPozoList = [{ label: "Seleccione", value: null, disabled: true }];
       for (let i in data) {
@@ -153,7 +153,7 @@ export class EditarPortafolioComponent implements OnInit {
     this.operadora.cexApellidoPaterno = "n/a";
     if (pozo.pozCompaniaPetrolera) {
       this.loading = true;
-      this.crearPortafolioService.findOperadoraByCompaniaPetrolera(pozo.pozCompaniaPetrolera).subscribe(
+      this.busquedaService.getOperadoraByCompaniaPetrolera(pozo.pozCompaniaPetrolera).subscribe(
         (data: Operadora) => {
           if (data) {
             this.operadora = data;
@@ -186,7 +186,7 @@ export class EditarPortafolioComponent implements OnInit {
   cargarPozosByCamCodigo(campo: Campo) {
     if (campo.camCodigo) {
       this.loading = true;
-      this.crearPortafolioService.findPozoByCamCodigo(campo.camCodigo).subscribe(
+      this.busquedaService.getPozoListByCamCodigo(campo.camCodigo).subscribe(
         (data: Pozo[]) => {
           let p: Pozo;
           this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
@@ -202,9 +202,9 @@ export class EditarPortafolioComponent implements OnInit {
   cargarBloqueByBlqCodigo(campo: Campo) {
     this.bloque.bqlNombre = "n/a";
     this.loading = true;
-    if (campo.bqlCodigo) {
+    if (campo.blqCodigo) {
       this.loading = true;
-      this.crearPortafolioService.findBloque(campo.bqlCodigo).subscribe(
+      this.busquedaService.getBloqueByBloqueCodigo(campo.blqCodigo).subscribe(
         (data: Bloque) => {
           if (data) {
             this.bloque = data;
@@ -222,7 +222,7 @@ export class EditarPortafolioComponent implements OnInit {
     this.portafolio.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
     this.portafolio.codigoTipoPozo = this.tipoPozo.codigoTipoPozo;
     this.portafolio.cexCodigo = this.operadora.cexCodigo;
-    this.portafolio.bqlCodigo = this.bloque.blqCodigo;
+    this.portafolio.blqCodigo = this.bloque.blqCodigo;
     this.portafolio.camCodigo = this.portafolio.campo.camCodigo;
     this.portafolio.pozCodigo = this.pozo.pozCodigo;
     this.portafolio.numeroTrabajo = this.numeroTrabajo;
@@ -230,16 +230,14 @@ export class EditarPortafolioComponent implements OnInit {
     this.portafolio.fechaRegistro = this.today;
     this.portafolio.idUsuario = this.usuario.idUsuario;
 
-    this.crearPortafolioService.transUpdatePortafolio(this.portafolio).subscribe(data => {
-
-      if (data) {
+    this.dataApi.transUpdatePortafolio(this.portafolio).subscribe(data => {
+      if (data == "El portafolio ha sido creado correctamente") {
         this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se actualizo el portafolio' });
+        this.messageService.add({ severity: 'success', detail: '' + data });
         this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
       } else {
         this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo actualizar el portafolio' });
-
+        this.messageService.add({ severity: 'info', detail: '' + data });
       }
     });
 
@@ -252,16 +250,16 @@ export class EditarPortafolioComponent implements OnInit {
 
   anularPortafolio() {
     this.portafolio.estado = 0;
-    this.crearPortafolioService.transUpdatePortafolio(this.portafolio).subscribe(data => {
-      if (data) {
+    this.dataApi.transUpdatePortafolio(this.portafolio).subscribe(data => {
+      if (data == "El portafolio ha sido creado correctamente") {
         this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se actualizo el portafolio' });
+        this.messageService.add({ severity: 'success', detail: '' + data });
         this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
         this.confirmModalRef.hide();
       } else {
         this.loading = false;
         this.confirmModalRef.hide();
-        this.messageService.add({ severity: 'info', detail: 'No se pudo actualizar el portafolio' });
+        this.messageService.add({ severity: 'info', detail: '' + data });
       }
     });
   }

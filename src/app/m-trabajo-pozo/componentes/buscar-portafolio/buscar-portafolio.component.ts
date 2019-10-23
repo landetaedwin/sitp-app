@@ -10,6 +10,7 @@ import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 import { Constantes } from 'src/app/resources/constantes';
 import { Operadora } from 'src/app/entidades/operadora';
+import { Bloque } from 'src/app/entidades/bloque';
 
 @Component({
   selector: 'app-buscar-portafolio',
@@ -96,6 +97,11 @@ export class BuscarPortafolioComponent implements OnInit {
             data[i].operadora = new Operadora;
             data[i].operadora.cexCodigo = null;
             data[i].operadora.cexApellidoPaterno = "N/A";
+          }
+          if (!data[i].bloque) {
+            data[i].bloque = new Bloque;
+            data[i].bloque.blqCodigo = null;
+            data[i].bloque.bqlNombre = "N/A";
           }
           dataAux.push(data[i]);
         }

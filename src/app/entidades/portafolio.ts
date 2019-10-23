@@ -11,7 +11,7 @@ export class Portafolio {
     codigoPortafolio: number
     codigoTipoTrabajo: number
     cexCodigo: number
-    bqlCodigo: String
+    blqCodigo: String
     camCodigo: String
     pozCodigo: string
     pozNombre: String
