@@ -55,6 +55,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
     }
     this.maxDate = new Date();
     this.minDate = new Date(2010, 0, 1);
+    this.minDateTrabajo = new Date(2010, 0, 1);
     this.portafolio = this.busquedaService.portafolio;
 
     if (this.portafolio.fechaInicio) {
@@ -139,9 +140,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
     } else {
       this.minDateTrabajo = this.minDate;
     }
-    if (this.portafolio.fechaInicio) {
-      this.minDateTrabajo = new Date(this.portafolio.fechaInicio);
-    }
+
     this.registroModalRef = this.modalService.show(template, { backdrop: 'static', keyboard: false });
 
   }
@@ -186,6 +185,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
 
 
   iniciarOperacionesRegistroDiario() {
+    debugger
     if (this.fechaInicio) {
       this.portafolio.fechaInicio = this.fechaInicio;
       this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro)
@@ -253,6 +253,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
 
   guardarRegistroDiario() {
     this.loading = true;
+    this.registroDiario.fechaAccion = new Date(this.registroDiario.fechaAccion)
     this.dataAPI.transCrearRegistroDiario(this.registroDiario).subscribe(data => {
       if (data) {
         this.loading = false;

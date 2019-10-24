@@ -209,7 +209,7 @@
       <div class="col-md-4"><label>{{cs.fechaAccion}}:</label>
       </div>
       <div class="col-md-8">
-        <p-calendar [style]="{ width: '100%' }" [minDate]="minDateTrabajo" [maxDate]="maxDate"
+        <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
           [inputStyle]="{ width: '100%' }" [(ngModel)]="registroDiario.fechaAccion"></p-calendar>
       </div>
     </div>
@@ -238,7 +238,7 @@
       </div>
 
       <div class="col-md-6" *ngIf="registroDiario.accion == aReinicio">
-        <button type="button" class="btn btn-sm btn-block btn-success" (click)="guardarSuspencion()">
+        <button type="button" class="btn btn-sm btn-block btn-success" (click)="guardarReinicio()">
           Reiniciar trabajo
         </button>
       </div>
