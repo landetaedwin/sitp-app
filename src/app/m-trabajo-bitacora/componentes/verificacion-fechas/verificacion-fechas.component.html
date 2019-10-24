@@ -165,9 +165,9 @@
           <tr *ngFor="let verificacionFechas of fechasList" style="font-size: 11px">
 
             <td>{{verificacionFechas.codVerificacionFechas}} </td>
-            <td>{{verificacionFechas.estado}} </td>
-            <td>{{verificacionFechas.visualizar_valoraciom}} </td>
-            <td>{{verificacionFechas.justificado}} </td>
+            <td>{{verificacionFechas.estado | estadoBitacora}} </td>
+            <td>{{verificacionFechas.valoracion | valoracionBitacora }} </td>
+            <td>{{verificacionFechas.justificado  | JustificadoBitacora}} </td>
             <td>{{verificacionFechas.fecha_actualizacion  | date:'MM-dd-yyyy' }} </td>
             <td>{{verificacionFechas.observacion }} </td>
             

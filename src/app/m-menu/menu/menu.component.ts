@@ -176,6 +176,7 @@ export class MenuComponent implements OnInit {
         visible: this.m1,
         items: [
           { label: 'Buscar portafolio', routerLink: [{ outlets: { sitp: ['buscarPortafolio'] } }], visible: this.i0 },
+          { label: 'Buscar portafolio Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioBitacora'] } }], visible: this.i0 },
         ]
       },
       {
@@ -186,16 +187,12 @@ export class MenuComponent implements OnInit {
         ]
       },
       {
-        label: 'Busqueda de portafolio para verificación',
+        label: 'Bitácora',
         visible: this.m3,
         items: [
-          { label: 'Buscar portfolio Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioBitacora'] } }], visible: this.i0 },
-          { label: 'Verrificación de fechas', routerLink: [{ outlets: { sitp: ['verificacionFechas'] } }], visible: this.i8 },
-          { label: 'Verificación de cumplimiento de tasas', command: () => this.imprimirMensaje(), visible: this.i9 },
-          { label: 'Verificación de producción', routerLink: [{ outlets: { sitp: ['verificacionProduccion'] } }], visible: this.i10 },
-          { label: 'Verificación de Inyección/Reinyección', command: () => this.imprimirMensaje(), visible: this.i11 },
-          { label: 'Verificación de Observaciones', command: () => this.imprimirMensaje(), visible: this.i12 },
-          { label: 'Seguimiento de observaciones', command: () => this.imprimirMensaje(), visible: this.i13 },
+          { label: 'Agregar Novedad', routerLink: [{ outlets: { sitp: [''] } }], visible: this.i0 },
+          { label: 'Verificación Bitácora', routerLink: [{ outlets: { sitp: [''] } }], visible: this.i0 },
+          
         ]
       },
       {

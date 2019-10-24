@@ -19,6 +19,7 @@ import { MMantenimientoModule } from './m-mantenimiento/m-mantenimiento.module';
 @NgModule({
   declarations: [
     AppComponent,
+    
   
 
   ],

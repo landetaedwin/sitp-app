@@ -11,6 +11,7 @@ import { BuscarPortafolioService } from '../../servicios/buscar-portafolio.servi
 import { InformeTrabajoOperadoraService} from '../../servicios/informe-trabajo-operadora.service';
 import{VerificarFechasService} from '../../servicios/verificar-fechas.service';
 import{VerificarNovedadService} from '../../servicios/verificarNovedad.service';
+import{VerificarProduccionService} from '../../servicios/verificar-produccion.service';
 import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
 import { Campo } from 'src/app/entidades/campo';
 import { Pozo } from 'src/app/entidades/pozo';
@@ -36,7 +37,7 @@ export class BuscarPortafolioBitacoraComponent implements OnInit {
   campo: Campo;
 
 
-  constructor(public buscarPortafolioService: BuscarPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router, public informeOperadoraService: InformeTrabajoOperadoraService, public verificarFechasService: VerificarFechasService, public verificarNovedadService :VerificarNovedadService) { 
+  constructor(public buscarPortafolioService: BuscarPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router, public informeOperadoraService: InformeTrabajoOperadoraService, public verificarFechasService: VerificarFechasService, public verificarNovedadService :VerificarNovedadService, public verificarProduccionService: VerificarProduccionService) { 
 
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
@@ -134,8 +135,8 @@ export class BuscarPortafolioBitacoraComponent implements OnInit {
   verificarProduccion(portafolio: Portafolio) {
     console.log("click");
     console.log(portafolio);
-    this.verificarNovedadService.portafolio= portafolio;
-    this.router.navigate(['/menu', { outlets: { sitp: ['verificacionProduccion'] } }]);
+    this.verificarProduccionService.portafolio= portafolio;
+    this.router.navigate(['/menu', { outlets: { sitp: ['verificarProduccion'] } }]);
   }
 
 

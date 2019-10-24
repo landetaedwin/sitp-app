@@ -19,7 +19,11 @@ import { VerificacionTasaComponent } from './componentes/verificacion-tasa/verif
 import { VerificacionInyectorComponent } from './componentes/verificacion-inyector/verificacion-inyector.component';
 import { VerificacionReinyectorComponent } from './componentes/verificacion-reinyector/verificacion-reinyector.component';
 import { VerificacionTrabajoComponent } from './componentes/verificacion-trabajo/verificacion-trabajo.component';
-
+import { EstadoBitacoraPipe } from '../resources/pipes/estado-bitacora';
+import { JustificadoBitacoraPipe } from '../resources/pipes/justificadoBitacora';
+import { ValoracionBitacoraPipe } from '../resources/pipes/valoracionBitacora';
+import { ValoracionProduccionPipe } from '../resources/pipes/valoracion-produccion';
+import { EditarVerificacionProduccionComponent } from './componentes/editar-verificacion-produccion/editar-verificacion-produccion.component';
 
 @NgModule({
   declarations: [ReportesDiariosComponent, VerificacionFechasComponent, VerificacionProduccionComponent, DocumentoOperadoraComponent,
@@ -30,7 +34,14 @@ import { VerificacionTrabajoComponent } from './componentes/verificacion-trabajo
      VerificacionTasaComponent,
      VerificacionInyectorComponent,
      VerificacionReinyectorComponent,
-     VerificacionTrabajoComponent],
+     VerificacionTrabajoComponent,
+     EstadoBitacoraPipe,
+     JustificadoBitacoraPipe,
+     ValoracionBitacoraPipe,
+     EditarVerificacionProduccionComponent, 
+     ValoracionProduccionPipe
+     
+    ],
   imports: [
     CalendarModule,
     DropdownModule,

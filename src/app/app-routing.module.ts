@@ -19,8 +19,9 @@ import { CrearPortafolioComponent } from './m-trabajo-pozo/componentes/crear-por
 import { DocumentoMinisterioComponent } from './m-trabajo-pozo/componentes/documento-ministerio/documento-ministerio.component';
 import { DocumentoOperadoraComponent } from './m-trabajo-pozo/componentes/documento-operadora/documento-operadora.component';
 import { EditarPortafolioComponent } from './m-trabajo-pozo/componentes/editar-portafolio/editar-portafolio.component';
+import {EditarVerificacionProduccionComponent} from './m-trabajo-bitacora/componentes/editar-verificacion-produccion/editar-verificacion-produccion.component';
 import { RegistroTrabajoDiarioComponent } from './m-trabajo-pozo/componentes/registro-trabajo-diario/registro-trabajo-diario.component';
-
+import { VerificacionNovedadComponent } from './m-trabajo-bitacora/componentes/verificacion-novedad/verificacion-novedad.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -39,11 +40,13 @@ const routes: Routes = [
       { path: 'informeOperadora', component: InformeTrabajosOperadoraComponent, outlet: 'sitp' },
       { path: 'reportesDiarios', component: ReportesDiariosComponent, outlet: 'sitp' },
       { path: 'verificacionFechas', component: VerificacionFechasComponent, outlet: 'sitp' },
-      { path: 'verificacionProduccion', component: VerificacionProduccionComponent, outlet: 'sitp' },
+      { path: 'verificarProduccion', component: VerificacionProduccionComponent, outlet: 'sitp' },
       { path: 'mantenimiento-tipo-pozo', component: TipoPozoComponent, outlet: 'sitp' },
+      { path: 'verificarNovedad', component: VerificacionNovedadComponent, outlet: 'sitp' },
       { path: 'reporte-documentos-operadora', component: DocumentoOperadoraComponent, outlet: 'sitp' },
       { path: 'reporte-documentos-ministerio', component: DocumentoMinisterioComponent, outlet: 'sitp' },
       { path: 'editarInformeOperadora', component: EditarInformeOperadoraComponent, outlet: 'sitp' },
+      { path: 'editarVerificarProduccion', component: EditarVerificacionProduccionComponent, outlet: 'sitp' },
       { path: 'verificarInyector', component: VerificacionInyectorComponent, outlet: 'sitp' },
       { path: 'verificarReinyector', component: VerificacionReinyectorComponent, outlet: 'sitp' },
       { path: 'verificarTasa', component: VerificacionTasaComponent, outlet: 'sitp' },

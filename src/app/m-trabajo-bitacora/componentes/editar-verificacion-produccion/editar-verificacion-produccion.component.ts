@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import {Portafolio} from 'src/app/entidades/portafolio';
 import { MessageService, SelectItem } from "primeng/api";
@@ -9,12 +10,13 @@ import { VerificarProduccionService } from 'src/app/m-trabajo-bitacora/servicios
 import { Router, RouterLink } from '@angular/router';
 import { InformeTrabajoOperadoraService } from '../../servicios/informe-trabajo-operadora.service';
 import { Produccion } from 'src/app/entidades/produccion';
+
 @Component({
-  selector: 'app-verificacion-produccion',
-  templateUrl: './verificacion-produccion.component.html',
-  styleUrls: ['./verificacion-produccion.component.css']
+  selector: 'app-editar-verificacion-produccion',
+  templateUrl: './editar-verificacion-produccion.component.html',
+  styleUrls: ['./editar-verificacion-produccion.component.css']
 })
-export class VerificacionProduccionComponent implements OnInit {
+export class EditarVerificacionProduccionComponent implements OnInit {
   today = new Date();
   verificacionProduccion = new VerificacionProduccion();
   produccion = new Produccion();
@@ -32,7 +34,9 @@ export class VerificacionProduccionComponent implements OnInit {
   sumaPorcentaje:number;
   buttonDisabled: boolean = true;
 
-  constructor( http:HttpClient,  public verificarProduccionService: VerificarProduccionService, private messageService: MessageService, public loginService: LoginService, public router: Router) { 
+
+
+  constructor(http:HttpClient,  public verificarProduccionService: VerificarProduccionService, private messageService: MessageService, public loginService: LoginService, public router: Router) { 
     
     this.portafolio = this.verificarProduccionService.portafolio;
 
@@ -60,13 +64,12 @@ export class VerificacionProduccionComponent implements OnInit {
                      ];
 
   }
-
   
   ngOnInit() {
-    this.usuario = this.loginService.sessionValue;
+    this.usuario= this.loginService.sessionValue;
     this.verificacionProduccion.fecha_actualizacion = this.today
   
-   
+
     if (!this.verificarProduccionService.portafolio) {
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
     }
@@ -74,8 +77,14 @@ export class VerificacionProduccionComponent implements OnInit {
     if (!this.usuario) {
       this.router.navigate(['/login'])
     }
+
+  
     this.verificacionProduccion.codPortafolio=this.portafolio.codigoPortafolio ;
     this.verificacionProduccion.tipopozo= this.portafolio.tipoPozo
+
+  
+
+
       //VERIFICA QUE TIPO DE POZO ES
 
    if (this.portafolio.tipoPozo.codigoTipoPozo==2) {
@@ -89,8 +98,11 @@ export class VerificacionProduccionComponent implements OnInit {
   }
   this.produccionList = [];
 
-  this.obtenerTodo();
-
+  this.verificacionProduccion= this.verificarProduccionService.verificarProduccion;
+  this.produccion= this.verificarProduccionService.produccion;
+  
+  this.cargarDatos();
+  this.cargarDatosDespues();
 
   }
 
@@ -140,23 +152,21 @@ export class VerificacionProduccionComponent implements OnInit {
 
   guardar(){
     this.verificacionProduccion.idUsu= this.usuario.idUsuario;
-    this.verificarProduccionService.transCrearVerificarProduccion(this.verificacionProduccion).subscribe(data =>{
+    this.verificarProduccionService.transUpdateVerificacionProduccion(this.verificacionProduccion).subscribe(data =>{
       if (data) {
      //   this.fechasList = data; 
     
      this.verificacionProduccion.fecha_actualizacion = this.today
-   
+     
         this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se creo el Informe de Verificación de Novedad' });
+        this.messageService.add({ severity: 'success', detail: 'Actulización Exitosa' });
         this.obtenerTodo();
 
       } else {
         this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo crear el informe de Verificación de Novedad' });
+        this.messageService.add({ severity: 'info', detail: 'Error al Actualizar' });
   
       }
-
-      console.log(this.verificacionProduccion)
     });
 }
 
@@ -167,6 +177,7 @@ export class VerificacionProduccionComponent implements OnInit {
         if (data) {
           this.produccionList = [];
           this.produccionList = data;
+          this.verificacionProduccion.justificado = null;
           this.verificacionProduccion.observacion = null;
         }
         this.loading = false;
@@ -213,7 +224,6 @@ export class VerificacionProduccionComponent implements OnInit {
   console.log(this.sumaPorcentaje);
   this.verificacionProduccion.Porcentaje_inc_dis= ((this.sumaPorcentaje/this.produccion.promedio_antes)*100)
   this.verificacionProduccion.PorcentajeMostrar=this.verificacionProduccion.Porcentaje_inc_dis.toFixed(2);
-  this.verificacionProduccion.porcentajeControl=this.verificacionProduccion.Porcentaje_inc_dis;
   this.verificacionProduccion.valor_despues= this.produccion.promedio_despues
 
   //OBTENER VALORACION
@@ -222,18 +232,15 @@ export class VerificacionProduccionComponent implements OnInit {
      
       if (this.verificacionProduccion.Porcentaje_inc_dis> 9){
         this.verificacionProduccion.valoracion=0
-        this.verificacionProduccion.descripcionValoracion="Exitoso";
      }
 
       if (this.verificacionProduccion.Porcentaje_inc_dis<10){
       this.verificacionProduccion.valoracion=1
-      this.verificacionProduccion.descripcionValoracion="Medianamente Exitoso";
     }
    
 
       } else{
         this.verificacionProduccion.valoracion=2
-        this.verificacionProduccion.descripcionValoracion="No Exitoso";
       }  
       this.buttonDisabled = false;
       
@@ -245,13 +252,11 @@ export class VerificacionProduccionComponent implements OnInit {
     
   }
 
-  editarProduccion(verificacionProduccion: VerificacionProduccion, produccion: Produccion) {
+  volver(verificacionProduccion: VerificacionProduccion) {
     console.log("click");
     this.verificarProduccionService.verificarProduccion = verificacionProduccion;
-    this.verificarProduccionService.produccion = produccion;
-    this.router.navigate(['/menu', { outlets: { sitp: ['editarVerificarProduccion'] } }]);
+    this.router.navigate(['/menu', { outlets: { sitp: ['verificarProduccion'] } }]);
   }
-
 
 
 }

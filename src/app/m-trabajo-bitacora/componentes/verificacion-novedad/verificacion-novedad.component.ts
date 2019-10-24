@@ -134,8 +134,5 @@ export class VerificacionNovedadComponent implements OnInit {
   
       }
     });
-    
-
-
 }
 }

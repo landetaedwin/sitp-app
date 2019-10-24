@@ -66,6 +66,8 @@ this.novedadList= [
     this.verificarFechas.fecha_actualizacion = this.today
      this.loading = true;  
      
+  
+
      if (!this.verificacionFechaService.portafolio) {
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
     }
