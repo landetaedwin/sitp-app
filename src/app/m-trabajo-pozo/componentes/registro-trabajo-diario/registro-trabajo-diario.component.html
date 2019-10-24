@@ -1,17 +1,4 @@
 <p-fieldset legend="Registro reporte diario trabajos en pozo">
-  <div class="row">
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-primary btn-block">
-        {{cs.guardar}}
-      </button>
-    </div>
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-success btn-block">
-        {{cs.cancelar}}
-      </button>
-    </div>
-  </div>
-  <hr>
   <p-fieldset legend="Datos del portafolio" [toggleable]="true">
     <div class="row mt-1">
       <div class="col-md-4">
@@ -94,10 +81,16 @@
           <div class="col-md-4">
             <p><b>{{cs.fechaInicio}}:</b></p>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-8" *ngIf="!portafolio.fechaInicio">
             <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
               [inputStyle]="{ width: '100%' }" [(ngModel)]="fechaInicio"></p-calendar>
           </div>
+
+          <div class="col-md-8" *ngIf="portafolio.fechaInicio">
+            <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+              [inputStyle]="{ width: '100%' }" [(ngModel)]="fechaInicio" [disabled]="true"></p-calendar>
+          </div>
+
         </div>
       </div>
       <div class="col-md-4">
@@ -105,9 +98,13 @@
           <div class="col-md-4">
             <p><b>{{cs.fechaFin}}:</b></p>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-8" *ngIf="!portafolio.fechaInicio">
             <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
-              [inputStyle]="{ width: '100%' }"></p-calendar>
+              [inputStyle]="{ width: '100%' }" [(ngModel)]="fechaFin"></p-calendar>
+          </div>
+          <div class="col-md-8" *ngIf="portafolio.fechaInicio">
+            <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+              [inputStyle]="{ width: '100%' }" [(ngModel)]="fechaFin" [disabled]="true"></p-calendar>
           </div>
         </div>
       </div>
@@ -127,13 +124,16 @@
           [disabled]="bRegistroDiario">{{cs.registroDiario}}</button>
       </div>
       <div class="col-md-2">
-        <button type="button" class="btn btn-sm btn-info btn-block" [disabled]="bSuspecion">{{cs.suspencion}}</button>
+        <button type="button" class="btn btn-sm btn-info btn-block"
+          (click)="openModalSuspencion(registroDiarioTemplate)" [disabled]="bSuspecion">{{cs.suspencion}}</button>
       </div>
       <div class="col-md-2">
-        <button type="button" class="btn btn-sm btn-info btn-block" [disabled]="bReinicio">{{cs.reinicio}}</button>
+        <button type="button" class="btn btn-sm btn-info btn-block" (click)="openModalReinicio(registroDiarioTemplate)"
+          [disabled]="bReinicio">{{cs.reinicio}}</button>
       </div>
       <div class="col-md-2">
-        <button type="button" class="btn btn-sm btn-info btn-block" [disabled]="bFin">{{cs.terminar}}</button>
+        <button type="button" class="btn btn-sm btn-info btn-block" (click)="finalizarOperacionesRegistroDiario()"
+          [disabled]="bFin">{{cs.terminar}}</button>
       </div>
 
     </div>
@@ -148,14 +148,31 @@
               <th>#</th>
               <th>{{cs.accion}}</th>
               <th>{{cs.fechaAccion}}</th>
-              <th>{{cs.fechaFin}}/{{cs.fechaSuspencion}}</th>
               <th>{{cs.actividad}}</th>
             </tr>
           </thead>
+          <tbody>
+            <tr
+              *ngFor="let reg of registroDiarioList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{reg.accion.accion}}</td>
+              <td>{{reg.fechaAccion | date:'dd/MM/yyyy'}}</td>
+              <td>{{reg.actividad}}</td>
+            </tr>
 
+
+          </tbody>
         </table>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <pagination-controls id="foo" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+          responsive="true">
+          ></pagination-controls>
+      </div>
+    </div>
+
   </p-fieldset>
 </p-fieldset>
 
@@ -167,59 +184,70 @@
 
 
 <ng-template #registroDiarioTemplate>
-  <p-fieldset legend="{{cs.registroDiario}}">
-    <div class="col-md-12">
-      <div class="row">
-        <div class="col-md-12">
-          <h6 style="color: red" [hidden]="!errorCrear">Completa todos los campos de este formulario</h6>
-        </div>
+  <div class="container mt-3 mb-3">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h4>{{cs.registroDiario}}</h4>
+        <hr>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-12">
-              <p><b>{{cs.accion}}:</b></p>
-            </div>
-            <div class="col-md-12">
-              <p>{{registroDiario.accion.accion}}</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-12">
-              <p><b>{{cs.fechaAccion}}:</b></p>
-            </div>
-            <div class="col-md-12">
-              <p>{{registroDiario.fechaAccion | date:'dd/MM/yyyy'}}</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-12">
-              <p><b>{{cs.actividad}}:</b></p>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <textarea class="form-control" rows="5" [(ngModel)]="registroDiario.actividad"></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h6 style="color: red" [hidden]="!errorCrear">Completa todos los campos de este formulario</h6>
       </div>
-      <div class="row justify-content-end mt-3 mb-3">
-        <div class="col-md-4">
-          <button type="button" class="btn btn-sm btn-block btn-success" (click)="guardarRegistroDiario()">
-            Guardar
-          </button>
-        </div>
-        <div class="col-md-4">
-          <button type="button" class="btn btn-sm btn-block btn-danger " (click)="closeModalRegistro()">
-            Cancelar
-          </button>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4"><label>{{cs.accion}}:</label>
+      </div>
+      <div class="col-md-8">
+        <input [value]="registroDiario.accion.accion" pInputText disabled />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4"><label>{{cs.fechaAccion}}:</label>
+      </div>
+      <div class="col-md-8">
+        <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+          [inputStyle]="{ width: '100%' }" [(ngModel)]="registroDiario.fechaAccion"></p-calendar>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4"><label>{{cs.actividad}}:</label>
+      </div>
+      <div class="col-md-8">
+        <div class="form-group">
+          <textarea class="form-control" rows="4" [(ngModel)]="registroDiario.actividad"></textarea>
         </div>
       </div>
     </div>
-  </p-fieldset>
+
+    <div class="row">
+      <div class="col-md-6" *ngIf="registroDiario.accion == aRegistroTrabajo">
+        <button type="button" class="btn btn-sm btn-block btn-success" (click)="guardarRegistroDiario()">
+          Registrar trabajo
+        </button>
+      </div>
+
+      <div class="col-md-6" *ngIf="registroDiario.accion == aSuspencion">
+        <button type="button" class="btn btn-sm btn-block btn-success" (click)="guardarSuspencion()">
+          Suspender trabajo
+        </button>
+      </div>
+
+      <div class="col-md-6" *ngIf="registroDiario.accion == aReinicio">
+        <button type="button" class="btn btn-sm btn-block btn-success" (click)="guardarReinicio()">
+          Reiniciar trabajo
+        </button>
+      </div>
+
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-block btn-danger " (click)="closeModalRegistro()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
 </ng-template>

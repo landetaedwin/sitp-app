@@ -41,7 +41,6 @@ export class TipoPozoComponent implements OnInit {
 
   getTipoPozoList() {
     this.mantenimientoService.findTipoPozoList().subscribe((data: TipoPozo[]) => {
-      debugger
       this.tipoPozoList = data;
     });
   }

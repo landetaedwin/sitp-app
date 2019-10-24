@@ -4,12 +4,12 @@ import { Usuario } from '../m-login/entidades/usuario';
 
 export class BusquedaParametros {
     numeroPortafolio: number = null;
-    pozo: String = null;
+    pozo: string = null;
     fechaDesde: Date = null;
     fechaHasta: Date = null;
     funcionario: String = null;
-    bloque: Bloque = null;
-    campo: Campo = null;
+    bloque: string = null;
+    campo: string = null;
     estado: number = null;
     usuario: Usuario = null;
 }

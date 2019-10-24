@@ -6,7 +6,17 @@
         Buscar
       </button>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+      <button type="button" class="btn btn-sm btn-success btn-block" (click)="crearPortafolio()">
+        Nuevo Portafolio
+      </button>
+    </div>
+    <div class="col-md-2" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
+      <button type="button" class="btn btn-sm btn-success btn-block" (click)="crearPortafolio()">
+        Nuevo Portafolio
+      </button>
+    </div>
+    <div class="col-md-2" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '17'">
       <button type="button" class="btn btn-sm btn-success btn-block" (click)="crearPortafolio()">
         Nuevo Portafolio
       </button>
@@ -15,7 +25,7 @@
 
   <hr>
 
-  <div class="row">
+  <div class="row" (keyup.enter)="buscarPortafolio()">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
@@ -101,19 +111,26 @@
   <div class="row">
     <div class="col-md-12">
       <ul class="nav justify-content-end">
-        <li>
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
           <i class="fa fa-pencil " aria-hidden="true"> Editar</i>
         </li>
-        <li>
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
           <i class="fa fa-calendar-check-o " aria-hidden="true"> Registrar trabajo diario</i>
         </li>
-        <li>
-          <i class="fa fa-paperclip " aria-hidden="true"> Adjuntar documentos</i>
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '17'">
+          <i class="fa fa-calendar-check-o " aria-hidden="true"> Registrar trabajo diario</i>
         </li>
-        <li>
+
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
           <i class="fa fa-file-pdf-o " aria-hidden="true"> Registrar Doc Ministerio</i>
         </li>
-        <li>
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+          <i class="fa fa-file-pdf-o " aria-hidden="true"> Registrar Doc Ministerio</i>
+        </li>
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
+          <i class="fa fa-user " aria-hidden="true"> Informe final operadora</i>
+        </li>
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
           <i class="fa fa-user " aria-hidden="true"> Informe final operadora</i>
         </li>
       </ul>
@@ -122,7 +139,7 @@
   <br>
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 table-responsive">
       <table class="table table-bordered table-sm">
         <thead>
           <tr>
@@ -133,13 +150,15 @@
             <th>Pozo</th>
             <th>Trabajo</th>
             <th>Numero</th>
-            <th>Fecha</th>
+            <th>Fecha Registro</th>
+            <th>Estado</th>
             <th>Accion</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            *ngFor="let portafolio of portafolioList| paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;">
+            *ngFor="let portafolio of portafolioList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
+
             <td>{{i+1}} </td>
             <td>{{portafolio.operadora.cexApellidoPaterno}} </td>
             <td>{{portafolio.bloque.bqlNombre}}</td>
@@ -148,23 +167,38 @@
             <td>{{portafolio.tipoTrabajo.tipoTrabajo}}</td>
             <td>{{portafolio.numeroTrabajo}}</td>
             <td>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</td>
+            <td>{{portafolio.estado}}</td>
             <td class="text-center" style="width:10%;">
               <div class="row">
                 <div class="col-md-12">
                   <ul class="nav">
-                    <li (click)="editarPortafolio(portafolio)">
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      (click)="editarPortafolio(portafolio)">
                       <i class="fa fa-pencil fa-2x"></i>
                     </li>
-                    <li (click)="goToRegistroDiario(portafolio)">
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      (click)="goToRegistroDiario(portafolio)">
                       <i class="fa fa-calendar-check-o fa-2x"></i>
                     </li>
-                    <li>
-                      <i class="fa fa-paperclip fa-2x" aria-hidden="true"></i>
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '17'"
+                      (click)="goToRegistroDiario(portafolio)">
+                      <i class="fa fa-calendar-check-o fa-2x"></i>
                     </li>
-                    <li (click)="goToDocumentoMinisterio(portafolio)">
+
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                      (click)="goToDocumentoMinisterio(portafolio)">
                       <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
                     </li>
-                    <li (click)="goToInformeOperadora(portafolio)">
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                      (click)="goToInformeOperadora(portafolio)">
+                      <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                    </li>
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      (click)="goToDocumentoMinisterio(portafolio)">
+                      <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
+                    </li>
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      (click)="goToInformeOperadora(portafolio)">
                       <i class="fa fa-user fa-2x" aria-hidden="true"></i>
                     </li>
                   </ul>
@@ -183,8 +217,8 @@
   </div>
   <div class="row">
     <div class="col-md-12 text-center">
-      <pagination-controls id="paginator" (pageChange)="page_number = $event" previousLabel="Anterior"
-        nextLabel="Siguiente" responsive="true">
+      <pagination-controls id="foo" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+        responsive="true">
         ></pagination-controls>
     </div>
   </div>

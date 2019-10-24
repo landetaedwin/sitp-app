@@ -103,7 +103,6 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
 guardarInformeTrabajo(){
 
 
-  //debugger;
   this.loading= true;
   this.informeOperadora.id_usuario= this.usuario.idUsuario;
   this.portafolio = this.informeTrabajoOperadoraService.portafolio;

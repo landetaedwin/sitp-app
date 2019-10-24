@@ -13,6 +13,7 @@ import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { Router, RouterLink } from '@angular/router';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
+import { CreateUpdateService } from '../../servicios/create-update.service';
 @Component({
   selector: "app-crear-portafolio",
   templateUrl: "./crear-portafolio.component.html",
@@ -43,7 +44,8 @@ export class CrearPortafolioComponent implements OnInit {
   maxDate: Date;
 
   constructor(
-    public crearPortafolioService: CrearPortafolioService,
+
+    public dataApi: CreateUpdateService,
     public busquedaService: BusquedaService,
     private messageService: MessageService,
     public loginService: LoginService,
@@ -67,7 +69,6 @@ export class CrearPortafolioComponent implements OnInit {
     }
 
     this.onLimitDate();
-
     this.initComponentes();
     this.bloque.bqlNombre = "n/a";
     this.operadora.cexApellidoPaterno = "n/a";
@@ -142,9 +143,9 @@ export class CrearPortafolioComponent implements OnInit {
   cargarBloqueByBlqCodigo(campo: Campo) {
     this.bloque.bqlNombre = "n/a";
     this.loading = true;
-    if (campo.bqlCodigo) {
+    if (campo.blqCodigo) {
       this.loading = true;
-      this.busquedaService.getBloqueByBloqueCodigo(campo.bqlCodigo).subscribe(
+      this.busquedaService.getBloqueByBloqueCodigo(campo.blqCodigo).subscribe(
         (data: Bloque) => {
           if (data) {
             this.bloque = data;
@@ -193,13 +194,14 @@ export class CrearPortafolioComponent implements OnInit {
 
   numeroTrabajo: number;
   guardarPortafolio() {
+    debugger
 
     this.loading = true;
     this.portafolio.codigoConsorcio = this.consorcio.codigoConsorcio;
     this.portafolio.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
     this.portafolio.codigoTipoPozo = this.tipoPozo.codigoTipoPozo;
     this.portafolio.cexCodigo = this.operadora.cexCodigo;
-    this.portafolio.bqlCodigo = this.bloque.blqCodigo;
+    this.portafolio.blqCodigo = this.bloque.blqCodigo;
     this.portafolio.camCodigo = this.campo.camCodigo;
     this.portafolio.pozCodigo = this.pozo.pozCodigo;
     this.portafolio.numeroTrabajo = this.numeroTrabajo;
@@ -207,15 +209,15 @@ export class CrearPortafolioComponent implements OnInit {
     this.portafolio.fechaRegistro = this.today;
     this.portafolio.idUsuario = this.usuario.idUsuario;
 
-    this.crearPortafolioService.transCrearPortafolio(this.portafolio).subscribe(data => {
+    this.dataApi.transCrearPortafolio(this.portafolio).subscribe(data => {
 
-      if (data) {
+      if (data == "El portafolio ha sido creado correctamente") {
         this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se creo el portafolio' });
+        this.messageService.add({ severity: 'success', detail: '' + data });
         this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
       } else {
         this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo crear el portafolio' });
+        this.messageService.add({ severity: 'info', detail: '' + data });
 
       }
     });

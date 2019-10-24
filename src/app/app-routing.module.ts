@@ -20,6 +20,7 @@ import { DocumentoMinisterioComponent } from './m-trabajo-pozo/componentes/docum
 import { DocumentoOperadoraComponent } from './m-trabajo-pozo/componentes/documento-operadora/documento-operadora.component';
 import { EditarPortafolioComponent } from './m-trabajo-pozo/componentes/editar-portafolio/editar-portafolio.component';
 import {EditarVerificacionProduccionComponent} from './m-trabajo-bitacora/componentes/editar-verificacion-produccion/editar-verificacion-produccion.component';
+import { HistorialPozoComponent } from './m-trabajo-pozo/componentes/historial-pozo/historial-pozo.component';
 import { RegistroTrabajoDiarioComponent } from './m-trabajo-pozo/componentes/registro-trabajo-diario/registro-trabajo-diario.component';
 import { VerificacionNovedadComponent } from './m-trabajo-bitacora/componentes/verificacion-novedad/verificacion-novedad.component';
 
@@ -51,6 +52,10 @@ const routes: Routes = [
       { path: 'verificarReinyector', component: VerificacionReinyectorComponent, outlet: 'sitp' },
       { path: 'verificarTasa', component: VerificacionTasaComponent, outlet: 'sitp' },
       { path: 'verificarTrabajo', component: VerificacionTrabajoComponent, outlet: 'sitp' },
+      { path: 'historialPozo', component: HistorialPozoComponent, outlet: 'sitp' },
+
+
+
 
     ]
   }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CrearPortafolioComponent } from './crear-portafolio.component';
+import { HistorialPozoComponent } from './historial-pozo.component';
 
-describe('CrearPortafolioComponent', () => {
-  let component: CrearPortafolioComponent;
-  let fixture: ComponentFixture<CrearPortafolioComponent>;
+describe('HistorialPozoComponent', () => {
+  let component: HistorialPozoComponent;
+  let fixture: ComponentFixture<HistorialPozoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CrearPortafolioComponent ]
+      declarations: [ HistorialPozoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CrearPortafolioComponent);
+    fixture = TestBed.createComponent(HistorialPozoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

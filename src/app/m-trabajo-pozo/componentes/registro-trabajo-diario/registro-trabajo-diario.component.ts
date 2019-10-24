@@ -4,12 +4,12 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MessageService } from 'primeng/api';
 import { Accion } from 'src/app/entidades/accion';
 import { Portafolio } from 'src/app/entidades/portafolio';
+import { RegistroDiario } from 'src/app/entidades/registro-diario';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { Constantes } from 'src/app/resources/constantes';
-import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
-import { EditarPortafolioService } from '../../servicios/editar-portafolio.service';
-import { RegistroDiario } from 'src/app/entidades/registro-diario';
+import { BusquedaService } from '../../servicios/buscar-portafolio.service';
+import { CreateUpdateService } from '../../servicios/create-update.service';
 
 @Component({
   selector: 'app-registro-trabajo-diario',
@@ -21,15 +21,18 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
   usuario: Usuario;
   portafolio: Portafolio = new Portafolio;
   registroDiario: RegistroDiario = new RegistroDiario;
+  registroDiarioList: RegistroDiario[] = []
 
   maxDate: Date;
   minDate: Date;
 
-  fechaInicio: Date;
+  minDateTrabajo: Date;
 
+  fechaInicio: Date;
+  fechaFin: Date;
   registroModalRef: BsModalRef;
 
-  bIniciar: boolean = false;
+  bIniciar: boolean = true;
   bRegistroDiario: boolean = true;
   bSuspecion: boolean = true;
   bReinicio: boolean = true;
@@ -39,7 +42,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
   aSuspencion: Accion = new Accion;
   aReinicio: Accion = new Accion;
 
-  constructor(public loginService: LoginService, public editarPortafolioService: EditarPortafolioService, public cs: Constantes, private crearPortafolioService: CrearPortafolioService, public messageService: MessageService, public router: Router, private modalService: BsModalService) {
+  constructor(public loginService: LoginService, public busquedaService: BusquedaService, public cs: Constantes, private dataAPI: CreateUpdateService, public messageService: MessageService, public router: Router, private modalService: BsModalService) {
   }
   ngOnInit() {
     this.loading = true;
@@ -47,30 +50,69 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
     if (!this.usuario) {
       this.router.navigate(['/login']);
     }
-    if (!this.editarPortafolioService.portafolio) {
+    if (!this.busquedaService.portafolio) {
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
     }
     this.maxDate = new Date();
     this.minDate = new Date(2010, 0, 1);
-    this.portafolio = this.editarPortafolioService.portafolio;
-    this.getAccionList();
+    this.minDateTrabajo = new Date(2010, 0, 1);
+    this.portafolio = this.busquedaService.portafolio;
 
     if (this.portafolio.fechaInicio) {
+      this.fechaInicio = new Date(this.portafolio.fechaInicio);
       this.bIniciar = true;
       this.bRegistroDiario = false;
-      this.bSuspecion = false;
-      this.bReinicio = false;
       this.bFin = false;
+    } else {
+      this.bIniciar = false;
     }
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
+
+
+    if (this.portafolio.fechaFin) {
+      this.fechaFin = new Date(this.portafolio.fechaFin);
+      this.bIniciar = true;
+      this.bRegistroDiario = true
+      this.bSuspecion = true;
+      this.bReinicio = true;
+      this.bFin = true;
+    }
+
+    this.getAccionList();
+    this.getRegistroDiarioList();
+
+  }
+
+  getRegistroDiarioList() {
+    this.busquedaService.getRegistroDiarioList(this.portafolio.codigoPortafolio).subscribe((data: RegistroDiario[]) => {
+      if (data && data.length > 0 && !this.portafolio.fechaFin) {
+        if (data[0].codigoAccion == this.aRegistroTrabajo.codigoAccion) {
+          this.bRegistroDiario = false;
+          this.bSuspecion = false;
+          this.bReinicio = true;
+        }
+        if (data[0].codigoAccion == this.aSuspencion.codigoAccion) {
+          this.bRegistroDiario = true;
+          this.bSuspecion = true;
+          this.bReinicio = false;
+        }
+        if (data[0].codigoAccion == this.aReinicio.codigoAccion) {
+          this.bRegistroDiario = false;
+          this.bSuspecion = false;
+          this.bReinicio = true;
+        }
+      }
+      setTimeout(() => {
+        this.registroDiarioList = data;
+        this.loading = false;
+
+      }, 500);
+    });
   }
 
   getAccionList() {
-    this.crearPortafolioService.findAccionList().subscribe((data: Accion[]) => {
+    this.busquedaService.getAccionList().subscribe((data: Accion[]) => {
       for (let i = 0; i < data.length; i++) {
-        debugger
+
         if (data[i].codigoAccion == 1) {
           this.aRegistroTrabajo = data[i];
         }
@@ -84,54 +126,174 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
     });
   }
 
+
+  //Modal registro diario 
   openModalRegistro(template: TemplateRef<any>) {
-    this.loading = true;
     this.registroDiario = new RegistroDiario;
     this.registroDiario.codigoAccion = this.aRegistroTrabajo.codigoAccion;
     this.registroDiario.accion = this.aRegistroTrabajo;
     this.registroDiario.codigoPortafolio = this.portafolio.codigoPortafolio;
-    this.registroDiario.fechaAccion = new Date();
     this.registroDiario.idUsuario = this.usuario.idUsuario;
     this.registroDiario.estado = 1;
+    if (this.registroDiarioList.length > 0 && this.registroDiarioList[0].fechaAccion) {
+      this.minDateTrabajo = new Date(this.registroDiarioList[0].fechaAccion);
+    } else {
+      this.minDateTrabajo = this.minDate;
+    }
+
     this.registroModalRef = this.modalService.show(template, { backdrop: 'static', keyboard: false });
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
-    console.log(this.aRegistroTrabajo)
+
   }
 
   closeModalRegistro() {
     this.registroModalRef.hide();
   }
 
+  // Modal suspencion
+  openModalSuspencion(template: TemplateRef<any>) {
+    this.registroDiario = new RegistroDiario;
+    this.registroDiario.codigoAccion = this.aSuspencion.codigoAccion;
+    this.registroDiario.accion = this.aSuspencion;
+    this.registroDiario.codigoPortafolio = this.portafolio.codigoPortafolio;
+    this.registroDiario.idUsuario = this.usuario.idUsuario;
+    this.registroDiario.estado = 1;
+    if (this.registroDiarioList.length > 0 && this.registroDiarioList[0].fechaAccion) {
+      this.minDateTrabajo = new Date(this.registroDiarioList[0].fechaAccion);
+    } else {
+      this.minDateTrabajo = this.minDate;
+    }
+    this.registroModalRef = this.modalService.show(template, { backdrop: 'static', keyboard: false });
+
+  }
+
+  // Modal suspencion
+  openModalReinicio(template: TemplateRef<any>) {
+    this.registroDiario = new RegistroDiario;
+    this.registroDiario.codigoAccion = this.aReinicio.codigoAccion;
+    this.registroDiario.accion = this.aReinicio;
+    this.registroDiario.codigoPortafolio = this.portafolio.codigoPortafolio;
+    this.registroDiario.idUsuario = this.usuario.idUsuario;
+    this.registroDiario.estado = 1;
+    if (this.registroDiarioList.length > 0 && this.registroDiarioList[0].fechaAccion) {
+      this.minDateTrabajo = new Date(this.registroDiarioList[0].fechaAccion);
+    } else {
+      this.minDateTrabajo = this.minDate;
+    }
+    this.registroModalRef = this.modalService.show(template, { backdrop: 'static', keyboard: false });
+
+  }
+
+
   iniciarOperacionesRegistroDiario() {
+    debugger
     if (this.fechaInicio) {
       this.portafolio.fechaInicio = this.fechaInicio;
+      this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro)
     } else {
       this.portafolio.fechaInicio = new Date();
+      this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro);
+      if (this.portafolio.fechaTrabajoSinTorre) {
+        this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
+      }
+      if (this.portafolio.consorcio.fechaRegistro) {
+        this.portafolio.consorcio.fechaRegistro = new Date(this.portafolio.consorcio.fechaRegistro);
+      }
+
     }
-    this.crearPortafolioService.transUpdatePortafolio(this.portafolio).subscribe(data => {
+    this.dataAPI.transUpdatePortafolio(this.portafolio).subscribe(data => {
       if (data) {
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se inician las operaciones' });
         this.bIniciar = true;
+        this.bRegistroDiario = false;
+        this.bFin = false;
+        this.fechaInicio = this.portafolio.fechaInicio;
+      }
+    });
+  }
+
+
+  finalizarOperacionesRegistroDiario() {
+    if (this.fechaFin) {
+      this.portafolio.fechaFin = this.fechaFin;
+      this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
+      this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro)
+      if (this.portafolio.fechaTrabajoSinTorre) {
+        this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
+      }
+      if (this.portafolio.consorcio.fechaRegistro) {
+        this.portafolio.consorcio.fechaRegistro = new Date(this.portafolio.consorcio.fechaRegistro);
+      }
+
+    } else {
+      this.portafolio.fechaFin = new Date();
+      this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
+      this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro);
+      if (this.portafolio.fechaTrabajoSinTorre) {
+        this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
+      }
+      if (this.portafolio.consorcio.fechaRegistro) {
+        this.portafolio.consorcio.fechaRegistro = new Date(this.portafolio.consorcio.fechaRegistro);
+      }
+
+    }
+    this.dataAPI.transUpdatePortafolio(this.portafolio).subscribe(data => {
+      if (data) {
+        this.loading = false;
+        this.messageService.add({ severity: 'success', detail: 'Se finalizaron las operaciones' });
+        this.bIniciar = true;
+        this.bRegistroDiario = true
+        this.bSuspecion = true;
+        this.bReinicio = true;
+        this.bFin = true;
+        this.fechaFin = this.portafolio.fechaFin;
       }
     });
   }
 
   guardarRegistroDiario() {
     this.loading = true;
-    debugger
-    this.crearPortafolioService.transCrearRegistroDiario(this.registroDiario).subscribe(data => {
+    this.registroDiario.fechaAccion = new Date(this.registroDiario.fechaAccion)
+    this.dataAPI.transCrearRegistroDiario(this.registroDiario).subscribe(data => {
       if (data) {
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Registro diario creado correctamente' });
+        this.getRegistroDiarioList();
         this.bIniciar = true;
         this.closeModalRegistro();
       }
     })
+  }
+
+  guardarSuspencion() {
+    this.loading = true;
+    this.dataAPI.transCrearRegistroDiario(this.registroDiario).subscribe(data => {
+      if (data) {
+        this.loading = false;
+        this.messageService.add({ severity: 'success', detail: 'Suspencion creada correctamente' });
+        this.getRegistroDiarioList();
+        this.bIniciar = true;
+        this.closeModalRegistro();
+      }
+    })
+  }
+
+  guardarReinicio() {
+    this.loading = true;
+    this.dataAPI.transCrearRegistroDiario(this.registroDiario).subscribe(data => {
+      if (data) {
+        this.loading = false;
+        this.messageService.add({ severity: 'success', detail: 'Reinicio creado correctamente' });
+        this.getRegistroDiarioList();
+        this.bIniciar = true;
+        this.closeModalRegistro();
+      }
+    })
+  }
 
 
+  goToBuscarPortafolio() {
+    this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
   }
 
 

@@ -78,7 +78,8 @@ export class MenuComponent implements OnInit {
 
     this.userCI = this.usuario.usuarioLogin;
 
-    if (this.usuario.perfil.codigoPerfil == '1') {
+    //ADMINISTRADOR
+    if (this.usuario.perfil.codigoPerfil == '21') {
       this.m1 = true;
       this.m2 = true;
       this.m3 = true;
@@ -115,9 +116,8 @@ export class MenuComponent implements OnInit {
 
     }
     //matriz
-    if (this.usuario.perfil.codigoPerfil == '2') {
+    if (this.usuario.perfil.codigoPerfil == '16') {
       this.m1 = true;
-      this.m2 = true;
       this.m3 = true;
       this.m6 = true;
       this.i0 = true;
@@ -133,9 +133,8 @@ export class MenuComponent implements OnInit {
 
     }
     //regional
-    if (this.usuario.perfil.codigoPerfil == '3') {
+    if (this.usuario.perfil.codigoPerfil == '17') {
       this.m1 = true;
-      this.m2 = true;
       this.m6 = true;
       this.i0 = true;
       this.i1 = true;
@@ -145,13 +144,13 @@ export class MenuComponent implements OnInit {
 
     }
     //pagos
-    if (this.usuario.perfil.codigoPerfil == '4') {
+    if (this.usuario.perfil.codigoPerfil == '18') {
       this.m5 = true;
       this.i19 = true;
       this.i20 = true;
     }
     //tazas
-    if (this.usuario.perfil.codigoPerfil == '5') {
+    if (this.usuario.perfil.codigoPerfil == '19') {
       this.m4 = true;
       this.m6 = true;
       this.i14 = true;
@@ -164,7 +163,7 @@ export class MenuComponent implements OnInit {
 
     }
     //bitacora
-    if (this.usuario.perfil.codigoPerfil == '6') {
+    if (this.usuario.perfil.codigoPerfil == '20') {
       this.m6 = true;
       this.i21 = true;
       this.i22 = true;
@@ -175,8 +174,10 @@ export class MenuComponent implements OnInit {
         label: 'Portafolio',
         visible: this.m1,
         items: [
+          { label: 'Crear portafolio', routerLink: [{ outlets: { sitp: ['crearPortafolio'] } }], visible: this.i1 },
           { label: 'Buscar portafolio', routerLink: [{ outlets: { sitp: ['buscarPortafolio'] } }], visible: this.i0 },
           { label: 'Buscar portafolio Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioBitacora'] } }], visible: this.i0 },
+          { label: 'Historial de pozo', routerLink: [{ outlets: { sitp: ['historialPozo'] } }], visible: this.i0 },
         ]
       },
       {

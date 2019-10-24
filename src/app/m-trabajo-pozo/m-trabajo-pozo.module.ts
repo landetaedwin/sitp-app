@@ -16,7 +16,9 @@ import { DocumentoMinisterioComponent } from './componentes/documento-ministerio
 import { DocumentoOperadoraComponent } from './componentes/documento-operadora/documento-operadora.component';
 import { EditarPortafolioComponent } from "./componentes/editar-portafolio/editar-portafolio.component";
 import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-diario/registro-trabajo-diario.component';
-
+import { NumerosDocDirective } from '../resources/directivas/numeros-doc.directive';
+import { HistorialPozoComponent } from './componentes/historial-pozo/historial-pozo.component';
+import { ToastModule } from 'primeng/toast';
 
 
 
@@ -26,10 +28,13 @@ import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-d
     EditarPortafolioComponent,
     BuscarPortafolioComponent,
     AsignacionCamposComponent,
-    FilterSearchPipe,
     RegistroTrabajoDiarioComponent,
     DocumentoOperadoraComponent,
-    DocumentoMinisterioComponent
+    DocumentoMinisterioComponent,
+    FilterSearchPipe,
+    NumerosDocDirective,
+    HistorialPozoComponent,
+
 
   ],
   imports: [
@@ -39,9 +44,8 @@ import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-d
     BrowserAnimationsModule,
     DropdownModule,
     CalendarModule,
-
     NgxPaginationModule,
-
+    ToastModule,
 
     ModalModule.forRoot(),
     NgxLoadingModule.forRoot({})

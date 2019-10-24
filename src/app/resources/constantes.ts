@@ -35,4 +35,12 @@ export class Constantes {
     //Acciones
     guardar = 'Guardar'
     cancelar = 'Cancelar'
+
+    adjuntarDocumento = "Adjuntar Documento"
+
+
+
+    codigoPerfilAdministrador = "21";
+    codigoPerfilMatriz = "16";
+    codigoPerfilRegional = "17";
 }

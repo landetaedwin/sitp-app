@@ -7,9 +7,10 @@ import { Portafolio } from 'src/app/entidades/portafolio';
 import { Pozo } from 'src/app/entidades/pozo';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
-import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
-import { EditarPortafolioService } from '../../servicios/editar-portafolio.service';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
+import { Constantes } from 'src/app/resources/constantes';
+import { Operadora } from 'src/app/entidades/operadora';
+import { Bloque } from 'src/app/entidades/bloque';
 
 @Component({
   selector: 'app-buscar-portafolio',
@@ -31,7 +32,7 @@ export class BuscarPortafolioComponent implements OnInit {
   page_number: number = 1;
   total: number = 8;
 
-  constructor(public busquedaService: BusquedaService, private crearPortafolioService: CrearPortafolioService, private messageService: MessageService, public loginService: LoginService, public router: Router, public editarPortafolioService: EditarPortafolioService) {
+  constructor(public busquedaService: BusquedaService, private messageService: MessageService, public loginService: LoginService, public router: Router, public prop: Constantes) {
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
   }
@@ -80,15 +81,34 @@ export class BuscarPortafolioComponent implements OnInit {
   buscarPortafolio() {
     this.loading = true;
     this.portafolioList = [];
-
     if (this.pozo) {
-      this.busquedaParametros.pozo = this.pozo.pozNombre;
+      this.busquedaParametros.pozo = this.pozo.pozCodigo;
     }
-    this.busquedaService.findPortafolioList(this.busquedaParametros).subscribe((data: Portafolio[]) => {
+    if (this.campo) {
+      this.busquedaParametros.campo = this.campo.camCodigo;
+    }
+    this.busquedaService.getPortafolioList(this.busquedaParametros).subscribe((data: Portafolio[]) => {
       if (data) {
-        this.portafolioList = data;
+
+        let dataAux: Portafolio[] = [];
+
+        for (let i: number = 0; i < data.length; i++) {
+          if (!data[i].operadora) {
+            data[i].operadora = new Operadora;
+            data[i].operadora.cexCodigo = null;
+            data[i].operadora.cexApellidoPaterno = "N/A";
+          }
+          if (!data[i].bloque) {
+            data[i].bloque = new Bloque;
+            data[i].bloque.blqCodigo = null;
+            data[i].bloque.bqlNombre = "N/A";
+          }
+          dataAux.push(data[i]);
+        }
+        this.portafolioList = dataAux;
         this.busquedaParametros.numeroPortafolio = null;
         this.busquedaParametros.pozo = null;
+        this.busquedaParametros.campo = null;
         this.busquedaParametros.fechaDesde = null;
         this.busquedaParametros.fechaHasta = null;
         this.busquedaParametros.funcionario = null;
@@ -99,6 +119,7 @@ export class BuscarPortafolioComponent implements OnInit {
         this.messageService.add({ severity: 'info', detail: 'No se encontraron datos' });
         this.busquedaParametros.numeroPortafolio = null;
         this.busquedaParametros.pozo = null;
+        this.busquedaParametros.campo = null;
         this.busquedaParametros.fechaDesde = null;
         this.busquedaParametros.fechaHasta = null;
         this.busquedaParametros.funcionario = null;
@@ -106,36 +127,31 @@ export class BuscarPortafolioComponent implements OnInit {
         this.pozo = null;
         this.loading = false;
       }
-
     });
   }
 
   crearPortafolio() {
-    this.loading = true;
     this.router.navigate(['/menu', { outlets: { sitp: ['crearPortafolio'] } }]);
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
   }
 
   editarPortafolio(portafolio: Portafolio) {
-    this.editarPortafolioService.portafolio = portafolio;
+    this.busquedaService.portafolio = portafolio;
     this.router.navigate(['/menu', { outlets: { sitp: ['editarPortafolio'] } }]);
   }
 
 
   goToRegistroDiario(portafolio: Portafolio) {
-    this.editarPortafolioService.portafolio = portafolio;
+    this.busquedaService.portafolio = portafolio;
     this.router.navigate(['/menu', { outlets: { sitp: ['registroDiario'] } }]);
   }
 
   goToInformeOperadora(portafolio: Portafolio) {
-    this.editarPortafolioService.portafolio = portafolio;
+    this.busquedaService.portafolio = portafolio;
     this.router.navigate(['/menu', { outlets: { sitp: ['reporte-documentos-operadora'] } }]);
   }
 
   goToDocumentoMinisterio(portafolio: Portafolio) {
-    this.editarPortafolioService.portafolio = portafolio;
+    this.busquedaService.portafolio = portafolio;
     this.router.navigate(['/menu', { outlets: { sitp: ['reporte-documentos-ministerio'] } }]);
   }
 

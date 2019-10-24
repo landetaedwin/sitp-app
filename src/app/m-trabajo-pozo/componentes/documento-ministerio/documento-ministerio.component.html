@@ -1,15 +1,10 @@
 <p-fieldset legend="Registro documentos habilitantes ministerio">
-  <div class="row">
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-primary btn-block">
-        {{cs.guardar}}
-      </button>
+  <div class="row justify-content-end">
+    <div class="col-md-3">
+      <button type="button" class="btn btn-sm btn-primary btn-block"
+        (click)="openModalDocumeto(documentoTemplate)">{{cs.adjuntarDocumento}}</button>
     </div>
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-success btn-block">
-        {{cs.cancelar}}
-      </button>
-    </div>
+
   </div>
   <hr>
   <p-fieldset legend="Datos del portafolio" [toggleable]="true">
@@ -104,121 +99,207 @@
   </p-fieldset>
   <br>
 
-  <p-fieldset legend="Documentos operadora" [toggleable]="true">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Nro. SGC:</b></label>
-        </div>
-        <div class="col-md">
-          <input pInputText />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Nro. Oficio:</b></label>
-        </div>
-        <div class="col-md">
-          <input pInputText />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Dir. Oficio:</b></label>
-        </div>
-        <div class="col-md">
-          <input type="file" accept=".pdf" required>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Adjuntar anexos:</b></label>
-        </div>
-        <div class="col-md">
-          <input type="file" accept=".pdf" required>
-        </div>
+  <p-fieldset legend="Documentos ministerio" [toggleable]="true">
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-bordered table-sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nro SGC</th>
+              <th>Nro Oficio</th>
+              <th>Anexos</th>
+              <th>Fecha oficio</th>
+              <th>Asunto</th>
+              <th>Resolución</th>
+              <th>Objetivo</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let doc of documentoMinisterioList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
+
+              <td>{{i+1}} </td>
+              <td>{{doc.numeroSGC}} </td>
+              <td>{{doc.numeroOficio}} </td>
+              <td>
+                <ul>
+                  <li *ngIf="doc.urlOficio">{{doc.urlOficio}}</li>
+                  <li *ngIf="doc.urlAnexo1">{{doc.urlAnexo1}}</li>
+                </ul>
+              </td>
+              <td>{{doc.fechaOficio  | date:'dd/MM/yyyy'}} </td>
+              <td>{{doc.asunto.asunto}} </td>
+              <td>{{doc.numeroResolucion}} </td>
+              <td>{{doc.objetivo}} </td>
+              <td>{{doc.estado}} </td>
+            </tr>
+          </tbody>
+
+        </table>
       </div>
     </div>
 
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Fecha oficio:</b></label>
-        </div>
-        <div class="col-md">
-          <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }">
-          </p-calendar>
-        </div>
+    <div class="row" *ngIf="documentoMinisterioList.length > 9">
+      <div class="col-md-12 text-center">
+        <pagination-controls id="foo" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+          responsive="true">
+          ></pagination-controls>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Fecha Oficio:</b></label>
-        </div>
-        <div class="col-md">
-          <input pInputText />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Asunto:</b></label>
-        </div>
-        <div class="col-md">
-          <p-dropdown [filter]="true">
-          </p-dropdown>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Nro Resolución:</b></label>
-        </div>
-        <div class="col-md">
-          <input pInputText />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Objetivo:</b></label>
-        </div>
-        <div class="col-md">
-          <input pInputText />
-        </div>
-      </div>
-    </div>
+
 
   </p-fieldset>
 
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-bordered table-sm">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nro SGC</th>
-            <th>Nro Oficio</th>
-            <th>Anexo</th>
-            <th>Fecha oficio</th>
-            <th>Asunto</th>
-            <th>Resolución</th>
-            <th>Objetivo</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
 
-      </table>
+
+  <ng-template #documentoTemplate>
+    <div class="container mt-3 mb-3">
+
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h4>Documentos habilitantes minsterio</h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label><b>Nro. SGC:</b></label>
+            </div>
+            <div class="col-md-8">
+              <input [(ngModel)]="documentoMinisterio.numeroSGC" pInputText numeros-doc />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label><b>Nro. Oficio:</b></label>
+            </div>
+            <div class="col-md-8">
+              <input [(ngModel)]="documentoMinisterio.numeroOficio" pInputText numeros-doc />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anexos -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Dir. Oficio adjunto:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeDocNroOficio($event);" />
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Adjuntar anexo:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeAnexo1($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Fecha Oficio:</b></label>
+            </div>
+            <div class="col-md-8">
+              <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+                [inputStyle]="{ width: '100%' }" [(ngModel)]="documentoMinisterio.fechaOficio"></p-calendar>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Asunto:</b></label>
+            </div>
+            <div class="col-md">
+              <p-dropdown [options]="asuntoList" [(ngModel)]="asunto" [filter]="true"
+                (onChange)="descativarNresolucion(asunto);"> </p-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Nro. Resolucion:</b></label>
+            </div>
+            <div class="col-md">
+              <input [(ngModel)]="documentoMinisterio.numeroResolucion" pInputText [disabled]="nResol" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Objetivo:</b></label>
+            </div>
+            <div class="col-md">
+              <input [(ngModel)]="documentoMinisterio.objetivo" pInputText />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-primary btn-block" (click)="guardar()">Guardar</button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-danger btn-block"
+            (click)="closeModalDocumento()">Cancelar</button>
+        </div>
+
+      </div>
+
     </div>
+  </ng-template>
 
-  </div>
+
+
+
+
+
+  <ng-template #customLoadingTemplate> </ng-template>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+  </ngx-loading>
