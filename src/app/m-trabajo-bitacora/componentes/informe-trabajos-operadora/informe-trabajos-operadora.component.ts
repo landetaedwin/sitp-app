@@ -30,7 +30,7 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
 
 
   constructor(public editarInformeOperadoraService: EditarInformeOperadoraService,  public http:HttpClient, public informeTrabajoOperadoraService: InformeTrabajoOperadoraService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
-    
+    this.portafolio = this.informeTrabajoOperadoraService.portafolio;
     this.estadolist= [
                       { label: "Registrado", value: 1, disabled: false },
                       { label: "Creado", value: 1, disabled: false },
@@ -51,7 +51,7 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
     }
 
-    this.portafolio = this.informeTrabajoOperadoraService.portafolio;
+  
     this.informeOperadora.codPortafolio= this.portafolio.codigoPortafolio;
 
     //this.loading = true;

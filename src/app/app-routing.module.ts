@@ -8,6 +8,7 @@ import { EditarInformeOperadoraComponent } from './m-trabajo-bitacora/componente
 import { InformeTrabajosOperadoraComponent } from './m-trabajo-bitacora/componentes/informe-trabajos-operadora/informe-trabajos-operadora.component';
 import { ReportesDiariosComponent } from './m-trabajo-bitacora/componentes/reportes-diarios/reportes-diarios.component';
 import { VerificacionFechasComponent } from './m-trabajo-bitacora/componentes/verificacion-fechas/verificacion-fechas.component';
+import { EditarVerificacionFechasComponent } from './m-trabajo-bitacora/componentes/editar-verificacion-fechas/editar-verificacion-fechas.component';
 import { VerificacionInyectorComponent } from './m-trabajo-bitacora/componentes/verificacion-inyector/verificacion-inyector.component';
 import { VerificacionProduccionComponent } from './m-trabajo-bitacora/componentes/verificacion-produccion/verificacion-produccion.component';
 import { VerificacionReinyectorComponent } from './m-trabajo-bitacora/componentes/verificacion-reinyector/verificacion-reinyector.component';
@@ -41,6 +42,7 @@ const routes: Routes = [
       { path: 'informeOperadora', component: InformeTrabajosOperadoraComponent, outlet: 'sitp' },
       { path: 'reportesDiarios', component: ReportesDiariosComponent, outlet: 'sitp' },
       { path: 'verificacionFechas', component: VerificacionFechasComponent, outlet: 'sitp' },
+      { path: 'editarFechas', component:EditarVerificacionFechasComponent , outlet: 'sitp' },
       { path: 'verificarProduccion', component: VerificacionProduccionComponent, outlet: 'sitp' },
       { path: 'mantenimiento-tipo-pozo', component: TipoPozoComponent, outlet: 'sitp' },
       { path: 'verificarNovedad', component: VerificacionNovedadComponent, outlet: 'sitp' },

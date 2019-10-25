@@ -9,27 +9,22 @@ import { VerificarFechasService } from 'src/app/m-trabajo-bitacora/servicios/ver
 import { Router, RouterLink } from '@angular/router';
 import { BusquedaService } from 'src/app/m-trabajo-pozo/servicios/buscar-portafolio.service';
 import { InformeTrabajoOperadoraService } from '../../servicios/informe-trabajo-operadora.service';
-import { VerificarProduccionService } from '../../servicios/verificar-produccion.service';
-
 
 @Component({
-  selector: 'app-verificacion-fechas',
-  templateUrl: './verificacion-fechas.component.html',
-  styleUrls: ['./verificacion-fechas.component.css']
+  selector: 'app-editar-verificacion-fechas',
+  templateUrl: './editar-verificacion-fechas.component.html',
+  styleUrls: ['./editar-verificacion-fechas.component.css']
 })
-export class VerificacionFechasComponent implements OnInit {
+export class EditarVerificacionFechasComponent implements OnInit {
   portafolio: Portafolio;
   estadolist: SelectItem[]=[];
   justificadoList: SelectItem[]=[];
   novedadList: SelectItem[]=[];
 
-  constructor(public verificarProduccionService:VerificarProduccionService,public busquedaService:BusquedaService, public informeTrabajoOperadoraService: InformeTrabajoOperadoraService, http:HttpClient, public verificacionFechaService: VerificarFechasService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
-  // this.portafolio = this.verificacionFechaService.portafolio;
-    //this.verificarFechas.codPortafolio= this.portafolio.codigoPortafolio;
-    //this.verificarFechas.fecha_inicio_trabajo = this.portafolio.fechaInicio;
-    //this.verificarFechas.fecha_fin_trabajo= this.portafolio.fechaFin;
 
-    this.portafolio = this.verificacionFechaService.portafolio;
+  constructor(public busquedaService:BusquedaService,  http:HttpClient, public verificacionFechaService: VerificarFechasService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
+
+
     this.verificarFechas.valoracion=1;
     this.verificarFechas.visualizar_valoraciom="No Cumple"
 
@@ -67,9 +62,10 @@ this.novedadList= [
   fechasList: VerificacionFechas[]=[];
   sumafecha : Date;
 
-  ngOnInit() {
-  
+   
 
+  ngOnInit() {
+    
     this.verificarFechas.fecha_actualizacion = this.today
      this.loading = true;  
      
@@ -78,6 +74,13 @@ this.novedadList= [
      if (!this.verificacionFechaService.portafolio) {
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
     }
+
+    if (!this.verificacionFechaService.verificarFechas) {
+      this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
+    }
+    this.portafolio = this.verificacionFechaService.portafolio;
+    this.verificarFechas=this.verificacionFechaService.verificarFechas
+  
 
     this.verificarFechas.codPortafolio= this.portafolio.codigoPortafolio;
     this.obtenerTodo();
@@ -93,7 +96,7 @@ this.novedadList= [
       this.verificarFechas.valoracion=0;
     }
 
-    console.log(this.verificarFechas.fechaPresentacion);
+    console.log(this.verificarFechas);
 
     this.usuario = this.loginService.sessionValue;
     this.fechasList= [];
@@ -102,37 +105,14 @@ this.novedadList= [
       this.router.navigate(['/login'])
     }
     
-    this.buscarpoId();
-
-
       
   }
 
-  buscarpoId(){
-    this.verificacionFechaService.buscarporId(this.verificarFechas.codPortafolio).subscribe(
-      (data: VerificacionFechas[]) => {   
-      if (data) {
 
-            console.log(data.length);
-        this.fechasList = data;
-        
-        this.verificarFechas.justificado=null;
-      
-        if (data.length!==0) {
-          this.messageService.add({ severity: 'warn', detail: 'Ya existe un informe asignado en este pozo' });
-          this.verificarFechas.formDisabled = 1;
-        }
-        
-      }
-        this.loading = false;
 
-      });
-  }
-
-  
   guardarVerificarFechas(){
     this.verificarFechas.id_usuario= this.usuario.idUsuario;
-    this.verificacionFechaService.transCrearVerificacionFechas(this.verificarFechas).subscribe(data =>{
+    this.verificacionFechaService.transUpdateVerificacionFechas(this.verificarFechas).subscribe(data =>{
       if (data) {
      //   this.fechasList = data; 
      if(this.verificarFechas.estado===1){
@@ -140,7 +120,7 @@ this.novedadList= [
       console.log('x is equal to y');
     }
         this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se Creó el Informe de Verificación de Fechas' });
+        this.messageService.add({ severity: 'success', detail: 'Se creo el Informe de Verificación de Fechas' });
         this.obtenerTodo();
 
       } else {
@@ -152,36 +132,22 @@ this.novedadList= [
     }
 
     
-    editarVerificacionFechas(verificacionFechas:VerificacionFechas){
-      this.verificacionFechaService.verificarFechas = verificacionFechas;
-      this.router.navigate(['/menu', { outlets: { sitp: ['editarFechas'] } }]);
-      console.log(VerificacionFechas);
-    }
-
     obtenerTodo(){
       this.verificacionFechaService.buscarporId(this.portafolio.codigoPortafolio).subscribe(
         (data: VerificacionFechas[]) => {   
         if (data) {
           this.fechasList = data;
-          this.verificarFechas.justificado=null;
-        }   
+            }   
           this.loading = false;
   
         });
       }
 
-      volver(portafolio: Portafolio) {
+      volver(verificacionFechas: VerificacionFechas) {
         console.log("click");
-      //this.busquedaService.portafolio = portafolio;
-      //  this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
-      this.informeTrabajoOperadoraService.portafolio=portafolio;
-      this.router.navigate(['/menu', { outlets: { sitp: ['informeOperadora'] } }]);
+        this.verificacionFechaService.verificarFechas = verificacionFechas;
+        this.router.navigate(['/menu', { outlets: { sitp: ['verificacionFechas'] } }]);
       }
 
-      
-      siguiente(portafolio: Portafolio) {
-        console.log("click");
-        this.verificarProduccionService.portafolio = portafolio;
-        this.router.navigate(['/menu', { outlets: { sitp: ['verificarProduccion'] } }]);
-      }
+  
 }

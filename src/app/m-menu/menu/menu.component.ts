@@ -176,7 +176,7 @@ export class MenuComponent implements OnInit {
         items: [
           { label: 'Crear portafolio', routerLink: [{ outlets: { sitp: ['crearPortafolio'] } }], visible: this.i1 },
           { label: 'Buscar portafolio', routerLink: [{ outlets: { sitp: ['buscarPortafolio'] } }], visible: this.i0 },
-          { label: 'Buscar portafolio Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioBitacora'] } }], visible: this.i0 },
+          { label: 'Informes de Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioBitacora'] } }], visible: this.i0 },
           { label: 'Historial de pozo', routerLink: [{ outlets: { sitp: ['historialPozo'] } }], visible: this.i0 },
         ]
       },
@@ -185,15 +185,6 @@ export class MenuComponent implements OnInit {
         visible: this.m2,
         items: [
           { label: 'Infome de resultados', command: () => this.imprimirMensaje(), visible: this.i7 },
-        ]
-      },
-      {
-        label: 'Bitácora',
-        visible: this.m3,
-        items: [
-          { label: 'Agregar Novedad', routerLink: [{ outlets: { sitp: [''] } }], visible: this.i0 },
-          { label: 'Verificación Bitácora', routerLink: [{ outlets: { sitp: [''] } }], visible: this.i0 },
-          
         ]
       },
       {

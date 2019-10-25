@@ -304,30 +304,47 @@
         </div>
       </div>
 
-
+      
     <div class="row">
-        <div class="col-md-6">
+      
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="verificacionProduccion"><b>Justificado:*</b></label>
+          </div>
+          <div class="col-md">
+          <p-dropdown [options]="justificadoList" [(ngModel)]="verificacionProduccion.justificado" readonly></p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12">
               <label for="verificacionProduccion"><b>Observacion:*</b></label>
             </div>
             <div class="col-md">
                 <textarea id="verificacionProduccion"   [(ngModel)]="verificacionProduccion.observacion"  class="md-textarea form-control" rows="3"></textarea>       
             </div>
           </div>
-        </div>
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-md-4">
-              <label for="verificacionProduccion"><b>Estado:*</b></label>
-            </div>
-            <div class="col-md">
-            <p-dropdown [options]="estadolist" [(ngModel)]="verificacionProduccion.estado" readonly></p-dropdown>
-            </div>
+ 
+          
+    <div class="row">
+      
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="verificacionProduccion"><b>Estado:*</b></label>
+          </div>
+          <div class="col-md">
+          <p-dropdown [options]="estadolist" [(ngModel)]="verificacionProduccion.estado" readonly></p-dropdown>
           </div>
         </div>
       </div>
-    
+    </div>
+
 
 
   </div>
@@ -363,18 +380,18 @@
 </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4"></div>
-   
-  <div class="col-md-4">
-     
-    <button pButton type="button" label="Guardar" class="ui-button-success" (click)="guardar()">
-    </button>
+
+  
+    <div class="row justify-content-end">
+        <div class="col-md-4">
+          <button type="button" class="btn btn-sm btn-info btn-block" (click)="guardar()">
+            Guardar
+          </button>
+        </div>
+      </div>
 
 
-  </div>
-  <div class="col-md-4"></div>
-</div>
+ 
 
 <br>
 <p-fieldset legend="Resultados" [toggleable]="true">
@@ -415,9 +432,17 @@
         </tbody>
       </table>
     </div>
-
   </div>
-
 </p-fieldset>
+
+<div class="row">
+    <div class="col-md-12 row justify-content-center">
+        <button type="button" class="btn btn-secondary btn-sm"  (click)="volver(portafolio) "><i class="fa fa-calendar-o" aria-hidden="true">&nbsp;Verificar Fechas</i>
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary btn-sm"  (click)="siguiente(portafolio)" ><i class="fa fa-bar-chart" aria-hidden="true">&nbsp; Verificar Novedades</i>
+        </button>
+    </div>
+</div>
 
 

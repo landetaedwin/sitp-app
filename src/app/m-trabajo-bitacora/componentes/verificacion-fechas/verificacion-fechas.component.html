@@ -1,143 +1,237 @@
-<p-fieldset legend="Verificar Fechas" [toggleable]="true">
-  <div class="row">
-    <div class="col-md-12">
+<div class="row">
+  <div class="col-md-12">
 
+  </div>
+</div>
+
+<H4> Verificación Fechas</H4>
+<p-fieldset legend="Datos del portafolio" [toggleable]="true">
+  <div class="row mt-1">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Numero de Portafolio:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.codigoPortafolio}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha de Registro:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Funcionario:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+        </div>
+      </div>
     </div>
   </div>
 
+  <div class="row mt-1">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Pozo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.pozo.pozNombre}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.tipoTrabajo.tipoTrabajo}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha TST:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaTrabajoSinTorre | date:'dd/MM/yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-1">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Número de Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.numeroTrabajo}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha Inicio Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaInicio  | date:'dd/MM/yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha Fin Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaFin  | date:'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-fieldset>
+<br>
+
+
+
+
+<p-fieldset legend="Formulario" [toggleable]="true"  *ngIf="verificarFechas.formDisabled ==0">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b> Fecha de Presentación Informe Operadora: </b></label>
+        </div>
+        <div class="col-md">
+          <p class="mtop">{{verificarFechas.fechaPresentacion | date:'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="verificacion Fechas"><b>Fecha Notificación o Solicitud Aprobación:</b></label>
+        </div>
+        <div class="col-md">
+          <p class="mtop">{{portafolio.fechaRegistro | date:'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
   <div class="row">
       <div class="col-md-6">
+        <div class="row" *ngIf="verificarFechas.valoracion == 0">
+          <div class="col-md-4">
+              <br>
+            <label for="verificarFechas"><b>Justificado:*</b></label>
+          </div>
+          <div class="col-md">
+            <br>
+            <p-dropdown [options]="justificadoList" [(ngModel)]="verificarFechas.justificado" readonly></p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+          <br>
           <div class="row">
             <div class="col-md-4">
-                <label for="campo"><b> Numero Portafolio: </b></label>
+              <label for="verificarFechas"><b>Valoración:*</b></label>
             </div>
             <div class="col-md">
-                <p class="mtop">{{verificarFechas.codPortafolio}}</p>
+                <p class="mtop">{{verificarFechas.visualizar_valoraciom}}</p>
             </div>
           </div>
         </div>
-        <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-4">
-                <label for="verificacion Fechas"><b>Valoración:</b></label>
-              </div>
-              <div class="col-md">
-                  <p class="mtop">{{verificarFechas.visualizar_valoraciom}}</p>
-              </div>
-            </div>
-          </div>      
     </div>
 
 
+
+    
   <div class="row">
-
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="verificacionFechas"><b>Fecha Inicio de Trabajo:</b></label>
-        </div>
-        <div class="col-md">
-            <p class="mtop">{{portafolio.fechaInicio | date:'MM-dd-yyyy'}}</p>
-          
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="verificacionFechas"><b>Fecha Fin de Trabajo:</b></label>
-        </div>
-        <div class="col-md">
-            <p class="mtop">{{portafolio.fechaFin | date:'MM-dd-yyyy'}}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="verificacionFechas"><b>Fecha Presentacion Informe de Operadora:*</b></label>
-        </div>
-        <div class="col-md">
-            <p class="label">{{verificarFechas.fechaPresentacion | date:'MM-dd-yyyy'}}</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="row">       
-        <div class="col-md-4">
-          <label for="verificacionFechas"><b>Justificado:*</b></label>
-        </div>
-        <div class="col-md">
-        <p-dropdown [options]="justificadoList" [(ngModel)]="verificarFechas.justificado" readonly></p-dropdown>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="verificacionFechas"><b>Observacion:*</b></label>
-        </div>
-        <div class="col-md">
-            <textarea id="verificacionFechas"   [(ngModel)]="verificarFechas.observacion"  class="md-textarea form-control" rows="3"></textarea>       
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="verificarFechas"><b>Estado:*</b></label>
-        </div>
-        <div class="col-md">
-        <p-dropdown [options]="estadolist" [(ngModel)]="verificarFechas.estado" readonly></p-dropdown>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-<div class="row">
-  <div class="col-md-6">
-    <div class="row">
-      <div class="col-md-4">
-        <label for="campo"><b>Fecha de Actualización:</b></label>
-      </div>
+    <div class="col-md-12" *ngIf="verificarFechas.valoracion ==0  && verificarFechas.justificado == 1" >
+        <div class="row">
       <div class="col-md">
-        <p class="mtop">{{verificarFechas.fecha_actualizacion | date:'MM-dd-yyyy'}}</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-6">
-    <div class="row">       
-      <div class="col-md-4">
-        <label for="campo"><b> Usuario: </b></label>
-      </div>
-      <div class="col-md">
-        <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+        <label for="verificacionFechas"><b>Observacion:*</b></label>
+        <textarea id="verificacionFechas" [(ngModel)]="verificarFechas.observacion" class="md-textarea form-control"
+          rows="3"></textarea>
       </div>
     </div>
   </div>
 </div>
- 
 
-
-  <div class="row" >
+  
+<div class="row">
+    <br>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+            <br>
+          <label for="verificarFechas"><b>Estado:*</b></label>
+        </div>
+        <div class="col-md">
+            <br>
+          <p-dropdown [options]="estadolist" [(ngModel)]="verificarFechas.estado" readonly></p-dropdown>
+        </div>
+      </div>
+    </div>
   </div>
-  <hr />
+
+
+
+
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+            <br>
+          <label for="campo"><b>Fecha de Actualización:</b></label>
+        </div>
+        <div class="col-md">
+            <br>
+          <p class="mtop">{{verificarFechas.fecha_actualizacion | date:'MM-dd-yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+            <br>
+          <label for="campo"><b> Usuario: </b></label>
+        </div>
+        <div class="col-md">
+            <br>
+          <p>{{usuario.nombres}} {{usuario.apellidos}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="row">
+  </div>
   <div class="row justify-content-end">
     <div class="col-md-4">
-      <button type="button" class="button" (click)="guardarVerificarFechas()">
+      <button type="button" class="btn btn-sm btn-info btn-block" (click)="guardarVerificarFechas()">
         Guardar
       </button>
     </div>
@@ -159,6 +253,7 @@
             <th>Justificado</th>
             <th>Fecha Actualización</th>
             <th>Observacion</th>
+            <th>Actualizar</th>
           </tr>
         </thead>
         <tbody>
@@ -168,9 +263,12 @@
             <td>{{verificacionFechas.estado | estadoBitacora}} </td>
             <td>{{verificacionFechas.valoracion | valoracionBitacora }} </td>
             <td>{{verificacionFechas.justificado  | JustificadoBitacora}} </td>
-            <td>{{verificacionFechas.fecha_actualizacion  | date:'MM-dd-yyyy' }} </td>
+            <td>{{verificacionFechas.fecha_actualizacion  | date:'dd/MM/yyyy' }} </td>
             <td>{{verificacionFechas.observacion }} </td>
-            
+            <td class="text-center">
+                <i class="fa fa-pencil-square-o fa-2x" (click)="editarVerificacionFechas(verificacionFechas);"></i>            
+            </td>
+
 
           </tr>
 
@@ -179,8 +277,18 @@
     </div>
 
   </div>
-
 </p-fieldset>
+
+
+<div class="row">
+    <div class="col-md-12 row justify-content-center">
+        <button type="button" class="btn btn-secondary btn-sm"  (click)="volver(portafolio) "><i class="fa fa-pencil" aria-hidden="true">&nbsp;Verificar Informe Operadora</i>
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary btn-sm"  (click)="siguiente(portafolio)" ><i class="fa fa-bar-chart" aria-hidden="true">&nbsp; Verificar Pozo</i>
+        </button>
+    </div>
+</div>
 
 <ng-template #customLoadingTemplate> </ng-template>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">

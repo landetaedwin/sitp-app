@@ -7,11 +7,11 @@ export class ValoracionBitacoraPipe implements PipeTransform {
 
     transform(value: any, args?: any): any {
 
-        if (value == 1) {
-            return "No"
-        }
         if (value == 0) {
-            return "Si"
+            return "No Cumple"
+        }
+        if (value == 1) {
+            return "Cumple"
         }
       
     }

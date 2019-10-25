@@ -6,6 +6,8 @@ import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { VerificacionProduccion } from 'src/app/entidades/verificacionProduccion';
 import { VerificarProduccionService } from 'src/app/m-trabajo-bitacora/servicios/verificar-produccion.service';
+import { VerificarFechasService } from 'src/app/m-trabajo-bitacora/servicios/verificar-fechas.service';
+import { VerificarNovedadService } from 'src/app/m-trabajo-bitacora/servicios/verificarNovedad.service';
 import { Router, RouterLink } from '@angular/router';
 import { InformeTrabajoOperadoraService } from '../../servicios/informe-trabajo-operadora.service';
 import { Produccion } from 'src/app/entidades/produccion';
@@ -32,7 +34,7 @@ export class VerificacionProduccionComponent implements OnInit {
   sumaPorcentaje:number;
   buttonDisabled: boolean = true;
 
-  constructor( http:HttpClient,  public verificarProduccionService: VerificarProduccionService, private messageService: MessageService, public loginService: LoginService, public router: Router) { 
+  constructor( http:HttpClient,public VerificarNovedadService: VerificarNovedadService, public verificarFechasService: VerificarFechasService, public verificarProduccionService: VerificarProduccionService, private messageService: MessageService, public loginService: LoginService, public router: Router) { 
     
     this.portafolio = this.verificarProduccionService.portafolio;
 
@@ -252,6 +254,17 @@ export class VerificacionProduccionComponent implements OnInit {
     this.router.navigate(['/menu', { outlets: { sitp: ['editarVerificarProduccion'] } }]);
   }
 
+  volver(portafolio: Portafolio) {
+    console.log("click");
+    this.verificarFechasService.portafolio = portafolio;
+    this.router.navigate(['/menu', { outlets: { sitp: ['verificacionFechas'] } }]);
+  }
 
+  
+  siguiente(portafolio: Portafolio) {
+    console.log("click");
+    this.VerificarNovedadService.portafolio = portafolio;
+    this.router.navigate(['/menu', { outlets: { sitp: ['verificarNovedad'] } }]);
+  }
 
 }

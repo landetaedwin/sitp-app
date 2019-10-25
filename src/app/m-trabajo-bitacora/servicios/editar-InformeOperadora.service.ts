@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class EditarInformeOperadoraService {
 
-  
+    portafolio:Portafolio;
     informeOperadora: InformeOperadora;
 
     constructor(readonly http: HttpClient, public prop: Constantes) { }

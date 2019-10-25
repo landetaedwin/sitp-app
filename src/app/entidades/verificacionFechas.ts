@@ -13,4 +13,5 @@ id_usuario: number;
 visualizar_estado: String;
 visualizar_justificado: String;
 visualizar_valoraciom: String;
+formDisabled:number=0
 }
