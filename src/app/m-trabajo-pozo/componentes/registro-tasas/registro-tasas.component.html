@@ -1,0 +1,161 @@
+<p-fieldset legend="Busqueda registro de tasas" [toggleable]="true">
+
+  <div class="row justify-content-end">
+    <div class="col-md-2">
+      <button type="button" class="btn btn-sm btn-primary btn-block">
+        Buscar
+      </button>
+    </div>
+    <div class="col-md-2" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+      <button type="button" class="btn btn-sm btn-success btn-block">
+        Nuevo
+      </button>
+    </div>
+    <div class="col-md-2" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
+      <button type="button" class="btn btn-sm btn-success btn-block" (click)="openModalTasa(tasaTempalte)">
+        Nuevo
+      </button>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Campo:*</b></label>
+        </div>
+        <div class="col-md">
+          <p-dropdown [options]="campoList" [(ngModel)]="campo" (onChange)="getPozoListByCamCodigo(campo);"
+            [filter]="true">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Pozo:*</b></label>
+        </div>
+        <div class="col-md">
+          <p-dropdown [options]="pozoList" [(ngModel)]="pozo" [filter]="true">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Alias:</b></label>
+        </div>
+        <div class="col-md">
+          <input pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Nro. Oficio:</b></label>
+        </div>
+        <div class="col-md">
+          <input pInputText />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Resolución:</b></label>
+        </div>
+        <div class="col-md">
+          <input pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Estado:</b></label>
+        </div>
+        <div class="col-md">
+          <p-dropdown></p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-fieldset>
+<br>
+
+<p-fieldset legend="Datos registro de tasas" [toggleable]="true">
+  <div class="row">
+    <div class="col-md-12 table-responsive">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Pozo</th>
+            <th>Alias</th>
+            <th>Yacimiento</th>
+            <th>Tasa</th>
+            <th>Nro. Oficio</th>
+            <th>Nro. SGC </th>
+            <th>Resolución</th>
+            <th>Fecha Resolución</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+
+
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <pagination-controls id="foo" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+        responsive="true">
+        ></pagination-controls>
+    </div>
+  </div>
+</p-fieldset>
+
+
+<ng-template #tasaTempalte>
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h4>Registro tasa</h4>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+
+
+
+
+
+
+
+<ng-template #customLoadingTemplate> </ng-template>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>

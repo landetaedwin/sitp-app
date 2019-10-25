@@ -19,6 +19,7 @@ import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-d
 import { NumerosDocDirective } from '../resources/directivas/numeros-doc.directive';
 import { HistorialPozoComponent } from './componentes/historial-pozo/historial-pozo.component';
 import { ToastModule } from 'primeng/toast';
+import { RegistroTasasComponent } from './componentes/registro-tasas/registro-tasas.component';
 
 
 
@@ -34,6 +35,7 @@ import { ToastModule } from 'primeng/toast';
     FilterSearchPipe,
     NumerosDocDirective,
     HistorialPozoComponent,
+    RegistroTasasComponent,
 
 
   ],
