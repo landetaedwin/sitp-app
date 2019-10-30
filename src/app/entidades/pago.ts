@@ -1,3 +1,5 @@
+import { DocumentoOperadora } from './documentoOperadora'
+
 export class Pago {
     codigoPago: number
     codigoDocumentoOperadora: number
@@ -10,4 +12,5 @@ export class Pago {
     estado: number
     fechaRegistro: Date
     idUsuario: number
+    documentoOperadora: DocumentoOperadora
 }

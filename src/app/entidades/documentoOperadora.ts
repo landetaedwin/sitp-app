@@ -1,5 +1,6 @@
 import { Archivo } from './archivo'
 import { Asunto } from './asunto'
+import { Portafolio } from './portafolio'
 
 export class DocumentoOperadora {
 
@@ -29,6 +30,8 @@ export class DocumentoOperadora {
     fileAnexo3: Archivo
     fileAnexo4: Archivo
     filePago: Archivo
+
+    portafolio: Portafolio
 
 
 }

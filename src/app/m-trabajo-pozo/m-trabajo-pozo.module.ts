@@ -20,6 +20,7 @@ import { NumerosDocDirective } from '../resources/directivas/numeros-doc.directi
 import { HistorialPozoComponent } from './componentes/historial-pozo/historial-pozo.component';
 import { ToastModule } from 'primeng/toast';
 import { RegistroTasasComponent } from './componentes/registro-tasas/registro-tasas.component';
+import { VerificarPagosComponent } from './componentes/verificar-pagos/verificar-pagos.component';
 
 
 
@@ -36,6 +37,7 @@ import { RegistroTasasComponent } from './componentes/registro-tasas/registro-ta
     NumerosDocDirective,
     HistorialPozoComponent,
     RegistroTasasComponent,
+    VerificarPagosComponent,
 
 
   ],
