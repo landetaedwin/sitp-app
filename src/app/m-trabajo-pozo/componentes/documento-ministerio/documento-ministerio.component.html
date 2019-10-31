@@ -125,7 +125,7 @@
               <td>{{doc.numeroOficio}} </td>
               <td>
                 <ul>
-                  <li *ngIf="doc.urlOficio">{{doc.urlOficio}}</li>
+                  <li *ngIf="doc.urlOficio" (click)="showPdf()">{{doc.urlOficio}}</li>
                   <li *ngIf="doc.urlAnexo1">{{doc.urlAnexo1}}</li>
                 </ul>
               </td>
