@@ -128,6 +128,7 @@
             <th>Nro. SGC </th>
             <th>Resolución</th>
             <th>Fecha Resolución</th>
+            <th>Documentos Adjuntos</th>
             <th>Estado</th>
             <th>Acción</th>
           </tr>
@@ -143,6 +144,16 @@
             <td>{{t.numeroSGC}}</td>
             <td>{{t.numeroResolucion}}</td>
             <td>{{t.fechaResolucion | date:'dd/MM/yyyy'}}</td>
+            <td>
+              <ul>
+                <li *ngIf="t.urlOficio" (click)="showPdf(t.fileOficio.base64,t.fileOficio.nombre)">OFICIO:
+                  {{t.fileOficio.nombre}}
+                </li>
+                <li *ngIf="t.urlResolucion" (click)="showPdf(t.fileResolucion.base64, t.fileResolucion.nombre)">ANEXO:
+                  {{t.fileResolucion.nombre}}
+                </li>
+              </ul>
+            </td>
             <td>{{t.estado}}</td>
             <td class="text-center" style="width:10%;">
               <div class="row">

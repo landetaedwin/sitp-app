@@ -124,8 +124,8 @@
             <th># Transacción</th>
             <th># Factura</th>
             <th>Valor</th>
-            <th>Ver Oficio</th>
-            <th>Ver Documentos</th>
+            <th>Documentos</th>
+            <th>Anexos</th>
             <th>Estado</th>
           </tr>
         </thead>
@@ -145,24 +145,42 @@
             <td>{{pago.valor}}</td>
             <td>
               <ul>
-                <li *ngIf="pago.documentoOperadora.urlOficio">{{pago.documentoOperadora.urlOficio}}</li>
-
+                <li *ngIf="pago.documentoOperadora.urlOficio"
+                  (click)="showPdf(pago.documentoOperadora.fileOficio.base64, pago.documentoOperadora.fileOficio.nombre)">
+                  OFICIO:
+                  {{pago.documentoOperadora.fileOficio.nombre}}
+                </li>
+                <li *ngIf="pago.documentoOperadora.urlPagos"
+                  (click)="showPdf(pago.documentoOperadora.filePago.base64 ,pago.documentoOperadora.filePago.nombre)">
+                  PAGO:
+                  {{pago.documentoOperadora.filePago.nombre}}</li>
               </ul>
             </td>
             <td>
               <ul>
-                <li *ngIf="pago.documentoOperadora.urlAnexo1">{{pago.documentoOperadora.urlAnexo1}}</li>
-                <li *ngIf="pago.documentoOperadora.urlAnexo2">{{pago.documentoOperadora.urlAnexo2}}</li>
-                <li *ngIf="pago.documentoOperadora.urlAnexo3">{{pago.documentoOperadora.urlAnexo3}}</li>
-                <li *ngIf="pago.documentoOperadora.urlAnexo4">{{pago.documentoOperadora.urlAnexo4}}</li>
-                <li *ngIf="pago.documentoOperadora.urlPagos">{{pago.documentoOperadora.urlPagos}}</li>
+                <li *ngIf="pago.documentoOperadora.urlAnexo1"
+                  (click)="showPdf(pago.documentoOperadora.fileAnexo1.base64, pago.documentoOperadora.fileAnexo1.nombre)">
+                  ANEXO:
+                  {{pago.documentoOperadora.fileAnexo1.nombre}}
+                </li>
+                <li *ngIf="pago.documentoOperadora.urlAnexo2"
+                  (click)="showPdf(pago.documentoOperadora.fileAnexo2.base64, pago.documentoOperadora.fileAnexo2.nombre)">
+                  ANEXO:
+                  {{pago.documentoOperadora.fileAnexo2.nombre}}
+                </li>
+                <li *ngIf="pago.documentoOperadora.urlAnexo3"
+                  (click)="showPdf(pago.documentoOperadora.fileAnexo3.base64, pago.documentoOperadora.fileAnexo3.nombre)">
+                  ANEXO:
+                  {{pago.documentoOperadora.fileAnexo3.nombre}}
+                </li>
+                <li *ngIf="pago.documentoOperadora.urlAnexo4"
+                  (click)="showPdf(pago.documentoOperadora.fileAnexo4.base64, pago.documentoOperadora.fileAnexo4.nombre)">
+                  ANEXO:
+                  {{pago.documentoOperadora.fileAnexo4.nombre}}
+                </li>
               </ul>
             </td>
             <td>{{pago.estado}}</td>
-
-
-
-
           </tr>
         </tbody>
       </table>

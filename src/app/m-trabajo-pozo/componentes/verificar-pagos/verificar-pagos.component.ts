@@ -27,7 +27,7 @@ export class VerificarPagosComponent implements OnInit {
   pagoList: Pago[] = []
 
 
-  constructor(private busquedaService: BusquedaService, private loginService: LoginService, private router: Router, private messageService:MessageService) { }
+  constructor(private busquedaService: BusquedaService, private loginService: LoginService, private router: Router, private messageService: MessageService) { }
 
   ngOnInit() {
     this.loading = true;
@@ -103,5 +103,15 @@ export class VerificarPagosComponent implements OnInit {
     })
   }
 
+
+  showPdf(doc: string, name: string) {
+    const linkSource = 'data:application/pdf;base64,' + doc;
+    const downloadLink = document.createElement("a");
+    const fileName = name + ".pdf";
+
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();
+  }
 
 }
