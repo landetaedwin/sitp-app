@@ -125,8 +125,12 @@
               <td>{{doc.numeroOficio}} </td>
               <td>
                 <ul>
-                  <li *ngIf="doc.urlOficio">{{doc.urlOficio}}</li>
-                  <li *ngIf="doc.urlAnexo1">{{doc.urlAnexo1}}</li>
+                  <li *ngIf="doc.urlOficio" (click)="showPdf(doc.fileOficio.base64,doc.fileOficio.nombre)">OFICIO:
+                    {{doc.fileOficio.nombre}}
+                  </li>
+                  <li *ngIf="doc.urlAnexo1" (click)="showPdf(doc.fileAnexo1.base64, doc.fileAnexo1.nombre)">ANEXO:
+                    {{doc.fileAnexo1.nombre}}
+                  </li>
                 </ul>
               </td>
               <td>{{doc.fechaOficio  | date:'dd/MM/yyyy'}} </td>

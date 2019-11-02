@@ -7,6 +7,7 @@ import { Pago } from 'src/app/entidades/pago';
 import { Portafolio } from 'src/app/entidades/portafolio';
 import { RegistroDiario } from 'src/app/entidades/registro-diario';
 import { Constantes } from "src/app/resources/constantes";
+import { Tasa } from 'src/app/entidades/tasa';
 
 const httpOptions = {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -51,6 +52,16 @@ export class CreateUpdateService {
     transCrearHistorialPozo(historialPozo: HistorialPozo) {
         const url = this.prop.PATH + "/sitp/historial-pozo-service/crear-historial-pozo";
         return this.http.post(url, historialPozo, httpOptions);
+    }
+
+    transCrearTasa(tasa: Tasa) {
+        const url = this.prop.PATH + "/sitp/tasa-service/crear-tasa";
+        return this.http.post(url, tasa, httpOptions);
+    }
+
+    transUpdateTasa(tasa: Tasa) {
+        const url = this.prop.PATH + "/sitp/tasa-service/update-tasa";
+        return this.http.post(url, tasa, httpOptions);
     }
 
 

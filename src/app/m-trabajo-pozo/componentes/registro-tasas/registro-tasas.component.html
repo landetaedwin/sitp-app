@@ -1,0 +1,704 @@
+<p-fieldset legend="Busqueda registro de tasas" [toggleable]="true">
+
+  <div class="row justify-content-end">
+    <div class="col-md-2">
+      <button type="button" class="btn btn-sm btn-primary btn-block" (click)="getTasaList()">
+        Buscar
+      </button>
+    </div>
+    <div class="col-md-2" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+      <button type="button" class="btn btn-sm btn-success btn-block" (click)="openModalTasa(tasaTempalte)">
+        Nuevo
+      </button>
+    </div>
+    <div class="col-md-2" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
+      <button type="button" class="btn btn-sm btn-success btn-block" (click)="openModalTasa(tasaTempalte)">
+        Nuevo
+      </button>
+    </div>
+  </div>
+
+  <div class="row mt-2" (keyup.enter)="getTasaList()">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Campo:*</b></label>
+        </div>
+        <div class="col-md">
+          <p-dropdown [options]="campoList" [(ngModel)]="campo" (onChange)="getPozoListByCamCodigo(campo);"
+            [filter]="true">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Pozo:*</b></label>
+        </div>
+        <div class="col-md">
+          <p-dropdown [options]="pozoList" [(ngModel)]="pozo" [filter]="true">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" (keyup.enter)="getTasaList()">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Alias:</b></label>
+        </div>
+        <div class="col-md">
+          <input pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Nro. Oficio:</b></label>
+        </div>
+        <div class="col-md">
+          <input [(ngModel)]="param.numerooficio" pInputText />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" (keyup.enter)="getTasaList()">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Resolución:</b></label>
+        </div>
+        <div class="col-md">
+          <input [(ngModel)]="param.resolucion" pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Estado:</b></label>
+        </div>
+        <div class="col-md">
+          <p-dropdown></p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-fieldset>
+<br>
+
+<p-fieldset legend="Datos registro de tasas" [toggleable]="true">
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="nav justify-content-end">
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+          <i class="fa fa-pencil"> Editar</i>
+        </li>
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
+          <i class="fa fa-pencil"> Editar</i>
+        </li>
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+          <i class="fa fa-times"> Anular</i>
+        </li>
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
+          <i class="fa fa-times"> Anular
+          </i>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12 table-responsive">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Pozo</th>
+            <th>Alias</th>
+            <th>Yacimiento</th>
+            <th>Tasa</th>
+            <th>Nro. Oficio</th>
+            <th>Nro. SGC </th>
+            <th>Resolución</th>
+            <th>Fecha Resolución</th>
+            <th>Documentos Adjuntos</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of tasaList | paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
+            <td>{{i+1}}</td>
+            <td>{{t.pozo.pozNombre}}</td>
+            <td>{{t.codigoAlias}}</td>
+            <td>{{t.codigoYacimiento}}</td>
+            <td>{{t.tasa}}</td>
+            <td>{{t.numeroOficio}}</td>
+            <td>{{t.numeroSGC}}</td>
+            <td>{{t.numeroResolucion}}</td>
+            <td>{{t.fechaResolucion | date:'dd/MM/yyyy'}}</td>
+            <td>
+              <ul>
+                <li *ngIf="t.urlOficio" (click)="showPdf(t.fileOficio.base64,t.fileOficio.nombre)">OFICIO:
+                  {{t.fileOficio.nombre}}
+                </li>
+                <li *ngIf="t.urlResolucion" (click)="showPdf(t.fileResolucion.base64, t.fileResolucion.nombre)">ANEXO:
+                  {{t.fileResolucion.nombre}}
+                </li>
+              </ul>
+            </td>
+            <td>{{t.estado}}</td>
+            <td class="text-center" style="width:10%;">
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="nav">
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      (click)="openModalTasaEdit(tasaTempalteEdit, t)">
+                      <i class="fa fa-pencil fa-2x"></i>
+                    </li>
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                      (click)="openModalTasaEdit(tasaTempalteEdit, t)">
+                      <i class="fa fa-pencil fa-2x"></i>
+                    </li>
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      (click)="openModalTasaAnular(tasaTempalteAnular, t)">
+                      <i class="fa fa-times fa-2x"></i>
+                    </li>
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                      (click)="openModalTasaAnular(tasaTempalteAnular, t)">
+                      <i class="fa fa-times fa-2x"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+
+            </td>
+
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <pagination-controls id="foo" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+        responsive="true">
+        ></pagination-controls>
+    </div>
+  </div>
+</p-fieldset>
+
+
+<ng-template #tasaTempalte>
+  <div class="container mt-3 mb-3">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h4>Registro tasa</h4>
+      </div>
+    </div>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Campo:*</b></label>
+          </div>
+          <div class="col-md">
+            <p-dropdown [options]="campoList" [(ngModel)]="campoT" (onChange)="cargarCampoPozo(campoT);"
+              [filter]="true">
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Pozo:*</b></label>
+          </div>
+          <div class="col-md">
+            <p-dropdown [options]="pozoList" [(ngModel)]="pozoT" [filter]="true"
+              (onChange)="cargarOperadoraByPozCompaniaPetrolera(pozoT);">
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Alias:</b></label>
+          </div>
+          <div class="col-md">
+            <input [(ngModel)]="tasa.codigoAlias" pInputText>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Bloque: </b></label>
+          </div>
+          <div class="col-md">
+            <p class="mtop">{{bloqueT.bqlNombre}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Operadora: </b></label>
+          </div>
+          <div class="col-md">
+            <p class="mtop">{{operadoraT.cexApellidoPaterno}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Yacimiento:*</b></label>
+          </div>
+          <div class="col-md">
+            <input [(ngModel)]="tasa.codigoYacimiento" pInputText>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Tasa:</b></label>
+          </div>
+          <div class="col-md">
+            <input [(ngModel)]="tasa.tasa" pInputText>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Nro. Oficio:</b></label>
+          </div>
+          <div class="col-md">
+            <input [(ngModel)]="tasa.numeroOficio" pInputText>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Oficio Anexo:</b></label>
+          </div>
+          <div class="col-md-8">
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" accept=".pdf" (change)="onChangeDocNroOficio($event);" />
+              </div>
+              <div class="input-group-append">
+                <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Fecha Oficio:</b></label>
+          </div>
+          <div class="col-md-8">
+            <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+              [inputStyle]="{ width: '100%' }" [(ngModel)]="tasa.fechaOficio"></p-calendar>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Nro. SGC:</b></label>
+          </div>
+          <div class="col-md">
+            <input [(ngModel)]="tasa.numeroSGC" pInputText>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Resolución:</b></label>
+          </div>
+          <div class="col-md">
+            <input [(ngModel)]="tasa.numeroResolucion" pInputText>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Resolución Anexos:</b></label>
+          </div>
+          <div class="col-md-8">
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" accept=".pdf" (change)="onChangeResolucion($event);" />
+              </div>
+              <div class="input-group-append">
+                <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Fecha Resolución:</b></label>
+          </div>
+          <div class="col-md-8">
+            <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+              [inputStyle]="{ width: '100%' }" [(ngModel)]="tasa.fechaResolucion"></p-calendar>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Observación:</b></label>
+          </div>
+          <div class="col-md-8">
+            <textarea class="form-control" rows="2" [(ngModel)]="tasa.observacion"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-primary btn-block" (click)="saveTasa()">Guardar</button>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="closeModalTasa()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+  <p-toast position="top-center"></p-toast>
+
+</ng-template>
+
+
+<ng-template #tasaTempalteEdit>
+  <div class="container mt-3 mb-3">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h4>Editar tasa</h4>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Campo:*</b></label>
+          </div>
+          <div class="col-md">
+            <p-dropdown [options]="campoList" [(ngModel)]="campoT" (onChange)="cargarCampoPozo(campoT);"
+              [filter]="true">
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Pozo:*</b></label>
+          </div>
+          <div class="col-md">
+            <p-dropdown [options]="pozoList" [(ngModel)]="pozoT" [filter]="true"
+              (onChange)="cargarOperadoraByPozCompaniaPetrolera(pozoT);">
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Alias:</b></label>
+          </div>
+          <div class="col-md">
+            <input [(ngModel)]="tasaEdit.codigoAlias" pInputText>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Bloque: </b></label>
+          </div>
+          <div class="col-md">
+            <p class="mtop">{{bloqueT.bqlNombre}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Operadora: </b></label>
+          </div>
+          <div class="col-md">
+            <p class="mtop">{{operadoraT.cexApellidoPaterno}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Yacimiento:*</b></label>
+          </div>
+          <div class="col-md">
+            <input [(ngModel)]="tasaEdit.codigoYacimiento" pInputText>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Tasa:</b></label>
+          </div>
+          <div class="col-md">
+            <input [(ngModel)]="tasaEdit.tasa" pInputText>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Nro. Oficio:</b></label>
+          </div>
+          <div class="col-md">
+            <input [(ngModel)]="tasaEdit.numeroOficio" pInputText>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Oficio Anexo:</b></label>
+          </div>
+          <div class="col-md-8">
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" accept=".pdf" (change)="onChangeDocNroOficio($event);" />
+              </div>
+              <div class="input-group-append">
+                <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Fecha Oficio:</b></label>
+          </div>
+          <div class="col-md-8">
+            <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+              [inputStyle]="{ width: '100%' }" [(ngModel)]="tasaEdit.fechaOficio"></p-calendar>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Nro. SGC:</b></label>
+          </div>
+          <div class="col-md">
+            <input [(ngModel)]="tasaEdit.numeroSGC" pInputText>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Resolución:</b></label>
+          </div>
+          <div class="col-md">
+            <input [(ngModel)]="tasaEdit.numeroResolucion" pInputText>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Resolución Anexos:</b></label>
+          </div>
+          <div class="col-md-8">
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" accept=".pdf" (change)="onChangeResolucion($event);" />
+              </div>
+              <div class="input-group-append">
+                <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Fecha Resolución:</b></label>
+          </div>
+          <div class="col-md-8">
+            <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+              [inputStyle]="{ width: '100%' }" [(ngModel)]="tasaEdit.fechaResolucion"></p-calendar>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Observación:</b></label>
+          </div>
+          <div class="col-md-8">
+            <textarea class="form-control" rows="2" [(ngModel)]="tasaEdit.observacion"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-primary btn-block" (click)="editTasa()">Editar</button>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="closeModalTasa()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+  <p-toast position="top-center"></p-toast>
+
+</ng-template>
+
+
+<ng-template #tasaTempalteAnular>
+  <div class="container mt-3 mb-3">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h4>Anular tasa</h4>
+      </div>
+    </div>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-12">
+        <p>¿Desea anular este registro?</p>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-primary btn-block" (click)="anularTasa()">SI</button>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="closeModalTasaAnular()">NO</button>
+      </div>
+    </div>
+  </div>
+  <p-toast position="top-center"></p-toast>
+
+</ng-template>
+
+
+<ng-template #customLoadingTemplate> </ng-template>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>

@@ -355,5 +355,16 @@ export class DocumentoOperadoraComponent implements OnInit {
   }
 
 
+  showPdf(doc: string, name: string) {
+    const linkSource = 'data:application/pdf;base64,' + doc;
+    const downloadLink = document.createElement("a");
+    const fileName = name + ".pdf";
+
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();
+  }
+
+
 
 }

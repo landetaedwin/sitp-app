@@ -191,18 +191,14 @@ export class MenuComponent implements OnInit {
         label: 'Registro de tasas',
         visible: this.m4,
         items: [
-          { label: 'Buscar registro de tasas', command: () => this.imprimirMensaje(), visible: this.i14 },
-          { label: 'Agregar registro de tasa', command: () => this.imprimirMensaje(), visible: this.i15 },
-          { label: 'Actualizar registro de tasa', command: () => this.imprimirMensaje(), visible: this.i16 },
-          { label: 'Editar registro de tasa', command: () => this.imprimirMensaje(), visible: this.i17 },
-          { label: 'Anular registro de tasa', command: () => this.imprimirMensaje(), visible: this.i18 },
+          { label: 'Buscar registro de tasas', routerLink: [{ outlets: { sitp: ['registroTasas'] } }], visible: this.i14 },
         ]
       },
       {
         label: 'Pagos',
         visible: this.m5,
         items: [
-          { label: 'Verificación de pagos', command: () => this.imprimirMensaje(), visible: this.i19 },
+          { label: 'Verificación de pagos', routerLink: [{ outlets: { sitp: ['verificarPagos'] } }], visible: this.i19 },
           { label: 'Busqueda de pagos registrados', command: () => this.imprimirMensaje(), visible: this.i20 },
         ]
       },
