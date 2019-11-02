@@ -1,3 +1,6 @@
+import { Archivo } from './archivo'
+import { Asunto } from './asunto'
+
 export class InformeOperadora{
 codInformeOperadora: number;
 codPortafolio: number;
@@ -13,5 +16,6 @@ estado: number;
 fecha_actualizacion: Date;
 id_usuario: number;
 rig: string;
-
+archivoInforme: Archivo;
+archivoAnexo: Archivo;
 }

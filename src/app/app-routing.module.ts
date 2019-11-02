@@ -10,8 +10,12 @@ import { ReportesDiariosComponent } from './m-trabajo-bitacora/componentes/repor
 import { VerificacionFechasComponent } from './m-trabajo-bitacora/componentes/verificacion-fechas/verificacion-fechas.component';
 import { EditarVerificacionFechasComponent } from './m-trabajo-bitacora/componentes/editar-verificacion-fechas/editar-verificacion-fechas.component';
 import { VerificacionInyectorComponent } from './m-trabajo-bitacora/componentes/verificacion-inyector/verificacion-inyector.component';
+import { EditarVerificacionInyectorComponent } from './m-trabajo-bitacora/componentes/editar-verificacion-inyector/editar-verificacion-inyector.component';
+
 import { VerificacionProduccionComponent } from './m-trabajo-bitacora/componentes/verificacion-produccion/verificacion-produccion.component';
 import { VerificacionReinyectorComponent } from './m-trabajo-bitacora/componentes/verificacion-reinyector/verificacion-reinyector.component';
+import { EditarVerificacionReinyectorComponent } from './m-trabajo-bitacora/componentes/editar-verificacion-reinyector/editar-verificacion-reinyector.component';
+
 import { VerificacionTasaComponent } from './m-trabajo-bitacora/componentes/verificacion-tasa/verificacion-tasa.component';
 import { VerificacionTrabajoComponent } from './m-trabajo-bitacora/componentes/verificacion-trabajo/verificacion-trabajo.component';
 import { AsignacionCamposComponent } from './m-trabajo-pozo/componentes/asignacion-campos/asignacion-campos.component';
@@ -51,7 +55,9 @@ const routes: Routes = [
       { path: 'editarInformeOperadora', component: EditarInformeOperadoraComponent, outlet: 'sitp' },
       { path: 'editarVerificarProduccion', component: EditarVerificacionProduccionComponent, outlet: 'sitp' },
       { path: 'verificarInyector', component: VerificacionInyectorComponent, outlet: 'sitp' },
+      { path: 'EditarVerificacionInyectorComponent', component: EditarVerificacionInyectorComponent, outlet: 'sitp' },
       { path: 'verificarReinyector', component: VerificacionReinyectorComponent, outlet: 'sitp' },
+      { path: 'EditarVerificacionReinyectorComponent', component: EditarVerificacionReinyectorComponent, outlet: 'sitp' },
       { path: 'verificarTasa', component: VerificacionTasaComponent, outlet: 'sitp' },
       { path: 'verificarTrabajo', component: VerificacionTrabajoComponent, outlet: 'sitp' },
       { path: 'historialPozo', component: HistorialPozoComponent, outlet: 'sitp' },

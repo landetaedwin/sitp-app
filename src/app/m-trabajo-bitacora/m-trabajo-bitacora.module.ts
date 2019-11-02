@@ -25,6 +25,8 @@ import { ValoracionBitacoraPipe } from '../resources/pipes/valoracionBitacora';
 import { ValoracionProduccionPipe } from '../resources/pipes/valoracion-produccion';
 import { EditarVerificacionProduccionComponent } from './componentes/editar-verificacion-produccion/editar-verificacion-produccion.component';
 import { EditarVerificacionFechasComponent } from './componentes/editar-verificacion-fechas/editar-verificacion-fechas.component';
+import { EditarVerificacionInyectorComponent } from './componentes/editar-verificacion-inyector/editar-verificacion-inyector.component';
+import { EditarVerificacionReinyectorComponent } from './componentes/editar-verificacion-reinyector/editar-verificacion-reinyector.component';
 
 @NgModule({
   declarations: [ReportesDiariosComponent, VerificacionFechasComponent, VerificacionProduccionComponent, DocumentoOperadoraComponent,
@@ -40,7 +42,7 @@ import { EditarVerificacionFechasComponent } from './componentes/editar-verifica
      JustificadoBitacoraPipe,
      ValoracionBitacoraPipe,
      EditarVerificacionProduccionComponent, 
-     ValoracionProduccionPipe, EditarVerificacionFechasComponent
+     ValoracionProduccionPipe, EditarVerificacionFechasComponent, EditarVerificacionInyectorComponent, EditarVerificacionReinyectorComponent
      
     ],
   imports: [

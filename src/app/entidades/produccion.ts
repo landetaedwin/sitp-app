@@ -18,7 +18,7 @@ export class Produccion {
     salinidad_ppm: String
     codigo_verificacion_produccion:String
     codigo_verificacion_tasa:String
-    
+    pozo_nombre:String
 
     PromedioAntesMostrar:String
     PromedioDespuesMostrar:String

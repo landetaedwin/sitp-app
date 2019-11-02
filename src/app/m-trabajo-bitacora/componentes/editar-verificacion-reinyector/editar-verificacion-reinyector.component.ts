@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import {Portafolio} from 'src/app/entidades/portafolio';
 import { MessageService, SelectItem } from "primeng/api";
@@ -12,13 +13,12 @@ import { VerificarNovedadService } from 'src/app/m-trabajo-bitacora/servicios/ve
 import { Router, RouterLink } from '@angular/router';
 import { Produccion } from 'src/app/entidades/produccion';
 
-
 @Component({
-  selector: 'app-verificacion-inyector',
-  templateUrl: './verificacion-inyector.component.html',
-  styleUrls: ['./verificacion-inyector.component.css']
+  selector: 'app-editar-verificacion-reinyector',
+  templateUrl: './editar-verificacion-reinyector.component.html',
+  styleUrls: ['./editar-verificacion-reinyector.component.css']
 })
-export class VerificacionInyectorComponent implements OnInit {
+export class EditarVerificacionReinyectorComponent implements OnInit {
   today = new Date();
   verificacionProduccion = new VerificacionProduccion();
   produccion = new Produccion();
@@ -37,40 +37,43 @@ export class VerificacionInyectorComponent implements OnInit {
   buttonDisabled: boolean = true;
 
 
-  constructor( http:HttpClient,public VerificarNovedadService: VerificarNovedadService, public verificarFechasService: VerificarFechasService, public verificarProduccionService: VerificarProduccionService, private messageService: MessageService, public loginService: LoginService, public router: Router) { 
 
-  this.portafolio = this.verificarProduccionService.portafolio;
+  constructor(http:HttpClient,public VerificarNovedadService: VerificarNovedadService, public verificarFechasService: VerificarFechasService, public verificarProduccionService: VerificarProduccionService, private messageService: MessageService, public loginService: LoginService, public router: Router) { 
+    this.portafolio = this.verificarProduccionService.portafolio;
 
-  this.justificadoList= [
-    { label: "Seleccione...", value: null, disabled: false },
-    { label: "Si", value: 1, disabled: false },
-    { label: "No", value: 2, disabled: false }
+    this.justificadoList= [
+      { label: "Seleccione...", value: null, disabled: false },
+      { label: "Si", value: 1, disabled: false },
+      { label: "No", value: 2, disabled: false }
+  
+  ];
+  
+    this.estadolist= [
+                      { label: "Seleccione...", value: null, disabled: false },
+                      { label: "Registrado", value: 1, disabled: false },
+                      { label: "Anulado", value: 2, disabled: false },
+                      { label: "Cerrado", value: 3, disabled: false }
+                     ];
+  
+    this.registrosList= [
+                      { label: "Seleccione...", value: 0, disabled: false },
+                      { label: "3", value: 3, disabled: false },
+                      { label: "4", value: 4, disabled: false },
+                      { label: "5", value: 5, disabled: false },
+                      { label: "6", value: 6, disabled: false },
+                      { label: "7", value: 7, disabled: false }
+                     ];
+  
 
-];
-
-  this.estadolist= [
-                    { label: "Seleccione...", value: null, disabled: false },
-                    { label: "Registrado", value: 1, disabled: false },
-                    { label: "Anulado", value: 2, disabled: false },
-                    { label: "Cerrado", value: 3, disabled: false }
-                   ];
-
-  this.registrosList= [
-                    { label: "Seleccione...", value: 0, disabled: false },
-                    { label: "3", value: 3, disabled: false },
-                    { label: "4", value: 4, disabled: false },
-                    { label: "5", value: 5, disabled: false },
-                    { label: "6", value: 6, disabled: false },
-                    { label: "7", value: 7, disabled: false }
-                   ];
-
-}
+  }
 
   
+
   ngOnInit() {
+
     this.usuario = this.loginService.sessionValue;
     this.verificacionProduccion.fecha_actualizacion = this.today
-  
+    this.verificacionProduccion= this.verificarProduccionService.verificarProduccion
    
     if (!this.verificarProduccionService.portafolio) {
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
@@ -86,14 +89,15 @@ export class VerificacionInyectorComponent implements OnInit {
   this.obtenerTodo();
   this.verificacionProduccion.porcentajeControlEstatico=10;
   
-
+  this.cargarDatos();
+  this.cargarDatosDespues();
   }
+
 
   cargarDatos(){
     
     this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
     this.verificarProduccionService.Buscar3Antes(this.portafolio.fechaInicio, this.verificacionProduccion.numRegistros, this.portafolio.pozo.pozNombre).subscribe(
-      
      
       (data: Produccion[]) => {   
       if (data) {
@@ -131,54 +135,43 @@ export class VerificacionInyectorComponent implements OnInit {
      
   }
 
-
-
-
+  
   guardar(){
     this.verificacionProduccion.idUsu= this.usuario.idUsuario;
-    this.verificarProduccionService.transCrearVerificarInyector(this.verificacionProduccion).subscribe(data =>{
+    this.verificarProduccionService.transUpdateVerificacionReinyector(this.verificacionProduccion).subscribe(data =>{
       if (data) {
      //   this.fechasList = data; 
     
      this.verificacionProduccion.fecha_actualizacion = this.today
-   
+     
         this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se creo el Informe de Verificación de Novedad' });
+        this.messageService.add({ severity: 'success', detail: 'Actulización Exitosa' });
         this.obtenerTodo();
 
       } else {
         this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo crear el informe de Verificación de Novedad' });
+        this.messageService.add({ severity: 'info', detail: 'Error al Actualizar' });
   
       }
-
-      console.log(this.verificacionProduccion)
     });
 }
-
 
 
 
 obtenerTodo() {
-  this.verificarProduccionService.buscarporIdInyector(this.portafolio.codigoPortafolio).subscribe(
+  this.verificarProduccionService.buscarporIdReinyector(this.portafolio.codigoPortafolio).subscribe(
     (data: VerificacionProduccion[]) => {
       if (data) {
         this.produccionList = [];
         this.produccionList = data;
+        this.verificacionProduccion.justificado = null;
         this.verificacionProduccion.observacion = null;
       }
       this.loading = false;
 
-      
-      if (data.length!==0) {
-        this.messageService.add({ severity: 'warn', detail: 'Ya existe un informe asignado en este pozo' });
-        this.verificacionProduccion.formDisabled = 1;
-      }
-
     });
-
-    
 }
+
 
 cargarDatosDespues(){
 
@@ -219,7 +212,6 @@ this.sumaPorcentaje=  ( this.produccion.promedio_despues- this.produccion.promed
 console.log(this.sumaPorcentaje);
 this.verificacionProduccion.Porcentaje_inc_dis= ((this.sumaPorcentaje/this.produccion.promedio_antes)*100)
 this.verificacionProduccion.PorcentajeMostrar=this.verificacionProduccion.Porcentaje_inc_dis.toFixed(2);
-this.verificacionProduccion.porcentajeControl=this.verificacionProduccion.Porcentaje_inc_dis;
 this.verificacionProduccion.valor_despues= this.produccion.promedio_despues
 
 //OBTENER VALORACION
@@ -228,19 +220,15 @@ this.verificacionProduccion.valor_despues= this.produccion.promedio_despues
    
     if (this.verificacionProduccion.Porcentaje_inc_dis> 9){
       this.verificacionProduccion.valoracion=0
-      this.verificacionProduccion.descripcionValoracion="Exitoso";
    }
 
     if (this.verificacionProduccion.Porcentaje_inc_dis<10){
     this.verificacionProduccion.valoracion=1
-    this.verificacionProduccion.descripcionValoracion="Medianamente Exitoso";
   }
+ 
 
-
-} else{
+    } else{
       this.verificacionProduccion.valoracion=2
-      this.verificacionProduccion.descripcionValoracion="No Exitoso";
-      this.verificacionProduccion.formDisabled=0
     }  
     this.buttonDisabled = false;
     
@@ -252,24 +240,20 @@ this.verificacionProduccion.valor_despues= this.produccion.promedio_despues
   
 }
 
-editarProduccion(verificacionProduccion: VerificacionProduccion, produccion: Produccion) {
+volver(verificacionProduccion: VerificacionProduccion) {
   console.log("click");
   this.verificarProduccionService.verificarProduccion = verificacionProduccion;
-  this.verificarProduccionService.produccion = produccion;
-  this.router.navigate(['/menu', { outlets: { sitp: ['EditarVerificacionInyectorComponent'] } }]);
-}
-
-volver(portafolio: Portafolio) {
-  console.log("click");
-  this.verificarFechasService.portafolio = portafolio;
-  this.router.navigate(['/menu', { outlets: { sitp: ['verificacionFechas'] } }]);
+  this.router.navigate(['/menu', { outlets: { sitp: ['verificarProduccion'] } }]);
 }
 
 
-siguiente(portafolio: Portafolio) {
-  console.log("click");
-  this.VerificarNovedadService.portafolio = portafolio;
-  this.router.navigate(['/menu', { outlets: { sitp: ['verificarNovedad'] } }]);
-}
+
+
+
+
+
+
+
+
 
 }

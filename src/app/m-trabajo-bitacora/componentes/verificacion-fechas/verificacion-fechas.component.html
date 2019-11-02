@@ -127,7 +127,7 @@
           <label for="verificacion Fechas"><b>Fecha Notificación o Solicitud Aprobación:</b></label>
         </div>
         <div class="col-md">
-          <p class="mtop">{{portafolio.fechaRegistro | date:'dd/MM/yyyy' }}</p>
+          <p class="mtop">{{verificarFechas.fechaArch | date:'dd/MM/yyyy' }}</p>
         </div>
       </div>
     </div>
@@ -136,14 +136,13 @@
   
   <div class="row">
       <div class="col-md-6">
-        <div class="row" *ngIf="verificarFechas.valoracion == 0">
+        <br>
+        <div class="row">
           <div class="col-md-4">
-              <br>
-            <label for="verificarFechas"><b>Justificado:*</b></label>
+            <label for="verificarFechas"><b>Fecha de Oficio:*</b></label>
           </div>
           <div class="col-md">
-            <br>
-            <p-dropdown [options]="justificadoList" [(ngModel)]="verificarFechas.justificado" readonly></p-dropdown>
+              <p class="mtop">{{verificarFechas.fechaNotificacion | date:'dd/MM/yyyy' }}</p>
           </div>
         </div>
       </div>
@@ -155,17 +154,43 @@
               <label for="verificarFechas"><b>Valoración:*</b></label>
             </div>
             <div class="col-md">
-                <p class="mtop">{{verificarFechas.visualizar_valoraciom}}</p>
+                <p class="mtop">{{verificarFechas.valoracion | valoracionBitacora }}</p>
             </div>
           </div>
         </div>
     </div>
 
 
-
+    <div class="row">
+      <br>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+              <br>
+            <label for="verificarFechas"><b>Estado:*</b></label>
+          </div>
+          <div class="col-md">
+              <br>
+            <p-dropdown [options]="estadolist" [(ngModel)]="verificarFechas.estado" readonly></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+      <div class="row" *ngIf="verificarFechas.valoracion > 0">
+        <div class="col-md-4">
+            <br>
+          <label for="verificarFechas"><b>Justificado:*</b></label>
+        </div>
+        <div class="col-md">
+          <br>
+          <p-dropdown [options]="justificadoList" [(ngModel)]="verificarFechas.justificado" readonly></p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
     
   <div class="row">
-    <div class="col-md-12" *ngIf="verificarFechas.valoracion ==0  && verificarFechas.justificado == 1" >
+    <div class="col-md-12" *ngIf="verificarFechas.valoracion > 0  && verificarFechas.justificado == 1" >
         <div class="row">
       <div class="col-md">
         <label for="verificacionFechas"><b>Observacion:*</b></label>
@@ -177,21 +202,7 @@
 </div>
 
   
-<div class="row">
-    <br>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-            <br>
-          <label for="verificarFechas"><b>Estado:*</b></label>
-        </div>
-        <div class="col-md">
-            <br>
-          <p-dropdown [options]="estadolist" [(ngModel)]="verificarFechas.estado" readonly></p-dropdown>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
 
 
@@ -206,7 +217,7 @@
         </div>
         <div class="col-md">
             <br>
-          <p class="mtop">{{verificarFechas.fecha_actualizacion | date:'MM-dd-yyyy'}}</p>
+          <p class="mtop">{{verificarFechas.fecha_actualizacion | date:'dd-MM-yyyy'}}</p>
         </div>
       </div>
     </div>

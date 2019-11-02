@@ -1,186 +1,443 @@
-<h1>Verificacion INYECTOR</h1>
-<p-fieldset legend="Informacion" [style]="{width: '90%'}">
-  <div class="row">
-    <div class="col-md-4">
-      Numero de portafolio:
-      <input id="input" type="text" [disabled]="true">
-    </div>
-    <div class="col-md-4">
-      Fecha de registro:
-      <input id="input" type="text"  [disabled]="true">
-    </div>
-    <div class="col-md-4">
-      Funcionario:
-      <input id="input" type="text" [disabled]="true">
-    </div>
-  </div>
+<h1>Verificación de Pozo Inyector</h1>
 
+<p-fieldset legend="Datos del portafolio" [toggleable]="true">
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Numero de Portafolio:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.codigoPortafolio}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha de Registro:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Funcionario:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Pozo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.pozo.pozNombre}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Trabajo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.tipoTrabajo.tipoTrabajo}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha TST:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaTrabajoSinTorre | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Número de Trabajo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.numeroTrabajo}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha Inicio:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaInicio  | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha Fin:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaFin  | date:'dd/MM/yyyy' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-fieldset>
   <br>
 
-  <div class="row">
-    <div class="col-sm-3">
-      Pozo:
-      <input id="input" type="text" [disabled]="true">
+
+
+<p-fieldset legend="Tipo Pozo Inyector" [style]="{width: '90%'}">
+ 
+
+    <div class="row">
+        
+      <div class="col-md-4">
+        <button pButton type="button" label="Cargar ANTES de inicio de trabajo" class="ui-button-success" (click)="cargarDatos()"></button> 
+      </div>
+
+
+      <div class="col-md-4">
+        <div class="col-md-3">
+            <label for="verificacion Fechas"><b># Registros:</b></label>
+         </div>
+         <div class="col-md-1">
+          <p-dropdown [options]="registrosList" [(ngModel)]="verificacionProduccion.numRegistros"readonly></p-dropdown>
+        </div>
+        
     </div>
-    <div class="col-sm-3">
-      Trabajo:
-      <input id="input" type="text"  [disabled]="true">
-    </div>
-    <div class="col-sm-3">
-      Numero:
-      <input id="input" type="text" [disabled]="true">
-    </div>
-    <div class="col-sm">
-      Fecha de trabajo sin torre:
-      <input id="input" type="text"[disabled]="true">
-    </div>
-
-  </div>
 
 
-</p-fieldset>
+      <div class="col-md-4">
+          
+        <button pButton type="button" label="Cargar DESPUES de fin de trabajo" class="ui-button-warning" (click)="cargarDatosDespues()" ></button>
+      </div>
 
-<br>
-
-<div class="col-md">
-  <h3>Tipo pozo INYECTOR</h3>
+    
 </div>
 
-<p-fieldset legend="Tipo Pozo Productor" [style]="{width: '90%'}">
-  <div class="row">
 
-    <div class="col-md-6">
-      Fecha inicio trabajo:
-      <input id="input" type="text" [disabled]="true">
+<br>
+<br>
+
+   <div class="row">
+  <div class="col-md-12">
+<p-fieldset legend="Produccion ANTES de trabajo" [toggleable]="true" >
+
+  <table class="table table-bordered table-sm">
+    
+        <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Bloque</th>
+            <th>Yacimiento</th>
+            <th>Pozo</th>
+            <th>BPPD</th>
+            
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let produccion of datosAntes" style="font-size: 11px">
+
+         
+        <td>{{produccion.f_produccion  | date:'dd/MM/yyyy' }} </td>
+        <td>{{produccion.bloqueDetalle}} </td>
+        <td>{{produccion.yacimiento}} </td>
+        <td>{{produccion.pozo_nombre}} </td>
+        <td>{{produccion.bppd}} </td>
+       
+        </tr>
+      <tr>
+          <td> <p><b>Promedio:</b></td>
+          <td></td>
+          <td></td>
+          <td> <p>{{produccion.PromedioAntesMostrar}}</p></td>
+      </tr>
+
+      </tbody>
+  </table>
+  <div class="col-md-12" *ngIf="produccion.ultimo_antes">
+      <div class="row">
+        <div class="col-md-4">
+            <p><b>Ultimo Antes :</b>
+              {{produccion.ultimo_antes}}</p>
+        </div>
+      </div>
     </div>
-    <div class="col-md-6">
-      Fecha fin trabajo:
-      <input id="input" type="text"  [disabled]="true">
+
+</p-fieldset>
+</div>
+</div>
+
+<br>
+<br>
+
+
+<p-fieldset legend="Produccion DESPUÉS de trabajo" [toggleable]="true" >
+  <div class="row">
+    <div class="col-md-12">
+
+<table class="table table-bordered table-sm">
+  
+      <thead>
+      <tr>
+          <th>Fecha</th>
+          <th>Bloque</th>
+          <th>Yacimiento</th>
+          <th>Pozo</th>
+          <th>BPPD</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let produccion of datosDespues" style="font-size: 11px">
+
+        <td>{{produccion.f_produccion  | date:'dd/MM/yyyy' }} </td>
+        <td>{{produccion.bloqueDetalle}} </td>
+        <td>{{produccion.yacimiento}} </td>
+        <td>{{produccion.pozo_nombre}} </td>
+        <td>{{produccion.bppd}} </td>
+      </tr>
+
+      <tr>
+          <td> <p><b>Promedio:</b></td>
+          <td></td>
+          <td></td>
+          <td> <p>{{produccion.PromedioDespuesMostrar}}</p></td>
+      </tr>
+
+    </tbody>
+</table>
+
+<div class="col-md-12" *ngIf="produccion.ultimo_despues">
+    <div class="row">
+      <div class="col-md-4">
+          <p><b>Ultimo Después :</b>
+            {{produccion.ultimo_despues}}</p>
+      </div>
     </div>
   </div>
+</div>
+</div>
+<br>
+<br>
+</p-fieldset>
 
-    <br>
+<p-fieldset legend="Formulario de Ingreso"    *ngIf="verificacionProduccion.formDisabled ==0" [toggleable]="true" >
+<div class="row">
 
-    <div class="row">
-      <br>
-      <div class="col-md-6">
-        Numero de registros:
-        <p-dropdown readonly></p-dropdown>
+
+    <div class="col-md-6">
+      <div class="row">       
+        <div class="col-md-4">
+          <label for="verificacionProduccion"><b>Porcentaje de Control :</b></label>
+        </div>
+        <div class="col-md">
+            <p class="label">{{verificacionProduccion.PorcentajeMostrar}}%</p>
+        </div>
       </div>
     </div>
 
-    <br>
+    <div class="col-md-6">
+      <div class="row">       
+        <div class="col-md-4">
+          <label for="verificacionProduccion"><b>Indice de Comparación :</b></label>
+        </div>
+        <div class="col-md">
+            <p class="label">{{verificacionProduccion.porcentajeControlEstatico}}%</p>
+        </div>
+      </div>
+    </div>    
+  </div>
+
+  
 
     <div class="row">
-      <div class="col-md-4">
-        <button pButton type="button" label="Cargar ANTES de inicio de trabajo" class="ui-button-success"></button>
-        <br><br>
-        <table class="table table-bordered table-sm">
-          <ng-template pTemplate="header">
-              <tr>
-                  <th>Fecha</th>
-                  <th>Baipd</th>
-              </tr>
-          </ng-template>
-          <ng-template pTemplate="body">
-              <tr>
-                  <td>asdasdas</td>
-                  <td>sadasd</td>
-
-              </tr>
-          </ng-template>
-    </table>
-
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+             
+            </div>
+            <div class="col-md">
+              
+              
+            </div>
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <div class="row">       
+            <div class="col-md-4">
+              <label for="verificacionProduccion"><b>Valoración:*</b></label>
+            </div>
+            <div class="col-md">
+                <p class="label">{{verificacionProduccion.descripcionValoracion }}</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-4">
-        <button pButton type="button" label="Cargar DESPUES de fin de trabajo" class="ui-button-warning"></button>
-        <br><br>
-        <table class="table table-bordered table-sm">
-          <ng-template pTemplate="header">
-              <tr>
-                  <th>Fecha</th>
-                  <th>Baipd</th>
-              </tr>
-          </ng-template>
-          <ng-template pTemplate="body">
-              <tr>
-                  <td>asdasdas</td>
-                  <td>sadasd</td>
 
-              </tr>
-          </ng-template>
-        </table>
+      
+    <div class="row" *ngIf="verificacionProduccion.valoracion==2">
+      
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="verificacionProduccion"><b>Justificado:*</b></label>
+          </div>
+          <div class="col-md">
+          <p-dropdown [options]="justificadoList" [(ngModel)]="verificacionProduccion.justificado" readonly></p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+          <div class="row" *ngIf="verificacionProduccion.justificado == 1">
+            <div class="col-md-12">
+              <label for="verificacionProduccion"><b>Observacion:*</b></label>
+            </div>
+            <div class="col-md">
+                <textarea id="verificacionProduccion"   [(ngModel)]="verificacionProduccion.observacion"  class="md-textarea form-control" rows="3"></textarea>       
+            </div>
+            <br>
+          </div>
+ 
+          
+    <div class="row">
+      
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+            <br>
+            <label for="verificacionProduccion"><b>Estado:*</b></label>
+          </div>
+          <div class="col-md">
+            <br>
+          <p-dropdown [options]="estadolist" [(ngModel)]="verificacionProduccion.estado" readonly></p-dropdown>
+          </div>
+        </div>
       </div>
     </div>
 
     
-    <br>
-    <div class="col-md">
-    Porcentaje de control:
-    <input id="input" type="text" [disabled]="true">
-    </div>
-    <br>
-    <div class="col-md">
-    Valoracion:
-    <input id="input" type="text"  [disabled]="true">
-    </div>
-    <br>
-    <div class="col-md">
-    Justificado:
-    <p-dropdown readonly></p-dropdown>
-    </div>
-    <br>
-    <div class="col-md">
-      <textarea id="verificacionFechas"  class="md-textarea form-control" rows="3"></textarea>    
-      
-    </div>
-    <br>
-    <div class="col-md">
-    Estado:
-    <p-dropdown readonly></p-dropdown>
-    </div>
-    <br>
-    <div class="col-md">
-    Fecha Actualizacion:
-    <input id="input" [disabled]="true">
-    </div>
-    <br>
-    <div class="col-md">
-    Usuario:
-    <input id="input" [disabled]="true">
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-md-4">
-        <button pButton type="button" label="Guardar" class="ui-button-success"></button>
+
+
+
+
+
+
+
+  <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Fecha de Actualización:</b></label>
+          </div>
+          <div class="col-md">
+            <p class="mtop">{{verificacionProduccion.fecha_actualizacion | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-md-6">
+        <div class="row">       
+          <div class="col-md-4">
+            <label for="campo"><b> Usuario: </b></label>
+          </div>
+          <div class="col-md">
+            <p>{{usuario.nombres}} {{usuario.apellidos}}</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <br>
-    <table class="table table-bordered table-sm">
-      <ng-template pTemplate="header">
-          <tr>
-              <th>Nro Verificacion</th>
-              <th>Valor Antes</th>
-              <th>Valor Despues</th>
-              <th>Porcentaje</th>
-              <th>Valoracion</th>
-              <th>Justificado</th>
-              <th>Estado</th>
-              <th>Fecha Actualizacion</th>
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="body">
-          <tr>
-              <td>asdasdas</td>
-              <td>sadasd</td>
-              <td>asdad</td>
-              <td>asdasda</td>
-          </tr>
-      </ng-template>
-    </table>
-
+    <div class="row justify-content-end">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-sm btn-info btn-block" (click)="guardar()">
+          Guardar
+        </button>
+      </div>
+    </div>
 
 </p-fieldset>
+
+
+
+  
+   
+
+
+ 
+
+<br>
+<p-fieldset legend="Resultados" [toggleable]="true">
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+
+            <th>Nro. Verificacion</th>
+            <th>Valor Antes</th>
+            <th>Valor Despues</th>
+            <th>Porcentaje Control</th>
+            <th>Valoracion</th>
+            <th>Justificado</th>
+            <th>Observacion</th>
+            <th>Estado</th>
+            <th>Fecha Actualización</th>
+            <th>Editar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let verificacionProduccion of produccionList | paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;" style="font-size: 11px">
+
+            <td>{{verificacionProduccion.codVerificacion}} </td>
+            <td>{{verificacionProduccion.valor_antes}} </td>
+            <td>{{verificacionProduccion.valor_despues}} </td>
+            <td>{{verificacionProduccion.porcentajeControl}} </td>
+            <td>{{verificacionProduccion.valoracion |ValoracionProduccion }} </td>
+            <td>{{verificacionProduccion.justificado | JustificadoBitacora}} </td>
+            <td>{{verificacionProduccion.observacion }} </td>
+            <td>{{verificacionProduccion.estado| estadoBitacora}} </td>
+            <td>{{verificacionProduccion.fecha_actualizacion | date:'dd/MM/yyyy'}} </td>
+            <td class="text-center">
+              <i class="fa fa-pencil-square-o fa-2x" (click)="editarProduccion(verificacionProduccion,produccion);"></i>            
+          </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</p-fieldset>
+
+<div class="row">
+    <div class="col-md-12 row justify-content-center">
+        <button type="button" class="btn btn-secondary btn-sm"  (click)="volver(portafolio) "><i class="fa fa-calendar-o" aria-hidden="true">&nbsp;Verificar Fechas</i>
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary btn-sm"  (click)="siguiente(portafolio)" ><i class="fa fa-newspaper-o" aria-hidden="true">&nbsp; Verificar Novedades</i>
+        </button>
+    </div>
+</div>
 
 

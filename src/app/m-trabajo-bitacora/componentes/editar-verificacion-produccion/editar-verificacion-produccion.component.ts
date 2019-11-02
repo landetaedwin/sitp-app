@@ -68,7 +68,7 @@ export class EditarVerificacionProduccionComponent implements OnInit {
   ngOnInit() {
     this.usuario= this.loginService.sessionValue;
     this.verificacionProduccion.fecha_actualizacion = this.today
-  
+
 
     if (!this.verificarProduccionService.portafolio) {
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
@@ -103,6 +103,8 @@ export class EditarVerificacionProduccionComponent implements OnInit {
   
   this.cargarDatos();
   this.cargarDatosDespues();
+  this.verificacionProduccion.porcentajeControlEstatico=10;
+  console.log(this.verificacionProduccion.porcentajeControlEstatico);
 
   }
 

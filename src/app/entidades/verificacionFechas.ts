@@ -13,5 +13,8 @@ id_usuario: number;
 visualizar_estado: String;
 visualizar_justificado: String;
 visualizar_valoraciom: String;
+fechaArch: Date;
+fechaNotificacion: Date;
 formDisabled:number=0
+
 }

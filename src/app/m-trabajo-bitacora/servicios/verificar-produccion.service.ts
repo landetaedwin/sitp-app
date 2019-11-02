@@ -26,6 +26,50 @@ export class VerificarProduccionService {
     constructor(readonly http: HttpClient, public prop: Constantes) { }
 
 
+
+
+    // componentes verificacion inyector
+    transCrearVerificarInyector(verificacionProduccion:VerificacionProduccion){
+      const url =  this.prop.PATH + "/sitp/VerificarProduccion/CrearVerificacionInyector";
+      return this.http.post(url, verificacionProduccion, httpOptions);
+    }
+
+
+    buscarporIdInyector(codPortafolio:number){
+      const url =  this.prop.PATH + "/sitp/VerificarProduccion/obtenerDatosInyector?codigoPortafolio="+ codPortafolio;
+  //   const url =  this.prop.PATH + "/sitp/InformeOperadora/findOperadoraById";
+      return this.http.get(url, httpOptions);
+    }
+
+   
+      transUpdateVerificacionInyector(verificacionProduccion:VerificacionProduccion) {
+        const url = this.prop.PATH + "/sitp/VerificarProduccion/ActualizarInyector";
+        return this.http.post(url, verificacionProduccion, httpOptions);
+      }
+    // componentes verificacion reinyector
+
+
+    transCrearVerificarReinyector(verificacionProduccion:VerificacionProduccion){
+      const url =  this.prop.PATH + "/sitp/VerificarProduccion/CrearVerificacionReinyector";
+      return this.http.post(url, verificacionProduccion, httpOptions);
+    }
+
+
+    buscarporIdReinyector(codPortafolio:number){
+      const url =  this.prop.PATH + "/sitp/VerificarProduccion/obtenerDatosReinyector?codigoPortafolio="+ codPortafolio;
+  //   const url =  this.prop.PATH + "/sitp/InformeOperadora/findOperadoraById";
+      return this.http.get(url, httpOptions);
+    }
+
+   
+      transUpdateVerificacionReinyector(verificacionProduccion:VerificacionProduccion) {
+        console.log(verificacionProduccion);
+        const url = this.prop.PATH + "/sitp/VerificarProduccion/ActualizarReinyector";
+        return this.http.post(url, verificacionProduccion, httpOptions);
+      }
+
+
+    // ccomponentes verificacion produccion
     transCrearVerificarProduccion(verificacionProduccion:VerificacionProduccion){
       const url =  this.prop.PATH + "/sitp/VerificarProduccion/CrearVerificacionProduccion";
       return this.http.post(url, verificacionProduccion, httpOptions);

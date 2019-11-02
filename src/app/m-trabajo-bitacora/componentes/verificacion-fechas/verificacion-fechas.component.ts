@@ -5,12 +5,15 @@ import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { VerificacionFechas } from 'src/app/entidades/verificacionFechas';
+import { InformeOperadora } from 'src/app/entidades/informe-operadora';
+import { DocumentoOperadora } from 'src/app/entidades/documentoOperadora';
+
 import { VerificarFechasService } from 'src/app/m-trabajo-bitacora/servicios/verificar-fechas.service';
 import { Router, RouterLink } from '@angular/router';
 import { BusquedaService } from 'src/app/m-trabajo-pozo/servicios/buscar-portafolio.service';
 import { InformeTrabajoOperadoraService } from '../../servicios/informe-trabajo-operadora.service';
 import { VerificarProduccionService } from '../../servicios/verificar-produccion.service';
-
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-verificacion-fechas',
@@ -19,10 +22,12 @@ import { VerificarProduccionService } from '../../servicios/verificar-produccion
 })
 export class VerificacionFechasComponent implements OnInit {
   portafolio: Portafolio;
-  estadolist: SelectItem[]=[];
+  estadolist: SelectItem[];
   justificadoList: SelectItem[]=[];
   novedadList: SelectItem[]=[];
-
+  fechaArch: Date;
+  x: number=0
+  
   constructor(public verificarProduccionService:VerificarProduccionService,public busquedaService:BusquedaService, public informeTrabajoOperadoraService: InformeTrabajoOperadoraService, http:HttpClient, public verificacionFechaService: VerificarFechasService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
   // this.portafolio = this.verificacionFechaService.portafolio;
     //this.verificarFechas.codPortafolio= this.portafolio.codigoPortafolio;
@@ -30,14 +35,14 @@ export class VerificacionFechasComponent implements OnInit {
     //this.verificarFechas.fecha_fin_trabajo= this.portafolio.fechaFin;
 
     this.portafolio = this.verificacionFechaService.portafolio;
-    this.verificarFechas.valoracion=1;
+  
     this.verificarFechas.visualizar_valoraciom="No Cumple"
+    this.verificarFechas.estado=1;
 
     this.estadolist= [
-                      { label: "Seleccione...", value: null, disabled: false },
                       { label: "Registrado", value: 1, disabled: false },
                       { label: "Anulado", value: 2, disabled: false },
-                      { label: "Cerrado", value: 3, disabled: false }
+                     
   ];
 
   this.justificadoList= [
@@ -65,10 +70,12 @@ this.novedadList= [
   verificarFechas = new VerificacionFechas();
   usuario: Usuario;
   fechasList: VerificacionFechas[]=[];
+ dtaList: InformeOperadora[]=[];
+ docOperadoraList: DocumentoOperadora[]=[];
   sumafecha : Date;
 
   ngOnInit() {
-  
+
 
     this.verificarFechas.fecha_actualizacion = this.today
      this.loading = true;  
@@ -79,8 +86,14 @@ this.novedadList= [
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
     }
 
-    this.verificarFechas.codPortafolio= this.portafolio.codigoPortafolio;
+      
+ 
+    this.obtenerFechaArch();
     this.obtenerTodo();
+ 
+
+    this.verificarFechas.codPortafolio= this.portafolio.codigoPortafolio;
+ 
     this.verificarFechas.fecha_inicio_trabajo = this.portafolio.fechaInicio;
     this.verificarFechas.fecha_fin_trabajo= this.portafolio.fechaFin;
     this.sumafecha =new Date(this.verificarFechas.fecha_fin_trabajo);
@@ -88,12 +101,11 @@ this.novedadList= [
     let dieciseisDias = 1000 * 60 * 60 * 24 * 30;
     let resta = this.sumafecha.getTime() + dieciseisDias;
     this.verificarFechas.fechaPresentacion = new Date(resta)
+    this.verificarFechas.fecha_inicio_trabajo= new Date(this.portafolio.fechaInicio);
+    this.today=new Date(this.today);
+    //this.infomeOperadora.fechaArch= new Date(this.infomeOperadora.fechaArch);
 
-    if (this.verificarFechas.fechaPresentacion<this.today){
-      this.verificarFechas.valoracion=0;
-    }
-
-    console.log(this.verificarFechas.fechaPresentacion);
+   
 
     this.usuario = this.loginService.sessionValue;
     this.fechasList= [];
@@ -112,8 +124,6 @@ this.novedadList= [
     this.verificacionFechaService.buscarporId(this.verificarFechas.codPortafolio).subscribe(
       (data: VerificacionFechas[]) => {   
       if (data) {
-
-            console.log(data.length);
         this.fechasList = data;
         
         this.verificarFechas.justificado=null;
@@ -164,6 +174,7 @@ this.novedadList= [
         if (data) {
           this.fechasList = data;
           this.verificarFechas.justificado=null;
+        
         }   
           this.loading = false;
   
@@ -183,5 +194,69 @@ this.novedadList= [
         console.log("click");
         this.verificarProduccionService.portafolio = portafolio;
         this.router.navigate(['/menu', { outlets: { sitp: ['verificarProduccion'] } }]);
+      }
+      
+      obtenerFechaArch(){
+        this.informeTrabajoOperadoraService.ObtenerDatos(this.portafolio.codigoPortafolio).subscribe(
+           
+          (data: InformeOperadora[]) => {                   
+                this.dtaList=data
+               this.verificarFechas.fechaArch=new Date(this.dtaList[0].fechaArch);  
+               console.log(this.dtaList[0].fechaArch);
+
+               this.busquedaService.getDocumentoOperadoraByCodigoPortafolioList(this.portafolio.codigoPortafolio).subscribe(
+                (data2: DocumentoOperadora[]) => {
+                  this.docOperadoraList=data2
+                this.verificarFechas.fechaNotificacion=new Date(this.docOperadoraList[0].fechaOficio)
+                console.log(this.dtaList[0].fechaOficio);
+                this.obtenerValor();
+              }
+              );
+              }
+          
+          
+          
+              );
+       
+      }
+
+      obtenerFechaRegistro(){
+
+        this.busquedaService.getDocumentoOperadoraByCodigoPortafolioList(this.portafolio.codigoPortafolio).subscribe(
+          (data: DocumentoOperadora[]) => {
+          this.verificarFechas.fechaNotificacion=new Date(this.docOperadoraList[0].fechaOficio)
+        } 
+        );
+        console.log("ewre411");
+     
+      }
+
+
+      obtenerValor(){
+
+    if (this.verificarFechas.fechaPresentacion>=this.verificarFechas.fechaArch && this.verificarFechas.fechaNotificacion<=this.verificarFechas.fecha_inicio_trabajo){
+    //  console.log(this.verificarFechas.fechaPresentacion.getTime()-this.today.getTime());
+      //console.log(this.portafolio.fechaRegistro.getTime()-this.verificarFechas.fecha_inicio_trabajo.getTime());
+       
+      this.verificarFechas.valoracion=0;
+    }
+
+
+    if (this.verificarFechas.fechaNotificacion>this.verificarFechas.fecha_inicio_trabajo){
+      this.verificarFechas.valoracion=1;
+     // console.log(this.portafolio.fechaRegistro.getTime()-this.verificarFechas.fecha_inicio_trabajo.getTime());
+    }
+
+
+    if ( this.verificarFechas.fechaPresentacion>this.fechaArch){
+      this.verificarFechas.valoracion=2;
+      //console.log(this.verificarFechas.fechaPresentacion.getTime()-this.today.getTime());
+    }
+
+    if (this.verificarFechas.fechaNotificacion>this.verificarFechas.fecha_inicio_trabajo && this.verificarFechas.fechaPresentacion<this.verificarFechas.fechaArch){
+      this.verificarFechas.valoracion=3;
+     // console.log(this.today.getTime()-this.verificarFechas.fechaPresentacion.getTime());
+      //console.log(this.verificarFechas.fecha_inicio_trabajo.getTime()-this.portafolio.fechaRegistro.getTime());
+    }
       }
 }
