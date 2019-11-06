@@ -64,5 +64,10 @@ export class CreateUpdateService {
         return this.http.post(url, tasa, httpOptions);
     }
 
+    transUpdatePago(pago: Pago) {
+        const url = this.prop.PATH + "/sitp/pago-service/editar-pago";
+        return this.http.post(url, pago, httpOptions);
+    }
+
 
 }

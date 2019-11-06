@@ -86,26 +86,18 @@
 <br>
 
 <p-fieldset legend="Datos registro de tasas" [toggleable]="true">
-  <!-- <div class="row">
+  <div class="row">
     <div class="col-md-12">
       <ul class="nav justify-content-end">
         <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
           <i class="fa fa-pencil"> Editar</i>
         </li>
-        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '18'">
           <i class="fa fa-pencil"> Editar</i>
         </li>
-        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
-          <i class="fa fa-times"> Anular</i>
-        </li>
-        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
-          <i class="fa fa-times"> Anular
-          </i>
-        </li>
       </ul>
-
     </div>
-  </div> -->
+  </div>
   <br>
   <div class="row">
     <div class="col-md-12 table-responsive">
@@ -127,6 +119,7 @@
             <th>Documentos</th>
             <th>Anexos</th>
             <th>Estado</th>
+            <th>Accion</th>
           </tr>
         </thead>
         <tbody>
@@ -181,6 +174,21 @@
               </ul>
             </td>
             <td>{{pago.estado}}</td>
+            <td>
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="nav justify-content-end">
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+                      <i class="fa fa-pencil fa-2x" (click)="openModalPagos(pagosTemplate,pago)"> </i>
+                    </li>
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '18'">
+                      <i class="fa fa-pencil fa-2x" (click)="openModalPagos(pagosTemplate,pago)"> </i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </td>
           </tr>
         </tbody>
       </table>
@@ -195,6 +203,112 @@
     </div>
   </div>
 </p-fieldset>
+
+
+
+<ng-template #pagosTemplate>
+  <div class="container mt-3 mb-3">
+
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h4>Pagos</h4>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Fecha pago:</b></label>
+          </div>
+          <div class="col-md-8">
+            <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+              [inputStyle]="{ width: '100%' }" [(ngModel)]="pago.fechaPago"></p-calendar>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Item:</b></label>
+          </div>
+          <div class="col-md-8">
+            <input pInputText [(ngModel)]="pago.item" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Valor:</b></label>
+          </div>
+          <div class="col-md-8">
+            <input pInputText [(ngModel)]="pago.valor" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Nro.comprobante:</b></label>
+          </div>
+          <div class="col-md-8">
+            <input pInputText [disabled]="ncomp" [(ngModel)]="pago.numeroComprobante"
+              (ngModelChange)="bloquearTransferencia()" (keyup)="activarTransferencia()" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Nro.transferencia:</b></label>
+          </div>
+          <div class="col-md-8">
+            <input pInputText [disabled]="ntrans" [(ngModel)]="pago.numeroTransaccion"
+              (ngModelChange)="bloquearComprobante()" (keyup)="activarComprobante()" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Nro. factura:</b></label>
+          </div>
+          <div class="col-md-8">
+            <input [(ngModel)]="pago.numeroFactura" pInputText />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Estado:</b></label>
+          </div>
+          <div class="col-md">
+            <p-dropdown></p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-success btn-block" (click)="updatePago()">Marcar como
+          revisado</button>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="closeModalPagos()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
 
 
 
