@@ -5,7 +5,7 @@ import { VerificacionNovedad } from 'src/app/entidades/verificacion-novedad';
 import { Portafolio } from 'src/app/entidades/portafolio';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Usuario } from 'src/app/m-login/entidades/usuario';
-
+import { VerificarProduccionService } from 'src/app/m-trabajo-bitacora/servicios/verificar-produccion.service';
 import { VerificarNovedadService } from 'src/app/m-trabajo-bitacora/servicios/verificarNovedad.service';
 import { Router, RouterLink } from '@angular/router';
 
@@ -23,31 +23,40 @@ export class VerificacionNovedadComponent implements OnInit {
   hoy: Date;
   public loading = false;
   justificadoList: SelectItem[]=[];
+  valoracionList: SelectItem[]=[];
   novedad: SelectItem[]=[];
+  page_size: number = 8;
+  page_number: number = 1;
 
 
-  constructor(http: HttpClient,public verificarNovedadService: VerificarNovedadService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
+  constructor(http: HttpClient, public verificarProduccionService: VerificarProduccionService,public verificarNovedadService: VerificarNovedadService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
     this.portafolio = this.verificarNovedadService.portafolio;
     
     this.hoy = new Date();
     this.verificacioNovedad.estado=1;
-    this.verificacioNovedad.justificado=1;
+    this.verificacioNovedad.justificado=2;
     this.verificacioNovedad.valoracion=1;
+    this.verificacioNovedad.novedad=1;
     
     this.estadolist = [
       { label: "Registrado", value: 1, disabled: false },
-      { label: "Anulado", value: 2, disabled: false },
-      { label: "Cerrado", value: 3, disabled: false }
+      { label: "Anulado", value: 2, disabled: false }
     ];
 
+    this.valoracionList = [
+      { label: "Si", value: 1, disabled: false },
+      { label: "No", value: 2, disabled: false }
+    ];
     
     this.justificadoList= [
+
       { label: "Si", value: 1, disabled: false },
       { label: "No", value: 2, disabled: false }
   
   ];
 
   this.novedad= [
+  
     { label: "Si", value: 1, disabled: false },
     { label: "No", value: 2, disabled: false }
 
@@ -85,8 +94,7 @@ export class VerificacionNovedadComponent implements OnInit {
           console.log(data.length);
           this.novedadList = data;
 
-          this.verificacioNovedad.justificado = null;
-          this.verificacioNovedad.observacion = null;
+
 
         }
         this.loading = false;
@@ -101,8 +109,8 @@ export class VerificacionNovedadComponent implements OnInit {
         if (data) {
           this.novedadList = [];
           this.novedadList = data;
-          this.verificacioNovedad.justificado = null;
-          this.verificacioNovedad.observacion = null;
+          this.verificacioNovedad.codVerfTrabajoInc= (data[0].codVerfTrabajo+1)
+     
         }
         this.loading = false;
 
@@ -113,16 +121,7 @@ export class VerificacionNovedadComponent implements OnInit {
     this.verificacioNovedad.idUsu= this.usuario.idUsuario;
     this.verificarNovedadService.transCrearVerificacionNovedad(this.verificacioNovedad).subscribe(data =>{
       if (data) {
-     //   this.fechasList = data; 
-     if(this.verificacioNovedad.estado===1){
-      this.verificacioNovedad.visualizar_estado="Registrado"
-    }
-    if(this.verificacioNovedad.estado==2){
-      this.verificacioNovedad.visualizar_estado="Anulado"
-      }
-      if(this.verificacioNovedad.estado==3){
-      this.verificacioNovedad.visualizar_estado="Cerrado"
-      }
+     
 
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se creo el Informe de Verificación de Novedad' });
@@ -135,4 +134,20 @@ export class VerificacionNovedadComponent implements OnInit {
       }
     });
 }
+
+volver(portafolio: Portafolio) {
+  console.log("click");
+  this.verificarProduccionService.portafolio = portafolio;
+  this.router.navigate(['/menu', { outlets: { sitp: ['verificarProduccion'] } }]);
 }
+
+siguiente(portafolio: Portafolio) {
+  console.log("click");
+  this.verificarProduccionService.portafolio = portafolio;
+  this.router.navigate(['/menu', { outlets: { sitp: ['verificarProduccion'] } }]);
+}
+}
+
+
+
+

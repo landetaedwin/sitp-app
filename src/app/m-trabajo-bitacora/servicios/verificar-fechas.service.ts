@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Constantes } from "src/app/resources/constantes";
 import { InformeOperadora } from 'src/app/entidades/informe-operadora';
+import { DocumentoOperadora } from 'src/app/entidades/documentoOperadora';
 import { Portafolio } from 'src/app/entidades/portafolio';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
@@ -21,7 +22,8 @@ export class VerificarFechasService {
 
       portafolio: Portafolio;
       verificarFechas: VerificacionFechas;
-
+     
+      
     constructor(readonly http: HttpClient, public prop: Constantes) { }
 
 

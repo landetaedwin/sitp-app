@@ -82,7 +82,7 @@ export class EditarInformeOperadoraComponent implements OnInit {
   guardarInformeTrabajo() {
    
 
-    this.crearInformeOperadora.transUpdateInformeOperadora(this.informeOperadora).subscribe(data => {
+    this.crearInformeOperadora.transCrearInformeOperadora(this.informeOperadora).subscribe(data => {
 
       if (data) {
        // this.loading = false;

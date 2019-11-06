@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core";
 import { Constantes } from "src/app/resources/constantes";
 import { InformeOperadora } from 'src/app/entidades/informe-operadora';
 import { Portafolio } from 'src/app/entidades/portafolio';
+import { VerificacionFechas } from 'src/app/entidades/verificacionFechas';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
@@ -21,52 +22,21 @@ export class InformeTrabajoOperadoraService {
       portafolio: Portafolio;
       informeOperadora: InformeOperadora;
 
+
     constructor(readonly http: HttpClient, public prop: Constantes) { }
 
-
-    transCrearTrabajoOperdora(informeOperadora:InformeOperadora){
-      const url =  this.prop.PATH + "/sitp/InformeOperadora/transCrearInformeOperadora";
+    transCrearInformeOperadora(informeOperadora: InformeOperadora) {
+      const url = this.prop.PATH + "/sitp/InformeOperadora/crearInformeOperadora";
       return this.http.post(url, informeOperadora, httpOptions);
-    }
+  }
+
+  ObtenerDatos(codigoPortafolio: number) {
+    const url = this.prop.PATH + "/sitp/InformeOperadora/listarDatos?codigoPortafolio=" + codigoPortafolio;
+    return this.http.get(url, httpOptions);
+  }
 
 
-    buscarporId(codPortafolio:number){
-      const url =  this.prop.PATH + "/sitp/InformeOperadora/findOperadoraById?codigoPortafolio="+ codPortafolio;
-  //   const url =  this.prop.PATH + "/sitp/InformeOperadora/findOperadoraById";
-      return this.http.get(url, httpOptions);
-    }
 
-
-    findDocument(cod_informe_operadora: number) {
-    //  const url = this.prop.PATH + "/sitp/InformeOperadora/findOperadoraById?codInformeOperadora=" + 3;
-     const url = this.prop.PATH + "/sitp/InformeOperadora/findInformeOperadora";
-      return this.http.get(url, httpOptions);
-    }
-
-    obtenerDatos(portafolio: Portafolio) {
-    //  const url = this.prop.PATH + "/sitp/InformeOperadora/findOperadoraById?codInformeOperadora=" + 3;
-     const url = this.prop.PATH + "/sitp/InformeOperadora/findInformeOperadora";
-      return this.http.get(url, httpOptions);
-    }
-
-    subirArchivo(archivo: File, id): Observable<InformeOperadora>{
-      console.log("PARTE 0");
-      let formData = new FormData();
-      formData.append("archivo", archivo);
-      formData.append("id", id);
-      const url = this.prop.PATH + "/sitp/InformeOperadora/subidaArchivo/";
-      return this.http.post(url, formData).pipe(
-        map((response:any)=> response.informeOperadora as InformeOperadora)
-      );
-      }
-      
-      transUpdateInformeOperadora(informeOperadora: InformeOperadora) {
-        const url = this.prop.PATH + "/sitp/InformeOperadora/transActualizarInforeOperadora";
-        return this.http.post(url, informeOperadora, httpOptions);
-      }
-  
-
-   
 
 
 }

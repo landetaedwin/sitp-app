@@ -7,13 +7,13 @@ export class ValoracionProduccionPipe implements PipeTransform {
 
     transform(value: any, args?: any): any {
 
-        if (value == 1) {
+        if (value == 0) {
             return "Exitoso"
         }
-        if (value == 2) {
+        if (value == 1) {
             return "Medianamente Exitoso"
         }
-        if (value == 3) {
+        if (value == 2) {
             return "No Exitoso"
         }
     }

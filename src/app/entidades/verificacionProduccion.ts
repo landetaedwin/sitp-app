@@ -13,10 +13,11 @@ export class VerificacionProduccion {
     fecha_actualizacion:Date
     idUsu:number
     tipopozo:TipoPozo
-    PorcentajeMostrar:String
+    PorcentajeMostrar:string
     valor_antes:number
     valor_despues:number
     porcentajeControl:number
     descripcionValoracion:String
+    formDisabled:number=0
 
 }

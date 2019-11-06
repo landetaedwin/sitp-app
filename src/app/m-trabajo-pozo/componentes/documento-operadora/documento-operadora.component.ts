@@ -13,6 +13,8 @@ import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 import { CreateUpdateService } from '../../servicios/create-update.service';
 import { Pago } from 'src/app/entidades/pago';
 import { Asunto } from 'src/app/entidades/asunto';
+import { VerificarFechasService } from 'src/app/m-trabajo-bitacora/servicios/verificar-fechas.service';
+
 
 @Component({
   selector: 'app-documento-operadora',
@@ -56,7 +58,7 @@ export class DocumentoOperadoraComponent implements OnInit {
 
 
 
-  constructor(public loginService: LoginService, public cs: Constantes, public busquedaService: BusquedaService, public dataApi: CreateUpdateService, public messageService: MessageService, public router: Router, private modalService: BsModalService) {
+  constructor(public VerificarFechasService: VerificarFechasService, public loginService: LoginService, public cs: Constantes, public busquedaService: BusquedaService, public dataApi: CreateUpdateService, public messageService: MessageService, public router: Router, private modalService: BsModalService) {
     this.categoriaList = [{ label: "Seleccione", value: null, disabled: true }];
     this.asuntoList = [{ label: "Seleccione", value: null, disabled: true }];
 

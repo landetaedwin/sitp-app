@@ -1,5 +1,7 @@
 export class VerificacionNovedad{
 codVerfTrabajo: number;
+novedad: number;
+codVerfTrabajoInc: number;
 codPortafolio: number;
 valoracion: number;
 justificado: number;
