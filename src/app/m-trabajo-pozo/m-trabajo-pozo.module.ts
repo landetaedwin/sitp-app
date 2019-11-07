@@ -23,6 +23,7 @@ import { RegistroTasasComponent } from './componentes/registro-tasas/registro-ta
 import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-diario/registro-trabajo-diario.component';
 import { VerificacionTasaComponent } from './componentes/verificacion-tasa/verificacion-tasa.component';
 import { VerificarPagosComponent } from './componentes/verificar-pagos/verificar-pagos.component';
+import { EstadoReporteDiarioPipe } from '../resources/pipes/estado-reporte-diario.pipe';
 
 
 
@@ -41,7 +42,8 @@ import { VerificarPagosComponent } from './componentes/verificar-pagos/verificar
     RegistroTasasComponent,
     VerificarPagosComponent,
     VerificacionTasaComponent,
-    EstadoPortafolioPipe
+    EstadoPortafolioPipe,
+    EstadoReporteDiarioPipe
 
 
   ],

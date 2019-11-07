@@ -34,6 +34,11 @@ export class CreateUpdateService {
         return this.http.post(url, rs, httpOptions);
     }
 
+    transEditarRegistroDiario(rs: RegistroDiario) {
+        const url = this.prop.PATH + "/sitp/registro-diario-service/update-registro-diario";
+        return this.http.post(url, rs, httpOptions);
+    }
+
     transCrearDocumentoOperadora(documentoOperadora: DocumentoOperadora) {
         const url = this.prop.PATH + "/sitp/documento-operadora-service/crear-documento-operadora";
         return this.http.post(url, documentoOperadora, httpOptions);
