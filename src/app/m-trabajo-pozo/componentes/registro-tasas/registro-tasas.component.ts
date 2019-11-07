@@ -192,6 +192,7 @@ export class RegistroTasasComponent implements OnInit {
 
   openModalTasa(template: TemplateRef<any>) {
     this.getCampoList();
+    this.tasa = new Tasa;
     this.campoT = new Campo;
     this.pozoT = new Pozo;
     this.bloqueT = new Bloque;
@@ -352,6 +353,12 @@ export class RegistroTasasComponent implements OnInit {
     downloadLink.href = linkSource;
     downloadLink.download = fileName;
     downloadLink.click();
+  }
+
+
+  goToVerificarTasa(tasa: Tasa) {
+    this.busquedaService.tasa = tasa;
+    this.router.navigate(['/menu', { outlets: { sitp: ['verificarTasa'] } }]);
   }
 
 

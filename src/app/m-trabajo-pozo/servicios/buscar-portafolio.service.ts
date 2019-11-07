@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { BusquedaParametros } from 'src/app/entidades/busquedaParametros';
 import { Portafolio } from 'src/app/entidades/portafolio';
 import { Constantes } from "src/app/resources/constantes";
+import { Tasa } from 'src/app/entidades/tasa';
 
 const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -16,6 +17,7 @@ export class BusquedaService {
 
   public portafolio: Portafolio;
   public link: string;
+  public tasa: Tasa;
 
   //Metodos nuevos
   getCampoList() {

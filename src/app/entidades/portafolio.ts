@@ -14,7 +14,7 @@ export class Portafolio {
     blqCodigo: String
     camCodigo: String
     pozCodigo: string
-    pozNombre: String
+    pozNombre: string
     numeroTrabajo: number
     fechaTrabajoSinTorre: Date
     fechaInicio: Date
@@ -33,5 +33,10 @@ export class Portafolio {
     tipoPozo: TipoPozo;
     consorcio: Consorcio;
     funcionario: Usuario;
+
+    motivoCambio: string
+    observacion: string
+    fechaModificacion: Date
+
 
 }

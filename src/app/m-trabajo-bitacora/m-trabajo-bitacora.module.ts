@@ -15,7 +15,6 @@ import { DocumentoOperadoraComponent } from './componentes/documento-operadora/d
 import { InformeTrabajosOperadoraComponent } from './componentes/informe-trabajos-operadora/informe-trabajos-operadora.component';
 import { EditarInformeOperadoraComponent } from './componentes/editar-informe-operadora/editar-informe-operadora.component';
 import { VerificacionNovedadComponent } from './componentes/verificacion-novedad/verificacion-novedad.component';
-import { VerificacionTasaComponent } from './componentes/verificacion-tasa/verificacion-tasa.component';
 import { VerificacionInyectorComponent } from './componentes/verificacion-inyector/verificacion-inyector.component';
 import { VerificacionReinyectorComponent } from './componentes/verificacion-reinyector/verificacion-reinyector.component';
 import { VerificacionTrabajoComponent } from './componentes/verificacion-trabajo/verificacion-trabajo.component';
@@ -30,21 +29,20 @@ import { EditarVerificacionReinyectorComponent } from './componentes/editar-veri
 
 @NgModule({
   declarations: [ReportesDiariosComponent, VerificacionFechasComponent, VerificacionProduccionComponent, DocumentoOperadoraComponent,
-     InformeTrabajosOperadoraComponent,
-     BuscarPortafolioBitacoraComponent,
-     EditarInformeOperadoraComponent,
-     VerificacionNovedadComponent,
-     VerificacionTasaComponent,
-     VerificacionInyectorComponent,
-     VerificacionReinyectorComponent,
-     VerificacionTrabajoComponent,
-     EstadoBitacoraPipe,
-     JustificadoBitacoraPipe,
-     ValoracionBitacoraPipe,
-     EditarVerificacionProduccionComponent, 
-     ValoracionProduccionPipe, EditarVerificacionFechasComponent, EditarVerificacionInyectorComponent, EditarVerificacionReinyectorComponent
-     
-    ],
+    InformeTrabajosOperadoraComponent,
+    BuscarPortafolioBitacoraComponent,
+    EditarInformeOperadoraComponent,
+    VerificacionNovedadComponent,
+    VerificacionInyectorComponent,
+    VerificacionReinyectorComponent,
+    VerificacionTrabajoComponent,
+    EstadoBitacoraPipe,
+    JustificadoBitacoraPipe,
+    ValoracionBitacoraPipe,
+    EditarVerificacionProduccionComponent,
+    ValoracionProduccionPipe, EditarVerificacionFechasComponent, EditarVerificacionInyectorComponent, EditarVerificacionReinyectorComponent
+
+  ],
   imports: [
     CalendarModule,
     DropdownModule,

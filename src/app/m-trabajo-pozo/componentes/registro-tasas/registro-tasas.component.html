@@ -109,6 +109,14 @@
           <i class="fa fa-times"> Anular
           </i>
         </li>
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+          <i class="fa fa-handshake-o"> Verificar tasa
+          </i>
+        </li>
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
+          <i class="fa fa-handshake-o"> Verificar tasa
+          </i>
+        </li>
       </ul>
 
     </div>
@@ -174,6 +182,14 @@
                     <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
                       (click)="openModalTasaAnular(tasaTempalteAnular, t)">
                       <i class="fa fa-times fa-2x"></i>
+                    </li>
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      (click)="goToVerificarTasa(t)">
+                      <i class="fa fa-handshake-o fa-2x"></i>
+                    </li>
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                      (click)="goToVerificarTasa(t)">
+                      <i class="fa fa-handshake-o fa-2x"></i>
                     </li>
                   </ul>
                 </div>
@@ -245,7 +261,7 @@
             <label for="campo"><b>Alias:</b></label>
           </div>
           <div class="col-md">
-            <input [(ngModel)]="tasa.codigoAlias" pInputText>
+            <input [(ngModel)]="tasa.alias" pInputText>
           </div>
         </div>
       </div>
@@ -480,7 +496,7 @@
             <label for="campo"><b>Alias:</b></label>
           </div>
           <div class="col-md">
-            <input [(ngModel)]="tasaEdit.codigoAlias" pInputText>
+            <input [(ngModel)]="tasaEdit.alias" pInputText>
           </div>
         </div>
       </div>

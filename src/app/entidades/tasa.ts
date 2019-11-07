@@ -32,9 +32,10 @@ export class Tasa {
     bloque: Bloque
     campo: Campo
     pozo: Pozo
-    alias: Alias
+    alias: string
     yacimiento: Yacimiento
     funcionario: Usuario
     fileOficio: Archivo
     fileResolucion: Archivo
+
 }

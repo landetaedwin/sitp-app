@@ -5,7 +5,7 @@ export class BusquedaParametros {
     pozo: string = null;
     fechaDesde: Date = null;
     fechaHasta: Date = null;
-    funcionario: String = null;
+    funcionario: number = null;
     bloque: string = null;
     campo: string = null;
     estado: number = null;

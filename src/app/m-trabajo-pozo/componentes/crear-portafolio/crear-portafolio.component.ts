@@ -1,17 +1,16 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from '@angular/router';
 import { MessageService, SelectItem } from "primeng/api";
 import { Bloque } from "src/app/entidades/bloque";
 import { Campo } from "src/app/entidades/campo";
+import { Consorcio } from 'src/app/entidades/consorcio';
 import { Operadora } from 'src/app/entidades/operadora';
+import { Portafolio } from 'src/app/entidades/portafolio';
 import { Pozo } from "src/app/entidades/pozo";
 import { TipoPozo } from "src/app/entidades/tipo-pozo";
-import { CrearPortafolioService } from "../../servicios/crear-portafolio.service";
-import { Consorcio } from 'src/app/entidades/consorcio';
 import { TipoTrabajo } from 'src/app/entidades/tipo-trabajo';
-import { Portafolio } from 'src/app/entidades/portafolio';
-import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
-import { Router, RouterLink } from '@angular/router';
+import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 import { CreateUpdateService } from '../../servicios/create-update.service';
 @Component({
@@ -33,30 +32,17 @@ export class CrearPortafolioComponent implements OnInit {
   tipoTrabajo: TipoTrabajo = new TipoTrabajo;
   bloque: Bloque = new Bloque;
   operadora: Operadora = new Operadora;
-  campoTst: boolean = false;
-  campoNumero: boolean = true;
-
-  today = new Date();
   usuario: Usuario;
   portafolio: Portafolio = new Portafolio;
-
   minDate: Date;
   maxDate: Date;
 
-  constructor(
-
-    public dataApi: CreateUpdateService,
-    public busquedaService: BusquedaService,
-    private messageService: MessageService,
-    public loginService: LoginService,
-    public router: Router) {
+  constructor(public dataApi: CreateUpdateService, public busquedaService: BusquedaService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.tipoPozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.consorcioList = [{ label: "Seleccione", value: null, disabled: true }];
     this.tipoTrabajoList = [{ label: "Seleccione", value: null, disabled: true }];
-
-
   }
 
 
@@ -68,14 +54,15 @@ export class CrearPortafolioComponent implements OnInit {
       this.router.navigate(['/login']);
     }
 
-    this.onLimitDate();
+    this.maxDate = new Date();
+    this.minDate = new Date(2010, 0, 1);
+
+
     this.initComponentes();
     this.bloque.bqlNombre = "n/a";
     this.operadora.cexApellidoPaterno = "n/a";
   }
 
-
-  //Servicios web
   initComponentes() {
     this.busquedaService.getCampoList().subscribe(
       (data: Campo[]) => {
@@ -131,7 +118,6 @@ export class CrearPortafolioComponent implements OnInit {
           this.loading = false;
         });
     }
-
   }
 
   cargarCampoPozo(campo: Campo) {
@@ -169,33 +155,7 @@ export class CrearPortafolioComponent implements OnInit {
     }
   }
 
-
-  //Logica de pantalla
-
-  verificacionTipoTrabajo(tipoTrabajo: TipoTrabajo) {
-    if (tipoTrabajo.codigoTipoTrabajo == 3) {
-      this.campoTst = true;
-    }
-    if (tipoTrabajo.codigoTipoTrabajo == 2) {
-      this.campoNumero = true;
-    }
-    if (tipoTrabajo.codigoTipoTrabajo == 1) {
-      this.campoNumero = false;
-      this.campoTst = false;
-    }
-  }
-
-  onLimitDate() {
-    this.maxDate = new Date();
-    this.minDate = new Date(2010, 0, 1);
-  }
-
-  //Transacciones
-
-  numeroTrabajo: number;
   guardarPortafolio() {
-    debugger
-
     this.loading = true;
     this.portafolio.codigoConsorcio = this.consorcio.codigoConsorcio;
     this.portafolio.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
@@ -204,21 +164,16 @@ export class CrearPortafolioComponent implements OnInit {
     this.portafolio.blqCodigo = this.bloque.blqCodigo;
     this.portafolio.camCodigo = this.campo.camCodigo;
     this.portafolio.pozCodigo = this.pozo.pozCodigo;
-    this.portafolio.numeroTrabajo = this.numeroTrabajo;
-    this.portafolio.estado = 3;
-    this.portafolio.fechaRegistro = this.today;
     this.portafolio.idUsuario = this.usuario.idUsuario;
 
     this.dataApi.transCrearPortafolio(this.portafolio).subscribe(data => {
-
       if (data == "El portafolio ha sido creado correctamente") {
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: '' + data });
-        this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
+        this.goToBuscarPortafolio()
       } else {
         this.loading = false;
         this.messageService.add({ severity: 'info', detail: '' + data });
-
       }
     });
 
