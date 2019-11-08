@@ -44,6 +44,11 @@ export class CreateUpdateService {
         return this.http.post(url, documentoOperadora, httpOptions);
     }
 
+    transUpdateDocumentoOperadora(documentoOperadora: DocumentoOperadora) {
+        const url = this.prop.PATH + "/sitp/documento-operadora-service/update-documento-operadora";
+        return this.http.post(url, documentoOperadora, httpOptions);
+    }
+
     transCrearPago(pago: Pago) {
         const url = this.prop.PATH + "/sitp/pago-service/crear-pago";
         return this.http.post(url, pago, httpOptions);
@@ -51,6 +56,11 @@ export class CreateUpdateService {
 
     transCrearDocumentoMinisterio(documentoMinisterio: DocumentoMinisterio) {
         const url = this.prop.PATH + "/sitp/documento-ministerio-service/crear-documento-ministerio";
+        return this.http.post(url, documentoMinisterio, httpOptions);
+    }
+
+    transUpdateDocumentoMinisterio(documentoMinisterio: DocumentoMinisterio) {
+        const url = this.prop.PATH + "/sitp/documento-ministerio-service/update-documento-ministerio";
         return this.http.post(url, documentoMinisterio, httpOptions);
     }
 

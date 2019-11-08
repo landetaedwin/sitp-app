@@ -3,17 +3,17 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MessageService, SelectItem } from 'primeng/api';
 import { Archivo } from 'src/app/entidades/archivo';
+import { Asunto } from 'src/app/entidades/asunto';
 import { Categoria } from 'src/app/entidades/categoria';
 import { DocumentoOperadora } from 'src/app/entidades/documentoOperadora';
+import { Pago } from 'src/app/entidades/pago';
 import { Portafolio } from 'src/app/entidades/portafolio';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
+import { VerificarFechasService } from 'src/app/m-trabajo-bitacora/servicios/verificar-fechas.service';
 import { Constantes } from 'src/app/resources/constantes';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 import { CreateUpdateService } from '../../servicios/create-update.service';
-import { Pago } from 'src/app/entidades/pago';
-import { Asunto } from 'src/app/entidades/asunto';
-import { VerificarFechasService } from 'src/app/m-trabajo-bitacora/servicios/verificar-fechas.service';
 
 
 @Component({
@@ -27,6 +27,8 @@ export class DocumentoOperadoraComponent implements OnInit {
   portafolio: Portafolio = new Portafolio;
   documentoOperadoraList: DocumentoOperadora[] = [];
   documentoOperadora: DocumentoOperadora = new DocumentoOperadora;
+  documentoOperadoraEdit: DocumentoOperadora = new DocumentoOperadora;
+
   pago: Pago = new Pago;
   pagoList: Pago[] = [];
 
@@ -37,6 +39,7 @@ export class DocumentoOperadoraComponent implements OnInit {
   documentoModalRef: BsModalRef;
   pagoModalRef: BsModalRef;
   pdfModalRef: BsModalRef;
+  documentoEditRef: BsModalRef;
 
   docNroOficio: Archivo = new Archivo;
   anexo1: Archivo = new Archivo;
@@ -161,16 +164,6 @@ export class DocumentoOperadoraComponent implements OnInit {
     this.pagoModalRef.hide();
   }
 
-
-
-  // openModalPDF(template: TemplateRef<any>) {
-  //   this.pdfModalRef = this.modalService.show(template, { class: 'modal-md', backdrop: 'static', keyboard: false });
-  // }
-
-  // closeModalPDF() {
-  //   this.pdfModalRef.hide();
-  // }
-
   onChangeDocNroOficio(e) {
     var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
     var reader = new FileReader();
@@ -247,13 +240,20 @@ export class DocumentoOperadoraComponent implements OnInit {
   guardar() {
     this.loading = true;
     this.documentoOperadora.codigoPortafolio = this.portafolio.codigoPortafolio;
-    this.documentoOperadora.codigoCategoria = this.categoria.codigoCategoria;
     this.documentoOperadora.idUsuario = this.usuario.idUsuario;
     this.documentoOperadora.estado = 1;
     this.documentoOperadora.fechaRegistro = new Date();
     this.documentoOperadora.fechaOficio = new Date(this.documentoOperadora.fechaOficio);
 
-    this.documentoOperadora.codigoAsunto = this.asunto.codigoAsunto;
+    debugger
+    if (this.categoria) {
+      this.documentoOperadora.codigoCategoria = this.categoria.codigoCategoria;
+    }
+    debugger
+    if (this.asunto) {
+      this.documentoOperadora.codigoAsunto = this.asunto.codigoAsunto;
+    }
+
 
     this.documentoOperadora.fileOficio = new Archivo;
     this.documentoOperadora.fileAnexo1 = new Archivo;
@@ -366,5 +366,148 @@ export class DocumentoOperadoraComponent implements OnInit {
   }
 
 
+  goToBuscarPortafolio() {
+    this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
+  }
 
+
+  openModalDocumentoEdit(template: TemplateRef<any>, document: DocumentoOperadora) {
+    this.documentoOperadoraEdit = this.cloneJSON(document)
+    this.getAsuntoList();
+    if (this.portafolio.codigoTipoTrabajo != 1) {
+      this.getListCategoriaByCodigoTipoTrabajo();
+    }
+    this.asunto = this.documentoOperadoraEdit.asunto;
+    this.categoria = this.documentoOperadoraEdit.categoria;
+    if (this.documentoOperadoraEdit.fechaOficio) {
+      this.documentoOperadoraEdit.fechaOficio = new Date(this.documentoOperadoraEdit.fechaOficio)
+    }
+    if (this.documentoOperadoraEdit.fechaARCH) {
+      this.documentoOperadoraEdit.fechaARCH = new Date(this.documentoOperadoraEdit.fechaARCH)
+    }
+
+    this.documentoEditRef = this.modalService.show(template, { class: 'modal-md', backdrop: 'static', keyboard: false });
+  }
+
+  closeModalDocumentoEdit() {
+    this.documentoEditRef.hide();
+  }
+
+  cloneJSON(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  }
+
+  editarDocumento() {
+    debugger
+    this.loading = true;
+    this.documentoOperadoraEdit.idUsuario = this.usuario.idUsuario;
+    this.documentoOperadoraEdit.fechaRegistro = new Date(this.documentoOperadoraEdit.fechaRegistro);
+    if (this.documentoOperadoraEdit.fechaOficio) {
+      this.documentoOperadoraEdit.fechaOficio = new Date(this.documentoOperadoraEdit.fechaOficio);
+    }
+    if (this.documentoOperadoraEdit.fechaARCH) {
+      this.documentoOperadoraEdit.fechaARCH = new Date(this.documentoOperadoraEdit.fechaARCH);
+    }
+
+
+    if (this.categoria) {
+      this.documentoOperadoraEdit.codigoCategoria = this.categoria.codigoCategoria;
+    }
+
+    if (this.asunto) {
+      this.documentoOperadoraEdit.codigoAsunto = this.asunto.codigoAsunto;
+    }
+
+
+    this.documentoOperadoraEdit.fileOficio = new Archivo;
+    this.documentoOperadoraEdit.fileAnexo1 = new Archivo;
+    this.documentoOperadoraEdit.fileAnexo2 = new Archivo;
+    this.documentoOperadoraEdit.fileAnexo3 = new Archivo;
+    this.documentoOperadoraEdit.fileAnexo4 = new Archivo;
+    this.documentoOperadoraEdit.filePago = new Archivo;
+
+    if (this.docNroOficio.base64) {
+      this.documentoOperadoraEdit.fileOficio.nombre = this.docNroOficio.nombre;
+      this.documentoOperadoraEdit.fileOficio.base64 = this.docNroOficio.base64.substring(28);
+    }
+
+    if (this.anexo1.base64) {
+      this.documentoOperadoraEdit.fileAnexo1.nombre = this.anexo1.nombre;
+      this.documentoOperadoraEdit.fileAnexo1.base64 = this.anexo1.base64.substring(28);
+    }
+
+    if (this.anexo2.base64) {
+      this.documentoOperadoraEdit.fileAnexo2.nombre = this.anexo2.nombre;
+      this.documentoOperadoraEdit.fileAnexo2.base64 = this.anexo2.base64.substring(28);
+    }
+
+    if (this.anexo3.base64) {
+      this.documentoOperadoraEdit.fileAnexo3.nombre = this.anexo3.nombre;
+      this.documentoOperadoraEdit.fileAnexo3.base64 = this.anexo3.base64.substring(28);
+    }
+
+    if (this.anexo4.base64) {
+      this.documentoOperadoraEdit.fileAnexo4.nombre = this.anexo4.nombre;
+      this.documentoOperadoraEdit.fileAnexo4.base64 = this.anexo4.base64.substring(28);
+    }
+
+    if (this.docPagos.base64) {
+      this.documentoOperadoraEdit.filePago.nombre = this.docPagos.nombre;
+      this.documentoOperadoraEdit.filePago.base64 = this.docPagos.base64.substring(28);
+    }
+
+    this.dataApi.transUpdateDocumentoOperadora(this.documentoOperadoraEdit).subscribe(data => {
+      if (data) {
+        this.getListDocumentoOperadora()
+        this.loading = false;
+        this.messageService.add({ severity: 'success', detail: 'Se actualizo el documento de operadora' });
+        this.asunto = null;
+        this.categoria = null;
+        this.closeModalDocumentoEdit();
+
+      } else {
+        this.loading = false;
+        this.messageService.add({ severity: 'info', detail: 'No se pudo actualizo el documento de operadora' });
+      }
+
+    });
+  }
+
+  anularDocumento() {
+    debugger
+    this.loading = true;
+    this.documentoOperadoraEdit.idUsuario = this.usuario.idUsuario;
+    this.documentoOperadoraEdit.estado = 0;
+    if (this.documentoOperadoraEdit.fechaRegistro) {
+      this.documentoOperadoraEdit.fechaRegistro = new Date(this.documentoOperadoraEdit.fechaRegistro);
+    }
+    if (this.documentoOperadoraEdit.fechaOficio) {
+      this.documentoOperadoraEdit.fechaOficio = new Date(this.documentoOperadoraEdit.fechaOficio);
+    }
+    if (this.documentoOperadoraEdit.fechaARCH) {
+      this.documentoOperadoraEdit.fechaARCH = new Date(this.documentoOperadoraEdit.fechaARCH);
+    }
+
+    this.dataApi.transUpdateDocumentoOperadora(this.documentoOperadoraEdit).subscribe(data => {
+      if (data) {
+        this.getListDocumentoOperadora()
+        this.loading = false;
+        this.messageService.add({ severity: 'success', detail: 'Se anulo el documento de operadora' });
+        this.asunto = null;
+        this.categoria = null;
+        this.closeModalDocumentoEdit();
+
+      } else {
+        this.loading = false;
+        this.messageService.add({ severity: 'info', detail: 'No se pudo anular el documento de operadora' });
+      }
+
+    });
+  }
+  confirmModalRef: BsModalRef;
+
+  openConfirmModal(template: TemplateRef<any>, document: DocumentoOperadora) {
+    this.documentoOperadoraEdit = document;
+    this.confirmModalRef = this.modalService.show(template);
+  }
 }
