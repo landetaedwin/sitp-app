@@ -6,8 +6,9 @@ import { HistorialPozo } from 'src/app/entidades/historialPozo';
 import { Pago } from 'src/app/entidades/pago';
 import { Portafolio } from 'src/app/entidades/portafolio';
 import { RegistroDiario } from 'src/app/entidades/registro-diario';
-import { Constantes } from "src/app/resources/constantes";
 import { Tasa } from 'src/app/entidades/tasa';
+import { VerificacionTasa } from 'src/app/entidades/verificacion-tasa';
+import { Constantes } from "src/app/resources/constantes";
 
 const httpOptions = {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -82,6 +83,11 @@ export class CreateUpdateService {
     transUpdatePago(pago: Pago) {
         const url = this.prop.PATH + "/sitp/pago-service/editar-pago";
         return this.http.post(url, pago, httpOptions);
+    }
+
+    transCreateVErificacionTasa(verificacionTasa: VerificacionTasa) {
+        const url = this.prop.PATH + "/sitp/tasa-service/crear-verificacion-tasa";
+        return this.http.post(url, verificacionTasa, httpOptions);
     }
 
 

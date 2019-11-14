@@ -1,17 +1,18 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { Router } from '@angular/router';
-import { Usuario } from 'src/app/m-login/entidades/usuario';
-import { BusquedaParametros } from 'src/app/entidades/busquedaParametros';
-import { SelectItem, MessageService } from 'primeng/api';
-import { Campo } from 'src/app/entidades/campo';
-import { Pozo } from 'src/app/entidades/pozo';
-import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Tasa } from 'src/app/entidades/tasa';
-import { Operadora } from 'src/app/entidades/operadora';
-import { Bloque } from 'src/app/entidades/bloque';
+import { MessageService, SelectItem } from 'primeng/api';
 import { Archivo } from 'src/app/entidades/archivo';
+import { Bloque } from 'src/app/entidades/bloque';
+import { BusquedaParametros } from 'src/app/entidades/busquedaParametros';
+import { Campo } from 'src/app/entidades/campo';
+import { Operadora } from 'src/app/entidades/operadora';
+import { Pozo } from 'src/app/entidades/pozo';
+import { Tasa } from 'src/app/entidades/tasa';
+import { Yacimiento } from 'src/app/entidades/yacimiento';
+import { Usuario } from 'src/app/m-login/entidades/usuario';
+import { LoginService } from 'src/app/m-login/servicios/login.service';
+import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 import { CreateUpdateService } from '../../servicios/create-update.service';
 
 @Component({
@@ -27,6 +28,8 @@ export class RegistroTasasComponent implements OnInit {
   campo: Campo;
   pozoList: SelectItem[] = [];
   pozo: Pozo;
+  yacimientoList: SelectItem[] = [];
+  yacimientoT: Yacimiento;
   tasa: Tasa = new Tasa;
   tasaEdit: Tasa = new Tasa;
   tasaAnular: Tasa = new Tasa;
@@ -113,6 +116,19 @@ export class RegistroTasasComponent implements OnInit {
       });
   }
 
+  getYacimientoList() {
+    this.busquedaService.getYacimientoList().subscribe(
+      (data: Yacimiento[]) => {
+        let c: Yacimiento;
+        this.yacimientoList = [{ label: "Seleccione", value: null, disabled: true }];
+        for (let i in data) {
+          c = data[i];
+          this.yacimientoList.push({ label: c.yacimiento, value: c });
+        }
+        this.loading = false;
+      });
+  }
+
   getPozoListByCamCodigo(campo: Campo) {
     if (campo.camCodigo) {
       this.cargarBloqueByBlqCodigo(campo);
@@ -192,11 +208,13 @@ export class RegistroTasasComponent implements OnInit {
 
   openModalTasa(template: TemplateRef<any>) {
     this.getCampoList();
+    this.getYacimientoList()
     this.tasa = new Tasa;
     this.campoT = new Campo;
     this.pozoT = new Pozo;
     this.bloqueT = new Bloque;
     this.operadoraT = new Operadora;
+    this.yacimientoT = new Yacimiento;
     this.bloqueT.bqlNombre = "n/a";
     this.operadoraT.cexApellidoPaterno = "n/a";
     this.registroTasaModalRef = this.modalService.show(template, { class: 'modal-md', backdrop: 'static', keyboard: false });
@@ -210,12 +228,14 @@ export class RegistroTasasComponent implements OnInit {
   openModalTasaEdit(template: TemplateRef<any>, tasaEdit: Tasa) {
 
     this.getCampoList();
+    this.getYacimientoList();
     this.tasaEdit = this.cloneJSON(tasaEdit);
     this.cargarCampoPozo(tasaEdit.campo);
     this.campoT = tasaEdit.campo;
     this.pozoT = tasaEdit.pozo;
     this.bloqueT = tasaEdit.bloque;
     this.operadoraT = tasaEdit.operadora;
+    this.yacimientoT = tasaEdit.yacimiento;
     this.tasaEdit.fechaOficio = new Date(tasaEdit.fechaOficio);
     this.tasaEdit.fechaResolucion = new Date(tasaEdit.fechaResolucion);
 
@@ -255,7 +275,8 @@ export class RegistroTasasComponent implements OnInit {
     this.tasa.estado = 1;
     this.tasa.idUsuario = this.usuario.idUsuario;
     this.tasa.fechaRegistro = new Date();
-
+    this.tasa.codigoYacimiento = this.yacimientoT.codigoYacimiento;
+    
 
     this.dataApi.transCrearTasa(this.tasa).subscribe(data => {
 
@@ -296,6 +317,7 @@ export class RegistroTasasComponent implements OnInit {
     }
     this.tasaEdit.idUsuario = this.usuario.idUsuario;
     this.tasaEdit.fechaActualizacion = new Date();
+    this.tasaEdit.codigoYacimiento = this.yacimientoT.codigoYacimiento;
 
 
     this.dataApi.transUpdateTasa(this.tasaEdit).subscribe(data => {
@@ -356,10 +378,7 @@ export class RegistroTasasComponent implements OnInit {
   }
 
 
-  goToVerificarTasa(tasa: Tasa) {
-    this.busquedaService.tasa = tasa;
-    this.router.navigate(['/menu', { outlets: { sitp: ['verificarTasa'] } }]);
-  }
+
 
 
 }

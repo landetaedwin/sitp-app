@@ -148,6 +148,14 @@
                   <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
                     (click)="goToDocumentoOperadota(portafolio)" class="dropdown-item" type="button"><i
                       class="fa fa-address-book-o"></i> Adjuntar documentos de Operadora</button>
+
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="goToVerificarTasa(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-coffee"></i> Verficiar tasa</button>
+
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                    (click)="goToVerificarTasa(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-coffee"></i> Verficiar tasa</button>
                 </div>
               </div>
             </td>

@@ -228,6 +228,9 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
       if (this.portafolio.consorcio.fechaRegistro) {
         this.portafolio.consorcio.fechaRegistro = new Date(this.portafolio.consorcio.fechaRegistro);
       }
+      if (this.portafolio.fechaModificacion) {
+        this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion);
+      }
 
     } else {
       this.portafolio.fechaFin = new Date();
@@ -238,6 +241,9 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
       }
       if (this.portafolio.consorcio.fechaRegistro) {
         this.portafolio.consorcio.fechaRegistro = new Date(this.portafolio.consorcio.fechaRegistro);
+      }
+      if (this.portafolio.fechaModificacion) {
+        this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion);
       }
 
     }

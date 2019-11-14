@@ -1,5 +1,184 @@
-<p-fieldset legend="Verificación de registro de tasas" [toggleable]="true">
+<p-fieldset legend="Verificación de tasas de producción fijadas">
+    <p-fieldset legend="DATOS DEL PORTAFOLIO" [toggleable]="true">
+        <div class="row ">
+            <div class="col-md-12">
+                <div class="row mt-2">
+                    <!-- <div class="col-md-6 mt-1">
+                        <button type="button" class="btn btn-sm btn-success btn-block"
+                            (click)="openModalDocumeto(documentoTemplate)"> <i class="fa fa-file-text-o"></i> Adjuntar
+                            documento</button>
+                    </div>
+                    <div class="col-md-6 mt-1">
+                        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="goToBuscarPortafolio()">
+                            <i class="fa fa-sign-out"> Cancelar</i>
+                        </button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
 
-  
+        <div class="row mt-1 mb-1">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label><b>Numero de portafolio:</b></label>
+                        <p>{{portafolio.codigoPortafolio}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label><b>Fecha registro:</b></label>
+                        <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label><b>Funcionario:</b></label>
+                        <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label><b>{{cs.pozo}}:</b></label>
+                        <p>{{portafolio.pozo.pozNombre}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label><b>{{cs.trabajo}}:</b></label>
+                        <p>{{portafolio.tipoTrabajo.tipoTrabajo}}</p>
+                    </div>
+                    <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
+                        <label><b>{{cs.fechaTST}}:</b></label>
+                        <p>{{portafolio.fechaTrabajoSinTorre | date:'dd/MM/yyyy'}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4" *ngIf="portafolio.numeroTrabajo">
+                        <label><b>{{cs.numeroTrabajo}}:</b></label>
+                        <p>{{portafolio.numeroTrabajo}}</p>
+                    </div>
+                    <div class="col-md-4" *ngIf="portafolio.fechaInicio">
+                        <p><b>{{cs.fechaInicio}}:</b></p>
+                        <p>{{portafolio.fechaInicio | date:'dd/MM/yyyy'}}</p>
+                    </div>
+                    <div class="col-md-4" *ngIf="portafolio.fechaFin">
+                        <p><b>{{cs.fechaFin}}:</b></p>
+                        <p>{{portafolio.fechaFin | date:'dd/MM/yyyy'}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label><b>Tasa:</b></label>
+                        <p>{{tasa.tasa}}</p>
+                    </div>
 
-</p-fieldset>
+                </div>
+            </div>
+        </div>
+
+    </p-fieldset>
+
+    <p-fieldset legend="DATOS DE VERIFICACIÓN " [toggleable]="true">
+
+        <div class="row">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-sm btn-block btn-primary" (click)="getProduccion3Despues()">
+                    Cargar despues del trabajo
+                </button>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-sm btn-block btn-danger" (click)="goToBuscarPortafolio()">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr class="text-center">
+                            <th>#</th>
+                            <th>FECHA</th>
+                            <th>YACIMIENTO</th>
+                            <th>BPPD</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center" *ngFor="let produccion of produccionDiariaList;let i=index;">
+                            <td>{{i+1}} </td>
+                            <td>{{produccion.f_produccion}} </td>
+                            <td>{{produccion.yacimiento}}</td>
+                            <td>{{produccion.bppd}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>Promedio: {{promedio}}</p>
+            </div>
+        </div>
+    </p-fieldset>
+
+    <p-fieldset legend="VERIFICACIÓN " [toggleable]="true">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label><b>Numero de portafolio:</b></label>
+                        <p *ngIf="promedio > tasa.tasa">NO CUMPLE </p>
+                        <p *ngIf="promedio < tasa.tasa">CUMPLE</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label><b>Justificación:</b></label>
+                        <p-dropdown [options]="justificadoList" [(ngModel)]="justificacion" readonly></p-dropdown>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label><b>Observación:</b></label>
+                        <textarea class="form-control" [(ngModel)]="verificacionTasa.observacion" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-2 mb-2">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-sm btn-block btn-success" (click)="goSaveVerificacion()">
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p-fieldset>
+
+    <p-fieldset legend="VERIFICACIÓN " [toggleable]="true">
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr class="text-center">
+                            <th>#</th>
+                            <th>Pozo</th>
+                            <th>Fecha fin de trabajo </th>
+                            <th>Fecha informe</th>
+                            <th>Justificado </th>
+                            <th>Observación</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center" *ngFor="let verificacion of verificacionTasaList;let i=index;">
+                            <td>{{i+1}} </td>
+                            <td>{{verificacion.portafolio.pozo.pozNombre}} </td>
+                            <td>{{verificacion.portafolio.fechaFin | date:'dd/MM/yyyy'}}</td>
+                            <td>{{verificacion.fechaModificacion | date:'dd/MM/yyyy'}}</td>
+                            <td>{{verificacion.justificacion}}</td>
+                            <td>{{verificacion.observacion}}</td>
+
+
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+    </p-fieldset>

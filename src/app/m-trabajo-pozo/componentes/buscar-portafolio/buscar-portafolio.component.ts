@@ -250,4 +250,13 @@ export class BuscarPortafolioComponent implements OnInit {
     this.confirmModalRef = this.modalService.show(template);
   }
 
+  goToVerificarTasa(portafolio: Portafolio) {
+    if (portafolio.estado == 1) {
+      this.busquedaService.portafolio = portafolio;
+      this.router.navigate(['/menu', { outlets: { sitp: ['verificarTasa'] } }]);
+    } else {
+      this.messageService.add({ severity: 'error', detail: 'Portafolio anulado, comunícate con el administrador.' });
+    }
+  }
+
 }
