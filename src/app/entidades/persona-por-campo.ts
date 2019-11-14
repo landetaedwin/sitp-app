@@ -16,4 +16,8 @@ export class PersonaPorCampo {
     fechaAsignacion: Date
     estado: number
     idUsuario: number
+
+    blqCodigo: string;
+    camCodigo: string
+    idUsuarioFuncionario: number
 }

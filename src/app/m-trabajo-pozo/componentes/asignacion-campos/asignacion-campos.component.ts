@@ -11,6 +11,7 @@ import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 import { CrearPortafolioService } from '../../servicios/crear-portafolio.service';
+import { CreateUpdateService } from '../../servicios/create-update.service';
 
 
 @Component({
@@ -59,7 +60,7 @@ export class AsignacionCamposComponent implements OnInit {
 
   camposListNoAsing: Campo[] = [];
 
-  constructor(public loginService: LoginService, private crearPortafolioService: CrearPortafolioService, public messageService: MessageService, public router: Router, private buscarService: BusquedaService, private modalService: BsModalService) {
+  constructor(public loginService: LoginService, private dataApi: CreateUpdateService, public messageService: MessageService, public router: Router, private buscarService: BusquedaService, private modalService: BsModalService) {
 
     this.estadoList = [{ label: "Seleccione", value: null, disabled: true }, { label: "Activo", value: 1 }, { label: "Inactivo", value: 0 }];
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
@@ -82,7 +83,7 @@ export class AsignacionCamposComponent implements OnInit {
   }
 
   getAllUsers() {
-    this.loginService.findUserList().subscribe((data: Usuario[]) => {
+    this.loginService.findUserListPersonaCampo().subscribe((data: Usuario[]) => {
       this.users = data;
       this.loading = false;
     }, (err) => {
@@ -261,9 +262,9 @@ export class AsignacionCamposComponent implements OnInit {
   errorCrear: boolean = false;
   guardarPersonaPorCampo() {
     this.personaPorCampo = new PersonaPorCampo;
-    this.personaPorCampo.bloque = this.bloque;
-    this.personaPorCampo.campo = this.campo;
-    this.personaPorCampo.funcionario = this.usuarioFuncionario;
+    this.personaPorCampo.blqCodigo = this.bloque.blqCodigo;
+    this.personaPorCampo.camCodigo = this.campo.camCodigo;
+    this.personaPorCampo.idUsuarioFuncionario = this.usuarioFuncionario.idUsuario;
     this.personaPorCampo.correo = this.usuarioFuncionario.correo;
     this.personaPorCampo.rdhCodigo = this.regional.rdhCodigo;
     this.personaPorCampo.estado = 1;
@@ -275,11 +276,11 @@ export class AsignacionCamposComponent implements OnInit {
 
     
     if (this.bloque.blqCodigo && this.campo.camCodigo && this.usuarioFuncionario.idUsuario) {
-      this.crearPortafolioService.transCrearPersonaPorCampo(this.personaPorCampo).subscribe(data => {
+      this.dataApi.transCreatePersonaPorCampo(this.personaPorCampo).subscribe(data => {
 
-        if (data) {
+        if (data == 'Se asigno correctamente la persona al campo') {
           this.loading = false;
-          this.messageService.add({ severity: 'success', detail: 'Se creo correctamente el registro' });
+          this.messageService.add({ severity: 'success', detail: 'Se asigno correctamente la persona al campo' });
           this.bloque = new Bloque;
           this.campo = new Campo;
           this.usuarioFuncionario = new Usuario;
@@ -308,36 +309,36 @@ export class AsignacionCamposComponent implements OnInit {
 
   guardarEditPersonaPorCampo() {
 
-    this.personaPorCampoEdit.estado = this.estado;
-    if (this.estado == 0) {
-      this.personaPorCampoEdit.fechaFin = new Date();
-    }
+    // this.personaPorCampoEdit.estado = this.estado;
+    // if (this.estado == 0) {
+    //   this.personaPorCampoEdit.fechaFin = new Date();
+    // }
 
-    if (this.personaPorCampoEdit.fechaInicio) {
-      this.personaPorCampoEdit.fechaInicio = new Date(this.personaPorCampoEdit.fechaInicio);
-    }
-    if (this.personaPorCampoEdit.fechaAsignacion) {
-      this.personaPorCampoEdit.fechaAsignacion = new Date(this.personaPorCampoEdit.fechaAsignacion);
-    }
+    // if (this.personaPorCampoEdit.fechaInicio) {
+    //   this.personaPorCampoEdit.fechaInicio = new Date(this.personaPorCampoEdit.fechaInicio);
+    // }
+    // if (this.personaPorCampoEdit.fechaAsignacion) {
+    //   this.personaPorCampoEdit.fechaAsignacion = new Date(this.personaPorCampoEdit.fechaAsignacion);
+    // }
 
-    this.loading = true;
-    this.crearPortafolioService.transUpdatePersonaPorCampo(this.personaPorCampoEdit).subscribe(data => {
+    // this.loading = true;
+    // this.crearPortafolioService.transUpdatePersonaPorCampo(this.personaPorCampoEdit).subscribe(data => {
 
-      if (data) {
-        this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se actualizo correctamente el registro' });
-        this.estado = null;
-        this.editPersonaPorCampoModalRef.hide();
+    //   if (data) {
+    //     this.loading = false;
+    //     this.messageService.add({ severity: 'success', detail: 'Se actualizo correctamente el registro' });
+    //     this.estado = null;
+    //     this.editPersonaPorCampoModalRef.hide();
 
-      } else {
-        this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo actualizo el registro' });
-      }
-    }, (err) => {
-      this.messageService.add({ severity: 'error', detail: 'Error interno' });
-      this.loading = false;
+    //   } else {
+    //     this.loading = false;
+    //     this.messageService.add({ severity: 'info', detail: 'No se pudo actualizo el registro' });
+    //   }
+    // }, (err) => {
+    //   this.messageService.add({ severity: 'error', detail: 'Error interno' });
+    //   this.loading = false;
 
-    });
+    // });
 
   }
 }

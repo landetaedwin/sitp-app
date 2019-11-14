@@ -9,6 +9,7 @@ import { RegistroDiario } from 'src/app/entidades/registro-diario';
 import { Tasa } from 'src/app/entidades/tasa';
 import { VerificacionTasa } from 'src/app/entidades/verificacion-tasa';
 import { Constantes } from "src/app/resources/constantes";
+import { PersonaPorCampo } from 'src/app/entidades/persona-por-campo';
 
 const httpOptions = {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -88,6 +89,11 @@ export class CreateUpdateService {
     transCreateVErificacionTasa(verificacionTasa: VerificacionTasa) {
         const url = this.prop.PATH + "/sitp/tasa-service/crear-verificacion-tasa";
         return this.http.post(url, verificacionTasa, httpOptions);
+    }
+
+    transCreatePersonaPorCampo(personaPorCampo: PersonaPorCampo) {
+        const url = this.prop.PATH + "/sitp/persona-campo-service/create-persona-campo";
+        return this.http.post(url, personaPorCampo, httpOptions);
     }
 
 
