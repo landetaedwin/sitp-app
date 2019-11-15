@@ -94,29 +94,8 @@
 
 <p-fieldset legend="Datos registro de tasas" [toggleable]="true">
   <div class="row">
-    <div class="col-md-12">
-      <ul class="nav justify-content-end">
-        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
-          <i class="fa fa-pencil"> Editar</i>
-        </li>
-        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
-          <i class="fa fa-pencil"> Editar</i>
-        </li>
-        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
-          <i class="fa fa-times"> Anular</i>
-        </li>
-        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
-          <i class="fa fa-times"> Anular
-          </i>
-        </li>
-      </ul>
-
-    </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-md-12 table-responsive">
-      <table class="table table-bordered table-sm">
+    <div class="col-md-12 ">
+      <table class="table table-striped table-sm">
         <thead>
           <tr>
             <th>#</th>
@@ -130,7 +109,7 @@
             <th>Fecha Resolución</th>
             <th>Documentos Adjuntos</th>
             <th>Estado</th>
-            <th>Acción</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -138,7 +117,7 @@
             <td>{{i+1}}</td>
             <td>{{t.pozo.pozNombre}}</td>
             <td>{{t.codigoAlias}}</td>
-            <td>{{t.codigoYacimiento}}</td>
+            <td>{{t.yacimiento.yacimiento}}</td>
             <td>{{t.tasa}}</td>
             <td>{{t.numeroOficio}}</td>
             <td>{{t.numeroSGC}}</td>
@@ -146,41 +125,59 @@
             <td>{{t.fechaResolucion | date:'dd/MM/yyyy'}}</td>
             <td>
               <ul>
-                <li *ngIf="t.urlOficio" (click)="showPdf(t.fileOficio.base64,t.fileOficio.nombre)">OFICIO:
-                  {{t.fileOficio.nombre}}
+                <li>
+                  <div *ngIf="t.urlOficio" class="btn-group dropright">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{t.fileOficio.nombre}}
+                    </a>
+                    <div class="dropdown-menu">
+                      <button class="dropdown-item" type="button"
+                        (click)="showPdf(t.fileOficio.base64,t.fileOficio.nombre)"><i class="fa fa-download"></i>
+                        Descargar</button>
+                    </div>
+                  </div>
                 </li>
-                <li *ngIf="t.urlResolucion" (click)="showPdf(t.fileResolucion.base64, t.fileResolucion.nombre)">ANEXO:
-                  {{t.fileResolucion.nombre}}
+                <li>
+                  <div *ngIf="t.urlResolucion" class="btn-group dropright">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{t.fileResolucion.nombre}}
+                    </a>
+                    <div class="dropdown-menu">
+                      <button class="dropdown-item" type="button"
+                        (click)="showPdf(t.fileResolucion.base64, t.fileResolucion.nombre)"><i
+                          class="fa fa-download"></i>
+                        Descargar</button>
+                    </div>
+                  </div>
                 </li>
               </ul>
             </td>
+
             <td>{{t.estado}}</td>
-            <td class="text-center" style="width:10%;">
-              <div class="row">
-                <div class="col-md-12">
-                  <ul class="nav">
-                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
-                      (click)="openModalTasaEdit(tasaTempalteEdit, t)">
-                      <i class="fa fa-pencil fa-2x"></i>
-                    </li>
-                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
-                      (click)="openModalTasaEdit(tasaTempalteEdit, t)">
-                      <i class="fa fa-pencil fa-2x"></i>
-                    </li>
-                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
-                      (click)="openModalTasaAnular(tasaTempalteAnular, t)">
-                      <i class="fa fa-times fa-2x"></i>
-                    </li>
-                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
-                      (click)="openModalTasaAnular(tasaTempalteAnular, t)">
-                      <i class="fa fa-times fa-2x"></i>
-                    </li>
-                  </ul>
+            <td>
+              <div class="btn-group dropleft">
+                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-cog"></i>
+                </button>
+                <div class="dropdown-menu">
+
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="openModalTasaAnular(tasaTempalteAnular, t)" class="dropdown-item" type="button"><i
+                      class="fa fa-trash-o"></i> Anular</button>
+
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="openModalTasaEdit(tasaTempalteEdit, t)" class="dropdown-item" type="button"><i
+                      class="fa fa-pencil"></i> Editar</button>
+
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                    (click)="openModalTasaEdit(tasaTempalteEdit, t)" class="dropdown-item" type="button"><i
+                      class="fa fa-pencil"></i> Editar</button>
                 </div>
               </div>
-
-
             </td>
+
+
 
 
           </tr>
@@ -245,7 +242,7 @@
             <label for="campo"><b>Alias:</b></label>
           </div>
           <div class="col-md">
-            <input [(ngModel)]="tasa.codigoAlias" pInputText>
+            <input [(ngModel)]="tasa.alias" pInputText>
           </div>
         </div>
       </div>
@@ -281,7 +278,8 @@
             <label for="campo"><b>Yacimiento:*</b></label>
           </div>
           <div class="col-md">
-            <input [(ngModel)]="tasa.codigoYacimiento" pInputText>
+            <p-dropdown [options]="yacimientoList" [(ngModel)]="yacimientoT" [filter]="true">
+            </p-dropdown>
           </div>
         </div>
       </div>
@@ -480,7 +478,7 @@
             <label for="campo"><b>Alias:</b></label>
           </div>
           <div class="col-md">
-            <input [(ngModel)]="tasaEdit.codigoAlias" pInputText>
+            <input [(ngModel)]="tasaEdit.alias" pInputText>
           </div>
         </div>
       </div>
@@ -516,7 +514,8 @@
             <label for="campo"><b>Yacimiento:*</b></label>
           </div>
           <div class="col-md">
-            <input [(ngModel)]="tasaEdit.codigoYacimiento" pInputText>
+            <p-dropdown [options]="yacimientoList" [(ngModel)]="yacimientoT" [filter]="true">
+            </p-dropdown>
           </div>
         </div>
       </div>

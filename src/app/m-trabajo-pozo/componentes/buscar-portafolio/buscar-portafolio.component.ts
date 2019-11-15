@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService, SelectItem } from 'primeng/api';
 import { BusquedaParametros } from 'src/app/entidades/busquedaParametros';
@@ -11,6 +11,8 @@ import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 import { Constantes } from 'src/app/resources/constantes';
 import { Operadora } from 'src/app/entidades/operadora';
 import { Bloque } from 'src/app/entidades/bloque';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { CreateUpdateService } from '../../servicios/create-update.service';
 
 @Component({
   selector: 'app-buscar-portafolio',
@@ -28,11 +30,19 @@ export class BuscarPortafolioComponent implements OnInit {
   campoList: SelectItem[] = [];
   campo: Campo;
 
-  page_size: number = 8;
+  page_size: number = 10;
   page_number: number = 1;
-  total: number = 8;
+  total: number = 10;
 
-  constructor(public busquedaService: BusquedaService, private messageService: MessageService, public loginService: LoginService, public router: Router, public prop: Constantes) {
+  searchText: string;
+  usuarioModalRefBusqueda: BsModalRef;
+  userList: Usuario[] = [];
+
+  confirmModalRef: BsModalRef;
+
+  portafolio: Portafolio = new Portafolio;
+
+  constructor(public busquedaService: BusquedaService, private dataApi: CreateUpdateService, private messageService: MessageService, public loginService: LoginService, public router: Router, public prop: Constantes, private modalService: BsModalService) {
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
   }
@@ -44,7 +54,9 @@ export class BuscarPortafolioComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     this.getCampoList();
-    //this.buscarPortafolio();
+    this.buscarPortafolio();
+    this.busquedaParametros.usuario = new Usuario;
+
 
   }
 
@@ -112,6 +124,8 @@ export class BuscarPortafolioComponent implements OnInit {
         this.busquedaParametros.fechaDesde = null;
         this.busquedaParametros.fechaHasta = null;
         this.busquedaParametros.funcionario = null;
+        this.busquedaParametros.usuario = new Usuario
+
         this.campo = null;
         this.pozo = null;
         this.loading = false;
@@ -123,6 +137,7 @@ export class BuscarPortafolioComponent implements OnInit {
         this.busquedaParametros.fechaDesde = null;
         this.busquedaParametros.fechaHasta = null;
         this.busquedaParametros.funcionario = null;
+        this.busquedaParametros.usuario = new Usuario
         this.campo = null;
         this.pozo = null;
         this.loading = false;
@@ -135,25 +150,113 @@ export class BuscarPortafolioComponent implements OnInit {
   }
 
   editarPortafolio(portafolio: Portafolio) {
-    this.busquedaService.portafolio = portafolio;
-    this.router.navigate(['/menu', { outlets: { sitp: ['editarPortafolio'] } }]);
+    if (portafolio.estado == 1) {
+      this.busquedaService.portafolio = portafolio;
+      this.router.navigate(['/menu', { outlets: { sitp: ['editarPortafolio'] } }]);
+    } else {
+      this.messageService.add({ severity: 'error', detail: 'Portafolio anulado, comunícate con el administrador.' });
+    }
   }
-
 
   goToRegistroDiario(portafolio: Portafolio) {
-    this.busquedaService.portafolio = portafolio;
-    this.router.navigate(['/menu', { outlets: { sitp: ['registroDiario'] } }]);
+    if (portafolio.estado == 1) {
+      this.busquedaService.portafolio = portafolio;
+      this.router.navigate(['/menu', { outlets: { sitp: ['registroDiario'] } }]);
+    } else {
+      this.messageService.add({ severity: 'error', detail: 'Portafolio anulado, comunícate con el administrador.' });
+    }
   }
 
-  goToInformeOperadora(portafolio: Portafolio) {
-    this.busquedaService.portafolio = portafolio;
-    this.router.navigate(['/menu', { outlets: { sitp: ['reporte-documentos-operadora'] } }]);
+  goToDocumentoOperadota(portafolio: Portafolio) {
+    if (portafolio.estado == 1) {
+      this.busquedaService.portafolio = portafolio;
+      this.router.navigate(['/menu', { outlets: { sitp: ['reporte-documentos-operadora'] } }]);
+    } else {
+      this.messageService.add({ severity: 'error', detail: 'Portafolio anulado, comunícate con el administrador.' });
+    }
   }
 
   goToDocumentoMinisterio(portafolio: Portafolio) {
-    this.busquedaService.portafolio = portafolio;
-    this.router.navigate(['/menu', { outlets: { sitp: ['reporte-documentos-ministerio'] } }]);
+    if (portafolio.estado == 1) {
+      this.busquedaService.portafolio = portafolio;
+      this.router.navigate(['/menu', { outlets: { sitp: ['reporte-documentos-ministerio'] } }]);
+    } else {
+      this.messageService.add({ severity: 'error', detail: 'Portafolio anulado, comunícate con el administrador.' });
+    }
   }
 
+  openModalFuncionarioBusqueda(template: TemplateRef<any>) {
+    this.loading = true;
+    this.getAllUsers();
+    this.usuarioModalRefBusqueda = this.modalService.show(template, { backdrop: 'static', keyboard: false });
+  }
+
+  closeUsuarioModalBusqueda() {
+    this.usuarioModalRefBusqueda.hide();
+  }
+
+  getAllUsers() {
+    this.loginService.findUserList().subscribe((data: Usuario[]) => {
+      this.userList = data;
+      this.loading = false;
+    }, (err) => {
+      this.messageService.add({ severity: 'error', detail: 'Error interno' });
+      this.loading = false;
+
+    });
+  }
+
+  goSelectUserBusqueds(user: Usuario) {
+    this.busquedaParametros.usuario = user;
+    this.busquedaParametros.funcionario = user.idUsuario;
+    this.closeUsuarioModalBusqueda();
+  }
+
+  anularPortafolio() {
+    this.loading = true;
+    this.portafolio.estado = 0;
+    this.portafolio.motivoCambio = "Anulacion del portafolio";
+    this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro);
+    if (this.portafolio.fechaInicio) {
+      this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
+    }
+    if (this.portafolio.fechaFin) {
+      this.portafolio.fechaFin = new Date(this.portafolio.fechaFin);
+    }
+    if (this.portafolio.fechaModificacion) {
+      this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion);
+    }
+    if (this.portafolio.fechaTrabajoSinTorre) {
+      this.portafolio.fechaModificacion = new Date(this.portafolio.fechaTrabajoSinTorre);
+    }
+
+    this.dataApi.transUpdatePortafolio(this.portafolio).subscribe(data => {
+      if (data == "El portafolio ha sido actualizado correctamente") {
+        this.loading = false;
+        this.messageService.add({ severity: 'success', detail: '' + data });
+        this.confirmModalRef.hide();
+        this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
+
+      } else {
+        this.loading = false;
+        this.confirmModalRef.hide();
+        this.messageService.add({ severity: 'info', detail: '' + data });
+      }
+    });
+  }
+
+  openConfirmModal(template: TemplateRef<any>, portafolio: Portafolio) {
+    this.portafolio = portafolio;
+    this.confirmModalRef = this.modalService.show(template);
+  }
+
+  goToVerificarTasa(portafolio: Portafolio) {
+    if (portafolio.estado == 1) {
+      this.busquedaService.portafolio = portafolio;
+      this.router.navigate(['/menu', { outlets: { sitp: ['verificarTasa'] } }]);
+    } else {
+      this.messageService.add({ severity: 'error', detail: 'Portafolio anulado, comunícate con el administrador.' });
+    }
+  }
 
 }

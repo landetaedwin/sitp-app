@@ -6,8 +6,10 @@ import { HistorialPozo } from 'src/app/entidades/historialPozo';
 import { Pago } from 'src/app/entidades/pago';
 import { Portafolio } from 'src/app/entidades/portafolio';
 import { RegistroDiario } from 'src/app/entidades/registro-diario';
-import { Constantes } from "src/app/resources/constantes";
 import { Tasa } from 'src/app/entidades/tasa';
+import { VerificacionTasa } from 'src/app/entidades/verificacion-tasa';
+import { Constantes } from "src/app/resources/constantes";
+import { PersonaPorCampo } from 'src/app/entidades/persona-por-campo';
 
 const httpOptions = {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -34,8 +36,18 @@ export class CreateUpdateService {
         return this.http.post(url, rs, httpOptions);
     }
 
+    transEditarRegistroDiario(rs: RegistroDiario) {
+        const url = this.prop.PATH + "/sitp/registro-diario-service/update-registro-diario";
+        return this.http.post(url, rs, httpOptions);
+    }
+
     transCrearDocumentoOperadora(documentoOperadora: DocumentoOperadora) {
         const url = this.prop.PATH + "/sitp/documento-operadora-service/crear-documento-operadora";
+        return this.http.post(url, documentoOperadora, httpOptions);
+    }
+
+    transUpdateDocumentoOperadora(documentoOperadora: DocumentoOperadora) {
+        const url = this.prop.PATH + "/sitp/documento-operadora-service/update-documento-operadora";
         return this.http.post(url, documentoOperadora, httpOptions);
     }
 
@@ -46,6 +58,11 @@ export class CreateUpdateService {
 
     transCrearDocumentoMinisterio(documentoMinisterio: DocumentoMinisterio) {
         const url = this.prop.PATH + "/sitp/documento-ministerio-service/crear-documento-ministerio";
+        return this.http.post(url, documentoMinisterio, httpOptions);
+    }
+
+    transUpdateDocumentoMinisterio(documentoMinisterio: DocumentoMinisterio) {
+        const url = this.prop.PATH + "/sitp/documento-ministerio-service/update-documento-ministerio";
         return this.http.post(url, documentoMinisterio, httpOptions);
     }
 
@@ -62,6 +79,21 @@ export class CreateUpdateService {
     transUpdateTasa(tasa: Tasa) {
         const url = this.prop.PATH + "/sitp/tasa-service/update-tasa";
         return this.http.post(url, tasa, httpOptions);
+    }
+
+    transUpdatePago(pago: Pago) {
+        const url = this.prop.PATH + "/sitp/pago-service/editar-pago";
+        return this.http.post(url, pago, httpOptions);
+    }
+
+    transCreateVErificacionTasa(verificacionTasa: VerificacionTasa) {
+        const url = this.prop.PATH + "/sitp/tasa-service/crear-verificacion-tasa";
+        return this.http.post(url, verificacionTasa, httpOptions);
+    }
+
+    transCreatePersonaPorCampo(personaPorCampo: PersonaPorCampo) {
+        const url = this.prop.PATH + "/sitp/persona-campo-service/create-persona-campo";
+        return this.http.post(url, personaPorCampo, httpOptions);
     }
 
 

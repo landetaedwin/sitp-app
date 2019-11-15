@@ -44,15 +44,6 @@
     margin-right: 1px;
   }
   
-  td {
-    font-size: 12px;
-  }
-  th {
-    font-size: 12px;
-  }
-  
-  li {
-    margin-left: 3px;
-    margin-right: 3px;
-  }
+  ul.u {list-style-type: none;}
+
   

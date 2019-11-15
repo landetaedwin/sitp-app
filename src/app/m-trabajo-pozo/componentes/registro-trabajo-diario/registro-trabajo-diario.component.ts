@@ -21,6 +21,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
   usuario: Usuario;
   portafolio: Portafolio = new Portafolio;
   registroDiario: RegistroDiario = new RegistroDiario;
+  registroDiarioEdit: RegistroDiario = new RegistroDiario;
   registroDiarioList: RegistroDiario[] = []
 
   maxDate: Date;
@@ -185,18 +186,21 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
 
 
   iniciarOperacionesRegistroDiario() {
-    debugger
+    this.loading = true;
+
     if (this.fechaInicio) {
       this.portafolio.fechaInicio = this.fechaInicio;
       this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro)
-    } else {
-      this.portafolio.fechaInicio = new Date();
-      this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro);
+      this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion)
       if (this.portafolio.fechaTrabajoSinTorre) {
         this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
       }
-      if (this.portafolio.consorcio.fechaRegistro) {
-        this.portafolio.consorcio.fechaRegistro = new Date(this.portafolio.consorcio.fechaRegistro);
+    } else {
+      this.portafolio.fechaInicio = new Date();
+      this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro);
+      this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion)
+      if (this.portafolio.fechaTrabajoSinTorre) {
+        this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
       }
 
     }
@@ -224,6 +228,9 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
       if (this.portafolio.consorcio.fechaRegistro) {
         this.portafolio.consorcio.fechaRegistro = new Date(this.portafolio.consorcio.fechaRegistro);
       }
+      if (this.portafolio.fechaModificacion) {
+        this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion);
+      }
 
     } else {
       this.portafolio.fechaFin = new Date();
@@ -234,6 +241,9 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
       }
       if (this.portafolio.consorcio.fechaRegistro) {
         this.portafolio.consorcio.fechaRegistro = new Date(this.portafolio.consorcio.fechaRegistro);
+      }
+      if (this.portafolio.fechaModificacion) {
+        this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion);
       }
 
     }
@@ -267,6 +277,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
 
   guardarSuspencion() {
     this.loading = true;
+    this.registroDiario.fechaAccion = new Date(this.registroDiario.fechaAccion)
     this.dataAPI.transCrearRegistroDiario(this.registroDiario).subscribe(data => {
       if (data) {
         this.loading = false;
@@ -280,6 +291,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
 
   guardarReinicio() {
     this.loading = true;
+    this.registroDiario.fechaAccion = new Date(this.registroDiario.fechaAccion)
     this.dataAPI.transCrearRegistroDiario(this.registroDiario).subscribe(data => {
       if (data) {
         this.loading = false;
@@ -292,10 +304,67 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
   }
 
 
+  //Modal registro diario 
+  openModalRegistroEdit(template: TemplateRef<any>, registroDiario: RegistroDiario) {
+    this.registroDiarioEdit = this.cloneJSON(registroDiario);
+    this.registroDiarioEdit.fechaAccion = new Date(this.registroDiarioEdit.fechaAccion)
+    this.registroModalRef = this.modalService.show(template, { backdrop: 'static', keyboard: false });
+
+  }
+
+  closeModalRegistroEdit() {
+    this.registroModalRef.hide();
+  }
+
+
+
+  editarRegistroDiario() {
+    this.loading = true;
+    this.registroDiarioEdit.fechaAccion = new Date(this.registroDiarioEdit.fechaAccion)
+    if (this.registroDiarioEdit.fechaActualizacion) {
+      this.registroDiarioEdit.fechaActualizacion = new Date(this.registroDiarioEdit.fechaActualizacion)
+    }
+    this.dataAPI.transEditarRegistroDiario(this.registroDiarioEdit).subscribe(data => {
+      if (data) {
+        this.loading = false;
+        this.messageService.add({ severity: 'success', detail: 'Registro actualizado creado correctamente' });
+        this.getRegistroDiarioList();
+        this.closeModalRegistro();
+      }
+    })
+  }
+
+
   goToBuscarPortafolio() {
     this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
   }
 
+  cloneJSON(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  }
 
+  anularRegistroDiario() {
+    this.loading = true;
+    if (this.registroDiarioEdit.fechaActualizacion) {
+      this.registroDiarioEdit.fechaActualizacion = new Date(this.registroDiarioEdit.fechaActualizacion)
+    }
+    if (this.registroDiarioEdit.fechaAccion) {
+      this.registroDiarioEdit.fechaAccion = new Date(this.registroDiarioEdit.fechaAccion)
+    }
+    this.registroDiarioEdit.estado = 0;
+    this.dataAPI.transEditarRegistroDiario(this.registroDiarioEdit).subscribe(data => {
+      if (data) {
+        this.loading = false;
+        this.messageService.add({ severity: 'success', detail: 'Registro actualizado creado correctamente' });
+        this.getRegistroDiarioList();
+        this.confirmModalRef.hide()
+      }
+    })
+  }
+  confirmModalRef: BsModalRef;
+  openConfirmModal(template: TemplateRef<any>, registroDiario: RegistroDiario) {
+    this.registroDiarioEdit = this.cloneJSON(registroDiario);
+    this.confirmModalRef = this.modalService.show(template);
+  }
 
 }

@@ -11,6 +11,8 @@ export class Pago {
     numeroFactura: string
     estado: number
     fechaRegistro: Date
+    fechaModificacion: Date
+
     idUsuario: number
     documentoOperadora: DocumentoOperadora
 }

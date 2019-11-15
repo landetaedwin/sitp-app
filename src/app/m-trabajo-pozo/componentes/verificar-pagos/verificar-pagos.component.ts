@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MessageService, SelectItem } from 'primeng/api';
 import { BusquedaParametros } from 'src/app/entidades/busquedaParametros';
 import { Campo } from 'src/app/entidades/campo';
@@ -8,6 +9,7 @@ import { Pozo } from 'src/app/entidades/pozo';
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
+import { CreateUpdateService } from '../../servicios/create-update.service';
 
 @Component({
   selector: 'app-verificar-pagos',
@@ -26,8 +28,17 @@ export class VerificarPagosComponent implements OnInit {
 
   pagoList: Pago[] = []
 
+  pago: Pago = new Pago;
+  maxDate: Date;
+  minDate: Date;
+  pagoModalRef: BsModalRef;
 
-  constructor(private busquedaService: BusquedaService, private loginService: LoginService, private router: Router, private messageService: MessageService) { }
+  ntrans: boolean = false;
+  ncomp: boolean = false;
+
+
+
+  constructor(private busquedaService: BusquedaService, private loginService: LoginService, private router: Router, private messageService: MessageService, private modalService: BsModalService, private dataApi: CreateUpdateService) { }
 
   ngOnInit() {
     this.loading = true;
@@ -36,6 +47,9 @@ export class VerificarPagosComponent implements OnInit {
     if (!this.usuario) {
       this.router.navigate(['/login']);
     }
+
+    this.maxDate = new Date();
+    this.minDate = new Date(2010, 0, 1);
 
     this.getCampoList();
   }
@@ -101,6 +115,76 @@ export class VerificarPagosComponent implements OnInit {
 
 
     })
+  }
+
+  openModalPagos(template: TemplateRef<any>, pago: Pago) {
+    this.pago = new Pago;
+    this.pago = this.cloneJSON(pago);
+    this.pago.fechaPago = new Date(this.pago.fechaPago);
+
+    if (this.pago.numeroComprobante) {
+      this.ntrans = true;
+      this.ncomp = false;
+    }
+    if (this.pago.numeroTransaccion) {
+      this.ncomp = true;
+      this.ntrans = false;
+
+    }
+
+
+    this.pagoModalRef = this.modalService.show(template, { class: 'modal-md', backdrop: 'static', keyboard: false });
+  }
+
+  closeModalPagos() {
+    this.pagoModalRef.hide();
+  }
+
+  cloneJSON(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  }
+
+  bloquearTransferencia() {
+    this.ntrans = true;
+  }
+
+  bloquearComprobante() {
+    this.ncomp = true;
+  }
+
+  activarTransferencia() {
+    if (this.pago.numeroComprobante.length == 0) {
+      this.ntrans = false;
+    }
+  }
+
+  activarComprobante() {
+    if (this.pago.numeroTransaccion.length == 0) {
+      this.ncomp = false;
+    }
+  }
+
+  updatePago() {
+    this.loading = true;
+    this.pago.idUsuario = this.usuario.idUsuario;
+    this.pago.fechaModificacion = new Date();
+    this.pago.fechaRegistro = new Date(this.pago.fechaRegistro);
+    this.pago.fechaPago = new Date(this.pago.fechaPago);
+    this.pago.estado = 2;
+    this.pago.documentoOperadora = null;
+    debugger
+    this.dataApi.transUpdatePago(this.pago).subscribe(res => {
+      if (res) {
+        this.loading = false;
+        this.messageService.add({ severity: 'success', detail: '' + "Se verifico correctamente el pago." });
+        this.closeModalPagos();
+
+      } else {
+        this.loading = false;
+        this.messageService.add({ severity: 'info', detail: '' + "Error al verificar el pago." });
+      }
+
+    });
   }
 
 

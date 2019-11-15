@@ -1,86 +1,68 @@
 <p-fieldset legend="Asignación o des asignación de persona a campos">
-  <div class="row justify-content-end">
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-success btn-block" (click)="getPersonaPorCampoList()">Buscar</button>
+  <div class="row ">
+    <div class="col-md-12">
+      <div class="row mt-2">
+        <div class="col-md-6 mt-1">
+          <button type="button" class="btn btn-sm btn-primary btn-block" (click)="getPersonaPorCampoList()"><i
+              class="fa fa-search"> </i> BUSCAR</button>
+        </div>
+        <div class="col-md-6 mt-1">
+          <button type="button" class="btn btn-sm btn-success btn-block"
+            (click)="openModalNewPersonaPorCampo(newPersonaPorCampoTemplate)">NUEVA ASIGNACIÓN</button>
+        </div>
+      </div>
     </div>
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-primary btn-block"
-        (click)="openModalNewPersonaPorCampo(newPersonaPorCampoTemplate)">Nuevo</button>
-    </div>
-
   </div>
+
+
 </p-fieldset>
 
 <br>
 <p-fieldset legend="Busqueda de personas por campo" [toggleable]="true">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="row">
-        <div class="col-md-4"><label for="bloque"><b>Bloque:</b></label></div>
-        <div class="col-md">
+        <div class="col-md-6">
+          <label for="bloque"><b>Bloque:</b></label>
           <p-dropdown [options]="bloqueList" [(ngModel)]="bloque" [filter]="true"
             (onChange)="getCampoListByBlqCodigo(bloque)"></p-dropdown>
         </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4"><label for="bloque"><b>Campo:</b></label></div>
-        <div class="col-md">
+        <div class="col-md-6">
+          <label for="bloque"><b>Campo:</b></label>
           <p-dropdown [options]="campoList" [(ngModel)]="campo" [filter]="true"></p-dropdown>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
       <div class="row">
-        <div class="col-md-4"><label for="bloque"><b>Fecha desde:</b></label></div>
-        <div class="col-md">
+        <div class="col-md-6">
+          <label for="bloque"><b>Fecha desde:</b></label>
           <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"
             [(ngModel)]="busquedaParametros.fechaDesde">
           </p-calendar>
         </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4"><label for="bloque"><b>Fecha hasta:</b></label></div>
-        <div class="col-md">
+        <div class="col-md-6">
+          <label for="bloque"><b>Fecha hasta:</b></label>
           <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"
             [(ngModel)]="busquedaParametros.fechaHasta">
           </p-calendar>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
       <div class="row">
-        <div class="col-md-4"><label for="bloque"><b>Estado:</b></label></div>
-        <div class="col-md">
+        <div class="col-md-6">
+          <label for="bloque"><b>Estado:</b></label>
           <p-dropdown [options]="estadoList" [(ngModel)]="busquedaParametros.estado"></p-dropdown>
         </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4"><label for="funcionario"><b>Funcionario:</b></label></div>
-        <div class="col-md">
+        <div class="col-md-6">
+          <label for="funcionario"><b>Funcionario:</b></label>
           <input type="text" [(ngModel)]="busquedaParametros.usuario.apellidos"
             (click)="openModalFuncionarioBusqueda(usuarioBusquedaAdTemplate)" pInputText>
         </div>
-
       </div>
     </div>
   </div>
 
-
-
-
-
+</p-fieldset>
+<br>
+<p-fieldset legend="Datos de personas por campo" [toggleable]="true">
   <div class="row">
     <div class="col-md-12">
       <table class="table table-hover table-sm">
@@ -245,6 +227,7 @@
       </div>
     </p-fieldset>
   </div>
+  <p-toast position="top-center"></p-toast>
 </ng-template>
 
 

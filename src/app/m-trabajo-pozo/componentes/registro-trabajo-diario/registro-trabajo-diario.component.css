@@ -9,7 +9,6 @@
 input {
   height: 24px;
   width: 100%;
-  margin-top: 4px;
   font-size: 12px;
 }
 
@@ -25,10 +24,6 @@ body .ui-dropdown .ui-dropdown-label {
   height: 24px;
 }
 
-.mtop {
-  margin-top: 4px;
-}
-
 .button {
   background-color: white;
   color: var(--sitp-color);
@@ -38,12 +33,6 @@ body .ui-dropdown .ui-dropdown-label {
   width: 100%;
 }
 
-td {
-  font-size: 12px;
-}
-th {
-  font-size: 12px;
-}
 textarea {
   font-size: 12px;
 }

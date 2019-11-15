@@ -15,7 +15,6 @@ import { DocumentoOperadoraComponent } from './componentes/documento-operadora/d
 import { InformeTrabajosOperadoraComponent } from './componentes/informe-trabajos-operadora/informe-trabajos-operadora.component';
 import { EditarInformeOperadoraComponent } from './componentes/editar-informe-operadora/editar-informe-operadora.component';
 import { VerificacionNovedadComponent } from './componentes/verificacion-novedad/verificacion-novedad.component';
-import { VerificacionTasaComponent } from './componentes/verificacion-tasa/verificacion-tasa.component';
 import { VerificacionInyectorComponent } from './componentes/verificacion-inyector/verificacion-inyector.component';
 import { VerificacionReinyectorComponent } from './componentes/verificacion-reinyector/verificacion-reinyector.component';
 import { VerificacionTrabajoComponent } from './componentes/verificacion-trabajo/verificacion-trabajo.component';
@@ -33,6 +32,7 @@ import { ConclusionesRecomendacionesComponent } from './componentes/conclusiones
 import { SeguimientoNovedadComponent } from './componentes/seguimiento-novedad/seguimiento-novedad.component';
 import { EditarSeguimientoNovedadComponent } from './componentes/editar-seguimiento-novedad/editar-seguimiento-novedad.component';
 
+
 @NgModule({
   declarations: [ReportesDiariosComponent, VerificacionFechasComponent, VerificacionProduccionComponent, DocumentoOperadoraComponent,
      InformeTrabajosOperadoraComponent,
@@ -40,7 +40,6 @@ import { EditarSeguimientoNovedadComponent } from './componentes/editar-seguimie
      EditarInformeOperadoraComponent,
      VerificacionNovedadComponent,
      EstadoInforme,
-     VerificacionTasaComponent,
      VerificacionInyectorComponent,
      VerificacionReinyectorComponent,
      VerificacionTrabajoComponent,
@@ -54,9 +53,21 @@ import { EditarSeguimientoNovedadComponent } from './componentes/editar-seguimie
      EditarVerificacionReinyectorComponent,
      ConclusionesRecomendacionesComponent,
      SeguimientoNovedadComponent,
-     EditarSeguimientoNovedadComponent
-     
-    ],
+     EditarSeguimientoNovedadComponent,
+    InformeTrabajosOperadoraComponent,
+    BuscarPortafolioBitacoraComponent,
+    EditarInformeOperadoraComponent,
+    VerificacionNovedadComponent,
+    VerificacionInyectorComponent,
+    VerificacionReinyectorComponent,
+    VerificacionTrabajoComponent,
+    EstadoBitacoraPipe,
+    JustificadoBitacoraPipe,
+    ValoracionBitacoraPipe,
+    EditarVerificacionProduccionComponent,
+    ValoracionProduccionPipe, EditarVerificacionFechasComponent, EditarVerificacionInyectorComponent, EditarVerificacionReinyectorComponent
+
+  ],
   imports: [
     CalendarModule,
     DropdownModule,

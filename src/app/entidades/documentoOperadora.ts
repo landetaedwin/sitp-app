@@ -1,6 +1,7 @@
 import { Archivo } from './archivo'
 import { Asunto } from './asunto'
 import { Portafolio } from './portafolio'
+import { Categoria } from './categoria'
 
 export class DocumentoOperadora {
 
@@ -16,9 +17,10 @@ export class DocumentoOperadora {
     urlAnexo4: string
     urlPagos: string
     fechaOficio: Date
-    fechaARCH: string
+    fechaARCH: Date
     codigoAsunto: number
     asunto: Asunto
+    categoria: Categoria
     objetivo: string
     estado: number
     fechaRegistro: Date;

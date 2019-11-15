@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { BusquedaParametros } from 'src/app/entidades/busquedaParametros';
 import { Portafolio } from 'src/app/entidades/portafolio';
 import { Constantes } from "src/app/resources/constantes";
+import { Tasa } from 'src/app/entidades/tasa';
 
 const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -16,6 +17,7 @@ export class BusquedaService {
 
   public portafolio: Portafolio;
   public link: string;
+  public tasa: Tasa;
 
   //Metodos nuevos
   getCampoList() {
@@ -136,5 +138,20 @@ export class BusquedaService {
     const url = this.prop.PATH + "/sitp/pago-service/pago-list";
     return this.http.post(url, param, httpOptions);
   }
+  getYacimientoList() {
+    const url = this.prop.PATH + this.prop.SYS + "/yacimiento-service/yacimiento-list";
+    return this.http.get(url, httpOptions);
+  }
+
+  BuscarDespues(fechaFin: Date, registros: number, pozo: String) {
+    const url = this.prop.PATH + "/sitp/VerificarProduccion/buscarDespues?ProduccionDespues=" + fechaFin + "&Registros=" + registros + "&Pozo=" + pozo;
+    return this.http.get(url, httpOptions);
+  }
+
+  getVerificacionTasaList(param: BusquedaParametros) {
+    const url = this.prop.PATH + this.prop.SYS + "/tasa-service/verificacion-tasa-list";
+    return this.http.post(url, param, httpOptions);
+  }
+
 
 }

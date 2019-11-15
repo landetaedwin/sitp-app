@@ -215,8 +215,6 @@ export class MenuComponent implements OnInit {
         label: 'Administrador',
         visible: this.m8,
         items: [
-          { label: 'Editar datos', style: "", command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Anular datos', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Asignación de Campos', routerLink: [{ outlets: { sitp: ['asignacionCampos'] } }], visible: true },
         ]
       },

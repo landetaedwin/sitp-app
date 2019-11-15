@@ -6,22 +6,16 @@ import { MenuComponent } from './m-menu/menu/menu.component';
 import { BuscarPortafolioBitacoraComponent } from './m-trabajo-bitacora/componentes/buscar-portafolio-bitacora/buscar-portafolio-bitacora.component';
 import { EditarInformeOperadoraComponent } from './m-trabajo-bitacora/componentes/editar-informe-operadora/editar-informe-operadora.component';
 import { EditarVerificacionFechasComponent } from './m-trabajo-bitacora/componentes/editar-verificacion-fechas/editar-verificacion-fechas.component';
+import { EditarVerificacionInyectorComponent } from './m-trabajo-bitacora/componentes/editar-verificacion-inyector/editar-verificacion-inyector.component';
 import { EditarVerificacionProduccionComponent } from './m-trabajo-bitacora/componentes/editar-verificacion-produccion/editar-verificacion-produccion.component';
+import { EditarVerificacionReinyectorComponent } from './m-trabajo-bitacora/componentes/editar-verificacion-reinyector/editar-verificacion-reinyector.component';
 import { InformeTrabajosOperadoraComponent } from './m-trabajo-bitacora/componentes/informe-trabajos-operadora/informe-trabajos-operadora.component';
 import { ReportesDiariosComponent } from './m-trabajo-bitacora/componentes/reportes-diarios/reportes-diarios.component';
 import { VerificacionFechasComponent } from './m-trabajo-bitacora/componentes/verificacion-fechas/verificacion-fechas.component';
 import { VerificacionInyectorComponent } from './m-trabajo-bitacora/componentes/verificacion-inyector/verificacion-inyector.component';
-
-import { EditarVerificacionInyectorComponent } from './m-trabajo-bitacora/componentes/editar-verificacion-inyector/editar-verificacion-inyector.component';
-
-
 import { VerificacionNovedadComponent } from './m-trabajo-bitacora/componentes/verificacion-novedad/verificacion-novedad.component';
-
 import { VerificacionProduccionComponent } from './m-trabajo-bitacora/componentes/verificacion-produccion/verificacion-produccion.component';
 import { VerificacionReinyectorComponent } from './m-trabajo-bitacora/componentes/verificacion-reinyector/verificacion-reinyector.component';
-import { EditarVerificacionReinyectorComponent } from './m-trabajo-bitacora/componentes/editar-verificacion-reinyector/editar-verificacion-reinyector.component';
-
-import { VerificacionTasaComponent } from './m-trabajo-bitacora/componentes/verificacion-tasa/verificacion-tasa.component';
 import { VerificacionTrabajoComponent } from './m-trabajo-bitacora/componentes/verificacion-trabajo/verificacion-trabajo.component';
 import { AsignacionCamposComponent } from './m-trabajo-pozo/componentes/asignacion-campos/asignacion-campos.component';
 import { BuscarPortafolioComponent } from './m-trabajo-pozo/componentes/buscar-portafolio/buscar-portafolio.component';
@@ -32,10 +26,16 @@ import { EditarPortafolioComponent } from './m-trabajo-pozo/componentes/editar-p
 import { HistorialPozoComponent } from './m-trabajo-pozo/componentes/historial-pozo/historial-pozo.component';
 import { RegistroTasasComponent } from './m-trabajo-pozo/componentes/registro-tasas/registro-tasas.component';
 import { RegistroTrabajoDiarioComponent } from './m-trabajo-pozo/componentes/registro-trabajo-diario/registro-trabajo-diario.component';
+import { VerificacionTasaComponent } from './m-trabajo-pozo/componentes/verificacion-tasa/verificacion-tasa.component';
 import { VerificarPagosComponent } from './m-trabajo-pozo/componentes/verificar-pagos/verificar-pagos.component';
 import { ConclusionesRecomendacionesComponent } from './m-trabajo-bitacora/componentes/conclusiones-recomendaciones/conclusiones-recomendaciones.component';
 import { SeguimientoNovedadComponent } from './m-trabajo-bitacora/componentes/seguimiento-novedad/seguimiento-novedad.component';
 import { EditarSeguimientoNovedadComponent } from './m-trabajo-bitacora/componentes/editar-seguimiento-novedad/editar-seguimiento-novedad.component';
+
+
+
+
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -68,12 +68,13 @@ const routes: Routes = [
       { path: 'EditarVerificacionReinyectorComponent', component: EditarVerificacionReinyectorComponent, outlet: 'sitp' },
       { path: 'conclusiones', component: ConclusionesRecomendacionesComponent, outlet: 'sitp' },
       { path: 'verificarTasa', component: VerificacionTasaComponent, outlet: 'sitp' },
+
       { path: 'verificarTrabajo', component: VerificacionTrabajoComponent, outlet: 'sitp' },
       { path: 'historialPozo', component: HistorialPozoComponent, outlet: 'sitp' },
       { path: 'registroTasas', component: RegistroTasasComponent, outlet: 'sitp' },
       { path: 'verificarPagos', component: VerificarPagosComponent, outlet: 'sitp' },
-      { path: 'seguimientoNovedad', component: SeguimientoNovedadComponent, outlet: 'sitp' }
 
+      { path: 'seguimientoNovedad', component: SeguimientoNovedadComponent, outlet: 'sitp' }
 
 
     ]

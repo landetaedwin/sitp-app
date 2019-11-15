@@ -1,182 +1,201 @@
-<p-fieldset legend="Registro documentos habilitantes operadora">
-  <div class="row justify-content-end">
-    <div class="col-md-3">
-      <button type="button" class="btn btn-sm btn-primary btn-block"
-        (click)="openModalDocumeto(documentoTemplate)">{{cs.adjuntarDocumento}}</button>
+<p-fieldset legend="REGISTRO DOCUMENTOS HABILITANTES OPERADORA">
+  <p-fieldset legend="DATOS DEL PORTAFOLIO" [toggleable]="true">
+    <div class="row ">
+      <div class="col-md-12">
+        <div class="row mt-2">
+          <div class="col-md-6 mt-1">
+            <button type="button" class="btn btn-sm btn-success btn-block"
+              (click)="openModalDocumeto(documentoTemplate)"> <i class="fa fa-file-text-o"></i> Adjuntar
+              documento</button>
+          </div>
+          <div class="col-md-6 mt-1">
+            <button type="button" class="btn btn-sm btn-danger btn-block" (click)="goToBuscarPortafolio()">
+              <i class="fa fa-sign-out"> Cancelar</i>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
-  </div>
-  <hr>
-  <p-fieldset legend="Datos del portafolio" [toggleable]="true">
-    <div class="row mt-1">
-      <div class="col-md-4">
+    <div class="row mt-1 mb-1">
+      <div class="col-md-12">
         <div class="row">
           <div class="col-md-4">
-            <p><b>{{cs.numeroPortafolio}}:</b></p>
-          </div>
-          <div class="col-md-8">
+            <label><b>Numero de portafolio:</b></label>
             <p>{{portafolio.codigoPortafolio}}</p>
           </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="row">
           <div class="col-md-4">
-            <p><b>{{cs.fechaRegistro}}:</b></p>
-          </div>
-          <div class="col-md-8">
+            <label><b>Fecha registro:</b></label>
             <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
           </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="row">
           <div class="col-md-4">
-            <p><b>{{cs.funcionario}}:</b></p>
-          </div>
-          <div class="col-md-8">
+            <label><b>Funcionario:</b></label>
             <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="row mt-1">
-      <div class="col-md-4">
         <div class="row">
           <div class="col-md-4">
-            <p><b>{{cs.pozo}}:</b></p>
-          </div>
-          <div class="col-md-8">
+            <label><b>{{cs.pozo}}:</b></label>
             <p>{{portafolio.pozo.pozNombre}}</p>
           </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="row">
           <div class="col-md-4">
-            <p><b>{{cs.trabajo}}:</b></p>
-          </div>
-          <div class="col-md-8">
+            <label><b>{{cs.trabajo}}:</b></label>
             <p>{{portafolio.tipoTrabajo.tipoTrabajo}}</p>
           </div>
-        </div>
-      </div>
-      <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
-        <div class="row">
-          <div class="col-md-4">
-            <p><b>{{cs.fechaTST}}:</b></p>
-          </div>
-          <div class="col-md-8">
+          <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
+            <label><b>{{cs.fechaTST}}:</b></label>
             <p>{{portafolio.fechaTrabajoSinTorre | date:'dd/MM/yyyy'}}</p>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row mt-1">
-      <div class="col-md-4">
         <div class="row">
-          <div class="col-md-4">
-            <p><b>{{cs.numeroTrabajo}}:</b></p>
-          </div>
-          <div class="col-md-8">
+          <div class="col-md-4" *ngIf="portafolio.numeroTrabajo">
+            <label><b>{{cs.numeroTrabajo}}:</b></label>
             <p>{{portafolio.numeroTrabajo}}</p>
           </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="portafolio.fechaInicio">
             <p><b>{{cs.fechaInicio}}:</b></p>
-          </div>
-          <div class="col-md-8">
             <p>{{portafolio.fechaInicio | date:'dd/MM/yyyy'}}</p>
           </div>
         </div>
       </div>
-
     </div>
   </p-fieldset>
-  <br>
 
   <p-fieldset legend="Documentos operadora" [toggleable]="true">
-    <div class="row">
-      <div class="col-md-12">
-        <ul class="nav justify-content-end">
-          <li><i class="fa fa-usd"> Registrar datos de pago</i></li>
-          <li><i class="fa fa-list-ol"> Lista datos de pago</i></li>
-        </ul>
-      </div>
-    </div>
-    <br>
 
     <div class="row">
-      <div class="col-md-12 table-responsive">
-        <table class="table table-bordered table-sm">
+      <div class="col-md-12">
+        <table class="table table-striped table-sm">
           <thead>
-            <tr>
+            <tr class="text-center">
               <th>#</th>
               <th>Nro. SGC</th>
               <th>Nro. Oficio</th>
               <th>Anexos</th>
               <th>Fecha oficio</th>
               <th>Fecha ARCH</th>
-              <th>Asunto</th>
+              <th *ngIf="portafolio.codigoTipoTrabajo != 1">Asunto</th>
               <th>Objetivo</th>
-              <th>Estado</th>
-              <th>Accion</th>
+              <th>Estado </th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr
+            <tr class="text-center"
               *ngFor="let doc of documentoOperadoraList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
 
               <td>{{i+1}} </td>
               <td>{{doc.numeroSGC}} </td>
               <td>{{doc.numeroOficio}} </td>
               <td>
-                <ul>
-
-                  <li *ngIf="doc.urlOficio" (click)="showPdf(doc.fileOficio.base64, doc.fileOficio.nombre)">OFICIO:
-                    {{doc.fileOficio.nombre}}
+                <ul class="u">
+                  <li>
+                    <div *ngIf="doc.urlOficio" class="btn-group dropright">
+                      <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{doc.fileOficio.nombre}}
+                      </a>
+                      <div class="dropdown-menu">
+                        <button class="dropdown-item" type="button"
+                          (click)="showPdf(doc.fileOficio.base64, doc.fileOficio.nombre)"><i class="fa fa-download"></i>
+                          Descargar</button>
+                      </div>
+                    </div>
                   </li>
-                  <li *ngIf="doc.urlAnexo1" (click)="showPdf(doc.fileAnexo1.base64, doc.fileAnexo1.nombre)">ANEXO:
-                    {{doc.fileAnexo1.nombre}}
+                  <li>
+                    <div *ngIf="doc.urlAnexo1" class="btn-group dropright">
+                      <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{doc.fileAnexo1.nombre}}
+                      </a>
+                      <div class="dropdown-menu">
+                        <button class="dropdown-item" type="button"
+                          (click)="showPdf(doc.fileAnexo1.base64, doc.fileAnexo1.nombre)"><i class="fa fa-download"></i>
+                          Descargar</button>
+                      </div>
+                    </div>
                   </li>
-                  <li *ngIf="doc.urlAnexo2" (click)="showPdf(doc.fileAnexo2.base64, doc.fileAnexo2.nombre)">ANEXO:
-                    {{doc.fileAnexo2.nombre}}
+                  <li>
+                    <div *ngIf="doc.urlAnexo2" class="btn-group dropright">
+                      <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{doc.fileAnexo2.nombre}}
+                      </a>
+                      <div class="dropdown-menu">
+                        <button class="dropdown-item" type="button"
+                          (click)="showPdf(doc.fileAnexo2.base64, doc.fileAnexo2.nombre)"><i class="fa fa-download"></i>
+                          Descargar</button>
+                      </div>
+                    </div>
                   </li>
-                  <li *ngIf="doc.urlAnexo3" (click)="showPdf(doc.fileAnexo3.base64, doc.fileAnexo3.nombre)">ANEXO:
-                    {{doc.fileAnexo3.nombre}}
+                  <li>
+                    <div *ngIf="doc.urlAnexo3" class="btn-group dropright">
+                      <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{doc.fileAnexo3.nombre}}
+                      </a>
+                      <div class="dropdown-menu">
+                        <button class="dropdown-item" type="button"
+                          (click)="showPdf(doc.fileAnexo3.base64, doc.fileAnexo3.nombre)"><i class="fa fa-download"></i>
+                          Descargar</button>
+                      </div>
+                    </div>
                   </li>
-                  <li *ngIf="doc.urlAnexo4" (click)="showPdf(doc.fileAnexo4.base64, doc.fileAnexo4.nombre)">ANEXO:
-                    {{doc.fileAnexo4.nombre}}
+                  <li>
+                    <div *ngIf="doc.urlAnexo4" class="btn-group dropright">
+                      <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{doc.fileAnexo4.nombre}}
+                      </a>
+                      <div class="dropdown-menu">
+                        <button class="dropdown-item" type="button"
+                          (click)="showPdf(doc.fileAnexo4.base64, doc.fileAnexo4.nombre)"><i class="fa fa-download"></i>
+                          Descargar</button>
+                      </div>
+                    </div>
                   </li>
-                  <li *ngIf="doc.urlPagos" (click)="showPdf(doc.filePago.base64 ,doc.filePago.nombre)">PAGO:
-                    {{doc.filePago.nombre}}</li>
+                  <li>
+                    <div *ngIf="doc.urlPagos" class="btn-group dropright">
+                      <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{doc.filePago.nombre}}
+                      </a>
+                      <div class="dropdown-menu">
+                        <button class="dropdown-item" type="button"
+                          (click)="showPdf(doc.filePago.base64, doc.filePago.nombre)"><i class="fa fa-download"></i>
+                          Descargar</button>
+                      </div>
+                    </div>
 
                 </ul>
               </td>
               <td>{{doc.fechaOficio  | date:'dd/MM/yyyy'}} </td>
               <td>{{doc.fechaARCH  | date:'dd/MM/yyyy'}} </td>
-              <td>{{doc.asunto.asunto}} </td>
+              <td *ngIf="portafolio.codigoTipoTrabajo != 1">{{doc.asunto.asunto}} </td>
               <td>{{doc.objetivo}} </td>
-              <td>{{doc.estado}} </td>
+              <td>{{doc.estado | estadoDocOperadora}} </td>
               <td>
-                <div class="row">
-                  <div class="col-md-12">
-                    <ul class="nav">
-                      <li
-                        *ngIf="doc.codigoAsunto == 1 || doc.codigoAsunto == 2 || doc.codigoAsunto == 3 || doc.codigoAsunto == 4"
-                        (click)="openModalPagos(pagosTemplate, doc.codigoDocumentoOperadora)"><i
-                          class="fa fa-usd fa-2x"></i>
-                      </li>
-                      <li
-                        *ngIf="doc.codigoAsunto == 1 || doc.codigoAsunto == 2 || doc.codigoAsunto == 3 || doc.codigoAsunto == 4"
-                        (click)="openModalPagosList(pagoListTemplate, doc.codigoDocumentoOperadora)"><i
-                          class="fa fa-list-ol fa-2x"></i>
-                      </li>
-                    </ul>
+                <div class="btn-group dropleft">
+                  <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-cog"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                      (click)="openModalDocumentoEdit(documentoEditTemplate,doc)" class="dropdown-item" type="button"><i
+                        class="fa fa-pencil"></i>
+                      Editar</button>
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      (click)="openModalDocumentoEdit(documentoEditTemplate,doc)" class="dropdown-item" type="button"><i
+                        class="fa fa-pencil"></i>
+                      Editar</button>
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      (click)="openModalDocumentoEdit(confirmDialog,doc)" class="dropdown-item" type="button"><i
+                        class="fa fa-trash-o"></i> Anular</button>
+                    <button
+                      *ngIf="doc.codigoAsunto == 1 || doc.codigoAsunto == 2 || doc.codigoAsunto == 3 || doc.codigoAsunto == 4"
+                      (click)="openModalPagos(pagosTemplate, doc.codigoDocumentoOperadora)" class="dropdown-item"
+                      type="button"><i class="fa fa-usd"></i>
+                      Registrar pago</button>
+                    <button
+                      *ngIf="doc.codigoAsunto == 1 || doc.codigoAsunto == 2 || doc.codigoAsunto == 3 || doc.codigoAsunto == 4"
+                      (click)="openModalPagosList(pagoListTemplate, doc.codigoDocumentoOperadora)" class="dropdown-item"
+                      type="button"><i class="fa fa-list-ol"></i>
+                      Ver lista de pagos</button>
                   </div>
                 </div>
               </td>
@@ -199,11 +218,10 @@
 
 
   <ng-template #documentoTemplate>
-    <div class="container mt-3 mb-3">
-
+    <div class="container mt-2 mb-2">
       <div class="row text-center">
         <div class="col-md-12">
-          <h4>Documentos habilitantes operadora</h4>
+          <h5>Documentos habilitantes operadora</h5>
         </div>
       </div>
 
@@ -426,6 +444,233 @@
     </div>
   </ng-template>
 
+  <ng-template #documentoEditTemplate>
+    <div class="container mt-2 mb-2">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h5>Documentos habilitantes operadora</h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label><b>Nro. SGC:</b></label>
+            </div>
+            <div class="col-md-8">
+              <input [(ngModel)]="documentoOperadoraEdit.numeroSGC" pInputText numeros-doc />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label><b>Nro. Oficio:</b></label>
+            </div>
+            <div class="col-md-8">
+              <input [(ngModel)]="documentoOperadoraEdit.numeroOficio" pInputText numeros-doc />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anexos -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Nro. Oficio:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeDocNroOficio($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Adjuntar anexo 1:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeAnexo1($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Adjuntar anexo 2:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeAnexo2($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Adjuntar anexo 3:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeAnexo3($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Adjuntar anexo 4:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeAnexo4($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Doc. Pagos:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeDocPagos($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm"> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Fecha Oficio:</b></label>
+            </div>
+            <div class="col-md-8">
+              <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+                [inputStyle]="{ width: '100%' }" [(ngModel)]="documentoOperadoraEdit.fechaOficio"
+                (onSelect)="changeFechaOficio()"></p-calendar>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Fecha ARCH:</b></label>
+            </div>
+            <div class="col-md-8">
+              <p-calendar [style]="{ width: '100%' }" [minDate]="minDateFA" [maxDate]="maxDate"
+                [inputStyle]="{ width: '100%' }" [(ngModel)]="documentoOperadoraEdit.fechaARCH"></p-calendar>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="portafolio.codigoTipoTrabajo != 1">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Categorización:</b></label>
+            </div>
+            <div class="col-md">
+              <p-dropdown [options]="categoriaList" [(ngModel)]="categoria" [filter]="true"> </p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Asunto:</b></label>
+            </div>
+            <div class="col-md">
+              <p-dropdown [options]="asuntoList" [(ngModel)]="asunto" [filter]="true"> </p-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Objetivo:</b></label>
+            </div>
+            <div class="col-md">
+              <input [(ngModel)]="documentoOperadoraEdit.objetivo" pInputText />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-primary btn-block" (click)="editarDocumento()">Editar</button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-danger btn-block"
+            (click)="closeModalDocumentoEdit()">Cancelar</button>
+        </div>
+
+      </div>
+
+    </div>
+  </ng-template>
+
 
   <ng-template #pagosTemplate>
     <div class="container mt-3 mb-3">
@@ -585,7 +830,30 @@
   </ng-template>
 
 
+  <ng-template #confirmDialog>
+    <div class="container mt-2 mb-2">
 
+      <div class="row">
+        <div class="col-md-12">
+          <h6> Anular documento </h6>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <p> ¿Desea anular este registro? </p>
+        </div>
+      </div>
+      <div class="row mt-1 mb-3">
+        <div class="col-md-6 ">
+          <button type="button" class="btn btn-sm btn-success btn-block" (click)="anularDocumento()">Si</button>
+        </div>
+        <div class="col-md-6 ">
+          <button type="button" class="btn btn-sm btn-danger btn-block" (click)="confirmModalRef.hide()">No</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 
 
   <ng-template #customLoadingTemplate> </ng-template>
