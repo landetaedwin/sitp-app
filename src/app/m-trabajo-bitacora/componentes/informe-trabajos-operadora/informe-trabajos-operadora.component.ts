@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { MessageService, SelectItem } from "primeng/api";
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import {InformeOperadora} from 'src/app/entidades/informe-operadora';
@@ -10,6 +10,7 @@ import { EditarInformeOperadoraService } from 'src/app/m-trabajo-bitacora/servic
 import { Router, RouterLink } from '@angular/router';
 import { VerificarFechasService } from 'src/app/m-trabajo-bitacora/servicios/verificar-fechas.service';
 import { Archivo } from 'src/app/entidades/archivo';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-informe-trabajos-operadora',
@@ -25,18 +26,19 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
   portafolio: Portafolio;
   informeOperadora2 : InformeOperadora;
   today= new Date();
-
-
+  editarInforme: InformeOperadora = new InformeOperadora();
+  anularInforme: InformeOperadora = new InformeOperadora();
+  registroInfomreModalRef: BsModalRef;
   informeOperadora = new InformeOperadora();
   fechaArch= this.informeOperadora.fechaOficio;
-  buttonDisabled: boolean = false;
+  Disabled: number = 0;
   anexo1: Archivo = new Archivo;
   anexo2: Archivo = new Archivo;
  
-  constructor(public verificarFechasService: VerificarFechasService, public editarInformeOperadoraService: EditarInformeOperadoraService,  public http:HttpClient, public informeTrabajoOperadoraService: InformeTrabajoOperadoraService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
+  constructor(private modalService: BsModalService,public verificarFechasService: VerificarFechasService, public editarInformeOperadoraService: EditarInformeOperadoraService,  public http:HttpClient, public informeTrabajoOperadoraService: InformeTrabajoOperadoraService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
+  this.informeOperadora.estado=1
     this.portafolio = this.informeTrabajoOperadoraService.portafolio;
     this.estadolist= [
-                      { label: "Seleccione...", value: 0, disabled: false },                
                       { label: "Registrado", value: 1, disabled: false },
                       { label: "Activo", value: 2, disabled: false },
                       { label: "Inactivo", value: 3, disabled: false },
@@ -80,7 +82,7 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
            
            if (data.length!==0) {
             this.messageService.add({ severity: 'warn', detail: 'Ya existe un informe asignado en este pozo' });
-            this.buttonDisabled = true;
+            this.Disabled = 1;
           }
 
           }
@@ -137,15 +139,15 @@ guardarInformeTrabajo(){
 
 }
 
-obtenerDatos(){
+obtenerDatos(){   
+  this.Disabled = 0;
   this.informeTrabajoOperadoraService.ObtenerDatos(this.informeOperadora.codPortafolio).subscribe(
     (data: InformeOperadora[]) => {   
     if (data) {
-          
           this.informelist=data
          if (data.length!==0) {
           this.messageService.add({ severity: 'warn', detail: 'Ya existe un informe asignado en este pozo' });
-          this.buttonDisabled = true;
+          this.Disabled = 1;
         }
 
         }
@@ -188,6 +190,99 @@ _onChangeAnexo2(e) {
 
 
 
+showPdf(doc: string, name: string) {
+  const linkSource = 'data:application/pdf;base64,' + doc;
+  const downloadLink = document.createElement("a");
+  const fileName = name + ".pdf";
+  console.log(downloadLink);
+  console.log(linkSource);
+  console.log(linkSource);
+
+  downloadLink.href = linkSource;
+  downloadLink.download = fileName;
+  downloadLink.click();
+}
+
+editInforme() {
+  this.loading = true;
+  this.editarInforme.anexoDocumento = this.informeOperadora.anexoDocumento;
+  this.editarInforme.archivoAnexo = this.informeOperadora.archivoAnexo;
+  this.editarInforme.codInformeOperadora= this.informeOperadora.codInformeOperadora;
+  this.editarInforme.costo_real= this.informeOperadora.costo_real;
+  this.editarInforme.estado= this.informeOperadora.estado
+  this.editarInforme.fechaArch= new Date(this.informeOperadora.fechaArch)
+  this.editarInforme.fechaOficio= new Date (this.informeOperadora.fechaOficio)
+  this.editarInforme.fecha_actualizacion= new Date();
+  this.editarInforme.id_usuario= this.usuario.idUsuario;
+  this.editarInforme.numeroOficio=this.informeOperadora.numeroOficio
+  this.editarInforme.numeroSgc= this.informeOperadora.numeroSgc
+  this.editarInforme.resultado= this.informeOperadora.resultado
+  this.editarInforme.rig= this.informeOperadora.rig
+  this.informeTrabajoOperadoraService.transUpdateInformeOperadora(this.editarInforme).subscribe(data=> {
+
+    if (data == "El informe ha sido actualizado correctamente") {
+      this.loading = false;
+      this.messageService.add({ severity: 'success', detail: '' + data });
+     // this.closeModalNovedadAnular();
+      this.obtenerDatos();
+
+    } else {
+      this.loading = false;
+      this.messageService.add({ severity: 'info', detail: '' + data });
+    }
+  });
+}
+
+AnularInforme() {
+  this.informeOperadora.anexoDocumento= this.anularInforme.anexoDocumento
+  this.informeOperadora.anexo_Oficio= this.anularInforme.anexo_Oficio
+  this.informeOperadora.archivoInforme= this.anularInforme.archivoInforme
+  this.informeOperadora.archivoAnexo=this.anularInforme.archivoAnexo
+  this.informeOperadora.codInformeOperadora=this.anularInforme.codInformeOperadora
+  this.informeOperadora.codPortafolio= this.anularInforme.codPortafolio
+  this.informeOperadora.costo_real= this.anularInforme.costo_real
+  this.informeOperadora.estado= 4
+  this.informeOperadora.fecha_actualizacion= new Date();
+  this.informeOperadora.id_usuario= this.anularInforme.id_usuario
+  this.informeOperadora.numeroOficio= this.anularInforme.numeroOficio
+  this.informeOperadora.numeroSgc= this.anularInforme.numeroSgc
+  this.informeOperadora.resultado= this.anularInforme.resultado
+  this.informeOperadora.rig= this.anularInforme.rig
+  this.informeOperadora.fechaArch= new Date(this.anularInforme.fechaArch)
+  this.informeOperadora.fechaOficio=new Date(this.anularInforme.fechaOficio)
+  this.loading = true;
+
+  console.log(this.informeOperadora)
+  this.informeTrabajoOperadoraService.transUpdateInformeOperadora(this.informeOperadora)
+  .subscribe(data => {
+    if (data ) {
+      this.loading = false;
+      this.messageService.add({ severity: 'success', detail: 'Novedad Anulada' });
+      this.closeModalInformeAnular();
+      this.obtenerDatos();
+    } else {
+      this.loading = false;
+      this.messageService.add({ severity: 'Error', detail: 'No se ha podido anular'});
+   //   this.closeModalNovedadAnular();
+    }
+  });
+}
+
+
+openModalInformeAnular(template: TemplateRef<any>,eInforme:InformeOperadora) {
+  this.anularInforme = this.cloneJSON(eInforme);
+  this.registroInfomreModalRef = this.modalService.show(template, { class: 'modal-sm', backdrop: 'static', keyboard: false });
+  this.obtenerDatos();
+}
+
+closeModalInformeAnular() {
+  this.registroInfomreModalRef.hide();
+}
+
+
+cloneJSON(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
 
 volver(portafolio: Portafolio) {
   console.log("click");

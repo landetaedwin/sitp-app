@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Constantes } from "src/app/resources/constantes";
 import { VerificacionNovedad } from 'src/app/entidades/verificacion-novedad';
 import { Portafolio } from 'src/app/entidades/portafolio';
+import { ConclusionRecomendacion } from 'src/app/entidades/conclusionRecomendacion';
 
 const httpOptions = {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -15,6 +16,7 @@ export class VerificarNovedadService {
     
     portafolio: Portafolio;
     verificacionNovedad: VerificacionNovedad;
+    conclusionRecomendacion: ConclusionRecomendacion;
 
     constructor(readonly http: HttpClient, public prop: Constantes) { }
 
@@ -31,7 +33,7 @@ export class VerificarNovedadService {
       }
   
      
-        transUpdateVerificacionFechas(verificacionNovedad:VerificacionNovedad) {
+        transUpdateVerificacionNovedad(verificacionNovedad:VerificacionNovedad) {
           const url = this.prop.PATH + "/sitp/VerificarNovedad/transActualizarNovedad";
           return this.http.post(url, verificacionNovedad, httpOptions);
         }

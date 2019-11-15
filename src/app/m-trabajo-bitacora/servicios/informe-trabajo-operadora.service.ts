@@ -30,6 +30,11 @@ export class InformeTrabajoOperadoraService {
       return this.http.post(url, informeOperadora, httpOptions);
   }
 
+  transUpdateInformeOperadora(informeOperadora: InformeOperadora) {
+    const url = this.prop.PATH + "/sitp/InformeOperadora/actualizarInformeOperadora";
+    return this.http.post(url, informeOperadora, httpOptions);
+}
+
   ObtenerDatos(codigoPortafolio: number) {
     const url = this.prop.PATH + "/sitp/InformeOperadora/listarDatos?codigoPortafolio=" + codigoPortafolio;
     return this.http.get(url, httpOptions);

@@ -19,14 +19,19 @@ import { VerificacionTasaComponent } from './componentes/verificacion-tasa/verif
 import { VerificacionInyectorComponent } from './componentes/verificacion-inyector/verificacion-inyector.component';
 import { VerificacionReinyectorComponent } from './componentes/verificacion-reinyector/verificacion-reinyector.component';
 import { VerificacionTrabajoComponent } from './componentes/verificacion-trabajo/verificacion-trabajo.component';
-import { EstadoBitacoraPipe } from '../resources/pipes/estado-bitacora';
 import { JustificadoBitacoraPipe } from '../resources/pipes/justificadoBitacora';
 import { ValoracionBitacoraPipe } from '../resources/pipes/valoracionBitacora';
 import { ValoracionProduccionPipe } from '../resources/pipes/valoracion-produccion';
+import { EstadoBitacoraPipe} from '../resources/pipes/estado-bitacora';
+import { EstadoInforme} from '../resources/pipes/EstadoInforme';
 import { EditarVerificacionProduccionComponent } from './componentes/editar-verificacion-produccion/editar-verificacion-produccion.component';
 import { EditarVerificacionFechasComponent } from './componentes/editar-verificacion-fechas/editar-verificacion-fechas.component';
 import { EditarVerificacionInyectorComponent } from './componentes/editar-verificacion-inyector/editar-verificacion-inyector.component';
 import { EditarVerificacionReinyectorComponent } from './componentes/editar-verificacion-reinyector/editar-verificacion-reinyector.component';
+import { ToastModule } from 'primeng/toast';
+import { ConclusionesRecomendacionesComponent } from './componentes/conclusiones-recomendaciones/conclusiones-recomendaciones.component';
+import { SeguimientoNovedadComponent } from './componentes/seguimiento-novedad/seguimiento-novedad.component';
+import { EditarSeguimientoNovedadComponent } from './componentes/editar-seguimiento-novedad/editar-seguimiento-novedad.component';
 
 @NgModule({
   declarations: [ReportesDiariosComponent, VerificacionFechasComponent, VerificacionProduccionComponent, DocumentoOperadoraComponent,
@@ -34,6 +39,7 @@ import { EditarVerificacionReinyectorComponent } from './componentes/editar-veri
      BuscarPortafolioBitacoraComponent,
      EditarInformeOperadoraComponent,
      VerificacionNovedadComponent,
+     EstadoInforme,
      VerificacionTasaComponent,
      VerificacionInyectorComponent,
      VerificacionReinyectorComponent,
@@ -42,7 +48,13 @@ import { EditarVerificacionReinyectorComponent } from './componentes/editar-veri
      JustificadoBitacoraPipe,
      ValoracionBitacoraPipe,
      EditarVerificacionProduccionComponent, 
-     ValoracionProduccionPipe, EditarVerificacionFechasComponent, EditarVerificacionInyectorComponent, EditarVerificacionReinyectorComponent
+     ValoracionProduccionPipe, 
+     EditarVerificacionFechasComponent, 
+     EditarVerificacionInyectorComponent, 
+     EditarVerificacionReinyectorComponent,
+     ConclusionesRecomendacionesComponent,
+     SeguimientoNovedadComponent,
+     EditarSeguimientoNovedadComponent
      
     ],
   imports: [

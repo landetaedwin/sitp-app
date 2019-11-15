@@ -48,10 +48,11 @@ export class EditarVerificacionProduccionComponent implements OnInit {
   ];
 
     this.estadolist= [
-                      { label: "Seleccione...", value: null, disabled: false },
+                    
                       { label: "Registrado", value: 1, disabled: false },
-                      { label: "Anulado", value: 2, disabled: false },
-                      { label: "Cerrado", value: 3, disabled: false }
+                      { label: "Activo", value: 2, disabled: false },
+                      { label: "Inactivo", value: 3, disabled: false },
+                      { label: "Suspendido", value: 4, disabled: false }
                      ];
 
     this.registrosList= [

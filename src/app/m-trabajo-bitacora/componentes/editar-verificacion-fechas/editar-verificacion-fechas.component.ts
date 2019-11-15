@@ -146,17 +146,13 @@ this.novedadList= [
     this.verificacionFechaService.transUpdateVerificacionFechas(this.verificarFechas).subscribe(data =>{
       if (data) {
      //   this.fechasList = data; 
-     if(this.verificarFechas.estado===1){
-      this.verificarFechas.visualizar_estado="Registrado"
-      console.log('x is equal to y');
-    }
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se actualizó el Informe de Verificación de Fechas' });
         this.obtenerTodo();
 
       } else {
         this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo axtualizar el informe de Verificación de Fechas' });
+        this.messageService.add({ severity: 'info', detail: 'No se pudo actualizar el informe de Verificación de Fechas' });
   
       }
     });

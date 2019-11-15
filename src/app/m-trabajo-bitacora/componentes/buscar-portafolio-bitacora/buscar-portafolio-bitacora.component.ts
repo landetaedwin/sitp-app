@@ -16,6 +16,7 @@ import { InformeTrabajoOperadoraService } from '../../servicios/informe-trabajo-
 import { VerificarFechasService } from '../../servicios/verificar-fechas.service';
 import { VerificarProduccionService } from '../../servicios/verificar-produccion.service';
 import { VerificarNovedadService } from '../../servicios/verificarNovedad.service';
+import { ConclusionesRecomendaciones } from '../../servicios/conclusiones-recomendaciones.service';
 
 @Component({
   selector: 'app-buscar-portafolio-bitacora',
@@ -38,7 +39,7 @@ export class BuscarPortafolioBitacoraComponent implements OnInit {
   campo: Campo;
 
 
-  constructor(public busquedaService: BusquedaService, private messageService: MessageService, public loginService: LoginService, public router: Router, public informeOperadoraService: InformeTrabajoOperadoraService, public verificarFechasService: VerificarFechasService, public verificarNovedadService: VerificarNovedadService, public verificarProduccionService: VerificarProduccionService) {
+  constructor(public conclusionService:ConclusionesRecomendaciones ,public busquedaService: BusquedaService, private messageService: MessageService, public loginService: LoginService, public router: Router, public informeOperadoraService: InformeTrabajoOperadoraService, public verificarFechasService: VerificarFechasService, public verificarNovedadService: VerificarNovedadService, public verificarProduccionService: VerificarProduccionService) {
 
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
@@ -200,5 +201,12 @@ export class BuscarPortafolioBitacoraComponent implements OnInit {
     console.log(portafolio);
     this.verificarNovedadService.portafolio = portafolio;
     this.router.navigate(['/menu', { outlets: { sitp: ['verificarTrabajo'] } }]);
+  }
+
+  conclusion(portafolio: Portafolio) {
+    console.log("click");
+    console.log(portafolio);
+    this.conclusionService.portafolio = portafolio;
+    this.router.navigate(['/menu', { outlets: { sitp: ['conclusiones'] } }]);
   }
 }

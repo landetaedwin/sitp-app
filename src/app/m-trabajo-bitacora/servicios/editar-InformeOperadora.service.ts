@@ -20,6 +20,7 @@ export class EditarInformeOperadoraService {
 
     constructor(readonly http: HttpClient, public prop: Constantes) { }
 
+    
 
 }
 

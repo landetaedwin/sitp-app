@@ -33,6 +33,9 @@ import { HistorialPozoComponent } from './m-trabajo-pozo/componentes/historial-p
 import { RegistroTasasComponent } from './m-trabajo-pozo/componentes/registro-tasas/registro-tasas.component';
 import { RegistroTrabajoDiarioComponent } from './m-trabajo-pozo/componentes/registro-trabajo-diario/registro-trabajo-diario.component';
 import { VerificarPagosComponent } from './m-trabajo-pozo/componentes/verificar-pagos/verificar-pagos.component';
+import { ConclusionesRecomendacionesComponent } from './m-trabajo-bitacora/componentes/conclusiones-recomendaciones/conclusiones-recomendaciones.component';
+import { SeguimientoNovedadComponent } from './m-trabajo-bitacora/componentes/seguimiento-novedad/seguimiento-novedad.component';
+import { EditarSeguimientoNovedadComponent } from './m-trabajo-bitacora/componentes/editar-seguimiento-novedad/editar-seguimiento-novedad.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -63,13 +66,13 @@ const routes: Routes = [
       { path: 'EditarVerificacionInyectorComponent', component: EditarVerificacionInyectorComponent, outlet: 'sitp' },
       { path: 'verificarReinyector', component: VerificacionReinyectorComponent, outlet: 'sitp' },
       { path: 'EditarVerificacionReinyectorComponent', component: EditarVerificacionReinyectorComponent, outlet: 'sitp' },
+      { path: 'conclusiones', component: ConclusionesRecomendacionesComponent, outlet: 'sitp' },
       { path: 'verificarTasa', component: VerificacionTasaComponent, outlet: 'sitp' },
       { path: 'verificarTrabajo', component: VerificacionTrabajoComponent, outlet: 'sitp' },
       { path: 'historialPozo', component: HistorialPozoComponent, outlet: 'sitp' },
       { path: 'registroTasas', component: RegistroTasasComponent, outlet: 'sitp' },
       { path: 'verificarPagos', component: VerificarPagosComponent, outlet: 'sitp' },
-
-
+      { path: 'seguimientoNovedad', component: SeguimientoNovedadComponent, outlet: 'sitp' }
 
 
 
