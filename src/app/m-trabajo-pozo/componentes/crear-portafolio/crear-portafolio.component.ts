@@ -175,6 +175,10 @@ export class CrearPortafolioComponent implements OnInit {
         this.loading = false;
         this.messageService.add({ severity: 'info', detail: '' + data });
       }
+    }, (err) => {
+      this.messageService.add({ severity: 'error', detail: 'Error interno' });
+      this.loading = false;
+      console.log(err)
     });
 
   }
