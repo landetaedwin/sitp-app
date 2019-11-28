@@ -162,53 +162,38 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-md-4"><label for="bloque"><b>Bloque:*</b></label></div>
-            <div class="col-md">
-              <p-dropdown [options]="bloqueList" [(ngModel)]="bloque" [filter]="true"
-                (onChange)="getCampoListByBlqCodigo(bloque)"></p-dropdown>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-md-4"><label for="campo"><b>Campo:*</b></label></div>
-            <div class="col-md">
-              <p-dropdown [options]="campoList" [(ngModel)]="campo" [filter]="true"></p-dropdown>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="row">
-            <div class="col-md-4"><label for="funcionario"><b>Funcionario:*</b></label></div>
-            <div class="col-md">
+            <div class="col-md-6">
+              <label for="funcionario"><b>Funcionario:*</b></label>
               <input type="text" [(ngModel)]="usuarioFuncionario.apellidos" pInputText
                 (click)="openModalFuncionario(usuarioAdTemplate)">
             </div>
-
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-md-4"><label for="campo"><b>Correo electrónico:*</b></label></div>
-            <div class="col-md">
-              <input type="text" [(ngModel)]="usuarioFuncionario.correo" pInputText>
+            <div class="col-md-6">
+              <label for="campo"><b>Correo electrónico:*</b></label>
+              <input type="text" [(ngModel)]="usuarioFuncionario.correo" pInputText disabled>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
           <div class="row">
-            <div class="col-md-4"><label for="bloque"><b>Ubicación funcionario:*</b></label></div>
-            <div class="col-md">
+            <div class="col-md-6">
+              <label for="bloque"><b>Bloque:*</b></label>
+              <p-dropdown [options]="bloqueList" [(ngModel)]="bloque" [filter]="true"
+                (onChange)="getCampoListByBlqCodigo(bloque)"></p-dropdown>
+            </div>
+            <div class="col-md-6">
+              <label for="campo"><b>Campo:*</b></label>
+              <p-dropdown [options]="campoList" [(ngModel)]="campo" [filter]="true"></p-dropdown>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <label for="bloque"><b>Ubicación funcionario:*</b></label>
               <p-dropdown [options]="regionalList" [(ngModel)]="regional"></p-dropdown>
             </div>
+            <div class="col-md-6"></div>
           </div>
         </div>
       </div>

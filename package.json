@@ -5,15 +5,11 @@
     "ng": "ng",
     "start": "ng serve --port 9002 --live-reload",
     "build": "ng build --base-href ./",
-    "build-pro": "ng build --configuration=pro --base-href ./",
-    "build-pre": "ng build --configuration=pre --base-href ./",
     "test": "ng test",
     "lint:fix": "ng lint base-web --fix",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:war": "npm run build && cd dist && jar -cvf ../baseWeb-$npm_package_version.war *",
-    "build-pre:war": "npm run build-pre && cd dist && jar -cvf ../baseWeb-pre-$npm_package_version.war *",
-    "build-pro:war": "npm run build-pro && cd dist && jar -cvf ../baseWeb-pro-$npm_package_version.war *"
+    "build:war": "npm run build && cd dist && jar -cvf ../sitp-app.war *"
   },
   "private": true,
   "dependencies": {

@@ -79,6 +79,7 @@ export class AsignacionCamposComponent implements OnInit {
     this.getRegionalList();
 
     this.busquedaParametros.usuario = new Usuario;
+    this.getPersonaPorCampoList();
 
   }
 
@@ -267,9 +268,6 @@ export class AsignacionCamposComponent implements OnInit {
     this.personaPorCampo.idUsuarioFuncionario = this.usuarioFuncionario.idUsuario;
     this.personaPorCampo.correo = this.usuarioFuncionario.correo;
     this.personaPorCampo.rdhCodigo = this.regional.rdhCodigo;
-    this.personaPorCampo.estado = 1;
-    this.personaPorCampo.fechaAsignacion = new Date();
-    this.personaPorCampo.fechaInicio = new Date();
     this.personaPorCampo.idUsuario = this.usuario.idUsuario;
 
     this.loading = true;
@@ -277,7 +275,6 @@ export class AsignacionCamposComponent implements OnInit {
     
     if (this.bloque.blqCodigo && this.campo.camCodigo && this.usuarioFuncionario.idUsuario) {
       this.dataApi.transCreatePersonaPorCampo(this.personaPorCampo).subscribe(data => {
-
         if (data == 'Se asigno correctamente la persona al campo') {
           this.loading = false;
           this.messageService.add({ severity: 'success', detail: 'Se asigno correctamente la persona al campo' });

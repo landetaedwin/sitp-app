@@ -187,7 +187,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
 
   iniciarOperacionesRegistroDiario() {
     this.loading = true;
-
+    debugger
     if (this.fechaInicio) {
       this.portafolio.fechaInicio = this.fechaInicio;
       this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro)
@@ -204,6 +204,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
       }
 
     }
+    debugger
     this.dataAPI.transUpdatePortafolio(this.portafolio).subscribe(data => {
       if (data) {
         this.loading = false;
@@ -213,6 +214,10 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
         this.bFin = false;
         this.fechaInicio = this.portafolio.fechaInicio;
       }
+    }, (err) => {
+      this.messageService.add({ severity: 'error', detail: 'Error interno' });
+      this.loading = false;
+      console.log(err)
     });
   }
 
@@ -258,6 +263,10 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
         this.bFin = true;
         this.fechaFin = this.portafolio.fechaFin;
       }
+    }, (err) => {
+      this.messageService.add({ severity: 'error', detail: 'Error interno' });
+      this.loading = false;
+      console.log(err)
     });
   }
 

@@ -83,6 +83,12 @@ export class EditarPortafolioComponent implements OnInit {
     this.numeroTrabajo = this.portafolio.numeroTrabajo;
     this.tipoPozo = this.portafolio.tipoPozo
     this.estado = this.portafolio.estado;
+    if (this.portafolio.fechaModificacion) {
+      this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion);
+    }
+    if (this.portafolio.fechaTrabajoSinTorre) {
+      this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
+    }
 
     this.cargarCampoList();
     this.cargarTipoPozoList();
@@ -104,6 +110,10 @@ export class EditarPortafolioComponent implements OnInit {
           this.campoList.push({ label: c.camNombre, value: c });
         }
         this.loading = false;
+      }, (err) => {
+        this.messageService.add({ severity: 'error', detail: 'Error interno' });
+        this.loading = false;
+        console.log(err)
       });
   }
 
@@ -117,6 +127,10 @@ export class EditarPortafolioComponent implements OnInit {
             p = data[i];
             this.pozoList.push({ label: p.pozNombre, value: p });
           }
+        }, (err) => {
+          this.messageService.add({ severity: 'error', detail: 'Error interno' });
+          this.loading = false;
+          console.log(err)
         });
     }
   }
@@ -128,6 +142,10 @@ export class EditarPortafolioComponent implements OnInit {
           if (data) {
             this.bloque = data;
           }
+        }, (err) => {
+          this.messageService.add({ severity: 'error', detail: 'Error interno' });
+          this.loading = false;
+          console.log(err)
         });
     }
   }
@@ -148,6 +166,10 @@ export class EditarPortafolioComponent implements OnInit {
           if (data) {
             this.operadora = data;
           }
+        }, (err) => {
+          this.messageService.add({ severity: 'error', detail: 'Error interno' });
+          this.loading = false;
+          console.log(err)
         });
     }
   }
@@ -162,6 +184,10 @@ export class EditarPortafolioComponent implements OnInit {
             this.operadora = data;
           }
           this.loading = false;
+        }, (err) => {
+          this.messageService.add({ severity: 'error', detail: 'Error interno' });
+          this.loading = false;
+          console.log(err)
         });
     }
   }
@@ -184,6 +210,10 @@ export class EditarPortafolioComponent implements OnInit {
             this.bloque = data;
           }
           this.loading = false;
+        }, (err) => {
+          this.messageService.add({ severity: 'error', detail: 'Error interno' });
+          this.loading = false;
+          console.log(err)
         });
     }
   }
@@ -201,6 +231,10 @@ export class EditarPortafolioComponent implements OnInit {
           }
           this.loading = false;
 
+        }, (err) => {
+          this.messageService.add({ severity: 'error', detail: 'Error interno' });
+          this.loading = false;
+          console.log(err)
         });
     }
   }
@@ -214,6 +248,10 @@ export class EditarPortafolioComponent implements OnInit {
           tt = data[i];
           this.tipoTrabajoList.push({ label: tt.tipoTrabajo, value: tt });
         }
+      }, (err) => {
+        this.messageService.add({ severity: 'error', detail: 'Error interno' });
+        this.loading = false;
+        console.log(err)
       });
   }
 
@@ -226,6 +264,10 @@ export class EditarPortafolioComponent implements OnInit {
           con = data[i];
           this.consorcioList.push({ label: con.consorcio, value: con });
         }
+      }, (err) => {
+        this.messageService.add({ severity: 'error', detail: 'Error interno' });
+        this.loading = false;
+        console.log(err)
       });
   }
 
@@ -237,6 +279,10 @@ export class EditarPortafolioComponent implements OnInit {
         tp = data[i];
         this.tipoPozoList.push({ label: tp.tipoPozo, value: tp });
       }
+    }, (err) => {
+      this.messageService.add({ severity: 'error', detail: 'Error interno' });
+      this.loading = false;
+      console.log(err)
     });
   }
 
@@ -250,12 +296,21 @@ export class EditarPortafolioComponent implements OnInit {
     this.portafolio.blqCodigo = this.bloque.blqCodigo;
     this.portafolio.camCodigo = this.campo.camCodigo;
     this.portafolio.pozCodigo = this.pozo.pozCodigo;
-    this.portafolio.numeroTrabajo = this.numeroTrabajo;
     this.portafolio.estado = this.estado;
     this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro);
     if (this.portafolio.fechaModificacion) {
       this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion);
     }
+    if (this.portafolio.fechaTrabajoSinTorre) {
+      this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
+    }
+    if (this.portafolio.fechaInicio) {
+      this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
+    }
+    if (this.portafolio.fechaFin) {
+      this.portafolio.fechaFin = new Date(this.portafolio.fechaFin);
+    }
+   
     this.portafolio.idUsuario = this.usuario.idUsuario;
 
     this.dataApi.transUpdatePortafolio(this.portafolio).subscribe(data => {
@@ -268,6 +323,10 @@ export class EditarPortafolioComponent implements OnInit {
         this.loading = false;
         this.messageService.add({ severity: 'info', detail: '' + data });
       }
+    }, (err) => {
+      this.messageService.add({ severity: 'error', detail: 'Error interno' });
+      this.loading = false;
+      console.log(err)
     });
 
   }
