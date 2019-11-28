@@ -18,6 +18,6 @@ export class VerificacionProduccion {
     valor_despues:number
     porcentajeControl:number
     descripcionValoracion:String
-    formDisabled:number=0
+    formDisabled:number
 
 }

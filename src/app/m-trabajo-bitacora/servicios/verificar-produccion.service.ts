@@ -77,12 +77,17 @@ export class VerificarProduccionService {
 
 
     buscarporId(codPortafolio:number){
+      const url =  this.prop.PATH + "/sitp/VerificarProduccion/listarDatos?codigoPortafolio="+ codPortafolio;
+  //   const url =  this.prop.PATH + "/sitp/InformeOperadora/findOperadoraById";
+      return this.http.get(url, httpOptions);
+    }
+
+    obtenerporId(codPortafolio:number){
       const url =  this.prop.PATH + "/sitp/VerificarProduccion/obtenerDatos?codigoPortafolio="+ codPortafolio;
   //   const url =  this.prop.PATH + "/sitp/InformeOperadora/findOperadoraById";
       return this.http.get(url, httpOptions);
     }
 
-   
       transUpdateVerificacionProduccion(verificacionProduccion:VerificacionProduccion) {
         const url = this.prop.PATH + "/sitp/VerificarProduccion/ActualizarProduccion";
         return this.http.post(url, verificacionProduccion, httpOptions);
@@ -98,4 +103,17 @@ export class VerificarProduccionService {
       const url =  this.prop.PATH + "/sitp/VerificarProduccion/buscarDespues?ProduccionDespues="+ fechaFin +"&Registros="+ registros+"&Pozo="+ pozo ;
       return this.http.get(url, httpOptions);
     }
+
+    BuscarInfoAntes(fechaInicio :Date, registros:number, pozo:String, codVerfProduccion:number){
+      const url =  this.prop.PATH + "/sitp/VerificarProduccion/listarDatosAntes?fechaAntes="+ fechaInicio +"&Registros="+ registros+"&Pozo="+ pozo+"&verfProd="+codVerfProduccion ;
+      console.log(url)
+      return this.http.get(url, httpOptions);
+    }
+
+    BuscarInfoDespues(fechaDespues :Date, registros:number, pozo:String, codVerfProduccion:number){
+      const url =  this.prop.PATH + "/sitp/VerificarProduccion/listarDatosDespues?fechaDespues="+ fechaDespues +"&Registros="+ registros+"&Pozo="+ pozo+"&verfProd="+codVerfProduccion ;
+      console.log(url)
+      return this.http.get(url, httpOptions);
+    }
+
 }

@@ -86,6 +86,11 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
     if(!this.usuario){
       this.router.navigate(['/login'])
     }
+
+    this.conclusionRecomendacion.id_usuario= this.usuario.idUsuario;
+    this.conclusionRecomendacion.codPortafolio= this.portafolio.codigoPortafolio
+    this.conclusionRecomendacion.fecha_actualizacion= this.today;
+    this.conclusionRecomendacion.codPortafolio= this.portafolio.codigoPortafolio;   
     
    // this.buscarpoId();
     this.obtenerTodoConclusionRecomendacion();
@@ -98,10 +103,11 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
 
  
   guardarConclusionRecomendacion(){
-    this.conclusionRecomendacion.id_usuario= this.usuario.idUsuario;
+
+
     this.conclusionRecomendacionService.transCrearConclusionRecomendacion(this.conclusionRecomendacion).subscribe(data =>{
       if (data) {
-        this.conclusionRecomendacion.codPortafolio= this.portafolio.codigoPortafolio;   
+     
         this.conclusionRecomendacion.fecha_actualizacion=this.today
         this.conclusionRecomendacion.estado= 1;   
         this.loading = false;
