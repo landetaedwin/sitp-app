@@ -12,6 +12,7 @@ import { MMenuModule } from './m-menu/m-menu.module';
 import { MTrabajoBitacoraModule } from './m-trabajo-bitacora/m-trabajo-bitacora.module';
 import { MTrabajoPozoModule } from './m-trabajo-pozo/m-trabajo-pozo.module';
 import { Constantes } from './resources/constantes';
+import { EditarSeguimientoNovedadComponent } from './editar-seguimiento-novedad/editar-seguimiento-novedad.component';
 
 
 
@@ -19,6 +20,7 @@ import { Constantes } from './resources/constantes';
 @NgModule({
   declarations: [
     AppComponent,
+    EditarSeguimientoNovedadComponent,
 
 
 

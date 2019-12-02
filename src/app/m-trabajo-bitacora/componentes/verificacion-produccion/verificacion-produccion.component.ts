@@ -10,6 +10,7 @@ import { VerificarFechasService } from 'src/app/m-trabajo-bitacora/servicios/ver
 import { VerificarNovedadService } from 'src/app/m-trabajo-bitacora/servicios/verificarNovedad.service';
 import { Router, RouterLink } from '@angular/router';
 import { Produccion } from 'src/app/entidades/produccion';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-verificacion-produccion',
@@ -62,7 +63,10 @@ export class VerificacionProduccionComponent implements OnInit {
                       { label: "4", value: 4, disabled: false },
                       { label: "5", value: 5, disabled: false },
                       { label: "6", value: 6, disabled: false },
-                      { label: "7", value: 7, disabled: false }
+                      { label: "7", value: 7, disabled: false },
+                      { label: "8", value: 7, disabled: false },
+                      { label: "9", value: 7, disabled: false },
+                      { label: "10", value: 7, disabled: false }
                      ];
 
   }
@@ -110,7 +114,7 @@ export class VerificacionProduccionComponent implements OnInit {
     this.verificarProduccionService.verificarProduccion = eProduccion;
     this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
     console.log(this.verificacionProduccion)
-    this.verificarProduccionService.BuscarInfoAntes(this.portafolio.fechaInicio, this.verificacionProduccion.numRegistros, this.portafolio.pozo.pozNombre, this.verificarProduccionService.verificarProduccion .codVerificacion).subscribe(
+    this.verificarProduccionService.BuscarInfoAntes(this.portafolio.fechaInicio, this.verificacionProduccion.numRegistros,  this.portafolio.pozo.pozCodigo, this.verificarProduccionService.verificarProduccion .codVerificacion).subscribe(
       (data: Produccion[]) => {   
       if (data) {
         this.datosAntes= data
@@ -144,7 +148,7 @@ export class VerificacionProduccionComponent implements OnInit {
       }   
         this.loading = false;
       });
-     
+     this.cargarDatosDespues(eProduccion);
   }
 
 
@@ -167,8 +171,7 @@ export class VerificacionProduccionComponent implements OnInit {
   
     this.verificarProduccionService.transCrearVerificarProduccion(this.verificacionProduccion).subscribe(data =>{
       if (data) {
-     //   this.fechasList = data; 
-     
+     //   this.fechasList = data;   
         this.verificacionProduccion.fecha_actualizacion = this.today
         this.loading = false;
  
@@ -177,7 +180,7 @@ export class VerificacionProduccionComponent implements OnInit {
      
   
       }
-
+      this.listarDatos(); 
       console.log(this.verificacionProduccion)
     });
 }
@@ -214,6 +217,7 @@ export class VerificacionProduccionComponent implements OnInit {
         if (data.length!==0) {
 
           this.messageService.add({ severity: 'warn', detail: 'Ya existe un informe asignado en este pozo' });
+          this.verificacionProduccion.formDisabled = 1;
           this.verificacionProduccion.codVerificacion= data[0].codVerificacion
           this.verificacionProduccion.fecha_actualizacion= data[0].fecha_actualizacion
           this.verificacionProduccion.justificado= data[0].justificado
@@ -226,7 +230,7 @@ export class VerificacionProduccionComponent implements OnInit {
        
           
         
-          this.verificarProduccionService.BuscarInfoDespues( this.portafolio.fechaFin, this.verificacionProduccion.numRegistros, this.portafolio.pozo.pozNombre, this.verificacionProduccion.codVerificacion).subscribe(
+          this.verificarProduccionService.BuscarInfoDespues( this.portafolio.fechaFin, this.verificacionProduccion.numRegistros, this.portafolio.pozo.pozCodigo, this.verificacionProduccion.codVerificacion).subscribe(
             (dataP: Produccion[]) => {   
         
             if (dataP) {
@@ -259,7 +263,7 @@ export class VerificacionProduccionComponent implements OnInit {
               this.loading = false;
             });
 
-            this.verificarProduccionService.BuscarInfoAntes(this.portafolio.fechaInicio, this.verificacionProduccion.numRegistros, this.portafolio.pozo.pozNombre, this.verificacionProduccion.codVerificacion ).subscribe(
+            this.verificarProduccionService.BuscarInfoAntes(this.portafolio.fechaInicio, this.verificacionProduccion.numRegistros,  this.portafolio.pozo.pozCodigo, this.verificacionProduccion.codVerificacion ).subscribe(
               (dataAntes: Produccion[]) => {   
               if (dataAntes) {
                 this.datosAntes= dataAntes
@@ -305,7 +309,7 @@ export class VerificacionProduccionComponent implements OnInit {
     this.verificarProduccionService.verificarProduccion = eProduccion;
    
     console.log(this.verificacionProduccion)
-    this.verificarProduccionService.BuscarInfoDespues(this.portafolio.fechaFin, this.verificacionProduccion.numRegistros, this.portafolio.pozo.pozNombre, this.verificarProduccionService.verificarProduccion.codVerificacion).subscribe(
+    this.verificarProduccionService.BuscarInfoDespues(this.portafolio.fechaFin, this.verificacionProduccion.numRegistros, this.portafolio.pozo.pozCodigo, this.verificarProduccionService.verificarProduccion.codVerificacion).subscribe(
       (data: Produccion[]) => {   
   
       if (data) {

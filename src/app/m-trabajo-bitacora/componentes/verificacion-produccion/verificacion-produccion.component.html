@@ -114,7 +114,7 @@
       <div class="col-md-4">
    
         
-        <button pButton type="button" label="Cargar ANTES de inicio de trabajo" class="ui-button-success" (click)="cargarDatos(produccion)"></button> 
+        <button pButton type="button"  label="Cargar ANTES de inicio de trabajo" class="btn-block ui-button-success" (click)="cargarDatos(produccion)"></button> 
       </div>
       
 
@@ -124,7 +124,7 @@
             <label for="verificacion Fechas"><b># Registros:</b></label>
          </div>
          <div class="col-md-1">
-          <p-dropdown [options]="registrosList" [(ngModel)]="verificacionProduccion.numRegistros"readonly></p-dropdown>
+          <p-dropdown [options]="registrosList"  [(ngModel)]="verificacionProduccion.numRegistros"readonly></p-dropdown>
         </div>
         
     </div>
@@ -132,7 +132,7 @@
 
       <div class="col-md-4">
           
-        <button pButton type="button" label="Cargar DESPUES de fin de trabajo" class="ui-button-warning"  [disabled]="buttonDespues" (click)="cargarDatosDespues(produccion)" ></button>
+        <button pButton type="button" label="Calcular " class="ui-button-warning btn-block"  [disabled]="buttonDespues" (click)="cargarDatosDespues(produccion)" ></button>
       </div>
     
     </div>
