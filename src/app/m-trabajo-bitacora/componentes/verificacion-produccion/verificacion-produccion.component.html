@@ -106,12 +106,17 @@
 
 <p-fieldset legend="Tipo Pozo Productor" [style]="{width: '90%'}">
  
+  <div   *ngIf="verificacionProduccion.formDisabled ==0">
+    <div class="row"  *ngFor="let produccion of verificacionProduccionListar">
 
-    <div class="row">
-        
+  
+
       <div class="col-md-4">
-        <button pButton type="button" label="Cargar ANTES de inicio de trabajo" class="ui-button-success" (click)="cargarDatos()"></button> 
+   
+        
+        <button pButton type="button"  label="Cargar ANTES de inicio de trabajo" class="btn-block ui-button-success" (click)="cargarDatos(produccion)"></button> 
       </div>
+      
 
 
       <div class="col-md-4">
@@ -119,7 +124,7 @@
             <label for="verificacion Fechas"><b># Registros:</b></label>
          </div>
          <div class="col-md-1">
-          <p-dropdown [options]="registrosList" [(ngModel)]="verificacionProduccion.numRegistros"readonly></p-dropdown>
+          <p-dropdown [options]="registrosList"  [(ngModel)]="verificacionProduccion.numRegistros"readonly></p-dropdown>
         </div>
         
     </div>
@@ -127,9 +132,10 @@
 
       <div class="col-md-4">
           
-        <button pButton type="button" label="Cargar DESPUES de fin de trabajo" class="ui-button-warning" (click)="cargarDatosDespues()" ></button>
+        <button pButton type="button" label="Calcular " class="ui-button-warning btn-block"  [disabled]="buttonDespues" (click)="cargarDatosDespues(produccion)" ></button>
       </div>
-
+    
+    </div>
     
 </div>
 
@@ -146,9 +152,7 @@
         <thead>
         <tr>
             <th>Fecha</th>
-            <th>Bloque</th>
             <th>Yacimiento</th>
-            <th>Pozo</th>
             <th>BPPD</th>
             <th>BFPD</th>
             <th>BSW%</th>
@@ -161,10 +165,8 @@
         <tr *ngFor="let produccion of datosAntes" style="font-size: 11px">
 
          
-        <td>{{produccion.f_produccion  | date:'dd/MM/yyyy' }} </td>
-        <td>{{produccion.bloqueDetalle}} </td>
+        <td>{{produccion.fecha_registro  | date:'dd/MM/yyyy' }} </td>
         <td>{{produccion.yacimiento}} </td>
-        <td>{{produccion.pozo_nombre}} </td>
         <td>{{produccion.bppd}} </td>
         <td>{{produccion.bfpd}} </td>
         <td>{{produccion.bsw}} </td>
@@ -208,9 +210,7 @@
       <thead>
       <tr>
           <th>Fecha</th>
-          <th>Bloque</th>
           <th>Yacimiento</th>
-          <th>Pozo</th>
           <th>BPPD</th>
           <th>BFPD</th>
           <th>BSW%</th>
@@ -222,10 +222,8 @@
     <tbody>
       <tr *ngFor="let produccion of datosDespues" style="font-size: 11px">
 
-        <td>{{produccion.f_produccion  | date:'dd/MM/yyyy' }} </td>
-        <td>{{produccion.bloqueDetalle}} </td>
+        <td>{{produccion.fecha_registro  | date:'dd/MM/yyyy' }} </td>
         <td>{{produccion.yacimiento}} </td>
-        <td>{{produccion.pozo_nombre}} </td>
         <td>{{produccion.bppd}} </td>
         <td>{{produccion.bfpd}} </td>
         <td>{{produccion.bsw}} </td>
@@ -389,8 +387,8 @@
     </div>
 
     <div class="row justify-content-end">
-      <div class="col-md-4">
-        <button type="button" class="btn btn-sm btn-info btn-block" (click)="guardar()">
+      <div class="col-md-4"  *ngFor="let verificacionProduccion of verificacionProduccionListar">
+        <button type="button" class="btn btn-sm btn-info btn-block" (click)="editarProduccion(verificacionProduccion)">
           Guardar
         </button>
       </div>
@@ -424,7 +422,7 @@
             <th>Observacion</th>
             <th>Estado</th>
             <th>Fecha Actualización</th>
-            <th>Editar</th>
+            <th>Anular</th>
           </tr>
         </thead>
         <tbody>
@@ -440,7 +438,6 @@
             <td>{{verificacionProduccion.estado| estadoBitacora}} </td>
             <td>{{verificacionProduccion.fecha_actualizacion | date:'dd/MM/yyyy'}} </td>
             <td class="text-center">
-              <i class="fa fa-pencil-square-o fa-2x" (click)="editarProduccion(verificacionProduccion,produccion);"></i>            
           </td>
           </tr>
 
