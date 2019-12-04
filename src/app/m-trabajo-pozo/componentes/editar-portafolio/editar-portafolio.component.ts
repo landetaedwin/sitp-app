@@ -59,7 +59,8 @@ export class EditarPortafolioComponent implements OnInit {
     this.consorcioList = [{ label: "Seleccione", value: null, disabled: true }];
     this.tipoTrabajoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.numeroList = [{ label: "Seleccione", value: null, disabled: true }];
-    this.estadoList = [{ label: "Seleccione", value: null, disabled: true }, { label: "Registrado", value: 3 }, { label: "Anulado", value: 0 }];
+    this.estadoList = [{ label: "Seleccione", value: null, disabled: true }, { label: "Registrado", value: 1 }, { label: "Anulado", value: 0 }];
+
 
   }
 
@@ -288,46 +289,78 @@ export class EditarPortafolioComponent implements OnInit {
 
 
   guardarPortafolio() {
-    this.loading = true;
-    this.portafolio.codigoConsorcio = this.consorcio.codigoConsorcio;
-    this.portafolio.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
-    this.portafolio.codigoTipoPozo = this.tipoPozo.codigoTipoPozo;
-    this.portafolio.cexCodigo = this.operadora.cexCodigo;
-    this.portafolio.blqCodigo = this.bloque.blqCodigo;
-    this.portafolio.camCodigo = this.campo.camCodigo;
-    this.portafolio.pozCodigo = this.pozo.pozCodigo;
-    this.portafolio.estado = this.estado;
-    this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro);
-    if (this.portafolio.fechaModificacion) {
-      this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion);
-    }
-    if (this.portafolio.fechaTrabajoSinTorre) {
-      this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
-    }
-    if (this.portafolio.fechaInicio) {
-      this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
-    }
-    if (this.portafolio.fechaFin) {
-      this.portafolio.fechaFin = new Date(this.portafolio.fechaFin);
-    }
-   
-    this.portafolio.idUsuario = this.usuario.idUsuario;
 
-    this.dataApi.transUpdatePortafolio(this.portafolio).subscribe(data => {
-      if (data == "El portafolio ha sido actualizado correctamente") {
-        this.loading = false;
-        this.messageService.add({ severity: 'success', detail: '' + data });
-        this.closeModalEditarPortafolio();
-        this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
-      } else {
-        this.loading = false;
-        this.messageService.add({ severity: 'info', detail: '' + data });
+
+    let errores: string[] = [];
+
+    if (!this.tipoPozo) {
+      errores.push("El tipo pozo es requerido");
+    }
+
+    if (!this.consorcio) {
+      errores.push("El consorcio es requerido");
+    }
+
+    if (!this.tipoTrabajo.codigoTipoTrabajo) {
+      errores.push("El tipo de trabajo es requerido");
+    }
+
+    if (this.tipoTrabajo.codigoTipoTrabajo && this.tipoTrabajo.codigoTipoTrabajo == 3) {
+      if (!this.portafolio.fechaTrabajoSinTorre) {
+        errores.push("Fecha de trabajo sin torre es requerido");
       }
-    }, (err) => {
-      this.messageService.add({ severity: 'error', detail: 'Error interno' });
-      this.loading = false;
-      console.log(err)
-    });
+    }
+
+    if (errores.length <= 0) {
+      this.loading = true;
+      this.loading = true;
+      this.portafolio.codigoConsorcio = this.consorcio.codigoConsorcio;
+      this.portafolio.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
+      this.portafolio.codigoTipoPozo = this.tipoPozo.codigoTipoPozo;
+      this.portafolio.cexCodigo = this.operadora.cexCodigo;
+      this.portafolio.blqCodigo = this.bloque.blqCodigo;
+      this.portafolio.camCodigo = this.campo.camCodigo;
+      this.portafolio.pozCodigo = this.pozo.pozCodigo;
+      
+      this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro);
+      if (this.portafolio.fechaModificacion) {
+        this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion);
+      }
+      if (this.portafolio.fechaTrabajoSinTorre) {
+        this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
+      }
+      if (this.portafolio.fechaInicio) {
+        this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
+      }
+      if (this.portafolio.fechaFin) {
+        this.portafolio.fechaFin = new Date(this.portafolio.fechaFin);
+      }
+
+      this.portafolio.idUsuario = this.usuario.idUsuario;
+
+      this.dataApi.transUpdatePortafolio(this.portafolio).subscribe(data => {
+        if (data == "El portafolio ha sido actualizado correctamente") {
+          this.loading = false;
+          this.messageService.add({ severity: 'success', detail: '' + data });
+          this.closeModalEditarPortafolio();
+          this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
+        } else {
+          this.loading = false;
+          this.messageService.add({ severity: 'info', detail: '' + data });
+        }
+      }, (err) => {
+        this.messageService.add({ severity: 'error', detail: 'Error interno' });
+        this.loading = false;
+        console.log(err)
+      });
+
+    } else {
+      for (let i: number = 0; i < errores.length; i++) {
+        this.messageService.add({ severity: 'error', detail: errores[i] });
+      }
+    }
+
+
 
   }
 
