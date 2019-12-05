@@ -61,6 +61,7 @@ export class DocumentoMinisterioComponent implements OnInit {
     this.maxDate = new Date();
     this.minDate = new Date(2010, 0, 1);
     this.getDocumentoMinisterioList();
+    this.getAsuntoList();
 
   }
 
@@ -135,44 +136,166 @@ export class DocumentoMinisterioComponent implements OnInit {
 
   guardar() {
 
-    this.loading = true;
-    this.documentoMinisterio.codigoPortafolio = this.portafolio.codigoPortafolio;
-    this.documentoMinisterio.idUsuario = this.usuario.idUsuario;
-    this.documentoMinisterio.estado = 1;
-    this.documentoMinisterio.codigoAsunto = this.asunto.codigoAsunto;
-    if (this.documentoMinisterio.fechaOficio) {
-      this.documentoMinisterio.fechaOficio = new Date(this.documentoMinisterio.fechaOficio);
+
+    let errores: string[] = [];
+
+    if (!this.documentoMinisterio.numeroSGC) {
+      errores.push("El campo Nro. SGC es requerido");
     }
-    if (this.documentoMinisterio.fechaRegistro) {
-      this.documentoMinisterio.fechaRegistro = new Date(this.documentoMinisterio.fechaRegistro);
+    if (!this.documentoMinisterio.numeroOficio) {
+      errores.push("El campo Nro. Oficio es requerido");
     }
 
-    this.documentoMinisterio.fileOficio = new Archivo;
-    this.documentoMinisterio.fileAnexo1 = new Archivo;
-
-    if (this.docNroOficio.base64) {
-      this.documentoMinisterio.fileOficio.nombre = this.docNroOficio.nombre;
-      this.documentoMinisterio.fileOficio.base64 = this.docNroOficio.base64.substring(28);
-    }
-    if (this.anexo1.base64) {
-      this.documentoMinisterio.fileAnexo1.nombre = this.anexo1.nombre;
-      this.documentoMinisterio.fileAnexo1.base64 = this.anexo1.base64.substring(28);
+    if (!this.documentoMinisterio.fechaOficio) {
+      errores.push("El campo fecha oficio es requerido");
     }
 
-    this.dataApi.transCrearDocumentoMinisterio(this.documentoMinisterio).subscribe(res => {
-      if (res) {
-        this.getDocumentoMinisterioList();
-        this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se agrego el documento de ministerio' });
-        this.asunto = null;
-        this.closeModalDocumento();
+    if (!this.asunto) {
+      errores.push("El campo asunto es requerido");
+    }
 
-      } else {
-        this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo agregar el documento de ministerio' });
+    if (!this.documentoMinisterio.numeroResolucion) {
+      errores.push("El campo Nro. Resolucion es requerido");
+    }
+    if (!this.documentoMinisterio.objetivo) {
+      errores.push("El campo objetivo es requerido");
+    }
+
+
+
+
+    if (errores.length <= 0) {
+      this.loading = true;
+      this.documentoMinisterio.codigoPortafolio = this.portafolio.codigoPortafolio;
+      this.documentoMinisterio.idUsuario = this.usuario.idUsuario;
+      this.documentoMinisterio.estado = 1;
+
+
+      this.documentoMinisterio.codigoAsunto = this.asunto.codigoAsunto;
+      if (this.documentoMinisterio.fechaOficio) {
+        this.documentoMinisterio.fechaOficio = new Date(this.documentoMinisterio.fechaOficio);
+      }
+      if (this.documentoMinisterio.fechaRegistro) {
+        this.documentoMinisterio.fechaRegistro = new Date(this.documentoMinisterio.fechaRegistro);
       }
 
-    })
+      this.documentoMinisterio.fileOficio = new Archivo;
+      this.documentoMinisterio.fileAnexo1 = new Archivo;
+
+      if (this.docNroOficio.base64) {
+        this.documentoMinisterio.fileOficio.nombre = this.docNroOficio.nombre;
+        this.documentoMinisterio.fileOficio.base64 = this.docNroOficio.base64.substring(28);
+      }
+      if (this.anexo1.base64) {
+        this.documentoMinisterio.fileAnexo1.nombre = this.anexo1.nombre;
+        this.documentoMinisterio.fileAnexo1.base64 = this.anexo1.base64.substring(28);
+      }
+
+      this.dataApi.transCrearDocumentoMinisterio(this.documentoMinisterio).subscribe(res => {
+        if (res) {
+          this.getDocumentoMinisterioList();
+          this.loading = false;
+          this.messageService.add({ severity: 'success', detail: 'Se agrego el documento de ministerio' });
+          this.asunto = null;
+          this.closeModalDocumento();
+
+        } else {
+          this.loading = false;
+          this.messageService.add({ severity: 'info', detail: 'No se pudo agregar el documento de ministerio' });
+        }
+
+      }, err => {
+        this.messageService.add({ severity: 'error', detail: 'Error en el servidor' });
+      })
+
+
+    } else {
+
+      for (let i: number = 0; i < errores.length; i++) {
+        this.messageService.add({ severity: 'error', detail: errores[i] });
+      }
+
+    }
+
+
+  }
+
+  editarDocumento() {
+
+    let errores: string[] = [];
+
+    if (!this.documentoMinisterioEdit.numeroSGC) {
+      errores.push("El campo Nro. SGC es requerido");
+    }
+    if (!this.documentoMinisterioEdit.numeroOficio) {
+      errores.push("El campo Nro. Oficio es requerido");
+    }
+
+    if (!this.documentoMinisterioEdit.fechaOficio) {
+      errores.push("El campo fecha oficio es requerido");
+    }
+
+    if (!this.asunto) {
+      errores.push("El campo asunto es requerido");
+    }
+
+    if (!this.documentoMinisterioEdit.numeroResolucion) {
+      errores.push("El campo Nro. Resolucion es requerido");
+    }
+    if (!this.documentoMinisterioEdit.objetivo) {
+      errores.push("El campo objetivo es requerido");
+    }
+
+
+    if (errores.length <= 0) {
+      this.loading = true;
+      this.documentoMinisterioEdit.idUsuario = this.usuario.idUsuario;
+
+      this.documentoMinisterioEdit.codigoAsunto = this.asunto.codigoAsunto;
+      if (this.documentoMinisterioEdit.fechaOficio) {
+        this.documentoMinisterioEdit.fechaOficio = new Date(this.documentoMinisterioEdit.fechaOficio);
+      }
+      if (this.documentoMinisterioEdit.fechaRegistro) {
+        this.documentoMinisterioEdit.fechaRegistro = new Date(this.documentoMinisterioEdit.fechaRegistro);
+      }
+
+      this.documentoMinisterioEdit.fileOficio = new Archivo;
+      this.documentoMinisterioEdit.fileAnexo1 = new Archivo;
+
+      if (this.docNroOficio.base64) {
+        this.documentoMinisterioEdit.fileOficio.nombre = this.docNroOficio.nombre;
+        this.documentoMinisterioEdit.fileOficio.base64 = this.docNroOficio.base64.substring(28);
+      }
+      if (this.anexo1.base64) {
+        this.documentoMinisterioEdit.fileAnexo1.nombre = this.anexo1.nombre;
+        this.documentoMinisterioEdit.fileAnexo1.base64 = this.anexo1.base64.substring(28);
+      }
+
+      this.dataApi.transUpdateDocumentoMinisterio(this.documentoMinisterioEdit).subscribe(res => {
+        if (res) {
+          this.getDocumentoMinisterioList();
+          this.loading = false;
+          this.messageService.add({ severity: 'success', detail: 'Se actualizo el documento de ministerio' });
+          this.asunto = null;
+          this.closeModalDocumentoEdit();
+
+        } else {
+          this.loading = false;
+          this.messageService.add({ severity: 'info', detail: 'No se pudo actualizar el documento de ministerio' });
+        }
+
+      })
+
+
+    } else {
+
+      for (let i: number = 0; i < errores.length; i++) {
+        this.messageService.add({ severity: 'error', detail: errores[i] });
+      }
+
+    }
+
+
 
 
   }
@@ -187,13 +310,19 @@ export class DocumentoMinisterioComponent implements OnInit {
   }
 
   openModalDocumentoEdit(template: TemplateRef<any>, document: DocumentoMinisterio) {
+    this.loading = true
     this.documentoMinisterioEdit = this.cloneJSON(document)
-    this.getAsuntoList();
-    this.asunto = this.documentoMinisterioEdit.asunto;
-    if (this.documentoMinisterioEdit.fechaOficio) {
-      this.documentoMinisterioEdit.fechaOficio = new Date(this.documentoMinisterioEdit.fechaOficio)
-    }
-    this.documentoEditRef = this.modalService.show(template, { class: 'modal-md', backdrop: 'static', keyboard: false });
+    setTimeout(() => {
+      this.getAsuntoList();
+      this.documentoEditRef = this.modalService.show(template, { class: 'modal-md', backdrop: 'static', keyboard: false });
+      this.asunto = this.documentoMinisterioEdit.asunto;
+      if (this.documentoMinisterioEdit.fechaOficio) {
+        this.documentoMinisterioEdit.fechaOficio = new Date(this.documentoMinisterioEdit.fechaOficio)
+      }
+    }, 2000);
+
+   
+    
   }
 
   closeModalDocumentoEdit() {
@@ -204,48 +333,7 @@ export class DocumentoMinisterioComponent implements OnInit {
     return JSON.parse(JSON.stringify(obj));
   }
 
-  editarDocumento() {
 
-    this.loading = true;
-    this.documentoMinisterioEdit.idUsuario = this.usuario.idUsuario;
-
-    this.documentoMinisterioEdit.codigoAsunto = this.asunto.codigoAsunto;
-    if (this.documentoMinisterioEdit.fechaOficio) {
-      this.documentoMinisterioEdit.fechaOficio = new Date(this.documentoMinisterioEdit.fechaOficio);
-    }
-    if (this.documentoMinisterioEdit.fechaRegistro) {
-      this.documentoMinisterioEdit.fechaRegistro = new Date(this.documentoMinisterioEdit.fechaRegistro);
-    }
-
-    this.documentoMinisterioEdit.fileOficio = new Archivo;
-    this.documentoMinisterioEdit.fileAnexo1 = new Archivo;
-
-    if (this.docNroOficio.base64) {
-      this.documentoMinisterioEdit.fileOficio.nombre = this.docNroOficio.nombre;
-      this.documentoMinisterioEdit.fileOficio.base64 = this.docNroOficio.base64.substring(28);
-    }
-    if (this.anexo1.base64) {
-      this.documentoMinisterioEdit.fileAnexo1.nombre = this.anexo1.nombre;
-      this.documentoMinisterioEdit.fileAnexo1.base64 = this.anexo1.base64.substring(28);
-    }
-
-    this.dataApi.transUpdateDocumentoMinisterio(this.documentoMinisterioEdit).subscribe(res => {
-      if (res) {
-        this.getDocumentoMinisterioList();
-        this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se actualizo el documento de ministerio' });
-        this.asunto = null;
-        this.closeModalDocumentoEdit();
-
-      } else {
-        this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo actualizar el documento de ministerio' });
-      }
-
-    })
-
-
-  }
 
   anularDocumento() {
     debugger
@@ -281,5 +369,6 @@ export class DocumentoMinisterioComponent implements OnInit {
     this.documentoMinisterioEdit = document;
     this.confirmModalRef = this.modalService.show(template);
   }
+
 
 }

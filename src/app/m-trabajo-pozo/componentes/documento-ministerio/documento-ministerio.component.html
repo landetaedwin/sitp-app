@@ -89,10 +89,10 @@
               <td>{{doc.numeroOficio}} </td>
               <td>
                 <ul>
-                  <li>
-                    <div *ngIf="doc.urlOficio" class="btn-group dropright">
+                  <li *ngIf="doc.urlOficio">
+                    <div class="btn-group dropright">
                       <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{doc.fileOficio.nombre}}
+                        Oficio adjunto
                       </a>
                       <div class="dropdown-menu">
                         <button class="dropdown-item" type="button"
@@ -101,10 +101,10 @@
                       </div>
                     </div>
                   </li>
-                  <li>
-                    <div *ngIf="doc.urlAnexo1" class="btn-group dropright">
+                  <li *ngIf="doc.urlAnexo1">
+                    <div class="btn-group dropright">
                       <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{doc.fileAnexo1.nombre}}
+                        Anexo 1
                       </a>
                       <div class="dropdown-menu">
                         <button class="dropdown-item" type="button"
@@ -175,7 +175,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label><b>Nro. SGC:</b></label>
+              <label><b>Nro. SGC:*</b></label>
             </div>
             <div class="col-md-8">
               <input [(ngModel)]="documentoMinisterio.numeroSGC" pInputText numeros-doc />
@@ -185,7 +185,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label><b>Nro. Oficio:</b></label>
+              <label><b>Nro. Oficio:*</b></label>
             </div>
             <div class="col-md-8">
               <input [(ngModel)]="documentoMinisterio.numeroOficio" pInputText numeros-doc />
@@ -205,11 +205,9 @@
             <div class="col-md-8">
               <div class="input-group">
                 <div class="custom-file">
-                  <input type="file" accept=".pdf" (change)="onChangeDocNroOficio($event);" />
+                  <input type="file" accept=".pdf" data-max-size="2048" (change)="onChangeDocNroOficio($event);" />
                 </div>
-                <div class="input-group-append">
-                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                </div>
+
               </div>
             </div>
           </div>
@@ -225,11 +223,9 @@
             <div class="col-md-8">
               <div class="input-group">
                 <div class="custom-file">
-                  <input type="file" accept=".pdf" (change)="onChangeAnexo1($event);" required>
+                  <input type="file" accept=".pdf" data-max-size="2048" (change)="onChangeAnexo1($event);" required>
                 </div>
-                <div class="input-group-append">
-                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                </div>
+
               </div>
             </div>
           </div>
@@ -240,7 +236,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="campo"><b>Fecha Oficio:</b></label>
+              <label for="campo"><b>Fecha Oficio:*</b></label>
             </div>
             <div class="col-md-8">
               <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
@@ -254,7 +250,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="campo"><b>Asunto:</b></label>
+              <label for="campo"><b>Asunto:*</b></label>
             </div>
             <div class="col-md">
               <p-dropdown [options]="asuntoList" [(ngModel)]="asunto" [filter]="true"
@@ -268,7 +264,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="campo"><b>Nro. Resolucion:</b></label>
+              <label for="campo"><b>Nro. Resolucion:*</b></label>
             </div>
             <div class="col-md">
               <input [(ngModel)]="documentoMinisterio.numeroResolucion" pInputText [disabled]="nResol" />
@@ -281,7 +277,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="campo"><b>Objetivo:</b></label>
+              <label for="campo"><b>Objetivo:*</b></label>
             </div>
             <div class="col-md">
               <input [(ngModel)]="documentoMinisterio.objetivo" pInputText />
@@ -301,6 +297,7 @@
       </div>
 
     </div>
+    <p-toast position="top-center"></p-toast>
   </ng-template>
 
 
@@ -317,7 +314,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label><b>Nro. SGC:</b></label>
+              <label><b>Nro. SGC:*</b></label>
             </div>
             <div class="col-md-8">
               <input [(ngModel)]="documentoMinisterioEdit.numeroSGC" pInputText numeros-doc />
@@ -327,7 +324,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label><b>Nro. Oficio:</b></label>
+              <label><b>Nro. Oficio:*</b></label>
             </div>
             <div class="col-md-8">
               <input [(ngModel)]="documentoMinisterioEdit.numeroOficio" pInputText numeros-doc />
@@ -382,7 +379,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="campo"><b>Fecha Oficio:</b></label>
+              <label for="campo"><b>Fecha Oficio:*</b></label>
             </div>
             <div class="col-md-8">
               <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
@@ -396,7 +393,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="campo"><b>Asunto:</b></label>
+              <label for="campo"><b>Asunto:*</b></label>
             </div>
             <div class="col-md">
               <p-dropdown [options]="asuntoList" [(ngModel)]="asunto" [filter]="true"
@@ -410,7 +407,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="campo"><b>Nro. Resolucion:</b></label>
+              <label for="campo"><b>Nro. Resolucion:*</b></label>
             </div>
             <div class="col-md">
               <input [(ngModel)]="documentoMinisterioEdit.numeroResolucion" pInputText [disabled]="nResol" />
@@ -423,7 +420,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="campo"><b>Objetivo:</b></label>
+              <label for="campo"><b>Objetivo:*</b></label>
             </div>
             <div class="col-md">
               <input [(ngModel)]="documentoMinisterioEdit.objetivo" pInputText />
@@ -443,6 +440,7 @@
       </div>
 
     </div>
+    <p-toast position="top-center"></p-toast>
   </ng-template>
 
   <ng-template #confirmDialog>
