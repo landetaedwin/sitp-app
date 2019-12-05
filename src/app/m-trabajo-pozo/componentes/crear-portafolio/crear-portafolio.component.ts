@@ -116,6 +116,9 @@ export class CrearPortafolioComponent implements OnInit {
             this.pozoList.push({ label: p.pozNombre, value: p });
           }
           this.loading = false;
+        }, err => {
+          console.log(err)
+          this.loading = false;
         });
     }
   }
@@ -137,6 +140,9 @@ export class CrearPortafolioComponent implements OnInit {
             this.bloque = data;
           }
           this.loading = false;
+        }, err => {
+          console.log(err)
+          this.loading = false;
         });
     }
   }
@@ -150,6 +156,9 @@ export class CrearPortafolioComponent implements OnInit {
           if (data) {
             this.operadora = data;
           }
+          this.loading = false;
+        }, err => {
+          console.log(err)
           this.loading = false;
         });
     }

@@ -142,6 +142,9 @@ export class BuscarPortafolioComponent implements OnInit {
         this.pozo = null;
         this.loading = false;
       }
+    }, err => {
+      console.log(err)
+      this.loading = false;
     });
   }
 
