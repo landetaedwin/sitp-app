@@ -10,6 +10,7 @@ import { Router, RouterLink } from '@angular/router';
 import { Archivo } from 'src/app/entidades/archivo';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Portafolio } from 'src/app/entidades/portafolio';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 
@@ -98,10 +99,13 @@ this.novedadList= [
     this.seguimientoNovedad.asunto="Soliciud de Información"
     this.seguimientoNovedad.tipoNovedad="Fechas"
 
+
+
     this.verificacionNovedad=this.seguimientoNovedadService.verificacioNovedad
     this.verificacionNovedad.codVerfTrabajo=this.seguimientoNovedadService.verificacioNovedad.codVerfTrabajo
-    
-    console.log(this.verificacionNovedad)
+    this.verificacionNovedad.codVerfNov= this.seguimientoNovedadService.verificacioNovedad.codVerfNov
+
+    console.log(this.verificacionNovedad.codVerfNov)
     this.seguimientoNovedad.codVerfTrabajo= this.verificacionNovedad.codVerfTrabajo;
 
     
@@ -151,10 +155,7 @@ this.novedadList= [
       (data: SeguimientoNovedad[]) => {   
       if (data) {
             this.seguimientoList=data
-           if (data.length!==0) {
-            this.messageService.add({ severity: 'warn', detail: 'Ya existe un informe asignado' });
-            this.Disabled = 1;
-          }
+     
   
           }   
         this.loading = false;
@@ -189,6 +190,7 @@ _onChangeAnexo1(e) {
 
   editSeguimiento() {
     this.loading = true;
+    this.editarSeguimiento.codVerfNov= this.seguimientoNovedad.codVerfNov
     this.editarSeguimiento.documento= this.seguimientoNovedad.documento
     this.editarSeguimiento.idUsuario= this.seguimientoNovedad.idUsuario
     this.editarSeguimiento.codSegNov= this.seguimientoNovedad.codSegNov

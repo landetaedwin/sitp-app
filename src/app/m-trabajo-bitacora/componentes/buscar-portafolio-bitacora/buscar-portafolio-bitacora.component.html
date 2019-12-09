@@ -96,30 +96,6 @@
 
 <br>
 <p-fieldset legend="Resultados" [toggleable]="true">
-
-  <div class="row">
-    <div class="col-md-12">
-      <ul class="nav justify-content-end">
-        <li>
-          <i class="fa fa-pencil-square-o" aria-hidden="true"> Crear Informe de Operadora</i>
-        </li>
-        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
-          <i class="fa fa-calendar-o" aria-hidden="true" > Crear Informe de Verificación de Fechas</i>
-        </li>
-        <li>
-          <i class="fa fa-newspaper-o" aria-hidden="true"> Crear Informe de Verificación de Novedad</i>
-        </li>
-        <li>
-          <i class="fa fa-bar-chart" aria-hidden="true"> Crear Informe de Verificación de Producción </i>
-        </li>
-        <li>
-            <i class=" fa fa-comments" aria-hidden="true"> Conlcusiones y Recomendaciones </i>
-          </li>
-
-       
-      </ul>
-    </div>
-  </div>
   <hr>
 
  
@@ -128,65 +104,85 @@
       <table class="table table-bordered table-sm">
         <thead>
           <tr>
-            <th>#</th>
+        
+            <th>Portafolio</th>
             <th>Operadora</th>
             <th>Bloque</th>
             <th>Campo</th>
             <th>Pozo</th>
             <th>Trabajo</th>
-            <th>Numero</th>
+            <th>Tipo Pozo</th>
             <th>Fecha</th>
-            <th>Accion</th>
+            <th>Estado</th>
+            <th>Acción</th>
           </tr>
         </thead>
-        <tbody>
+
+
+        <tbody *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21' || usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
           <tr
             *ngFor="let portafolio of portafolioList| paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;">
-            <td>{{i+1}} </td>
+         
+            <td>{{portafolio.codigoPortafolio}}</td>
             <td>{{portafolio.operadora.cexApellidoPaterno}} </td>
             <td>{{portafolio.bloque.bqlNombre}}</td>
             <td>{{portafolio.campo.camNombre}}</td>
             <td>{{portafolio.pozo.pozNombre}}</td>
             <td>{{portafolio.tipoTrabajo.tipoTrabajo}}</td>
-            <td>{{portafolio.numeroTrabajo}}</td>
+            <td>{{portafolio.codigoTipoPozo| tipoPozoPipe}}</td>
             <td>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</td>
+            <td>{{portafolio.estado | estadoPortafolio}}</td>
             <td class="text-center" style="width:10%;">
-              <div class="row">
-                <div class="col-md-12">
-                  <ul class="nav">
+              <div class="btn-group dropleft" *ngIf="portafolio.estado!=0">
+                  <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-cog"></i>
+                </button>
 
-                    <li (click)="informeOperadora(portafolio);">
-                      <i class="fa fa-pencil fa-2x"></i>
-                    </li>
+                <div class="dropdown-menu">
+                    
+                  
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'" 
+                    (click)="informeOperadora(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-pencil"></i> Registro diario</button>
 
-                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'" (click)="verificarFechas(portafolio);">
-                      <i class="fa fa-calendar-o fa-2x"></i>
-                    </li>
+                      <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="verificarFechas(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-calendar-o"></i> Verificar Fechas</button>
 
-                    <li (click)="verificarNovedad(portafolio);">
-                      <i class="fa fa-newspaper-o fa-2x"></i>
-                    </li>
-                    <li (click)="verificarProduccion(portafolio);">
-                      <i class="fa fa-bar-chart fa-2x"></i>
-                    </li>
 
-                    <li (click)="conclusion(portafolio);">
-                      <i class="fa fa-comments fa-2x"></i>
-                    </li>
+                      <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      (click)="verificarProduccion(portafolio)" class="dropdown-item" type="button"><i
+                        class="fa fa-area-chart"></i> Verificar Producción</button>
+                
+                        
+                      <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="verificarNovedad(portafolio);" class="dropdown-item" type="button"><i
+                      class="fa fa-newspaper-o"></i> Verificar Novedades</button>
 
-               
 
-                  </ul>
-                </div>
-              </div>
+                     
+                      <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="conclusion(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-comments "></i> Conclusiones</button>
+
+            
+            </div>
+          </div>
             </td>
 
           </tr>
-
         </tbody>
+
+
+
+
+
+
+
+
       </table>
     </div>
-
   </div>
   <div class="row">
     <div class="col-md-12 text-center">

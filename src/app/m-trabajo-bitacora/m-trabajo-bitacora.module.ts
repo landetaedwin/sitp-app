@@ -22,6 +22,8 @@ import { JustificadoBitacoraPipe } from '../resources/pipes/justificadoBitacora'
 import { ValoracionBitacoraPipe } from '../resources/pipes/valoracionBitacora';
 import { ValoracionProduccionPipe } from '../resources/pipes/valoracion-produccion';
 import { EstadoBitacoraPipe} from '../resources/pipes/estado-bitacora';
+import { TipoPozoPipe} from '../resources/pipes/tipo-pozo.pipe';
+import { EstadoPortafolioPipe} from '../resources/pipes/estado-portafolioBitacora.pipe';
 import { EstadoInforme} from '../resources/pipes/EstadoInforme';
 import { EditarVerificacionProduccionComponent } from './componentes/editar-verificacion-produccion/editar-verificacion-produccion.component';
 import { EditarVerificacionFechasComponent } from './componentes/editar-verificacion-fechas/editar-verificacion-fechas.component';
@@ -37,6 +39,8 @@ import { EditarSeguimientoNovedadComponent } from './componentes/editar-seguimie
   declarations: [ReportesDiariosComponent, VerificacionFechasComponent, VerificacionProduccionComponent, DocumentoOperadoraComponent,
      InformeTrabajosOperadoraComponent,
      BuscarPortafolioBitacoraComponent,
+
+     EstadoPortafolioPipe,TipoPozoPipe,
      EditarInformeOperadoraComponent,
      VerificacionNovedadComponent,
      EstadoInforme,

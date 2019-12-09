@@ -4,6 +4,7 @@ export class SeguimientoNovedad{
 asunto: string; 
 codSegNov: number;
 codVerfTrabajo: number;
+codVerfNov: String;
 CodTipoNov: number;
 numDoc: string;
 documento: string;

@@ -12,4 +12,6 @@ idUsu: number;
 verificacionNovedad: String;
 visualizar_estado: String;
 verfNovedad: String;
+codVerfNov: String
 }
+
