@@ -142,6 +142,9 @@ export class BuscarPortafolioComponent implements OnInit {
         this.pozo = null;
         this.loading = false;
       }
+    }, err => {
+      console.log(err)
+      this.loading = false;
     });
   }
 
@@ -150,12 +153,9 @@ export class BuscarPortafolioComponent implements OnInit {
   }
 
   editarPortafolio(portafolio: Portafolio) {
-    if (portafolio.estado == 1) {
-      this.busquedaService.portafolio = portafolio;
-      this.router.navigate(['/menu', { outlets: { sitp: ['editarPortafolio'] } }]);
-    } else {
-      this.messageService.add({ severity: 'error', detail: 'Portafolio anulado, comunícate con el administrador.' });
-    }
+    this.busquedaService.portafolio = portafolio;
+    this.router.navigate(['/menu', { outlets: { sitp: ['editarPortafolio'] } }]);
+
   }
 
   goToRegistroDiario(portafolio: Portafolio) {
@@ -213,6 +213,8 @@ export class BuscarPortafolioComponent implements OnInit {
   }
 
   anularPortafolio() {
+
+    debugger
     this.loading = true;
     this.portafolio.estado = 0;
     this.portafolio.motivoCambio = "Anulacion del portafolio";
@@ -227,7 +229,7 @@ export class BuscarPortafolioComponent implements OnInit {
       this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion);
     }
     if (this.portafolio.fechaTrabajoSinTorre) {
-      this.portafolio.fechaModificacion = new Date(this.portafolio.fechaTrabajoSinTorre);
+      this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
     }
 
     this.dataApi.transUpdatePortafolio(this.portafolio).subscribe(data => {

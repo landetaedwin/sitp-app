@@ -80,6 +80,9 @@ export class HistorialPozoComponent implements OnInit {
 
       this.historialPozoList = dataAux;
       this.loading = false;
+    }, err => {
+      console.log(err)
+      this.loading = false;
     });
 
   }

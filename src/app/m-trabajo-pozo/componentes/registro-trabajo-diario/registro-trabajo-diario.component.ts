@@ -84,6 +84,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
   }
 
   getRegistroDiarioList() {
+    debugger
     this.busquedaService.getRegistroDiarioList(this.portafolio.codigoPortafolio).subscribe((data: RegistroDiario[]) => {
       if (data && data.length > 0 && !this.portafolio.fechaFin) {
         if (data[0].codigoAccion == this.aRegistroTrabajo.codigoAccion) {
@@ -139,7 +140,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
     if (this.registroDiarioList.length > 0 && this.registroDiarioList[0].fechaAccion) {
       this.minDateTrabajo = new Date(this.registroDiarioList[0].fechaAccion);
     } else {
-      this.minDateTrabajo = this.minDate;
+      this.minDateTrabajo = new Date(this.portafolio.fechaInicio);
     }
 
     this.registroModalRef = this.modalService.show(template, { backdrop: 'static', keyboard: false });
@@ -186,130 +187,160 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
 
 
   iniciarOperacionesRegistroDiario() {
-    this.loading = true;
-    debugger
     if (this.fechaInicio) {
+      this.loading = true;
       this.portafolio.fechaInicio = this.fechaInicio;
       this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro)
       this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion)
       if (this.portafolio.fechaTrabajoSinTorre) {
         this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
       }
-    } else {
-      this.portafolio.fechaInicio = new Date();
-      this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro);
-      this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion)
-      if (this.portafolio.fechaTrabajoSinTorre) {
-        this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
-      }
 
-    }
-    debugger
-    this.dataAPI.transUpdatePortafolio(this.portafolio).subscribe(data => {
-      if (data) {
+      this.dataAPI.transUpdatePortafolio(this.portafolio).subscribe(data => {
+        if (data) {
+          this.loading = false;
+          this.messageService.add({ severity: 'success', detail: 'Se inician las operaciones' });
+          this.bIniciar = true;
+          this.bRegistroDiario = false;
+          this.bFin = false;
+          this.fechaInicio = this.portafolio.fechaInicio;
+        }
+      }, (err) => {
+        this.messageService.add({ severity: 'error', detail: 'Error interno' });
         this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se inician las operaciones' });
-        this.bIniciar = true;
-        this.bRegistroDiario = false;
-        this.bFin = false;
-        this.fechaInicio = this.portafolio.fechaInicio;
-      }
-    }, (err) => {
-      this.messageService.add({ severity: 'error', detail: 'Error interno' });
-      this.loading = false;
-      console.log(err)
-    });
+        console.log(err)
+      });
+
+    } else {
+      this.messageService.add({ severity: 'error', detail: 'Seleccione la fecha de inicio' });
+    }
   }
 
 
   finalizarOperacionesRegistroDiario() {
     if (this.fechaFin) {
-      this.portafolio.fechaFin = this.fechaFin;
-      this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
-      this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro)
-      if (this.portafolio.fechaTrabajoSinTorre) {
-        this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
-      }
-      if (this.portafolio.consorcio.fechaRegistro) {
-        this.portafolio.consorcio.fechaRegistro = new Date(this.portafolio.consorcio.fechaRegistro);
-      }
-      if (this.portafolio.fechaModificacion) {
-        this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion);
-      }
+      debugger
+      let ff: Date = new Date(this.fechaFin)
+      let fa: Date = new Date(this.registroDiarioList[0].fechaAccion)
+      if (ff < fa) {
+        this.messageService.add({ severity: 'error', detail: 'La fecha fin es mayor a la fecha de la ultima acción' });
+      } else {
+        this.loading = true;
+        this.portafolio.fechaFin = this.fechaFin;
+        this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
+        this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro)
+        if (this.portafolio.fechaTrabajoSinTorre) {
+          this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
+        }
+        if (this.portafolio.consorcio.fechaRegistro) {
+          this.portafolio.consorcio.fechaRegistro = new Date(this.portafolio.consorcio.fechaRegistro);
+        }
+        if (this.portafolio.fechaModificacion) {
+          this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion);
+        }
 
+        this.dataAPI.transUpdatePortafolio(this.portafolio).subscribe(data => {
+          if (data) {
+            this.loading = false;
+            this.messageService.add({ severity: 'success', detail: 'Se finalizaron las operaciones' });
+            this.bIniciar = true;
+            this.bRegistroDiario = true
+            this.bSuspecion = true;
+            this.bReinicio = true;
+            this.bFin = true;
+            this.fechaFin = this.portafolio.fechaFin;
+          }
+        }, (err) => {
+          this.messageService.add({ severity: 'error', detail: 'Error interno' });
+          this.loading = false;
+          console.log(err)
+        });
+      }
     } else {
-      this.portafolio.fechaFin = new Date();
-      this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
-      this.portafolio.fechaRegistro = new Date(this.portafolio.fechaRegistro);
-      if (this.portafolio.fechaTrabajoSinTorre) {
-        this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
-      }
-      if (this.portafolio.consorcio.fechaRegistro) {
-        this.portafolio.consorcio.fechaRegistro = new Date(this.portafolio.consorcio.fechaRegistro);
-      }
-      if (this.portafolio.fechaModificacion) {
-        this.portafolio.fechaModificacion = new Date(this.portafolio.fechaModificacion);
-      }
-
+      this.messageService.add({ severity: 'error', detail: 'Seleccione la fecha de fin' });
     }
-    this.dataAPI.transUpdatePortafolio(this.portafolio).subscribe(data => {
-      if (data) {
-        this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se finalizaron las operaciones' });
-        this.bIniciar = true;
-        this.bRegistroDiario = true
-        this.bSuspecion = true;
-        this.bReinicio = true;
-        this.bFin = true;
-        this.fechaFin = this.portafolio.fechaFin;
-      }
-    }, (err) => {
-      this.messageService.add({ severity: 'error', detail: 'Error interno' });
-      this.loading = false;
-      console.log(err)
-    });
+
   }
 
   guardarRegistroDiario() {
-    this.loading = true;
-    this.registroDiario.fechaAccion = new Date(this.registroDiario.fechaAccion)
-    this.dataAPI.transCrearRegistroDiario(this.registroDiario).subscribe(data => {
-      if (data) {
-        this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Registro diario creado correctamente' });
-        this.getRegistroDiarioList();
-        this.bIniciar = true;
-        this.closeModalRegistro();
+    let errores: string[] = [];
+    if (!this.registroDiario.fechaAccion) {
+      errores.push("La fecha de acción es requerida");
+    }
+    if (!this.registroDiario.actividad) {
+      errores.push("La actividad es requerida");
+    }
+    if (errores.length <= 0) {
+      this.loading = true;
+      this.registroDiario.fechaAccion = new Date(this.registroDiario.fechaAccion)
+      this.dataAPI.transCrearRegistroDiario(this.registroDiario).subscribe(data => {
+        if (data) {
+          this.loading = false;
+          this.messageService.add({ severity: 'success', detail: 'Registro diario creado correctamente' });
+          this.getRegistroDiarioList();
+          this.bIniciar = true;
+          this.closeModalRegistro();
+        }
+      })
+    } else {
+      for (let i: number = 0; i < errores.length; i++) {
+        this.messageService.add({ severity: 'error', detail: errores[i] });
       }
-    })
+    }
   }
 
   guardarSuspencion() {
-    this.loading = true;
-    this.registroDiario.fechaAccion = new Date(this.registroDiario.fechaAccion)
-    this.dataAPI.transCrearRegistroDiario(this.registroDiario).subscribe(data => {
-      if (data) {
-        this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Suspencion creada correctamente' });
-        this.getRegistroDiarioList();
-        this.bIniciar = true;
-        this.closeModalRegistro();
+    let errores: string[] = [];
+    if (!this.registroDiario.fechaAccion) {
+      errores.push("La fecha de acción es requerida");
+    }
+    if (!this.registroDiario.actividad) {
+      errores.push("La actividad es requerida");
+    }
+    if (errores.length <= 0) {
+      this.loading = true;
+      this.registroDiario.fechaAccion = new Date(this.registroDiario.fechaAccion)
+      this.dataAPI.transCrearRegistroDiario(this.registroDiario).subscribe(data => {
+        if (data) {
+          this.loading = false;
+          this.messageService.add({ severity: 'success', detail: 'Suspencion creada correctamente' });
+          this.getRegistroDiarioList();
+          this.bIniciar = true;
+          this.closeModalRegistro();
+        }
+      })
+    } else {
+      for (let i: number = 0; i < errores.length; i++) {
+        this.messageService.add({ severity: 'error', detail: errores[i] });
       }
-    })
+    }
   }
 
   guardarReinicio() {
-    this.loading = true;
-    this.registroDiario.fechaAccion = new Date(this.registroDiario.fechaAccion)
-    this.dataAPI.transCrearRegistroDiario(this.registroDiario).subscribe(data => {
-      if (data) {
-        this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Reinicio creado correctamente' });
-        this.getRegistroDiarioList();
-        this.bIniciar = true;
-        this.closeModalRegistro();
+    let errores: string[] = [];
+    if (!this.registroDiario.fechaAccion) {
+      errores.push("La fecha de acción es requerida");
+    }
+    if (!this.registroDiario.actividad) {
+      errores.push("La actividad es requerida");
+    }
+    if (errores.length <= 0) {
+      this.loading = true;
+      this.registroDiario.fechaAccion = new Date(this.registroDiario.fechaAccion)
+      this.dataAPI.transCrearRegistroDiario(this.registroDiario).subscribe(data => {
+        if (data) {
+          this.loading = false;
+          this.messageService.add({ severity: 'success', detail: 'Reinicio creado correctamente' });
+          this.getRegistroDiarioList();
+          this.bIniciar = true;
+          this.closeModalRegistro();
+        }
+      })
+    } else {
+      for (let i: number = 0; i < errores.length; i++) {
+        this.messageService.add({ severity: 'error', detail: errores[i] });
       }
-    })
+    }
   }
 
 
@@ -328,19 +359,33 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
 
 
   editarRegistroDiario() {
-    this.loading = true;
-    this.registroDiarioEdit.fechaAccion = new Date(this.registroDiarioEdit.fechaAccion)
-    if (this.registroDiarioEdit.fechaActualizacion) {
-      this.registroDiarioEdit.fechaActualizacion = new Date(this.registroDiarioEdit.fechaActualizacion)
+    let errores: string[] = [];
+    if (!this.registroDiarioEdit.fechaAccion) {
+      errores.push("La fecha de acción es requerida");
     }
-    this.dataAPI.transEditarRegistroDiario(this.registroDiarioEdit).subscribe(data => {
-      if (data) {
-        this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Registro actualizado creado correctamente' });
-        this.getRegistroDiarioList();
-        this.closeModalRegistro();
+    if (!this.registroDiarioEdit.actividad) {
+      errores.push("La actividad es requerida");
+    }
+    if (errores.length <= 0) {
+      this.loading = true;
+      this.registroDiarioEdit.fechaAccion = new Date(this.registroDiarioEdit.fechaAccion)
+      if (this.registroDiarioEdit.fechaActualizacion) {
+        this.registroDiarioEdit.fechaActualizacion = new Date(this.registroDiarioEdit.fechaActualizacion)
       }
-    })
+      this.dataAPI.transEditarRegistroDiario(this.registroDiarioEdit).subscribe(data => {
+        if (data) {
+          this.loading = false;
+          this.messageService.add({ severity: 'success', detail: 'Registro actualizado creado correctamente' });
+          this.getRegistroDiarioList();
+          this.closeModalRegistro();
+        }
+      })
+    } else {
+      for (let i: number = 0; i < errores.length; i++) {
+        this.messageService.add({ severity: 'error', detail: errores[i] });
+      }
+    }
+
   }
 
 

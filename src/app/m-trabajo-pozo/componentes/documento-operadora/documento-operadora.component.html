@@ -10,7 +10,7 @@
           </div>
           <div class="col-md-6 mt-1">
             <button type="button" class="btn btn-sm btn-danger btn-block" (click)="goToBuscarPortafolio()">
-              <i class="fa fa-sign-out"> Cancelar</i>
+              <i class="fa fa-sign-out"> Volver</i>
             </button>
           </div>
         </div>
@@ -229,7 +229,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label><b>Nro. SGC:</b></label>
+              <label><b>Nro. SGC:*</b></label>
             </div>
             <div class="col-md-8">
               <input [(ngModel)]="documentoOperadora.numeroSGC" pInputText numeros-doc />
@@ -239,7 +239,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label><b>Nro. Oficio:</b></label>
+              <label><b>Nro. Oficio:*</b></label>
             </div>
             <div class="col-md-8">
               <input [(ngModel)]="documentoOperadora.numeroOficio" pInputText numeros-doc />
@@ -374,7 +374,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="campo"><b>Fecha Oficio:</b></label>
+              <label for="campo"><b>Fecha Oficio:*</b></label>
             </div>
             <div class="col-md-8">
               <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
@@ -386,7 +386,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="campo"><b>Fecha ARCH:</b></label>
+              <label for="campo"><b>Fecha ARCH:*</b></label>
             </div>
             <div class="col-md-8">
               <p-calendar [style]="{ width: '100%' }" [minDate]="minDateFA" [maxDate]="maxDate"
@@ -399,7 +399,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="campo"><b>Categorización:</b></label>
+              <label for="campo"><b>Categorización:*</b></label>
             </div>
             <div class="col-md">
               <p-dropdown [options]="categoriaList" [(ngModel)]="categoria" [filter]="true"> </p-dropdown>
@@ -409,7 +409,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="campo"><b>Asunto:</b></label>
+              <label for="campo"><b>Asunto:*</b></label>
             </div>
             <div class="col-md">
               <p-dropdown [options]="asuntoList" [(ngModel)]="asunto" [filter]="true"> </p-dropdown>
@@ -422,7 +422,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label for="campo"><b>Objetivo:</b></label>
+              <label for="campo"><b>Objetivo:*</b></label>
             </div>
             <div class="col-md">
               <input [(ngModel)]="documentoOperadora.objetivo" pInputText />
@@ -442,6 +442,7 @@
       </div>
 
     </div>
+    <p-toast position="top-center"></p-toast>
   </ng-template>
 
   <ng-template #documentoEditTemplate>
@@ -669,6 +670,8 @@
       </div>
 
     </div>
+    <p-toast position="top-center"></p-toast>
+
   </ng-template>
 
 
@@ -680,13 +683,11 @@
           <h4>Documentos habilitantes operadora - Pagos</h4>
         </div>
       </div>
-
-
       <div class="row">
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label><b>Fecha pago:</b></label>
+              <label><b>Fecha pago:*</b></label>
             </div>
             <div class="col-md-8">
               <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
@@ -697,7 +698,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label><b>Item:</b></label>
+              <label><b>Item:*</b></label>
             </div>
             <div class="col-md-8">
               <input pInputText [(ngModel)]="pago.item" />
@@ -710,7 +711,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label><b>Valor:</b></label>
+              <label><b>Valor:*</b></label>
             </div>
             <div class="col-md-8">
               <input pInputText [(ngModel)]="pago.valor" />
@@ -720,7 +721,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label><b>Nro.comprobante:</b></label>
+              <label><b>Nro.comprobante:*</b></label>
             </div>
             <div class="col-md-8">
               <input pInputText [disabled]="ncomp" [(ngModel)]="pago.numeroComprobante"
@@ -734,7 +735,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label><b>Nro.transferencia:</b></label>
+              <label><b>Nro.transferencia:*</b></label>
             </div>
             <div class="col-md-8">
               <input pInputText [disabled]="ntrans" [(ngModel)]="pago.numeroTransaccion"
@@ -745,7 +746,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label><b>Nro. factura:</b></label>
+              <label><b>Nro. factura:*</b></label>
             </div>
             <div class="col-md-8">
               <input [(ngModel)]="pago.numeroFactura" pInputText />
@@ -763,6 +764,7 @@
         </div>
       </div>
     </div>
+    <p-toast position="top-center"></p-toast>
   </ng-template>
 
 
@@ -794,17 +796,17 @@
                 <th>Valor</th>
               </tr>
             </thead>
-
-            <tr
-              *ngFor="let pago of pagoList| paginate: {id: 'pagoList', itemsPerPage: 10, currentPage: pp }; let i=index;">
-              <td>{{i+1}} </td>
-              <td>{{pago.fechaPago | date:'dd/MM/yyyy'}}</td>
-              <td>{{pago.item}}</td>
-              <td>{{pago.numeroComprobante}}</td>
-              <td>{{pago.numeroTransaccion}}</td>
-              <td>{{pago.numeroFactura}}</td>
-              <td>{{pago.valor}}</td>
-            </tr>
+            <tbody>
+              <tr
+                *ngFor="let pago of pagoList| paginate: {id: 'pagoList', itemsPerPage: 10, currentPage: pp }; let i=index;">
+                <td>{{i+1}} </td>
+                <td>{{pago.fechaPago | date:'dd/MM/yyyy'}}</td>
+                <td>{{pago.item}}</td>
+                <td>{{pago.numeroComprobante}}</td>
+                <td>{{pago.numeroTransaccion}}</td>
+                <td>{{pago.numeroFactura}}</td>
+                <td>{{pago.valor}}</td>
+              </tr>
             </tbody>
           </table>
         </div>
