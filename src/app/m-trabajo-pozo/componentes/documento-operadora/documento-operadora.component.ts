@@ -238,96 +238,174 @@ export class DocumentoOperadoraComponent implements OnInit {
   }
 
   guardar() {
-    this.loading = true;
-    this.documentoOperadora.codigoPortafolio = this.portafolio.codigoPortafolio;
-    this.documentoOperadora.idUsuario = this.usuario.idUsuario;
-    this.documentoOperadora.estado = 1;
-    this.documentoOperadora.fechaRegistro = new Date();
-    this.documentoOperadora.fechaOficio = new Date(this.documentoOperadora.fechaOficio);
+
+
+    let errores: string[] = [];
+
+    if (!this.documentoOperadora.numeroSGC) {
+      errores.push("El campo Nro. SGC es requerido");
+    }
+    if (!this.documentoOperadora.numeroOficio) {
+      errores.push("El campo Nro. Oficio es requerido");
+    }
+
+    if (!this.documentoOperadora.fechaOficio) {
+      errores.push("El campo fecha oficio es requerido");
+    }
+    if (!this.documentoOperadora.fechaARCH) {
+      errores.push("El campo fecha ARCH es requerido");
+    }
+
+    if (!this.categoria) {
+      errores.push("El campo categorización es requerido");
+    }
+
+    if (!this.asunto) {
+      errores.push("El campo asunto es requerido");
+    }
+
+    if (!this.documentoOperadora.objetivo) {
+      errores.push("El campo objetivo es requerido");
+    }
 
     debugger
-    if (this.categoria) {
-      this.documentoOperadora.codigoCategoria = this.categoria.codigoCategoria;
-    }
-    debugger
-    if (this.asunto) {
-      this.documentoOperadora.codigoAsunto = this.asunto.codigoAsunto;
-    }
+
+    if (errores.length <= 0) {
+      this.loading = true;
+      this.documentoOperadora.codigoPortafolio = this.portafolio.codigoPortafolio;
+      this.documentoOperadora.idUsuario = this.usuario.idUsuario;
+      this.documentoOperadora.estado = 1;
+      this.documentoOperadora.fechaRegistro = new Date();
+      this.documentoOperadora.fechaOficio = new Date(this.documentoOperadora.fechaOficio);
 
 
-    this.documentoOperadora.fileOficio = new Archivo;
-    this.documentoOperadora.fileAnexo1 = new Archivo;
-    this.documentoOperadora.fileAnexo2 = new Archivo;
-    this.documentoOperadora.fileAnexo3 = new Archivo;
-    this.documentoOperadora.fileAnexo4 = new Archivo;
-    this.documentoOperadora.filePago = new Archivo;
-
-    if (this.docNroOficio.base64) {
-      this.documentoOperadora.fileOficio.nombre = this.docNroOficio.nombre;
-      this.documentoOperadora.fileOficio.base64 = this.docNroOficio.base64.substring(28);
-    }
-
-    if (this.anexo1.base64) {
-      this.documentoOperadora.fileAnexo1.nombre = this.anexo1.nombre;
-      this.documentoOperadora.fileAnexo1.base64 = this.anexo1.base64.substring(28);
-    }
-
-    if (this.anexo2.base64) {
-      this.documentoOperadora.fileAnexo2.nombre = this.anexo2.nombre;
-      this.documentoOperadora.fileAnexo2.base64 = this.anexo2.base64.substring(28);
-    }
-
-    if (this.anexo3.base64) {
-      this.documentoOperadora.fileAnexo3.nombre = this.anexo3.nombre;
-      this.documentoOperadora.fileAnexo3.base64 = this.anexo3.base64.substring(28);
-    }
-
-    if (this.anexo4.base64) {
-      this.documentoOperadora.fileAnexo4.nombre = this.anexo4.nombre;
-      this.documentoOperadora.fileAnexo4.base64 = this.anexo4.base64.substring(28);
-    }
-
-    if (this.docPagos.base64) {
-      this.documentoOperadora.filePago.nombre = this.docPagos.nombre;
-      this.documentoOperadora.filePago.base64 = this.docPagos.base64.substring(28);
-    }
-
-    this.dataApi.transCrearDocumentoOperadora(this.documentoOperadora).subscribe(data => {
-      if (data) {
-        this.getListDocumentoOperadora()
-        this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se agrego el documento de operadora' });
-        this.asunto = null;
-        this.categoria = null;
-        this.closeModalDocumento();
-
-      } else {
-        this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo agregar el documento de operadora' });
+      if (this.categoria) {
+        this.documentoOperadora.codigoCategoria = this.categoria.codigoCategoria;
       }
 
-    });
+      if (this.asunto) {
+        this.documentoOperadora.codigoAsunto = this.asunto.codigoAsunto;
+      }
+
+
+      this.documentoOperadora.fileOficio = new Archivo;
+      this.documentoOperadora.fileAnexo1 = new Archivo;
+      this.documentoOperadora.fileAnexo2 = new Archivo;
+      this.documentoOperadora.fileAnexo3 = new Archivo;
+      this.documentoOperadora.fileAnexo4 = new Archivo;
+      this.documentoOperadora.filePago = new Archivo;
+
+      if (this.docNroOficio.base64) {
+        this.documentoOperadora.fileOficio.nombre = this.docNroOficio.nombre;
+        this.documentoOperadora.fileOficio.base64 = this.docNroOficio.base64.substring(28);
+      }
+
+      if (this.anexo1.base64) {
+        this.documentoOperadora.fileAnexo1.nombre = this.anexo1.nombre;
+        this.documentoOperadora.fileAnexo1.base64 = this.anexo1.base64.substring(28);
+      }
+
+      if (this.anexo2.base64) {
+        this.documentoOperadora.fileAnexo2.nombre = this.anexo2.nombre;
+        this.documentoOperadora.fileAnexo2.base64 = this.anexo2.base64.substring(28);
+      }
+
+      if (this.anexo3.base64) {
+        this.documentoOperadora.fileAnexo3.nombre = this.anexo3.nombre;
+        this.documentoOperadora.fileAnexo3.base64 = this.anexo3.base64.substring(28);
+      }
+
+      if (this.anexo4.base64) {
+        this.documentoOperadora.fileAnexo4.nombre = this.anexo4.nombre;
+        this.documentoOperadora.fileAnexo4.base64 = this.anexo4.base64.substring(28);
+      }
+
+      if (this.docPagos.base64) {
+        this.documentoOperadora.filePago.nombre = this.docPagos.nombre;
+        this.documentoOperadora.filePago.base64 = this.docPagos.base64.substring(28);
+      }
+
+      this.dataApi.transCrearDocumentoOperadora(this.documentoOperadora).subscribe(data => {
+        if (data) {
+          this.getListDocumentoOperadora()
+          this.loading = false;
+          this.messageService.add({ severity: 'success', detail: 'Se agrego el documento de operadora' });
+          this.asunto = null;
+          this.categoria = null;
+          this.closeModalDocumento();
+
+        } else {
+          this.loading = false;
+          this.messageService.add({ severity: 'info', detail: 'No se pudo agregar el documento de operadora' });
+        }
+
+      }, (err) => {
+        this.messageService.add({ severity: 'error', detail: 'Error interno' });
+        this.loading = false;
+        console.log(err)
+      });
+
+    } else {
+
+      for (let i: number = 0; i < errores.length; i++) {
+        this.messageService.add({ severity: 'error', detail: errores[i] });
+      }
+
+    }
+
   }
 
 
   guardarPago() {
-    this.loading = true;
-    this.pago.estado = 1;
-    this.pago.idUsuario = this.usuario.idUsuario;
-    this.pago.fechaRegistro = new Date();
 
-    this.dataApi.transCrearPago(this.pago).subscribe(res => {
-      if (res) {
+    let errores: string[] = [];
+
+    if (!this.pago.fechaPago) {
+      errores.push("El campo fecha de pago es requerido");
+    }
+    if (!this.pago.item) {
+      errores.push("El campo item es requerido");
+    }
+    if (!this.pago.valor) {
+      errores.push("El campo valor es requerido");
+    }
+    if (this.ntrans && !this.pago.numeroComprobante) {
+      errores.push("El campo Nro.comprobante es requerido");
+    }
+    if (this.ncomp && !this.pago.numeroTransaccion) {
+      errores.push("El campo Nro.transferencia es requerido");
+    }
+    if (!this.pago.numeroFactura) {
+      errores.push("El campo Nro. factura es requerido");
+    }
+
+    if (errores.length <= 0) {
+      this.loading = true;
+      this.pago.estado = 1;
+      this.pago.idUsuario = this.usuario.idUsuario;
+      this.pago.fechaRegistro = new Date();
+
+      this.dataApi.transCrearPago(this.pago).subscribe(res => {
+        if (res) {
+          this.loading = false;
+          this.messageService.add({ severity: 'success', detail: 'Se agrego el pago' });
+          this.closeModalPagos();
+        } else {
+          this.loading = false;
+          this.messageService.add({ severity: 'info', detail: 'No se pudo agregar el pago' });
+        }
+
+      }, (err) => {
+        this.messageService.add({ severity: 'error', detail: 'Error interno' });
         this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se agrego el pago' });
-        this.closeModalPagos();
-      } else {
-        this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo agregar el pago' });
+        console.log(err)
+      });
+
+    } else {
+      for (let i: number = 0; i < errores.length; i++) {
+        this.messageService.add({ severity: 'error', detail: errores[i] });
       }
-
-    });
-
+    }
   }
 
   changeFechaOficio() {
@@ -398,79 +476,122 @@ export class DocumentoOperadoraComponent implements OnInit {
   }
 
   editarDocumento() {
+
+
+    let errores: string[] = [];
+
+    if (!this.documentoOperadoraEdit.numeroSGC) {
+      errores.push("El campo Nro. SGC es requerido");
+    }
+    if (!this.documentoOperadoraEdit.numeroOficio) {
+      errores.push("El campo Nro. Oficio es requerido");
+    }
+
+    if (!this.documentoOperadoraEdit.fechaOficio) {
+      errores.push("El campo fecha oficio es requerido");
+    }
+    if (!this.documentoOperadoraEdit.fechaARCH) {
+      errores.push("El campo fecha ARCH es requerido");
+    }
+
+    if (!this.categoria) {
+      errores.push("El campo categorización es requerido");
+    }
+
+    if (!this.asunto) {
+      errores.push("El campo asunto es requerido");
+    }
+
+    if (!this.documentoOperadoraEdit.objetivo) {
+      errores.push("El campo objetivo es requerido");
+    }
+
     debugger
-    this.loading = true;
-    this.documentoOperadoraEdit.idUsuario = this.usuario.idUsuario;
-    this.documentoOperadoraEdit.fechaRegistro = new Date(this.documentoOperadoraEdit.fechaRegistro);
-    if (this.documentoOperadoraEdit.fechaOficio) {
-      this.documentoOperadoraEdit.fechaOficio = new Date(this.documentoOperadoraEdit.fechaOficio);
-    }
-    if (this.documentoOperadoraEdit.fechaARCH) {
-      this.documentoOperadoraEdit.fechaARCH = new Date(this.documentoOperadoraEdit.fechaARCH);
-    }
 
-
-    if (this.categoria) {
-      this.documentoOperadoraEdit.codigoCategoria = this.categoria.codigoCategoria;
-    }
-
-    if (this.asunto) {
-      this.documentoOperadoraEdit.codigoAsunto = this.asunto.codigoAsunto;
-    }
-
-
-    this.documentoOperadoraEdit.fileOficio = new Archivo;
-    this.documentoOperadoraEdit.fileAnexo1 = new Archivo;
-    this.documentoOperadoraEdit.fileAnexo2 = new Archivo;
-    this.documentoOperadoraEdit.fileAnexo3 = new Archivo;
-    this.documentoOperadoraEdit.fileAnexo4 = new Archivo;
-    this.documentoOperadoraEdit.filePago = new Archivo;
-
-    if (this.docNroOficio.base64) {
-      this.documentoOperadoraEdit.fileOficio.nombre = this.docNroOficio.nombre;
-      this.documentoOperadoraEdit.fileOficio.base64 = this.docNroOficio.base64.substring(28);
-    }
-
-    if (this.anexo1.base64) {
-      this.documentoOperadoraEdit.fileAnexo1.nombre = this.anexo1.nombre;
-      this.documentoOperadoraEdit.fileAnexo1.base64 = this.anexo1.base64.substring(28);
-    }
-
-    if (this.anexo2.base64) {
-      this.documentoOperadoraEdit.fileAnexo2.nombre = this.anexo2.nombre;
-      this.documentoOperadoraEdit.fileAnexo2.base64 = this.anexo2.base64.substring(28);
-    }
-
-    if (this.anexo3.base64) {
-      this.documentoOperadoraEdit.fileAnexo3.nombre = this.anexo3.nombre;
-      this.documentoOperadoraEdit.fileAnexo3.base64 = this.anexo3.base64.substring(28);
-    }
-
-    if (this.anexo4.base64) {
-      this.documentoOperadoraEdit.fileAnexo4.nombre = this.anexo4.nombre;
-      this.documentoOperadoraEdit.fileAnexo4.base64 = this.anexo4.base64.substring(28);
-    }
-
-    if (this.docPagos.base64) {
-      this.documentoOperadoraEdit.filePago.nombre = this.docPagos.nombre;
-      this.documentoOperadoraEdit.filePago.base64 = this.docPagos.base64.substring(28);
-    }
-
-    this.dataApi.transUpdateDocumentoOperadora(this.documentoOperadoraEdit).subscribe(data => {
-      if (data) {
-        this.getListDocumentoOperadora()
-        this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se actualizo el documento de operadora' });
-        this.asunto = null;
-        this.categoria = null;
-        this.closeModalDocumentoEdit();
-
-      } else {
-        this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo actualizo el documento de operadora' });
+    if (errores.length <= 0) {
+      this.loading = true;
+      this.documentoOperadoraEdit.idUsuario = this.usuario.idUsuario;
+      this.documentoOperadoraEdit.fechaRegistro = new Date(this.documentoOperadoraEdit.fechaRegistro);
+      if (this.documentoOperadoraEdit.fechaOficio) {
+        this.documentoOperadoraEdit.fechaOficio = new Date(this.documentoOperadoraEdit.fechaOficio);
+      }
+      if (this.documentoOperadoraEdit.fechaARCH) {
+        this.documentoOperadoraEdit.fechaARCH = new Date(this.documentoOperadoraEdit.fechaARCH);
       }
 
-    });
+
+      if (this.categoria) {
+        this.documentoOperadoraEdit.codigoCategoria = this.categoria.codigoCategoria;
+      }
+
+      if (this.asunto) {
+        this.documentoOperadoraEdit.codigoAsunto = this.asunto.codigoAsunto;
+      }
+
+
+      this.documentoOperadoraEdit.fileOficio = new Archivo;
+      this.documentoOperadoraEdit.fileAnexo1 = new Archivo;
+      this.documentoOperadoraEdit.fileAnexo2 = new Archivo;
+      this.documentoOperadoraEdit.fileAnexo3 = new Archivo;
+      this.documentoOperadoraEdit.fileAnexo4 = new Archivo;
+      this.documentoOperadoraEdit.filePago = new Archivo;
+
+      if (this.docNroOficio.base64) {
+        this.documentoOperadoraEdit.fileOficio.nombre = this.docNroOficio.nombre;
+        this.documentoOperadoraEdit.fileOficio.base64 = this.docNroOficio.base64.substring(28);
+      }
+
+      if (this.anexo1.base64) {
+        this.documentoOperadoraEdit.fileAnexo1.nombre = this.anexo1.nombre;
+        this.documentoOperadoraEdit.fileAnexo1.base64 = this.anexo1.base64.substring(28);
+      }
+
+      if (this.anexo2.base64) {
+        this.documentoOperadoraEdit.fileAnexo2.nombre = this.anexo2.nombre;
+        this.documentoOperadoraEdit.fileAnexo2.base64 = this.anexo2.base64.substring(28);
+      }
+
+      if (this.anexo3.base64) {
+        this.documentoOperadoraEdit.fileAnexo3.nombre = this.anexo3.nombre;
+        this.documentoOperadoraEdit.fileAnexo3.base64 = this.anexo3.base64.substring(28);
+      }
+
+      if (this.anexo4.base64) {
+        this.documentoOperadoraEdit.fileAnexo4.nombre = this.anexo4.nombre;
+        this.documentoOperadoraEdit.fileAnexo4.base64 = this.anexo4.base64.substring(28);
+      }
+
+      if (this.docPagos.base64) {
+        this.documentoOperadoraEdit.filePago.nombre = this.docPagos.nombre;
+        this.documentoOperadoraEdit.filePago.base64 = this.docPagos.base64.substring(28);
+      }
+
+      this.dataApi.transUpdateDocumentoOperadora(this.documentoOperadoraEdit).subscribe(data => {
+        if (data) {
+          this.getListDocumentoOperadora()
+          this.loading = false;
+          this.messageService.add({ severity: 'success', detail: 'Se actualizo el documento de operadora' });
+          this.asunto = null;
+          this.categoria = null;
+          this.closeModalDocumentoEdit();
+
+        } else {
+          this.loading = false;
+          this.messageService.add({ severity: 'info', detail: 'No se pudo actualizo el documento de operadora' });
+        }
+
+      });
+
+    } else {
+
+      for (let i: number = 0; i < errores.length; i++) {
+        this.messageService.add({ severity: 'error', detail: errores[i] });
+      }
+
+    }
+
+
+
   }
 
   anularDocumento() {
