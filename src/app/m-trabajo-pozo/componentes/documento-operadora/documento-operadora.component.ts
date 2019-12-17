@@ -14,6 +14,7 @@ import { VerificarFechasService } from 'src/app/m-trabajo-bitacora/servicios/ver
 import { Constantes } from 'src/app/resources/constantes';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 import { CreateUpdateService } from '../../servicios/create-update.service';
+import { Item } from 'src/app/entidades/item';
 
 
 @Component({
@@ -31,6 +32,9 @@ export class DocumentoOperadoraComponent implements OnInit {
 
   pago: Pago = new Pago;
   pagoList: Pago[] = [];
+
+  item: Item = new Item;
+  itemList: SelectItem[] = [];
 
 
   categoriaList: SelectItem[] = [];
@@ -122,6 +126,22 @@ export class DocumentoOperadoraComponent implements OnInit {
 
   }
 
+  getListItem() {
+    this.loading = true
+
+    this.busquedaService.getItemList().subscribe((data: Item[]) => {
+      let c: Item;
+      this.itemList = [{ label: "Seleccione", value: null, disabled: true }];
+      for (let i in data) {
+        c = data[i];
+        this.itemList.push({ label: c.cseAccion, value: c });
+      }
+      this.loading = false;
+
+    })
+
+  }
+
   openModalDocumeto(template: TemplateRef<any>) {
     this.documentoOperadora = new DocumentoOperadora;
     this.getAsuntoList();
@@ -137,6 +157,7 @@ export class DocumentoOperadoraComponent implements OnInit {
 
   openModalPagos(template: TemplateRef<any>, codigoDocumentoOperadora: number) {
     this.pago = new Pago;
+    this.getListItem()
     this.pago.codigoDocumentoOperadora = codigoDocumentoOperadora;
     this.pagoModalRef = this.modalService.show(template, { class: 'modal-md', backdrop: 'static', keyboard: false });
   }
@@ -355,6 +376,10 @@ export class DocumentoOperadoraComponent implements OnInit {
 
   }
 
+  cambiarValorPago() {
+    this.pago.valor = this.item.cseValor;
+  }
+
 
   guardarPago() {
 
@@ -363,7 +388,7 @@ export class DocumentoOperadoraComponent implements OnInit {
     if (!this.pago.fechaPago) {
       errores.push("El campo fecha de pago es requerido");
     }
-    if (!this.pago.item) {
+    if (!this.item.cseCodigo) {
       errores.push("El campo item es requerido");
     }
     if (!this.pago.valor) {
@@ -383,6 +408,7 @@ export class DocumentoOperadoraComponent implements OnInit {
       this.loading = true;
       this.pago.estado = 1;
       this.pago.idUsuario = this.usuario.idUsuario;
+      this.pago.item = this.item.cseCodigo;
       this.pago.fechaRegistro = new Date();
 
       this.dataApi.transCrearPago(this.pago).subscribe(res => {

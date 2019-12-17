@@ -153,5 +153,10 @@ export class BusquedaService {
     return this.http.post(url, param, httpOptions);
   }
 
+  getItemList() {
+    const url = this.prop.PATH + "/sitp/pago-service/item-list";
+    return this.http.get(url, httpOptions);
+  }
+
 
 }
