@@ -271,7 +271,7 @@
       <table class="table table-bordered table-sm">
         <thead>
           <tr>
-            <th>Cod. Conclusión</th>
+            <th>#</th>
             <th>Conclusion</th>
             <th>Recomendación</th>
             <th>Fecha Actualización</th>
@@ -282,8 +282,8 @@
         <tbody>
 
 
-          <tr *ngFor="let conclusionRecomendacion of conclusionList" style="font-size: 11px">    
-            <td>{{conclusionRecomendacion.codConclusion }} </td>
+          <tr *ngFor="let conclusionRecomendacion of conclusionList  | paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;" style="font-size: 11px">    
+            <td>{{i+1}} </td>
             <td>{{conclusionRecomendacion.conclusion}} </td>
             <td>{{conclusionRecomendacion.recomendacion }}  </td>
             <td>{{conclusionRecomendacion.fecha_actualizacion | date:'dd-MM-yyyy' }}  </td>

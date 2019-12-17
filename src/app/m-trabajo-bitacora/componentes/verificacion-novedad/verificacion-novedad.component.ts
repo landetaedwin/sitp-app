@@ -115,8 +115,10 @@ export class VerificacionNovedadComponent implements OnInit {
       (data: VerificacionNovedad[]) => {
         if (data) {
           this.novedadList = [];
+          this.verificacioNovedad.codVerfNov= this.portafolio.codigoPortafolio +"_"+data.length
           this.novedadList = data;
           this.verificacioNovedad.estado=1
+         
           console.log(this.verificacioNovedad.codVerfTrabajo)
         }
         this.loading = false;
@@ -129,11 +131,13 @@ export class VerificacionNovedadComponent implements OnInit {
     this.verificacioNovedad.idUsu= this.usuario.idUsuario;
     this.verificarNovedadService.transCrearVerificacionNovedad(this.verificacioNovedad).subscribe(data =>{
       if (data) {
-        this.verificacioNovedad.verfNovedad= this.portafolio.codigoPortafolio +"_"+ this.verificarNovedadService.transCrearVerificacionNovedad.length
-        console.log(this.verificacioNovedad.verfNovedad)
+        this.obtenerTodo();
+       // this.verificacioNovedad.codVerfNov= this.portafolio.codigoPortafolio +"_"+ this.buscarpoId().length
+        console.log(this.verificacioNovedad.codVerfNov)
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se creo el Informe de Verificación de Novedad' });
-        this.obtenerTodo();
+      //  this.obtenerTodo();
+      
       } else {
         this.loading = false;
         this.messageService.add({ severity: 'info', detail: 'No se pudo crear el informe de Verificación de Novedad' });
@@ -156,6 +160,7 @@ siguiente(portafolio: Portafolio) {
 
 seguimientoNovedad(verificacionNovedad: VerificacionNovedad) {
   console.log("click");
+  this.verificacioNovedad.codVerfNov= this.anularNovedad.codVerfNov
   this.verificacioNovedad.codVerfTrabajo= this.anularNovedad.codVerfTrabajo
   this.seguimientoNovedadesService.verificacioNovedad= verificacionNovedad
   this.seguimientoNovedadesService.portafolio=this.portafolio
@@ -181,6 +186,7 @@ cloneJSON(obj) {
 
   editNovedad() {
     this.loading = true;
+    this.editarNovedad.codVerfNov= this.verificacioNovedad.codVerfNov
     this.editarNovedad.codVerfTrabajo = this.verificacioNovedad.codVerfTrabajo;
     this.editarNovedad.estado = this.verificacioNovedad.estado;
     this.editarNovedad.valoracion = this.verificacioNovedad.valoracion;
@@ -192,7 +198,7 @@ cloneJSON(obj) {
 
     this.verificarNovedadService.transUpdateVerificacionNovedad(this.editarNovedad).subscribe(data=> {
 
-      if (data == "La tasa ha sido actualizada correctamente") {
+      if (data == "La Novedad ha sido actualizada correctamente") {
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: '' + data });
        // this.closeModalNovedadAnular();
@@ -208,6 +214,7 @@ cloneJSON(obj) {
   }
 
   AnularNovedad() {
+    this.verificacioNovedad.codVerfNov= this.anularNovedad.codVerfNov
     this.verificacioNovedad.codPortafolio= this.anularNovedad.codPortafolio
     this.verificacioNovedad.codVerfTrabajo= this.anularNovedad.codVerfTrabajo
     this.verificacioNovedad.fecha_actualizacion= new Date(this.anularNovedad.fecha_actualizacion)
@@ -238,8 +245,9 @@ cloneJSON(obj) {
 
   }
 
-
-
+volverMenu(){
+this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
+}
 
 }
 
