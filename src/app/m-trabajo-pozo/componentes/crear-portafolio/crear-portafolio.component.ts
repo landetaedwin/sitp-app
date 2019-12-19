@@ -13,6 +13,7 @@ import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { BusquedaService } from '../../servicios/buscar-portafolio.service';
 import { CreateUpdateService } from '../../servicios/create-update.service';
+import { HistorialPozo } from 'src/app/entidades/historialPozo';
 @Component({
   selector: "app-crear-portafolio",
   templateUrl: "./crear-portafolio.component.html",
@@ -233,6 +234,33 @@ export class CrearPortafolioComponent implements OnInit {
 
   goToBuscarPortafolio() {
     this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolio'] } }]);
+  }
+
+
+  historialPozoList: HistorialPozo[] = [];
+
+  cargarHistorialPozo(pozo: string, tipoTrabajo: number) {
+    debugger
+    this.loading = true;
+
+    if (!pozo) {
+      pozo = null;
+    }
+
+
+    this.busquedaService.getHistorialPozoListByFliter(pozo).subscribe(
+      (data: HistorialPozo[]) => {
+
+        if (data) {
+          this.historialPozoList = [];
+          this.historialPozoList = data;
+        }
+        this.loading = false;
+      }, err => {
+        console.log(err)
+        this.loading = false;
+      });
+
   }
 
 }

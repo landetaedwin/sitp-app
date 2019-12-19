@@ -129,6 +129,11 @@ export class BusquedaService {
     return this.http.get(url, httpOptions);
   }
 
+  getHistorialPozoListByFliter(codigoPozo: string) {
+    const url = this.prop.PATH + "/sitp/historial-pozo-service/historial-pozo-list-by-filter?codigoPozo=" + codigoPozo;
+    return this.http.get(url, httpOptions);
+  }
+
   getTasaList(param: BusquedaParametros) {
     const url = this.prop.PATH + "/sitp/tasa-service/tasa-list";
     return this.http.post(url, param, httpOptions);
@@ -151,6 +156,11 @@ export class BusquedaService {
   getVerificacionTasaList(param: BusquedaParametros) {
     const url = this.prop.PATH + this.prop.SYS + "/tasa-service/verificacion-tasa-list";
     return this.http.post(url, param, httpOptions);
+  }
+
+  getItemList() {
+    const url = this.prop.PATH + "/sitp/pago-service/item-list";
+    return this.http.get(url, httpOptions);
   }
 
 

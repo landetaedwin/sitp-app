@@ -85,6 +85,7 @@
         <thead>
           <tr class="text-center">
             <th>#</th>
+            <th>Portafolio</th>
             <th>Operadora</th>
             <th>Bloque</th>
             <th>Campo</th>
@@ -101,6 +102,7 @@
             *ngFor="let portafolio of portafolioList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
 
             <td>{{i+1}} </td>
+            <td>{{portafolio.codigoPortafolio}} </td>
             <td>{{portafolio.operadora.cexApellidoPaterno}} </td>
             <td>{{portafolio.bloque.bqlNombre}}</td>
             <td>{{portafolio.campo.camNombre}}</td>

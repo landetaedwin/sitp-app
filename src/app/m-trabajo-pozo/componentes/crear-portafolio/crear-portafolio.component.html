@@ -34,8 +34,8 @@
         </div>
         <div class="col-md-12">
           <label><b>Pozo:*</b></label>
-          <p-dropdown [options]="pozoList" [(ngModel)]="pozo" (onChange)="cargarOperadoraByPozCompaniaPetrolera(pozo);"
-            [filter]="true">
+          <p-dropdown [options]="pozoList" [(ngModel)]="pozo"
+            (onChange)="cargarOperadoraByPozCompaniaPetrolera(pozo);cargarHistorialPozo(pozo.pozCodigo)" [filter]="true">
           </p-dropdown>
         </div>
         <div class="col-md-12">
@@ -49,7 +49,8 @@
 
         <div class="col-md-12">
           <label for="campo"><b>Trabajo:*</b></label>
-          <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo"></p-dropdown>
+          <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo" (onChange)="cargarHistorialPozo(pozo.pozCodigo,tipoTrabajo.codigoTipoTrabajo)">
+          </p-dropdown>
         </div>
         <div class="col-md-12" *ngIf="tipoTrabajo.codigoTipoTrabajo == 3">
           <label for="campo"><b>Fecha trabajo sin torre:</b></label>
@@ -74,18 +75,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="text-center">
-                <td>WO1</td>
+              <tr class="text-center" *ngFor="let hp of historialPozoList; let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{hp.tipoTrabajo.tipoTrabajo}}</td>
               </tr>
-              <tr class="text-center">
-                <td>WO2</td>
-              </tr>
-              <tr class="text-center">
-                <td>WO3</td>
-              </tr>
-              <tr class="text-center">
-                <td>WO4</td>
-              </tr>
+
             </tbody>
           </table>
 

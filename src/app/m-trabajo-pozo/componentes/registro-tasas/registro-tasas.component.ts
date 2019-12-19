@@ -264,6 +264,14 @@ export class RegistroTasasComponent implements OnInit {
     this.tasa.blqCodigo = this.bloqueT.blqCodigo;
     this.tasa.fileOficio = new Archivo;
     this.tasa.fileResolucion = new Archivo;
+
+
+    this.tasa.pozo = this.pozoT;
+    this.tasa.bloque = this.bloqueT;
+    this.tasa.campo = this.campoT;
+
+
+
     if (this.docNroOficio.base64) {
       this.tasa.fileOficio.nombre = this.docNroOficio.nombre;
       this.tasa.fileOficio.base64 = this.docNroOficio.base64.substring(28);
@@ -276,7 +284,7 @@ export class RegistroTasasComponent implements OnInit {
     this.tasa.idUsuario = this.usuario.idUsuario;
     this.tasa.fechaRegistro = new Date();
     this.tasa.codigoYacimiento = this.yacimientoT.codigoYacimiento;
-    
+
 
     this.dataApi.transCrearTasa(this.tasa).subscribe(data => {
 
@@ -302,6 +310,10 @@ export class RegistroTasasComponent implements OnInit {
     this.tasaEdit.blqCodigo = this.bloqueT.blqCodigo;
     this.tasaEdit.fileOficio = new Archivo;
     this.tasaEdit.fileResolucion = new Archivo;
+
+    this.tasa.pozo = this.pozoT;
+    this.tasa.bloque = this.bloqueT;
+    this.tasa.campo = this.campoT;
 
     this.tasaEdit.fechaOficio = new Date(this.tasaEdit.fechaOficio)
     this.tasaEdit.fechaResolucion = new Date(this.tasaEdit.fechaResolucion)

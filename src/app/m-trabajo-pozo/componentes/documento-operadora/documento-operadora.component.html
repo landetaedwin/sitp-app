@@ -701,7 +701,7 @@
               <label><b>Item:*</b></label>
             </div>
             <div class="col-md-8">
-              <input pInputText [(ngModel)]="pago.item" />
+              <p-dropdown [options]="itemList" [(ngModel)]="item" [filter]="true" (onChange)="cambiarValorPago();"> </p-dropdown>
             </div>
           </div>
         </div>
@@ -714,7 +714,7 @@
               <label><b>Valor:*</b></label>
             </div>
             <div class="col-md-8">
-              <input pInputText [(ngModel)]="pago.valor" />
+              <input pInputText [(ngModel)]="pago.valor" disabled/>
             </div>
           </div>
         </div>

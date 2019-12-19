@@ -64,22 +64,29 @@ export class HistorialPozoComponent implements OnInit {
   }
 
   getHistorialPozoList() {
+    debugger
     this.busqueda.getHistorialPozoList().subscribe((data: HistorialPozo[]) => {
       this.historialPozoList = data;
 
-      let dataAux: HistorialPozo[] = [];
-      for (let i: number = 0; i < data.length; i++) {
+      if (!data) {
+        this.loading = false;
+        this.messageService.add({ severity: 'info', detail: 'No existen datos' });
+      } else {
+        let dataAux: HistorialPozo[] = [];
+        for (let i: number = 0; i < data.length; i++) {
 
-        if (!data[i].categoria) {
-          data[i].categoria = new Categoria;
-          data[i].categoria.codigoCategoria = null;
-          data[i].categoria.categoria = "N/A";
+          if (!data[i].categoria) {
+            data[i].categoria = new Categoria;
+            data[i].categoria.codigoCategoria = null;
+            data[i].categoria.categoria = "N/A";
+          }
+          dataAux.push(data[i]);
         }
-        dataAux.push(data[i]);
-      }
 
-      this.historialPozoList = dataAux;
-      this.loading = false;
+        this.historialPozoList = dataAux;
+        this.loading = false;
+
+      }
     }, err => {
       console.log(err)
       this.loading = false;
@@ -161,37 +168,86 @@ export class HistorialPozoComponent implements OnInit {
   }
 
   crearHistorialPozo() {
-    this.loading = true;
-    this.historialPozo.camCodigo = this.campo.camCodigo;
-    this.historialPozo.pozCodigo = this.pozo.pozCodigo;
-    this.historialPozo.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
 
-    if (this.historialPozo.fechaTST) {
-      this.historialPozo.fechaTST = new Date(this.historialPozo.fechaTST);
-    }
-    this.historialPozo.fechaInicio = new Date(this.historialPozo.fechaInicio);
-    this.historialPozo.fechaFin = new Date(this.historialPozo.fechaFin);
-    if (this.categoria) {
-      this.historialPozo.codigoCategoria = this.categoria.codigoCategoria;
+
+    let errores: string[] = [];
+
+    if (!this.campo) {
+      errores.push("El campo es requerido");
     }
 
-    this.historialPozo.idUsuario = this.usuario.idUsuario;
-    this.historialPozo.fechaRegistro = new Date();
-    this.historialPozo.estado = 1;
+    if (!this.pozo) {
+      errores.push("El pozo es requerido");
+    }
 
+    if (!this.tipoTrabajo.codigoTipoTrabajo) {
+      errores.push("El tipo de trabajo es requerido");
+    }
 
-    this.dataApi.transCrearHistorialPozo(this.historialPozo).subscribe(res => {
-      if (res == "El historial de pozo ha sido creado correctamente") {
-        this.loading = false;
-        this.messageService.add({ severity: 'success', detail: '' + res });
-        this.closeModalHistorialPozo();
+    
 
-      } else {
-        this.loading = false;
-        this.messageService.add({ severity: 'info', detail: '' + res });
+    if (!this.historialPozo.fechaInicio) {
+      errores.push("El campo fecha inicio es requerido");
+    }
 
+    if (!this.historialPozo.fechaInicio) {
+      errores.push("El campo fecha fin es requerido");
+    }
+
+    if (this.tipoTrabajo.codigoTipoTrabajo && this.tipoTrabajo.codigoTipoTrabajo == 3) {
+      if (!this.historialPozo.fechaTST) {
+        errores.push("Fecha de trabajo sin torre es requerido");
       }
-    });
+      if (!this.historialPozo.numero) {
+        errores.push("El campo numero es requerido");
+      }
+    }
+
+
+    if (errores.length <= 0) {
+      this.loading = true;
+      this.historialPozo.camCodigo = this.campo.camCodigo;
+      this.historialPozo.pozCodigo = this.pozo.pozCodigo;
+      this.historialPozo.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
+
+      if (this.historialPozo.fechaTST) {
+        this.historialPozo.fechaTST = new Date(this.historialPozo.fechaTST);
+      }
+      this.historialPozo.fechaInicio = new Date(this.historialPozo.fechaInicio);
+      this.historialPozo.fechaFin = new Date(this.historialPozo.fechaFin);
+      if (this.categoria) {
+        this.historialPozo.codigoCategoria = this.categoria.codigoCategoria;
+      }
+
+      this.historialPozo.idUsuario = this.usuario.idUsuario;
+      this.historialPozo.fechaRegistro = new Date();
+      this.historialPozo.estado = 1;
+
+
+      this.dataApi.transCrearHistorialPozo(this.historialPozo).subscribe(res => {
+        if (res == "El historial de pozo ha sido creado correctamente") {
+          this.loading = false;
+          this.messageService.add({ severity: 'success', detail: '' + res });
+          this.closeModalHistorialPozo();
+
+        } else {
+          this.loading = false;
+          this.messageService.add({ severity: 'info', detail: '' + res });
+
+        }
+      });
+
+    } else {
+
+      for (let i: number = 0; i < errores.length; i++) {
+        this.messageService.add({ severity: 'error', detail: errores[i] });
+      }
+
+    }
+
+
+
+
 
 
   }

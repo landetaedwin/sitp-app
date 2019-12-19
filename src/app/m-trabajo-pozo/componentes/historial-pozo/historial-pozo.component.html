@@ -4,6 +4,11 @@
       <button type="button" class="btn btn-sm btn-primary btn-block"
         (click)="openModalHistorialPozo(historialPozoTemplate)">Agregar</button>
     </div>
+
+    <div class="col-md-2">
+      <button type="button" class="btn btn-sm btn-primary btn-block" (click)="getHistorialPozoList()">Mostar
+        historial</button>
+    </div>
   </div>
 </p-fieldset>
 <hr>
@@ -20,7 +25,6 @@
             <th>Fecha TST</th>
             <th>Fecha Fin</th>
             <th>Categorización</th>
-
           </tr>
         </thead>
         <tbody>
