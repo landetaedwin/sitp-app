@@ -11,6 +11,7 @@ import { VerificarFechasService } from 'src/app/m-trabajo-bitacora/servicios/ver
 import { VerificarNovedadService } from 'src/app/m-trabajo-bitacora/servicios/verificarNovedad.service';
 import { Router, RouterLink } from '@angular/router';
 import { Produccion } from 'src/app/entidades/produccion';
+import { Inyector } from 'src/app/entidades/inyector';
 
 
 @Component({
@@ -22,10 +23,11 @@ export class VerificacionInyectorComponent implements OnInit {
   today = new Date();
   verificacionProduccion = new VerificacionProduccion();
   produccion = new Produccion();
+  inyector = new Inyector();
   portafolio: Portafolio;
   produccionList: VerificacionProduccion[]=[];
-  datosAntes: Produccion[]=[];
-  datosDespues:Produccion[]=[];
+  datosAntes: Inyector[]=[];
+  datosDespues: Inyector[]=[];
   registrosList:SelectItem[]=[];
   estadolist: SelectItem[]=[];
   justificadoList: SelectItem[]=[];
@@ -35,11 +37,18 @@ export class VerificacionInyectorComponent implements OnInit {
   pDespues: number;
   sumaPorcentaje:number;
   buttonDisabled: boolean = true;
+  verificacionProduccionListar: VerificacionProduccion[]=[];
+  buttonDespues: boolean = true;
 
 
   constructor( http:HttpClient,public VerificarNovedadService: VerificarNovedadService, public verificarFechasService: VerificarFechasService, public verificarProduccionService: VerificarProduccionService, private messageService: MessageService, public loginService: LoginService, public router: Router) { 
-
-  this.portafolio = this.verificarProduccionService.portafolio;
+      
+    this.verificacionProduccion.estado=1
+    this.verificacionProduccion.numRegistros=3
+    this.verificacionProduccion.justificado=2
+    this.verificacionProduccion.formDisabled=0
+    this.portafolio = this.verificarProduccionService.portafolio;
+    this.verificacionProduccion.porcentajeControlEstatico=10
 
   this.justificadoList= [
     { label: "Seleccione...", value: null, disabled: false },
@@ -56,12 +65,14 @@ export class VerificacionInyectorComponent implements OnInit {
                    ];
 
   this.registrosList= [
-                    { label: "Seleccione...", value: 0, disabled: false },
                     { label: "3", value: 3, disabled: false },
                     { label: "4", value: 4, disabled: false },
                     { label: "5", value: 5, disabled: false },
                     { label: "6", value: 6, disabled: false },
-                    { label: "7", value: 7, disabled: false }
+                    { label: "7", value: 7, disabled: false },
+                    { label: "8", value: 8, disabled: false },
+                    { label: "9", value: 9, disabled: false },
+                    { label: "10", value:10, disabled: false }
                    ];
 
 }
@@ -79,23 +90,83 @@ export class VerificacionInyectorComponent implements OnInit {
     if (!this.usuario) {
       this.router.navigate(['/login'])
     }
+
+    
+
+
+
     this.verificacionProduccion.codPortafolio=this.portafolio.codigoPortafolio ;
     this.verificacionProduccion.tipopozo= this.portafolio.tipoPozo
     this.produccionList = [];
+  this.listarDatos();
 
-  this.obtenerTodo();
   this.verificacionProduccion.porcentajeControlEstatico=10;
-  
-
   }
 
-  cargarDatos(){
+  
+  cloneJSON(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  }
+
+  listarDatos(){
+    this.verificarProduccionService.buscarporIdInyector(this.portafolio.codigoPortafolio).subscribe(
+      (data: VerificacionProduccion[]) => { 
+     console.log(data)
+        if (data.length==0) {
+          this.almacenamientoAutomatico()
+        }
+        this.verificacionProduccion.formDisabled=0;
+        this.verificacionProduccionListar = [];
+        this.verificacionProduccionListar = data;
+        this.obtenerTodo();
+
+      });
+  }
+
     
-    this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
-    this.verificarProduccionService.Buscar3Antes(this.portafolio.fechaInicio, this.verificacionProduccion.numRegistros, this.portafolio.pozo.pozNombre).subscribe(
+  almacenamientoAutomatico(){
+    console.log("deberia mostrar los datos")
+    this.verificacionProduccion.idUsu= this.usuario.idUsuario;
+    this.verificacionProduccion.descripcionValoracion= null
+    this.verificacionProduccion.estado= 5
+    //this.verificarProduccionService.BuscarInfoAntes= null
+    this.verificacionProduccion.fecha_actualizacion= this.today
+    this.verificacionProduccion.justificado= null
+   // this.verificacionProduccion.numRegistros= null
+    this.verificacionProduccion.observacion= null
+    this.verificacionProduccion.porcentajeControl= null
+    this.verificacionProduccion.porcentajeControlEstatico= null
+    this.verificacionProduccion.valor_antes= null
+    this.verificacionProduccion.valor_despues= null
+    this.verificacionProduccion.valoracion= null
+  
+    this.verificarProduccionService.transCrearVerificarInyector(this.verificacionProduccion).subscribe(data =>{
+      if (data) {
+     //   this.fechasList = data;   
+        this.verificacionProduccion.fecha_actualizacion = this.today
+        this.loading = false;
+ 
+      } else {
+        this.loading = false;
+      }
+      this.listarDatos();
+     // this.listarDatos(); 
+      console.log(this.verificacionProduccion)
       
-     
-      (data: Produccion[]) => {   
+    });
+
+}
+
+
+  cargarDatos(eProduccion: VerificacionProduccion){
+
+    this.buttonDespues= false;
+    this.verificarProduccionService.verificarProduccion  = this.cloneJSON(eProduccion);
+    this.verificarProduccionService.verificarProduccion = eProduccion;
+    this.portafolio.fechaInicio = new Date(this.today);
+ 
+    this.verificarProduccionService.BuscarInfoInyectorAntes(this.portafolio.fechaInicio, this.verificacionProduccion.numRegistros,  this.portafolio.pozo.pozCodigo, this.verificarProduccionService.verificarProduccion .codVerificacion).subscribe(
+      (data: Inyector[]) => {   
       if (data) {
         this.datosAntes= data
         this.produccion.promedio_antes =0;
@@ -106,9 +177,9 @@ export class VerificacionInyectorComponent implements OnInit {
 
     //SUMA LOS DATOS
      for (let i:number=0 ; i < data.length; i++) {
-        this.produccion.promedio_antes += data[i].bppd;// 0,1,2
+        this.produccion.promedio_antes += data[i].Baipd;// 0,1,2
         //ON=BTIENE EL ULTIMO VALOR
-        this.produccion.ultimo_antes= data[i].bppd;
+        this.produccion.ultimo_antes= data[i].Baipd;
     }
 
     //CALCULA PROMEDIO
@@ -128,64 +199,124 @@ export class VerificacionInyectorComponent implements OnInit {
       }   
         this.loading = false;
       });
-     
+     this.cargarDatosDespues(eProduccion);
   }
 
-
-
-
-  guardar(){
-    this.verificacionProduccion.idUsu= this.usuario.idUsuario;
-    this.verificarProduccionService.transCrearVerificarInyector(this.verificacionProduccion).subscribe(data =>{
-      if (data) {
-     //   this.fechasList = data; 
-    
-     this.verificacionProduccion.fecha_actualizacion = this.today
-   
-        this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se creo el Informe de Verificación de Novedad' });
-        this.obtenerTodo();
-
-      } else {
-        this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo crear el informe de Verificación de Novedad' });
-  
-      }
-
-      console.log(this.verificacionProduccion)
-    });
-}
-
-
-
-
 obtenerTodo() {
-  this.verificarProduccionService.buscarporIdInyector(this.portafolio.codigoPortafolio).subscribe(
+
+  this.verificarProduccionService.obtenerporIdInyector(this.portafolio.codigoPortafolio).subscribe(
     (data: VerificacionProduccion[]) => {
       if (data) {
         this.produccionList = [];
         this.produccionList = data;
         this.verificacionProduccion.observacion = null;
+     //   this.verificarProduccionService.verificarProduccion=data[1].codVerificacion;
       }
       this.loading = false;
 
-      
       if (data.length!==0) {
+
         this.messageService.add({ severity: 'warn', detail: 'Ya existe un informe asignado en este pozo' });
         this.verificacionProduccion.formDisabled = 1;
-      }
+        this.verificacionProduccion.codVerificacion= data[0].codVerificacion
+        this.verificacionProduccion.fecha_actualizacion= data[0].fecha_actualizacion
+        this.verificacionProduccion.justificado= data[0].justificado
+        this.verificacionProduccion.numRegistros= data[0].numRegistros
+        this.verificacionProduccion.valor_antes= data[0].valor_antes
+        this.verificacionProduccion.valor_despues= data[0].valor_despues
+        this.verificacionProduccion.valoracion= data[0].valoracion
+        this.portafolio.fechaFin = new Date(this.portafolio.fechaFin);
 
-    });
+     
+        
+      
+        this.verificarProduccionService.BuscarInfoInyectorDespues( this.portafolio.fechaFin, this.verificacionProduccion.numRegistros, this.portafolio.pozo.pozCodigo, this.verificacionProduccion.codVerificacion).subscribe(
+          (dataP: Inyector[]) => {   
+      
+          if (dataP) {
+            console.log(dataP);
+            this.datosDespues= dataP
+            this.produccion.promedio_despues =0;
+           
+            // ENVIO DE DATOS POR CONSOLA
+          // console.log(this.portafolio.fechaInicio);
+         // console.log(this.datosAntes);
+    
+      //SUMA LOS DATOS
+       for (let i:number=0 ; i < dataP.length; i++) {
+          this.produccion.promedio_despues += dataP[i].Baipd;// 0,1,2
+          //ON=BTIENE EL ULTIMO VALOR
+          this.produccion.ultimo_despues= dataP[i].Baipd;
+      }
+    
+      //CALCULA PROMEDIO
+      try{
+        this.produccion.promedio_despues= (this.produccion.promedio_despues/dataP.length)
+        this.produccion.PromedioDespuesMostrar= this.produccion.promedio_despues.toFixed(2)
+        }
+        catch (e){
+          this.produccion.promedio_antes= (0)
+        }
+                   
+    
+    }
+            this.loading = false;
+          });
+
+          this.verificarProduccionService.BuscarInfoInyectorAntes(this.portafolio.fechaInicio, this.verificacionProduccion.numRegistros,  this.portafolio.pozo.pozCodigo, this.verificacionProduccion.codVerificacion ).subscribe(
+            (dataAntes: Inyector[]) => {   
+            if (dataAntes) {
+              this.datosAntes= dataAntes
+              this.produccion.promedio_antes =0;
+          //SUMA LOS DATOS
+           for (let i:number=0 ; i < dataAntes.length; i++) {
+              this.produccion.promedio_antes += dataAntes[i].Baipd;// 0,1,2
+              //ON=BTIENE EL ULTIMO VALOR
+              this.produccion.ultimo_antes= dataAntes[i].Baipd;
+          }
+      
+          //CALCULA PROMEDIO
+          try{
+          this.produccion.promedio_antes= (this.produccion.promedio_antes/dataAntes.length)
+          this.produccion.PromedioAntesMostrar= this.produccion.promedio_antes.toFixed(2)
+          console.log(dataAntes.length)
+          console.log(this.produccion.promedio_antes);
+          this.verificacionProduccion.valor_antes= this.produccion.promedio_antes
+       
+          }
+          catch (e){
+            this.produccion.promedio_antes= (0)
+          }
+          
+      
+          // console.log(  this.produccion.promedio_antes);
+            }   
+              this.loading = false;
+            });
+
+        }
+       // this.verificacionProduccion.formDisabled = 1;          
+      });
 
     
 }
 
-cargarDatosDespues(){
+
+
+
+
+
+cargarDatosDespues(eProduccion: VerificacionProduccion){
 
   this.portafolio.fechaFin = new Date(this.portafolio.fechaFin);
+  this.verificacionProduccion.formDisabled = 0;
+  this.verificarProduccionService.verificarProduccion  = this.cloneJSON(eProduccion);
+  this.verificarProduccionService.verificarProduccion = eProduccion;
+ 
+  console.log(this.verificacionProduccion)
+  this.verificarProduccionService.BuscarInfoInyectorDespues(this.portafolio.fechaFin, this.verificacionProduccion.numRegistros, this.portafolio.pozo.pozCodigo, this.verificarProduccionService.verificarProduccion.codVerificacion).subscribe(
+    (data: Inyector[]) => {   
 
-  this.verificarProduccionService.BuscarDespues(this.portafolio.fechaFin, this.verificacionProduccion.numRegistros, this.portafolio.pozo.pozNombre).subscribe(
-    (data: Produccion[]) => {   
     if (data) {
       this.datosDespues= data
       this.produccion.promedio_despues =0;
@@ -196,9 +327,9 @@ cargarDatosDespues(){
 
 //SUMA LOS DATOS
  for (let i:number=0 ; i < data.length; i++) {
-    this.produccion.promedio_despues += data[i].bppd;// 0,1,2
+    this.produccion.promedio_despues += data[i].  Baipd;// 0,1,2
     //ON=BTIENE EL ULTIMO VALOR
-    this.produccion.ultimo_despues= data[i].bppd;
+    this.produccion.ultimo_despues= data[i].Baipd;
 }
 
 
@@ -235,28 +366,55 @@ this.verificacionProduccion.valor_despues= this.produccion.promedio_despues
     this.verificacionProduccion.valoracion=1
     this.verificacionProduccion.descripcionValoracion="Medianamente Exitoso";
   }
+ 
 
-
-} else{
+    } else{
       this.verificacionProduccion.valoracion=2
       this.verificacionProduccion.descripcionValoracion="No Exitoso";
       this.verificacionProduccion.formDisabled=0
     }  
-    this.buttonDisabled = false;
+    
     
 
 }
       this.loading = false;
     });
-
-  
 }
 
-editarProduccion(verificacionProduccion: VerificacionProduccion, produccion: Produccion) {
-  console.log("click");
-  this.verificarProduccionService.verificarProduccion = verificacionProduccion;
-  this.verificarProduccionService.produccion = produccion;
-  this.router.navigate(['/menu', { outlets: { sitp: ['EditarVerificacionInyectorComponent'] } }]);
+
+debloquearActualizacion(){
+  this.verificacionProduccion.formDisabled=0
+  this.verificacionProduccion.fecha_actualizacion = new Date();
+  this.verificarProduccionService.verificarProduccion=this.verificacionProduccion
+}
+
+editarProduccion(eProduccion) {
+  //this.verificarProduccionService.verificarProduccion  = this.cloneJSON(eProduccion);
+  //this.verificarProduccionService.verificarProduccion = eProduccion;
+  console.log(this.verificarProduccionService.verificarProduccion );
+
+  this.verificacionProduccion.formDisabled=1
+  this.verificacionProduccion.estado=1;
+  this.verificacionProduccion.idUsu= this.usuario.idUsuario;
+  this.verificacionProduccion.codVerificacion= this.verificarProduccionService.verificarProduccion.codVerificacion
+    console.log(this.verificacionProduccion);
+    
+    this.verificarProduccionService.transUpdateVerificacionInyector(this.verificacionProduccion).subscribe(data =>{
+      if (data) {
+     this.verificacionProduccion.fecha_actualizacion = this.today
+        this.loading = false;
+        this.messageService.add({ severity: 'success', detail: 'Se actualizó el Informe de Verificación de Novedad' });
+        this.obtenerTodo();
+
+      } else {
+        this.loading = false;
+        this.messageService.add({ severity: 'info', detail: 'No se pudo actualizar el informe de Verificación de Novedad' });
+  
+      }
+
+      console.log(this.verificacionProduccion.codVerificacion)
+    });
+  
 }
 
 volver(portafolio: Portafolio) {

@@ -10,6 +10,7 @@ import { VerificarFechasService } from 'src/app/m-trabajo-bitacora/servicios/ver
 import { VerificarNovedadService } from 'src/app/m-trabajo-bitacora/servicios/verificarNovedad.service';
 import { Router, RouterLink } from '@angular/router';
 import { Produccion } from 'src/app/entidades/produccion';
+import { Inyector } from 'src/app/entidades/inyector';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
@@ -33,6 +34,7 @@ export class VerificacionProduccionComponent implements OnInit {
   usuario: Usuario;
   pAntes: number=0;
   pDespues: number;
+  
   sumaPorcentaje:number;
 
   buttonDespues: boolean = true;
@@ -64,9 +66,9 @@ export class VerificacionProduccionComponent implements OnInit {
                       { label: "5", value: 5, disabled: false },
                       { label: "6", value: 6, disabled: false },
                       { label: "7", value: 7, disabled: false },
-                      { label: "8", value: 7, disabled: false },
-                      { label: "9", value: 7, disabled: false },
-                      { label: "10", value: 7, disabled: false }
+                      { label: "8", value: 8, disabled: false },
+                      { label: "9", value: 9, disabled: false },
+                      { label: "10", value: 10, disabled: false }
                      ];
 
   }
@@ -97,6 +99,8 @@ export class VerificacionProduccionComponent implements OnInit {
 
   this.produccionList = [];
 
+  this.verificacionProduccion.porcentajeControlEstatico=10;
+  this.verificacionProduccion.formDisabled=0;
   this.listarDatos();
   }
 
@@ -113,7 +117,8 @@ export class VerificacionProduccionComponent implements OnInit {
     this.verificarProduccionService.verificarProduccion  = this.cloneJSON(eProduccion);
     this.verificarProduccionService.verificarProduccion = eProduccion;
     this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
-    console.log(this.verificacionProduccion)
+ 
+
     this.verificarProduccionService.BuscarInfoAntes(this.portafolio.fechaInicio, this.verificacionProduccion.numRegistros,  this.portafolio.pozo.pozCodigo, this.verificarProduccionService.verificarProduccion .codVerificacion).subscribe(
       (data: Produccion[]) => {   
       if (data) {
@@ -128,7 +133,8 @@ export class VerificacionProduccionComponent implements OnInit {
      for (let i:number=0 ; i < data.length; i++) {
         this.produccion.promedio_antes += data[i].bppd;// 0,1,2
         //ON=BTIENE EL ULTIMO VALOR
-        this.produccion.ultimo_antes= data[i].bppd;
+        this.produccion.ultimo_antes= data[i].bppd
+        ;
     }
 
     //CALCULA PROMEDIO
@@ -155,7 +161,8 @@ export class VerificacionProduccionComponent implements OnInit {
 
   
     almacenamientoAutomatico(){
-    this.verificacionProduccion.idUsu= this.usuario.idUsuario;
+    console.log("deberia agregar nuevo dato")
+      this.verificacionProduccion.idUsu= this.usuario.idUsuario;
     this.verificacionProduccion.descripcionValoracion= null
     this.verificacionProduccion.estado= 5
     //this.verificarProduccionService.BuscarInfoAntes= null
@@ -191,9 +198,11 @@ export class VerificacionProduccionComponent implements OnInit {
   listarDatos(){
     this.verificarProduccionService.buscarporId(this.portafolio.codigoPortafolio).subscribe(
       (data: VerificacionProduccion[]) => { 
-     
+    
         if (data.length==0) {
+          this.verificacionProduccion.formDisabled=0
           this.almacenamientoAutomatico()
+          console.log(this.verificacionProduccion.formDisabled)
         }
  
         this.verificacionProduccionListar = [];
@@ -379,26 +388,25 @@ export class VerificacionProduccionComponent implements OnInit {
   }
 
   editarProduccion(eProduccion) {
-    this.verificarProduccionService.verificarProduccion  = this.cloneJSON(eProduccion);
-    this.verificarProduccionService.verificarProduccion = eProduccion;
-    console.log(this.verificarProduccionService.verificarProduccion
-      );
+   // this.verificarProduccionService.verificarProduccion  = this.cloneJSON(eProduccion);
+  ///this.verificarProduccionService.verificarProduccion = eProduccion;
+    console.log(this.verificarProduccionService.verificarProduccion );
   this.verificacionProduccion.formDisabled=1
   this.verificacionProduccion.estado=1;
   this.verificacionProduccion.idUsu= this.usuario.idUsuario;
-  this.verificacionProduccion.codVerificacion= this.verificarProduccionService.verificarProduccion.codVerificacion
+  this.verificacionProduccion.codVerificacion= this.verificarProduccionService.verificarProduccion .codVerificacion
+  this.verificacionProduccion.fecha_actualizacion = this.today
     console.log(this.verificacionProduccion);
-    
     this.verificarProduccionService.transUpdateVerificacionProduccion(this.verificacionProduccion).subscribe(data =>{
       if (data) {
-     this.verificacionProduccion.fecha_actualizacion = this.today
+    
         this.loading = false;
-        this.messageService.add({ severity: 'success', detail: 'Se creo el Informe de Verificación de Novedad' });
+        this.messageService.add({ severity: 'success', detail: 'Se actualizó el Informe de Verificación de Novedad' });
         this.obtenerTodo();
 
       } else {
         this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No se pudo crear el informe de Verificación de Novedad' });
+        this.messageService.add({ severity: 'info', detail: 'No se pudo actualizar el informe de Verificación de Novedad' });
   
       }
 

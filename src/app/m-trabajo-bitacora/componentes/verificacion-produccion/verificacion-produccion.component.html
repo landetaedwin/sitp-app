@@ -151,28 +151,30 @@
     
         <thead>
         <tr>
-            <th>Fecha</th>
-            <th>Yacimiento</th>
-            <th>BPPD</th>
-            <th>BFPD</th>
-            <th>BSW%</th>
-            <th>*API</th>
-            <th>Equipo</th>
-            <th>SALINIDAD PPM</th>
+          <th>Fecha</th>
+          <th>Yacimiento</th>
+          <th>BPPD</th>
+          <th>BFPD</th>
+          <th>BSW%</th>
+          <th>Salinidad(PPM)</th>
+          <th>Equipo</th>
+          <th>Rango-MIN-MAX</th>
+    
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let produccion of datosAntes" style="font-size: 11px">
 
          
-        <td>{{produccion.fecha_registro  | date:'dd/MM/yyyy' }} </td>
-        <td>{{produccion.yacimiento}} </td>
-        <td>{{produccion.bppd}} </td>
-        <td>{{produccion.bfpd}} </td>
-        <td>{{produccion.bsw}} </td>
-        <td>{{produccion.api}} </td>
-        <td>{{produccion.equipo}} </td>
-        <td>{{produccion.salinidad_ppm}} </td>
+          <td>{{produccion.fecha_registro }} </td>
+          <td>{{produccion.yacimiento}} </td>
+          <td>{{produccion.bppd}} </td>
+          <td>{{produccion.bfpd}} </td>
+          <td>{{produccion.bsw}} </td>
+          <td>{{produccion.salinidad_ppm}} </td>
+          <td>{{produccion.equipo}} </td>
+          <td>{{produccion.minMax}} </td>
+  
 
         </tr>
       <tr>
@@ -214,22 +216,23 @@
           <th>BPPD</th>
           <th>BFPD</th>
           <th>BSW%</th>
-          <th>*API</th>
+          <th>Salinidad(PPM)</th>
           <th>Equipo</th>
-          <th>SALINIDAD PPM</th>
+          <th>Rango-MIN-MAX</th>
+         
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let produccion of datosDespues" style="font-size: 11px">
 
-        <td>{{produccion.fecha_registro  | date:'dd/MM/yyyy' }} </td>
+        <td>{{produccion.fecha_registro }} </td>
         <td>{{produccion.yacimiento}} </td>
         <td>{{produccion.bppd}} </td>
         <td>{{produccion.bfpd}} </td>
         <td>{{produccion.bsw}} </td>
-        <td>{{produccion.api}} </td>
-        <td>{{produccion.equipo}} </td>
         <td>{{produccion.salinidad_ppm}} </td>
+        <td>{{produccion.equipo}} </td>
+        <td>{{produccion.minMax}} </td>
       </tr>
 
       <tr>

@@ -1,7 +1,7 @@
 export class Constantes {
 
-    PATH = 'http://172.16.20.48:8080';
-   // PATH = 'http://localhost:8080';
+   // PATH = 'http://172.16.20.48:8080';
+   PATH = 'http://localhost:8080';
     SYS = '/sitp'
     MODULOCP = '/crearPortafolio'
 
@@ -38,9 +38,7 @@ export class Constantes {
     cancelar = 'Cancelar'
 
     adjuntarDocumento = "Adjuntar Documento"
-
-
-
+    
     codigoPerfilAdministrador = "21";
     codigoPerfilMatriz = "16";
     codigoPerfilRegional = "17";
