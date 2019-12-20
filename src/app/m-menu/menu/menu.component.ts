@@ -176,7 +176,7 @@ export class MenuComponent implements OnInit {
         items: [
           { label: 'Crear portafolio', routerLink: [{ outlets: { sitp: ['crearPortafolio'] } }], visible: this.i1 },
           { label: 'Buscar portafolio', routerLink: [{ outlets: { sitp: ['buscarPortafolio'] } }], visible: this.i0 },
-          { label: 'Informes de Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioBitacora'] } }], visible: this.i0 },
+         
           { label: 'Historial de pozo', routerLink: [{ outlets: { sitp: ['historialPozo'] } }], visible: this.i0 },
         ]
       },
@@ -206,9 +206,7 @@ export class MenuComponent implements OnInit {
         label: 'Bitacora',
         visible: this.m6,
         items: [
-          { label: 'Registro de novedad', command: () => this.imprimirMensaje(), visible: this.i21 },
-          { label: 'Seguimiento de la novedad', command: () => this.imprimirMensaje(), visible: this.i22 },
-          { label: 'Informe Trabajo de Operadora', command: () => this.imprimirMensaje(), visible: this.i23 },
+          { label: 'Informes de Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioBitacora'] } }], visible: this.i0 }
         ]
       },
       {

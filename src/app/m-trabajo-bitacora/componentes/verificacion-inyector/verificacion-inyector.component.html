@@ -106,39 +106,33 @@
 <p-fieldset legend="Tipo Pozo Inyector" [style]="{width: '90%'}">
  
 
-  <div   *ngIf="verificacionProduccion.formDisabled ==0">
+  <div   *ngIf="verificacionProduccion.formDisabled ==0 && buttonDisabled==0">
     <div class="row"  *ngFor="let produccion of verificacionProduccionListar">
 
   
 
-      <div class="col-md-4">
-   
-        
-        <button pButton type="button"  label="Cargar ANTES de inicio de trabajo" class="btn-block ui-button-success" (click)="cargarDatos(produccion)"></button> 
+      <div class="col-md-6"> 
+        <br>
+        <button pButton type="button"  label="Obtener Datos" class="btn-block ui-button-success" (click)="cargarDatos(produccion)"></button> 
       </div>
       
 
 
-      <div class="col-md-4">
-        <div class="col-md-3">
+      <div class="col-md-6">
+        <div class="col-md">
             <label for="verificacion Fechas"><b># Registros:</b></label>
          </div>
-         <div class="col-md-1">
+         <div class="col-md">
           <p-dropdown [options]="registrosList"  [(ngModel)]="verificacionProduccion.numRegistros"readonly></p-dropdown>
         </div>
         
     </div>
 
 
-      <div class="col-md-4">
-          
-        <button pButton type="button" label="Calcular " class="ui-button-warning btn-block"  [disabled]="buttonDespues" (click)="cargarDatosDespues(produccion)" ></button>
-      </div>
-    
-    </div>
+     
     
   </div>
-
+</div>
 
 <br>
 <br>
@@ -384,7 +378,7 @@
             <th>Observacion</th>
             <th>Estado</th>
             <th>Fecha Actualización</th>
-            <th>Editar</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -400,7 +394,12 @@
             <td>{{verificacionProduccion.estado| estadoBitacora}} </td>
             <td>{{verificacionProduccion.fecha_actualizacion | date:'dd/MM/yyyy'}} </td>
             <td class="text-center">
-              <i class="fa fa-pencil-square-o fa-2x" (click)="debloquearActualizacion(verificacionProduccion)"></i>            
+              <i class="fa fa-pencil-square-o fa-2x" (click)="debloquearActualizacion(verificacionProduccion)"></i> 
+              <i *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+              (click)="openModalInformeAnular(InformeTempalteAnular, verificacionProduccion)">
+              <i class="fa fa-times fa-2x"></i>
+            </i> 
+                        
           </td>
           </tr>
 
@@ -409,6 +408,34 @@
     </div>
   </div>
 </p-fieldset>
+
+<ng-template #InformeTempalteAnular>
+  <div class="container mt-3 mb-3">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h4>Anular Reinyector</h4>
+      </div>
+    </div>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-12">
+        <p>¿Desea anular este registro?</p>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-primary btn-block" (click)="AnularInforme()">SI</button>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="closeModalInformeAnular()">NO</button>
+      </div>
+    </div>
+  </div>
+
+
+</ng-template>
 
 <div class="row">
     <div class="col-md-12 row justify-content-center">

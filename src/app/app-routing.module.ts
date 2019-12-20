@@ -68,7 +68,6 @@ const routes: Routes = [
       { path: 'EditarVerificacionReinyectorComponent', component: EditarVerificacionReinyectorComponent, outlet: 'sitp' },
       { path: 'conclusiones', component: ConclusionesRecomendacionesComponent, outlet: 'sitp' },
       { path: 'verificarTasa', component: VerificacionTasaComponent, outlet: 'sitp' },
-
       { path: 'verificarTrabajo', component: VerificacionTrabajoComponent, outlet: 'sitp' },
       { path: 'historialPozo', component: HistorialPozoComponent, outlet: 'sitp' },
       { path: 'registroTasas', component: RegistroTasasComponent, outlet: 'sitp' },

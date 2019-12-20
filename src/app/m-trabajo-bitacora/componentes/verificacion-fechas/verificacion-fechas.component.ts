@@ -86,7 +86,10 @@ this.novedadList= [
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
     }
 
-      
+    if(!this.portafolio.fechaFin || !this.portafolio.fechaInicio){
+      this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
+      this.messageService.add({ severity: 'warn', detail: 'No se ha establecido una fecha de inicio o fin de actividades' });
+    }
  
     this.obtenerFechaArch();
     this.obtenerTodo();
@@ -98,7 +101,7 @@ this.novedadList= [
     this.verificarFechas.fecha_fin_trabajo= this.portafolio.fechaFin;
     this.sumafecha =new Date(this.verificarFechas.fecha_fin_trabajo);
     	
-    let dieciseisDias = 1000 * 60 * 60 * 24 * 30;
+    let dieciseisDias = 1000 * 60 * 60 * 24 * 33;
     let resta = this.sumafecha.getTime() + dieciseisDias;
     this.verificarFechas.fechaPresentacion = new Date(resta)
     this.verificarFechas.fecha_inicio_trabajo= new Date(this.portafolio.fechaInicio);
@@ -199,23 +202,32 @@ this.novedadList= [
       obtenerFechaArch(){
         this.informeTrabajoOperadoraService.ObtenerDatos(this.portafolio.codigoPortafolio).subscribe(
            
-          (data: InformeOperadora[]) => {                   
+          (data: InformeOperadora[]) => {
+            console.log(data);
+            if(data.length>0){                   
                 this.dtaList=data
                this.verificarFechas.fechaArch=new Date(this.dtaList[0].fechaArch);  
                console.log(this.dtaList[0].fechaArch);
-
+              }
+              else{
+                this.messageService.add({ severity: 'warn', detail: 'Aun no se ha asignado una fecha de notificacion de solicitud de aprobacion' });
+                this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
+              }
                this.busquedaService.getDocumentoOperadoraByCodigoPortafolioList(this.portafolio.codigoPortafolio).subscribe(
                 (data2: DocumentoOperadora[]) => {
+                  if(data2.length>0){
+                    console.log(data2); 
                   this.docOperadoraList=data2
                 this.verificarFechas.fechaNotificacion=new Date(this.docOperadoraList[0].fechaOficio)
                 console.log(this.dtaList[0].fechaOficio);
                 this.obtenerValor();
+                  }else{
+                  this.messageService.add({ severity: 'warn', detail: 'Aun no se ha asignado una fecha de entrega de informe de resultados' });
+                  this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
+                }
               }
               );
-              }
-          
-          
-          
+              } 
               );
        
       }

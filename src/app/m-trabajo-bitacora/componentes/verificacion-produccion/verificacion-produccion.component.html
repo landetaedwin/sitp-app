@@ -106,37 +106,32 @@
 
 <p-fieldset legend="Tipo Pozo Productor" [style]="{width: '90%'}">
  
-  <div   *ngIf="verificacionProduccion.formDisabled ==0">
+  <div   *ngIf="verificacionProduccion.formDisabled ==0 && buttonDisabled==0">
     <div class="row"  *ngFor="let produccion of verificacionProduccionListar">
 
   
 
-      <div class="col-md-4">
-   
-        
-        <button pButton type="button"  label="Cargar ANTES de inicio de trabajo" class="btn-block ui-button-success" (click)="cargarDatos(produccion)"></button> 
+      <div class="col-md-6"> 
+        <br>
+        <button pButton type="button"  label="Obtener Datos" class="btn-block ui-button-success" (click)="cargarDatos(produccion)"></button> 
       </div>
       
 
 
-      <div class="col-md-4">
-        <div class="col-md-3">
+      <div class="col-md-6">
+        <div class="col-md">
             <label for="verificacion Fechas"><b># Registros:</b></label>
          </div>
-         <div class="col-md-1">
+         <div class="col-md">
           <p-dropdown [options]="registrosList"  [(ngModel)]="verificacionProduccion.numRegistros"readonly></p-dropdown>
         </div>
         
     </div>
 
 
-      <div class="col-md-4">
-          
-        <button pButton type="button" label="Calcular " class="ui-button-warning btn-block"  [disabled]="buttonDespues" (click)="cargarDatosDespues(produccion)" ></button>
-      </div>
+     
     
-    </div>
-    
+  </div>
 </div>
 
 
@@ -341,30 +336,6 @@
           </div>
  
           
-    <div class="row">
-      
-      <div class="col-md-6">
-        <div class="row">
-          <div class="col-md-4">
-            <br>
-            <label for="verificacionProduccion"><b>Estado:*</b></label>
-          </div>
-          <div class="col-md">
-            <br>
-          <p-dropdown [options]="estadolist" [(ngModel)]="verificacionProduccion.estado" readonly></p-dropdown>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    
-
-
-
-
-
-
-
   <div class="row">
       <div class="col-md-6">
         <div class="row">

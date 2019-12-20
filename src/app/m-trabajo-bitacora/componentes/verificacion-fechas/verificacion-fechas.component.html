@@ -139,7 +139,7 @@
         <br>
         <div class="row">
           <div class="col-md-4">
-            <label for="verificarFechas"><b>Fecha de Oficio:*</b></label>
+            <label for="verificarFechas"><b>Fecha Máxima de Entrega de Resultados:*</b></label>
           </div>
           <div class="col-md">
               <p class="mtop">{{verificarFechas.fechaNotificacion | date:'dd/MM/yyyy' }}</p>
@@ -164,16 +164,6 @@
     <div class="row">
       <br>
       <div class="col-md-6">
-        <div class="row">
-          <div class="col-md-4">
-              <br>
-            <label for="verificarFechas"><b>Estado:*</b></label>
-          </div>
-          <div class="col-md">
-              <br>
-            <p-dropdown [options]="estadolist" [(ngModel)]="verificarFechas.estado" readonly></p-dropdown>
-          </div>
-        </div>
       </div>
       <div class="col-md-6">
       <div class="row" *ngIf="verificarFechas.valoracion > 0">

@@ -11,6 +11,8 @@ import { Router, RouterLink } from '@angular/router';
 import { VerificarFechasService } from 'src/app/m-trabajo-bitacora/servicios/verificar-fechas.service';
 import { Archivo } from 'src/app/entidades/archivo';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BusquedaService } from 'src/app/m-trabajo-pozo/servicios/buscar-portafolio.service';
+import { DocumentoOperadora } from 'src/app/entidades/documentoOperadora';
 
 @Component({
   selector: 'app-informe-trabajos-operadora',
@@ -28,6 +30,7 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
   today= new Date();
   editarInforme: InformeOperadora = new InformeOperadora();
   anularInforme: InformeOperadora = new InformeOperadora();
+  
   registroInfomreModalRef: BsModalRef;
   informeOperadora = new InformeOperadora();
   fechaArch= this.informeOperadora.fechaOficio;
@@ -35,7 +38,7 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
   anexo1: Archivo = new Archivo;
   anexo2: Archivo = new Archivo;
  
-  constructor(private modalService: BsModalService,public verificarFechasService: VerificarFechasService, public editarInformeOperadoraService: EditarInformeOperadoraService,  public http:HttpClient, public informeTrabajoOperadoraService: InformeTrabajoOperadoraService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
+  constructor(private modalService: BsModalService,public busquedaService:BusquedaService, public verificarFechasService: VerificarFechasService, public editarInformeOperadoraService: EditarInformeOperadoraService,  public http:HttpClient, public informeTrabajoOperadoraService: InformeTrabajoOperadoraService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
   this.informeOperadora.estado=1
     this.portafolio = this.informeTrabajoOperadoraService.portafolio;
     this.estadolist= [
@@ -60,35 +63,28 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
     }
 
+    
+    if(!this.portafolio.fechaFin || !this.portafolio.fechaInicio){
+      this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
+      this.messageService.add({ severity: 'warn', detail: 'No se ha establecido una fecha de inicio o fin de actividades' });
+    }
+
   
     this.informeOperadora.codPortafolio= this.portafolio.codigoPortafolio;
 
-    //this.loading = true;
-    //  this.portafolio = this.informeTrabajoOperadoraService.portafolio;
-   //this.informeOperadora.codPortafolio= this.portafolio.codigoPortafolio;
-    //this.informeOperadora.codPortafolio = this.portafolio.codigoPortafolio;
-
    this.informelist= [];
-    //this.informeOperadora= this.informeOperadora.cod_informe_operadora;
-
-   
-
-
-    this.informeTrabajoOperadoraService.ObtenerDatos(this.informeOperadora.codPortafolio).subscribe(
+   this.informeTrabajoOperadoraService.ObtenerDatos(this.informeOperadora.codPortafolio).subscribe(
       (data: InformeOperadora[]) => {   
       if (data) {
         this.informelist=data
-            console.log(data.length);
+            console.log(this.informeOperadora.fecha_actualizacion);
            
            if (data.length!==0) {
             this.messageService.add({ severity: 'warn', detail: 'Ya existe un informe asignado en este pozo' });
             this.Disabled = 1;
           }
 
-          }
-
-         
-         
+          }       
         this.loading = false;
 
       });
@@ -102,15 +98,45 @@ export class InformeTrabajosOperadoraComponent implements OnInit {
   
 guardarInformeTrabajo(){
 
+  let errores: string[] = [];
+
+    if (!this.informeOperadora.costo_real) {
+      errores.push("El campo Costo Real es requerido");
+    }
+    if (!this.informeOperadora.fechaArch) {
+      errores.push("El campo Fecha Arch es requeido");
+    }
+
+    if (!this.informeOperadora.fechaOficio) {
+      errores.push("El campo fecha oficio es requerido");
+    }
+    if (!this.informeOperadora.numeroOficio) {
+      errores.push("El campo numero de Oficio es requerido");
+    }
+
+    if (!this.informeOperadora.numeroSgc) {
+      errores.push("El campo No. SGC es requerido");
+    }
+
+    if (!this.informeOperadora.rig) {
+      errores.push("El campo Rig es requerido");
+    }
+
+  
+  
+
+    
+    if (errores.length <= 0) {
 
   this.loading= true;
   this.informeOperadora.id_usuario= this.usuario.idUsuario;
   this.portafolio = this.informeTrabajoOperadoraService.portafolio;
   this.informeOperadora.codPortafolio= this.portafolio.codigoPortafolio;
-  this.informeOperadora.fecha_actualizacion = new Date();
-
+  this.informeOperadora.fecha_actualizacion = new Date(this.today);
+  this.informeOperadora.estado=1
   this.informeOperadora.archivoAnexo = new Archivo;
   this.informeOperadora.archivoInforme = new Archivo;
+
 
   if (this.anexo1.base64) {
     this.informeOperadora.archivoInforme.nombre = this.anexo1.nombre;
@@ -136,6 +162,14 @@ guardarInformeTrabajo(){
     }
 
   });
+    }
+    else {
+
+      for (let i: number = 0; i < errores.length; i++) {
+        this.messageService.add({ severity: 'error', detail: errores[i] });
+      }
+
+    }
 
 }
 
@@ -258,6 +292,17 @@ AnularInforme() {
     if (data ) {
       this.loading = false;
       this.messageService.add({ severity: 'success', detail: 'Novedad Anulada' });
+      this.informeOperadora.anexoDocumento= null
+      this.informeOperadora.anexo_Oficio= null
+      this.informeOperadora.archivoInforme= null
+      this.informeOperadora.archivoAnexo=null
+      this.informeOperadora.costo_real= null
+      this.informeOperadora.numeroOficio= null
+      this.informeOperadora.numeroSgc= null
+      this.informeOperadora.resultado= null
+      this.informeOperadora.rig= null
+      this.informeOperadora.fechaArch= null
+      this.informeOperadora.fechaOficio=null
       this.closeModalInformeAnular();
       this.obtenerDatos();
     } else {

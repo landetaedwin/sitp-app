@@ -143,7 +143,7 @@
         </div>
         <div class="col-md">
           <div class="custom-file">
-            <input (change)="onChangeAnexo1($event)" type="file" accept=".pdf" required>
+            <input (change)="onChangeAnexo1($event)" type="file" accept=".pdf" >
           </div>
           <br>
         </div>
@@ -157,7 +157,7 @@
         </div>
         <div class="col-md">
           <div class="custom-file">
-            <input (change)="onChangeAnexo2($event)" type="file" accept=".pdf" required>
+            <input (change)="onChangeAnexo2($event)" type="file" accept=".pdf" >
           </div>
           <br>
         </div>
@@ -185,7 +185,7 @@
         <div class="col-md">
           <br>
           <p-calendar [style]="{ width: '100%' }" [maxDate]="today" [inputStyle]="{ width: '100%' }"
-            [(ngModel)]="informeOperadora.fechaOficio" required="true"></p-calendar>
+            [(ngModel)]="informeOperadora.fechaOficio" ></p-calendar>
           <br>
         </div>
       </div>
@@ -200,7 +200,7 @@
         <div class="col-md">
           <br>
           <p-calendar [style]="{ width: '100%' }" [minDate]="informeOperadora.fechaOficio" [maxDate]="today"
-            [inputStyle]="{ width: '100%' }" [(ngModel)]="informeOperadora.fechaArch" required="true"></p-calendar>
+            [inputStyle]="{ width: '100%' }" [(ngModel)]="informeOperadora.fechaArch"></p-calendar>
           <br>
         </div>
       </div>
@@ -208,19 +208,7 @@
 
   </div>
   <div class="row">
-    <div *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'" class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <br>
-          <label for="InformeOperadora"><b>Estado:*</b></label>
-        </div>
-        <div class="col-md">
-          <br>
-          <p-dropdown [options]="estadolist" [(ngModel)]="informeOperadora.estado" readonly></p-dropdown>
-          <br>
-        </div>
-      </div>
-    </div>
+   
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
@@ -245,7 +233,7 @@
         </div>
         <div class="col-md">
           <br>
-          <input type="text" class="form-control" [(ngModel)]="informeOperadora.rig" required>
+          <input type="text" class="form-control" [(ngModel)]="informeOperadora.rig" >
           <br>
         </div>
       </div>
@@ -261,7 +249,7 @@
         </div>
         <div class="col-md">
           <br>
-          <input type="number" class="form-control" [(ngModel)]="informeOperadora.costo_real" required="true">
+          <input type="number" class="form-control" [(ngModel)]="informeOperadora.costo_real">
           <br>
         </div>
       </div>
@@ -321,21 +309,28 @@
             <td>{{informeOperadora.fechaArch | date:'dd/MM/yyyy'}} </td>
             <td>{{informeOperadora.costo_real}} </td>
             <td>{{informeOperadora.estado | estadoOperadora}} </td>
-            <td>{{informeOperadora.fecha_actualizacion | date:'dd/MM/yyyy'}} </td>
+            <td>{{informeOperadora.fecha_actualizacion }} </td>
 
-            <td class="text-center" *ngIf="informeOperadora.anexo_Oficio"
-              (click)="showPdf(informeOperadora.archivoInforme.base64,informeOperadora.archivoInforme.nombre)">
-              <ul>
-
+            <td>
+             
+              <ul *ngIf="informeOperadora.anexo_Oficio " class="text-center"
+                (click)="showPdf(informeOperadora.archivoInforme.base64,informeOperadora.archivoInforme.nombre)">
                 <i class="fa fa-file-pdf-o  fa-2x" aria-hidden="true"></i>
               </ul>
 
+              <ul *ngIf="!informeOperadora.anexo_Oficio">
+                No se ha cargado archivo adjunto
+              </ul>
             </td>
 
             <td class="text-center">
-              <ul *ngIf="informeOperadora.anexoDocumento"
+              <ul *ngIf="informeOperadora.anexoDocumento" class="text-center"
                 (click)="showPdf(informeOperadora.archivoAnexo.base64,informeOperadora.archivoAnexo.nombre)">
                 <i class="fa fa-file-pdf-o  fa-2x" aria-hidden="true"></i>
+              </ul>
+
+              <ul *ngIf="!informeOperadora.anexo_Oficio">
+                No se ha cargado archivo adjunto
               </ul>
 
             </td>

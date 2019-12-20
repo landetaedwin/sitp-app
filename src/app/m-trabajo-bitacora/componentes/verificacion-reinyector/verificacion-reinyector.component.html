@@ -106,32 +106,33 @@
 <p-fieldset legend="Tipo Pozo Reinyector" [style]="{width: '90%'}">
  
 
-    <div class="row">
-        
-      <div class="col-md-4">
-        <button pButton type="button" label="Cargar ANTES de inicio de trabajo" class="ui-button-success" (click)="cargarDatos()"></button> 
+  <div   *ngIf="verificacionProduccion.formDisabled ==0 && buttonDisabled==0">
+    <div class="row"  *ngFor="let produccion of verificacionProduccionListar">
+
+  
+
+      <div class="col-md-6"> 
+        <br>
+        <button pButton type="button"  label="Obtener Datos" class="btn-block ui-button-success" (click)="cargarDatos(produccion)"></button> 
       </div>
+      
 
 
-      <div class="col-md-4">
-        <div class="col-md-3">
+      <div class="col-md-6">
+        <div class="col-md">
             <label for="verificacion Fechas"><b># Registros:</b></label>
          </div>
-         <div class="col-md-1">
-          <p-dropdown [options]="registrosList" [(ngModel)]="verificacionProduccion.numRegistros"readonly></p-dropdown>
+         <div class="col-md">
+          <p-dropdown [options]="registrosList"  [(ngModel)]="verificacionProduccion.numRegistros"readonly></p-dropdown>
         </div>
         
     </div>
 
 
-      <div class="col-md-4">
-          
-        <button pButton type="button" label="Cargar DESPUES de fin de trabajo" class="ui-button-warning" (click)="cargarDatosDespues()" ></button>
-      </div>
-
+     
     
+  </div>
 </div>
-
 
 <br>
 <br>
@@ -145,10 +146,8 @@
         <thead>
         <tr>
             <th>Fecha</th>
-            <th>Bloque</th>
-            <th>Yacimiento</th>
-            <th>Pozo</th>
-            <th>BPPD</th>
+            <th>Baipd</th>
+
             
         </tr>
       </thead>
@@ -156,17 +155,13 @@
         <tr *ngFor="let produccion of datosAntes" style="font-size: 11px">
 
          
-        <td>{{produccion.f_produccion  | date:'dd/MM/yyyy' }} </td>
-        <td>{{produccion.bloqueDetalle}} </td>
-        <td>{{produccion.yacimiento}} </td>
-        <td>{{produccion.pozo_nombre}} </td>
-        <td>{{produccion.bppd}} </td>
+        <td>{{produccion.Fecha | date:'dd/MM/yyyy' }} </td>
+        <td>{{produccion.Baipd}} </td>
+       
        
         </tr>
       <tr>
           <td> <p><b>Promedio:</b></td>
-          <td></td>
-          <td></td>
           <td> <p>{{produccion.PromedioAntesMostrar}}</p></td>
       </tr>
 
@@ -198,26 +193,20 @@
       <thead>
       <tr>
           <th>Fecha</th>
-          <th>Bloque</th>
-          <th>Yacimiento</th>
-          <th>Pozo</th>
-          <th>BPPD</th>
+          <th>Baipd</th>
+          
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let produccion of datosDespues" style="font-size: 11px">
 
-        <td>{{produccion.f_produccion  | date:'dd/MM/yyyy' }} </td>
-        <td>{{produccion.bloqueDetalle}} </td>
-        <td>{{produccion.yacimiento}} </td>
-        <td>{{produccion.pozo_nombre}} </td>
-        <td>{{produccion.bppd}} </td>
+        <td>{{produccion.Fecha  | date:'dd/MM/yyyy' }} </td>
+        <td>{{produccion.Baipd}} </td>
+
       </tr>
 
       <tr>
           <td> <p><b>Promedio:</b></td>
-          <td></td>
-          <td></td>
           <td> <p>{{produccion.PromedioDespuesMostrar}}</p></td>
       </tr>
 
@@ -238,7 +227,7 @@
 <br>
 </p-fieldset>
 
-<p-fieldset legend="Formulario de Ingreso"  [toggleable]="true" >
+<p-fieldset legend="Formulario de Ingreso"    *ngIf="verificacionProduccion.formDisabled ==0" [toggleable]="true" >
 <div class="row">
 
 
@@ -280,13 +269,13 @@
           </div>
         </div>
     
-        <div class="col-md-6"   *ngIf="verificacionProduccion.formDisabled ==0" >
+        <div class="col-md-6">
           <div class="row">       
             <div class="col-md-4">
               <label for="verificacionProduccion"><b>Valoración:*</b></label>
             </div>
             <div class="col-md">
-                <p class="label">{{verificacionProduccion.valoracion   |  ValoracionProduccion }}</p>
+                <p class="label">{{verificacionProduccion.descripcionValoracion }}</p>
             </div>
           </div>
         </div>
@@ -320,21 +309,6 @@
           </div>
  
           
-    <div class="row"  *ngIf="verificacionProduccion.formDisabled ==0">
-      
-      <div class="col-md-6">
-        <div class="row">
-          <div class="col-md-4">
-            <br>
-            <label for="verificacionProduccion"  ><b>Estado:*</b></label>
-          </div>
-          <div class="col-md">
-            <br>
-          <p-dropdown [options]="estadolist" [(ngModel)]="verificacionProduccion.estado" readonly></p-dropdown>
-          </div>
-        </div>
-      </div>
-    </div>
 
     
 
@@ -344,7 +318,7 @@
 
 
 
-  <div class="row"  *ngIf="verificacionProduccion.formDisabled ==0" > 
+  <div class="row">
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-4">
@@ -368,9 +342,9 @@
       </div>
     </div>
 
-    <div class="row justify-content-end"   *ngIf="verificacionProduccion.formDisabled ==0" >
+    <div class="row justify-content-end">
       <div class="col-md-4">
-        <button type="button" class="btn btn-sm btn-info btn-block" (click)="guardar()">
+        <button type="button" class="btn btn-sm btn-info btn-block" (click)="editarProduccion(verificacionProduccion)">
           Guardar
         </button>
       </div>
@@ -404,7 +378,7 @@
             <th>Observacion</th>
             <th>Estado</th>
             <th>Fecha Actualización</th>
-            <th>Editar</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -420,7 +394,11 @@
             <td>{{verificacionProduccion.estado| estadoBitacora}} </td>
             <td>{{verificacionProduccion.fecha_actualizacion | date:'dd/MM/yyyy'}} </td>
             <td class="text-center">
-              <i class="fa fa-pencil-square-o fa-2x" (click)="editarProduccion(verificacionProduccion,produccion);"></i>            
+              <i class="fa fa-pencil-square-o fa-2x" (click)="debloquearActualizacion(verificacionProduccion)"></i>   
+              <i *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                (click)="openModalInformeAnular(InformeTempalteAnular, verificacionProduccion)">
+                <i class="fa fa-times fa-2x"></i>
+              </i>         
           </td>
           </tr>
 
@@ -429,13 +407,39 @@
     </div>
   </div>
 </p-fieldset>
+<ng-template #InformeTempalteAnular>
+  <div class="container mt-3 mb-3">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h4>Anular Reinyector</h4>
+      </div>
+    </div>
+    <hr>
 
+    <div class="row">
+      <div class="col-md-12">
+        <p>¿Desea anular este registro?</p>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-primary btn-block" (click)="AnularInforme()">SI</button>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="closeModalInformeAnular()">NO</button>
+      </div>
+    </div>
+  </div>
+
+
+</ng-template>
 <div class="row">
     <div class="col-md-12 row justify-content-center">
         <button type="button" class="btn btn-secondary btn-sm"  (click)="volver(portafolio) "><i class="fa fa-calendar-o" aria-hidden="true">&nbsp;Verificar Fechas</i>
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <button type="button" class="btn btn-primary btn-sm"  (click)="siguiente(portafolio)" ><i class="fa fa-bar-chart" aria-hidden="true">&nbsp; Verificar Novedades</i>
+        <button type="button" class="btn btn-primary btn-sm"  (click)="siguiente(portafolio)" ><i class="fa fa-newspaper-o" aria-hidden="true">&nbsp; Verificar Novedades</i>
         </button>
     </div>
 </div>

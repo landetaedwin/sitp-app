@@ -30,20 +30,18 @@ export class VerificarProduccionService {
 
     // componentes verificacion inyector
     transCrearVerificarInyector(verificacionProduccion:VerificacionProduccion){
-      const url =  this.prop.PATH + "/sitp/VerificarProduccion/CrearVerificacionInyector";
+      const url =  this.prop.PATH + "/sitp/VerificarInyector/CrearVerificacionInyector";
       return this.http.post(url, verificacionProduccion, httpOptions);
     }
 
 
     buscarporIdInyector(codPortafolio:number){
       const url =  this.prop.PATH + "/sitp/VerificarInyector/listarDatos?codigoPortafolio="+ codPortafolio;
-  //   const url =  this.prop.PATH + "/sitp/InformeOperadora/findOperadoraById";
       return this.http.get(url, httpOptions);
     }
 
     obtenerporIdInyector(codPortafolio:number){
       const url =  this.prop.PATH + "/sitp/VerificarInyector/obtenerDatos?codigoPortafolio="+ codPortafolio;
-      //   const url =  this.prop.PATH + "/sitp/InformeOperadora/findOperadoraById";
           return this.http.get(url, httpOptions)
     }
 
@@ -66,30 +64,53 @@ export class VerificarProduccionService {
     }
 
 
-
-
-
     // componentes verificacion reinyector
 
 
     transCrearVerificarReinyector(verificacionProduccion:VerificacionProduccion){
-      const url =  this.prop.PATH + "/sitp/VerificarProduccion/CrearVerificacionReinyector";
+      const url =  this.prop.PATH + "/sitp/VerificarReinyector/CrearVerificacionReinyector";
       return this.http.post(url, verificacionProduccion, httpOptions);
     }
 
+    obtenerporIdReinyector(codPortafolio:number){
+      const url =  this.prop.PATH + "/sitp/VerificarReinyector/obtenerDatos?codigoPortafolio="+ codPortafolio;
+          return this.http.get(url, httpOptions)
+    }
 
     buscarporIdReinyector(codPortafolio:number){
-      const url =  this.prop.PATH + "/sitp/VerificarProduccion/obtenerDatosReinyector?codigoPortafolio="+ codPortafolio;
-  //   const url =  this.prop.PATH + "/sitp/InformeOperadora/findOperadoraById";
+      const url =  this.prop.PATH + "/sitp/VerificarReinyector/listarDatos?codigoPortafolio="+ codPortafolio;
       return this.http.get(url, httpOptions);
     }
 
    
       transUpdateVerificacionReinyector(verificacionProduccion:VerificacionProduccion) {
         console.log(verificacionProduccion);
-        const url = this.prop.PATH + "/sitp/VerificarProduccion/ActualizarReinyector";
+        const url = this.prop.PATH + "/sitp/VerificarReinyector/ActualizarReinyector";
         return this.http.post(url, verificacionProduccion, httpOptions);
       }
+
+
+      BuscarInfoReinyectorAntes(fechaInicio :Date, registros:number, pozo:String, codVerfProduccion:number){
+        const url =  this.prop.PATH + "/sitp/VerificarReinyector/listarDatosAntes?fechaAntes="+ fechaInicio +"&Registros="+ registros+"&Pozo="+ pozo+"&verfProd="+codVerfProduccion ;
+        console.log(url)
+        return this.http.get(url, httpOptions);
+      }
+  
+      BuscarInfoReinyectorDespues(fechaDespues :Date, registros:number, pozo:String, codVerfProduccion:number){
+        const url =  this.prop.PATH + "/sitp/VerificarReinyector/listarDatosDespues?fechaDespues="+ fechaDespues +"&Registros="+ registros+"&Pozo="+ pozo+"&verfProd="+codVerfProduccion ;
+        console.log(url)
+        return this.http.get(url, httpOptions);
+      }
+  
+  
+
+
+
+
+
+
+
+
 
 
     // ccomponentes verificacion produccion

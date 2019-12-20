@@ -11,7 +11,6 @@ import { BuscarPortafolioBitacoraComponent } from './componentes/buscar-portafol
 import { ReportesDiariosComponent } from './componentes/reportes-diarios/reportes-diarios.component';
 import { VerificacionFechasComponent } from './componentes/verificacion-fechas/verificacion-fechas.component';
 import { VerificacionProduccionComponent } from './componentes/verificacion-produccion/verificacion-produccion.component';
-import { DocumentoOperadoraComponent } from './componentes/documento-operadora/documento-operadora.component';
 import { InformeTrabajosOperadoraComponent } from './componentes/informe-trabajos-operadora/informe-trabajos-operadora.component';
 import { EditarInformeOperadoraComponent } from './componentes/editar-informe-operadora/editar-informe-operadora.component';
 import { VerificacionNovedadComponent } from './componentes/verificacion-novedad/verificacion-novedad.component';
@@ -36,7 +35,7 @@ import { EditarSeguimientoNovedadComponent } from './componentes/editar-seguimie
 
 
 @NgModule({
-  declarations: [ReportesDiariosComponent, VerificacionFechasComponent, VerificacionProduccionComponent, DocumentoOperadoraComponent,
+  declarations: [ReportesDiariosComponent, VerificacionFechasComponent, VerificacionProduccionComponent,
      InformeTrabajosOperadoraComponent,
      BuscarPortafolioBitacoraComponent,
 

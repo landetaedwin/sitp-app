@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import {Portafolio} from 'src/app/entidades/portafolio';
 import { MessageService, SelectItem } from "primeng/api";
 import { LoginService } from 'src/app/m-login/servicios/login.service';
@@ -12,6 +12,8 @@ import { Router, RouterLink } from '@angular/router';
 import { Produccion } from 'src/app/entidades/produccion';
 import { Inyector } from 'src/app/entidades/inyector';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+
 
 @Component({
   selector: 'app-verificacion-produccion',
@@ -32,14 +34,14 @@ export class VerificacionProduccionComponent implements OnInit {
   justificadoList: SelectItem[]=[];
   public loading = false;
   usuario: Usuario;
-  pAntes: number=0;
-  pDespues: number;
-  
+  anularInforme= new VerificacionProduccion();
+  registroInfomreModalRef: BsModalRef;
+  buttonDisabled: number;
   sumaPorcentaje:number;
 
   buttonDespues: boolean = true;
 
-  constructor( http:HttpClient,public VerificarNovedadService: VerificarNovedadService, public verificarFechasService: VerificarFechasService, public verificarProduccionService: VerificarProduccionService, private messageService: MessageService, public loginService: LoginService, public router: Router) { 
+  constructor( private modalService: BsModalService, http:HttpClient,public VerificarNovedadService: VerificarNovedadService, public verificarFechasService: VerificarFechasService, public verificarProduccionService: VerificarProduccionService, private messageService: MessageService, public loginService: LoginService, public router: Router) { 
     
     this.verificacionProduccion.estado=1
     this.verificacionProduccion.numRegistros=3
@@ -47,6 +49,8 @@ export class VerificacionProduccionComponent implements OnInit {
     this.verificacionProduccion.formDisabled=0
     this.portafolio = this.verificarProduccionService.portafolio;
     this.verificacionProduccion.porcentajeControlEstatico=10
+    this.buttonDisabled=0;
+
 
     this.justificadoList= [
       { label: "Si", value: 1, disabled: false },
@@ -95,6 +99,11 @@ export class VerificacionProduccionComponent implements OnInit {
   }
   if (this.portafolio.tipoPozo.codigoTipoPozo==3) {
     this.router.navigate(['/menu', { outlets: { sitp: ['verificarReinyector'] } }]);
+  }
+
+  if(!this.portafolio.fechaFin || !this.portafolio.fechaInicio){
+    this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
+    this.messageService.add({ severity: 'warn', detail: 'No se ha establecido una fecha de inicio o fin de actividades' });
   }
 
   this.produccionList = [];
@@ -212,6 +221,46 @@ export class VerificacionProduccionComponent implements OnInit {
       });
   }
   
+  
+debloquearActualizacion(){
+  this.verificacionProduccion.formDisabled=0
+  this.verificacionProduccion.fecha_actualizacion = new Date();
+
+  this.verificarProduccionService.verificarProduccion=this.verificacionProduccion
+  this.verificarProduccionService.obtenerporIdInyector(this.portafolio.codigoPortafolio).subscribe(
+    (data: VerificacionProduccion[]) => {
+      this.loading = false;
+
+      if (data.length !== 0) {
+        this.verificacionProduccion.PorcentajeMostrar= data[0].porcentajeControl.toFixed(2)
+        this.verificacionProduccion.codVerificacion = data[0].codVerificacion
+        this.verificacionProduccion.fecha_actualizacion =this.today
+        this.verificacionProduccion.valoracion = data[0].valoracion
+        this.verificacionProduccion.observacion= data[0].observacion
+
+        if (this.verificacionProduccion.Porcentaje_inc_dis>=0){
+   
+          if (this.verificacionProduccion.Porcentaje_inc_dis> 9){
+            this.verificacionProduccion.valoracion=0
+            this.verificacionProduccion.descripcionValoracion="Exitoso";
+         }
+      
+          if (this.verificacionProduccion.Porcentaje_inc_dis<10){
+          this.verificacionProduccion.valoracion=1
+          this.verificacionProduccion.descripcionValoracion="Medianamente Exitoso";
+        }
+       
+      
+          } else{
+            this.verificacionProduccion.valoracion=2
+            this.verificacionProduccion.descripcionValoracion="No Exitoso";
+            this.verificacionProduccion.formDisabled=0
+          
+          } 
+        }
+      });
+}
+
   obtenerTodo() {
     this.verificarProduccionService.obtenerporId(this.portafolio.codigoPortafolio).subscribe(
       (data: VerificacionProduccion[]) => {
@@ -226,6 +275,7 @@ export class VerificacionProduccionComponent implements OnInit {
         if (data.length!==0) {
 
           this.messageService.add({ severity: 'warn', detail: 'Ya existe un informe asignado en este pozo' });
+          this.buttonDisabled=1;
           this.verificacionProduccion.formDisabled = 1;
           this.verificacionProduccion.codVerificacion= data[0].codVerificacion
           this.verificacionProduccion.fecha_actualizacion= data[0].fecha_actualizacion
@@ -414,12 +464,47 @@ export class VerificacionProduccionComponent implements OnInit {
     });
   }
 
- // editarProduccion(verificacionProduccion: VerificacionProduccion, produccion: Produccion) {
-  //  console.log("click");
-  //  this.verificarProduccionService.verificarProduccion = verificacionProduccion;
-  //  this.verificarProduccionService.produccion = produccion;
-  //  this.router.navigate(['/menu', { outlets: { sitp: ['editarVerificarProduccion'] } }]);
- // }
+AnularInforme() {
+  this.verificacionProduccion.codPortafolio= this.anularInforme.codPortafolio
+  this.verificacionProduccion.estado=0;
+  this.verificacionProduccion.idUsu= this.anularInforme.idUsu
+  this.verificacionProduccion.justificado= this.anularInforme.justificado
+  this.verificacionProduccion.numRegistros= this.anularInforme.numRegistros
+  this.verificacionProduccion.observacion= this.anularInforme.observacion
+  this.verificacionProduccion.porcentajeControl= this.anularInforme.porcentajeControl
+  this.verificacionProduccion.valor_antes= this.anularInforme.valor_antes
+  this.verificacionProduccion.valor_despues= this.anularInforme.valor_despues
+  this.verificacionProduccion.valoracion= this.anularInforme.valoracion
+  this.verificacionProduccion.fecha_actualizacion= this.today
+  this.verificacionProduccion.codVerificacion= this.anularInforme.codVerificacion
+  console.log(this.verificacionProduccion)
+
+  this.verificarProduccionService.transUpdateVerificacionInyector(this.verificacionProduccion)
+  .subscribe(data => {
+   if (data ) {
+      this.loading = false;
+      this.messageService.add({ severity: 'success', detail: 'Verificación Anulada' });
+      //this.verificacionProduccion=null;
+     this.closeModalInformeAnular();
+     this.obtenerTodo();
+      //this.listarDatos();
+    } else {
+      this.loading = false;
+      this.messageService.add({ severity: 'Error', detail: 'No se ha podido anular'});
+   //   this.closeModalNovedadAnular();
+    }
+  });
+}
+
+openModalInformeAnular(template: TemplateRef<any>,eInforme:VerificacionProduccion) {
+  this.anularInforme = this.cloneJSON(eInforme);
+  this.registroInfomreModalRef = this.modalService.show(template, { class: 'modal-sm', backdrop: 'static', keyboard: false });
+}
+
+closeModalInformeAnular() {
+  this.registroInfomreModalRef.hide();
+}
+
 
   volver(portafolio: Portafolio) {
     console.log("click");

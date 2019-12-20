@@ -83,7 +83,7 @@ this.novedadList= [
   
 
     this.seguimientoNovedad.fechaActualizacion = this.today;
-  //  this.informeOperadora.codPortafolio = this.portafolio.codigoPortafolio;
+  
    }
 
   ngOnInit() {
@@ -122,6 +122,16 @@ this.novedadList= [
 
   guardar(){
 
+    let errores: string[] = [];
+
+    if (!this.seguimientoNovedad.numDoc) {
+      errores.push("El campo Número de Documento es requerido");
+    }
+    if (!this.seguimientoNovedad.observacion) {
+      errores.push("El campo Conclusión es requerido");
+    }
+
+    if (errores.length <= 0) {
 
     this.seguimientoNovedad.archivoInforme = new Archivo;
     this.seguimientoNovedad.idUsuario= this.usuario.idUsuario;
@@ -140,13 +150,24 @@ this.novedadList= [
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se registró el Seguimiento de Novedad' });
         this.obtenerDatos();
-       
+         this.seguimientoNovedad.observacion=null;
+         this.seguimientoNovedad.numDoc=null;
+         this.seguimientoNovedad.documento=null;
       } else {
         this.loading = false;
         this.messageService.add({ severity: 'info', detail: 'No se puede registrar el seguimiento de Novedad' });
   
       }
     });
+}
+else {
+
+  for (let i: number = 0; i < errores.length; i++) {
+    this.messageService.add({ severity: 'error', detail: errores[i] });
+  }
+
+}
+
 }
 
   obtenerDatos(){   

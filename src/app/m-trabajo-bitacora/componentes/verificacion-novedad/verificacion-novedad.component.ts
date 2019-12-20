@@ -92,6 +92,13 @@ export class VerificacionNovedadComponent implements OnInit {
     if (!this.usuario) {
       this.router.navigate(['/login'])
     }
+
+    if(!this.portafolio.fechaFin || !this.portafolio.fechaInicio){
+      this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
+      this.messageService.add({ severity: 'warn', detail: 'No se ha establecido una fecha de inicio o fin de actividades' });
+    }
+
+    
     this.obtenerTodo();
     this.buscarpoId();
   }
@@ -137,6 +144,8 @@ export class VerificacionNovedadComponent implements OnInit {
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se creo el Informe de Verificación de Novedad' });
       //  this.obtenerTodo();
+        this.verificacioNovedad.justificado= null;
+      
       
       } else {
         this.loading = false;

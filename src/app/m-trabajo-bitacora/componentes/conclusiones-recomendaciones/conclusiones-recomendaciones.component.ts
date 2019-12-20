@@ -104,7 +104,16 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
  
   guardarConclusionRecomendacion(){
 
+    let errores: string[] = [];
 
+    if (!this.conclusionRecomendacion.conclusion) {
+      errores.push("El campo Conclusión es requerido");
+    }
+    if (!this.conclusionRecomendacion.recomendacion) {
+      errores.push("El campo Recomendación es requerido");
+    }
+
+    if (errores.length <= 0) {
     this.conclusionRecomendacionService.transCrearConclusionRecomendacion(this.conclusionRecomendacion).subscribe(data =>{
       if (data) {
      
@@ -120,8 +129,12 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
   
       }
     });
+  }
+    else {
+      this.loading = false;
+      this.messageService.add({ severity: 'info', detail: 'No se puede registrar el seguimiento de Novedad' });
     }
-
+  }
 
     actualizarConclusionRecomendacion(){
 
