@@ -25,6 +25,10 @@ import { RegistroTasasComponent } from './componentes/registro-tasas/registro-ta
 import { RegistroTrabajoDiarioComponent } from './componentes/registro-trabajo-diario/registro-trabajo-diario.component';
 import { VerificacionTasaComponent } from './componentes/verificacion-tasa/verificacion-tasa.component';
 import { VerificarPagosComponent } from './componentes/verificar-pagos/verificar-pagos.component';
+import { EstadoTasaPipe } from '../resources/pipes/estado-tasa';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import {CheckboxModule} from 'primeng/checkbox';
+
 
 @NgModule({
   declarations: [
@@ -37,6 +41,7 @@ import { VerificarPagosComponent } from './componentes/verificar-pagos/verificar
     DocumentoMinisterioComponent,
     FilterSearchPipe,
     NumerosDocDirective,
+    EstadoTasaPipe,
     HistorialPozoComponent,
     RegistroTasasComponent,
     VerificarPagosComponent,
@@ -56,6 +61,8 @@ import { VerificarPagosComponent } from './componentes/verificar-pagos/verificar
     CalendarModule,
     NgxPaginationModule,
     ToastModule,
+    RadioButtonModule,
+    CheckboxModule,
 
     ModalModule.forRoot(),
     NgxLoadingModule.forRoot({})

@@ -153,7 +153,7 @@
               </ul>
             </td>
 
-            <td>{{t.estado}}</td>
+            <td>{{t.estado | estadoTasa}}</td>
             <td>
               <div class="btn-group dropleft">
                 <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -164,7 +164,7 @@
 
                   <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
                     (click)="openModalTasaAnular(tasaTempalteAnular, t)" class="dropdown-item" type="button"><i
-                      class="fa fa-trash-o"></i> Anular</button>
+                      class="fa fa-trash-o"></i> Derogar</button>
 
                   <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
                     (click)="openModalTasaEdit(tasaTempalteEdit, t)" class="dropdown-item" type="button"><i

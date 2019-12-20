@@ -61,19 +61,30 @@
                         <p>{{portafolio.fechaFin | date:'dd/MM/yyyy'}}</p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label><b>Tasa:</b></label>
-                        <p>{{tasa.tasa}}</p>
-                    </div>
 
-                </div>
             </div>
         </div>
 
     </p-fieldset>
 
     <p-fieldset legend="DATOS DE VERIFICACIÓN " [toggleable]="true">
+
+
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <label><b>Tasas registradas:</b></label>
+                <p-dropdown [options]="tasaList" [(ngModel)]="tasa"> </p-dropdown>
+            </div>
+            <div class="col-md-6">
+                <label><b>Tasas registradas:</b></label>
+                <p-dropdown [options]="cantidadList" [(ngModel)]="cant" > </p-dropdown>
+            </div>
+        </div>
+
+
+
+        <br>
+
 
         <div class="row">
             <div class="col-md-6">
@@ -99,6 +110,7 @@
                             <th>FECHA</th>
                             <th>YACIMIENTO</th>
                             <th>BPPD</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,6 +119,11 @@
                             <td>{{produccion.f_produccion}} </td>
                             <td>{{produccion.yacimiento}}</td>
                             <td>{{produccion.bppd}}</td>
+                            <td>
+                                <p-checkbox [(ngModel)]="produccion.isSelected" binary="true"
+                                    (onChange)="calcularPromedio()"></p-checkbox>
+
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -120,7 +137,7 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-6">
-                        <label><b>Numero de portafolio:</b></label>
+                        <label><b>Valoracion:</b></label>
                         <p *ngIf="promedio > tasa.tasa">NO CUMPLE </p>
                         <p *ngIf="promedio < tasa.tasa">CUMPLE</p>
                     </div>
@@ -133,7 +150,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label><b>Observación:</b></label>
-                        <textarea class="form-control" [(ngModel)]="verificacionTasa.observacion" rows="2"></textarea>
+                        <textarea class="form-control" [(ngModel)]="observacion" rows="2"></textarea>
                     </div>
                 </div>
 
