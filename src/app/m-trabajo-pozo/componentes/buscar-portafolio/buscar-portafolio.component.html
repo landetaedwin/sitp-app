@@ -110,7 +110,7 @@
             <td>{{portafolio.tipoTrabajo.tipoTrabajo}}</td>
             <td>{{portafolio.numeroTrabajo}}</td>
             <td>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</td>
-            <td>{{portafolio.estado }}</td>
+            <td>{{portafolio.estado | estadoPortafolio }}</td>
             <td>
               <div class="btn-group dropleft">
                 <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -151,13 +151,15 @@
                     (click)="goToDocumentoOperadota(portafolio)" class="dropdown-item" type="button"><i
                       class="fa fa-address-book-o"></i> Adjuntar documentos de Operadora</button>
 
-                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                  <button
+                    *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21' && portafolio.tipoPozo.codigoTipoPozo == 1"
                     (click)="goToVerificarTasa(portafolio)" class="dropdown-item" type="button"><i
-                      class="fa fa-coffee"></i> Verficiar tasa</button>
+                      class="fa fa-bar-chart"></i> Verficiar tasa</button>
 
-                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                  <button
+                    *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16' &&portafolio.tipoPozo.codigoTipoPozo == 1"
                     (click)="goToVerificarTasa(portafolio)" class="dropdown-item" type="button"><i
-                      class="fa fa-coffee"></i> Verficiar tasa</button>
+                      class="fa fa-bar-chart"></i> Verficiar tasa</button>
                 </div>
               </div>
             </td>

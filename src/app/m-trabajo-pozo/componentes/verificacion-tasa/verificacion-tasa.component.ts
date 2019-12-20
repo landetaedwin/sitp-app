@@ -26,7 +26,7 @@ export class VerificacionTasaComponent implements OnInit {
   portafolio: Portafolio = new Portafolio;
   maxDate: Date;
   minDate: Date;
-  tasaList: Tasa[] = []
+  tasaList: SelectItem[] = []
   param: BusquedaParametros = new BusquedaParametros;
   tasa: Tasa = new Tasa;
   produccionDiariaList: Produccion[] = []
@@ -38,12 +38,28 @@ export class VerificacionTasaComponent implements OnInit {
   verificacionTasaList: VerificacionTasa[] = []
 
 
+  cantidadList: SelectItem[] = [];
+  cant: number = 3;
+
 
   constructor(public loginService: LoginService, public router: Router, private busqueda: BusquedaService, private modalService: BsModalService, private dataApi: CreateUpdateService, private messageService: MessageService, public cs: Constantes) {
     this.justificadoList = [
       { label: "Seleccione", value: null, disabled: false },
       { label: "Si", value: 1, disabled: false },
       { label: "No", value: 0, disabled: false }];
+
+    this.cantidadList = [
+
+      { label: "3", value: 3, disabled: false },
+      { label: "4", value: 4, disabled: false },
+      { label: "5", value: 5, disabled: false },
+      { label: "6", value: 6, disabled: false },
+      { label: "7", value: 7, disabled: false },
+      { label: "10", value: 10, disabled: false },
+    ];
+
+    this.tasaList = [{ label: "Seleccione", value: null, disabled: true }];
+
   }
 
   ngOnInit() {
@@ -80,7 +96,16 @@ export class VerificacionTasaComponent implements OnInit {
       if (data.length > 0) {
         this.param.pozo = null;
         this.param = new BusquedaParametros;
-        this.tasa = data[0];
+
+        this.tasaList = [{ label: "Seleccione", value: null, disabled: true }];
+
+        let c: Tasa;
+        for (let i in data) {
+          c = data[i];
+          this.tasaList.push({ label: c.yacimiento.yacimiento + " - BPPD: " + c.tasa, value: c });
+        }
+
+
         this.loading = false;
       } else {
         this.messageService.add({ severity: 'info', detail: 'No se encontraron datos' });
@@ -96,17 +121,34 @@ export class VerificacionTasaComponent implements OnInit {
   }
 
   getProduccion3Despues() {
+    debugger
     this.portafolio.fechaFin = new Date(this.portafolio.fechaFin);
-    this.busqueda.BuscarDespues(this.portafolio.fechaFin, 3, this.portafolio.pozo.pozNombre).subscribe((data: Produccion[]) => {
+    this.busqueda.BuscarDespues(this.portafolio.fechaFin, this.cant, this.portafolio.pozo.pozNombre).subscribe((data: Produccion[]) => {
       this.produccionDiariaList = data;
-      this.promedio = 0;
-      debugger
-      for (let i: number = 0; i < data.length; i++) {
-        this.promedio = this.promedio + data[i].bppd;
-      }
-      this.promedio = this.promedio / data.length;
+
     })
   }
+
+
+  calcularPromedio() {
+    this.promedio = 0;
+    let cont: number = 0;
+    debugger
+    for (let i: number = 0; i < this.produccionDiariaList.length; i++) {
+
+      if (this.produccionDiariaList[i].isSelected) {
+        this.promedio = this.promedio + this.produccionDiariaList[i].bppd;
+        cont++
+      }
+
+
+    }
+    this.promedio = this.promedio / cont;
+
+  }
+
+
+  observacion: string;
 
   goSaveVerificacion() {
 
@@ -121,11 +163,12 @@ export class VerificacionTasaComponent implements OnInit {
       this.verificacionTasa.valoracion = 1
     }
     this.verificacionTasa.justificacion = this.justificacion;
+    this.verificacionTasa.observacion = this.observacion
     this.verificacionTasa.idUsuario = this.usuario.idUsuario;
 
     this.dataApi.transCreateVErificacionTasa(this.verificacionTasa).subscribe(data => {
       if (data == "Se ha creado correctamente el registro") {
-       
+
         this.getVerificacionList();
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: '' + data });
