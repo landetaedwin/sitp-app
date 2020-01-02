@@ -176,7 +176,7 @@ export class MenuComponent implements OnInit {
         items: [
           { label: 'Crear portafolio', routerLink: [{ outlets: { sitp: ['crearPortafolio'] } }], visible: this.i1 },
           { label: 'Buscar portafolio', routerLink: [{ outlets: { sitp: ['buscarPortafolio'] } }], visible: this.i0 },
-         
+
           { label: 'Historial de pozo', routerLink: [{ outlets: { sitp: ['historialPozo'] } }], visible: this.i0 },
         ]
       },
@@ -235,7 +235,7 @@ export class MenuComponent implements OnInit {
           { label: 'Estado de asignación', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Estado del pago', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Valoración de cumplimiento', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Consorsio', command: () => this.imprimirMensaje(), visible: true }
+          { label: 'Consorsio', routerLink: [{ outlets: { sitp: ['consorcios'] } }], visible: true }
         ]
       }
 

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './m-login/login/login.component';
-import { TipoPozoComponent } from './m-mantenimiento/componentes/tipo-pozo/tipo-pozo.component';
 import { MenuComponent } from './m-menu/menu/menu.component';
 import { BuscarPortafolioBitacoraComponent } from './m-trabajo-bitacora/componentes/buscar-portafolio-bitacora/buscar-portafolio-bitacora.component';
 import { EditarInformeOperadoraComponent } from './m-trabajo-bitacora/componentes/editar-informe-operadora/editar-informe-operadora.component';
@@ -31,6 +30,7 @@ import { VerificarPagosComponent } from './m-trabajo-pozo/componentes/verificar-
 import { ConclusionesRecomendacionesComponent } from './m-trabajo-bitacora/componentes/conclusiones-recomendaciones/conclusiones-recomendaciones.component';
 import { SeguimientoNovedadComponent } from './m-trabajo-bitacora/componentes/seguimiento-novedad/seguimiento-novedad.component';
 import { EditarSeguimientoNovedadComponent } from './m-trabajo-bitacora/componentes/editar-seguimiento-novedad/editar-seguimiento-novedad.component';
+import { ConsorciosComponent } from './m-mantenimiento/componentes/consorcios/consorcios.component';
 
 
 
@@ -56,7 +56,6 @@ const routes: Routes = [
       { path: 'verificacionFechas', component: VerificacionFechasComponent, outlet: 'sitp' },
       { path: 'editarFechas', component: EditarVerificacionFechasComponent, outlet: 'sitp' },
       { path: 'verificarProduccion', component: VerificacionProduccionComponent, outlet: 'sitp' },
-      { path: 'mantenimiento-tipo-pozo', component: TipoPozoComponent, outlet: 'sitp' },
       { path: 'verificarNovedad', component: VerificacionNovedadComponent, outlet: 'sitp' },
       { path: 'reporte-documentos-operadora', component: DocumentoOperadoraComponent, outlet: 'sitp' },
       { path: 'reporte-documentos-ministerio', component: DocumentoMinisterioComponent, outlet: 'sitp' },
@@ -73,8 +72,9 @@ const routes: Routes = [
       { path: 'registroTasas', component: RegistroTasasComponent, outlet: 'sitp' },
       { path: 'verificarPagos', component: VerificarPagosComponent, outlet: 'sitp' },
 
-      { path: 'seguimientoNovedad', component: SeguimientoNovedadComponent, outlet: 'sitp' }
+      { path: 'seguimientoNovedad', component: SeguimientoNovedadComponent, outlet: 'sitp' },
 
+      { path: 'consorcios', component: ConsorciosComponent, outlet: 'sitp' },
 
     ]
   }

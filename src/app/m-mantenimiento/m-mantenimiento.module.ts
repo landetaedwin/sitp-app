@@ -8,10 +8,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { FieldsetModule } from 'primeng/fieldset';
-import { TipoPozoComponent } from './componentes/tipo-pozo/tipo-pozo.component';
+import { ConsorciosComponent } from './componentes/consorcios/consorcios.component';
+import { EstadoCatalogo } from '../resources/pipes/estado-catalogos';
 
 @NgModule({
-  declarations: [TipoPozoComponent],
+  declarations: [ConsorciosComponent, EstadoCatalogo],
   imports: [
     CommonModule,
     FormsModule,
