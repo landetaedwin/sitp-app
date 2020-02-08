@@ -1,6 +1,6 @@
 export class VerificacionNovedad{
 codVerfTrabajo: number;
-novedad: number;
+novedad: String;
 codVerfTrabajoInc: number;
 codPortafolio: number;
 valoracion: number;

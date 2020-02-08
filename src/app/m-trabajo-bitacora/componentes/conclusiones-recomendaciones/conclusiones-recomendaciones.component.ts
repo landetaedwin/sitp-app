@@ -193,7 +193,7 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
         
       obtenerTodoProductor(){
  
-        this.verificarFechasService.buscarporId(this.portafolio.codigoPortafolio).subscribe(
+        this.VerificarProduccionService.buscarporId(this.portafolio.codigoPortafolio).subscribe(
           (data: VerificacionProduccion[]) => {   
           if (data) {
             this.ProductorList = data;
@@ -207,7 +207,7 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
         
       obtenerTodoInyector(){
  
-        this.VerificarProduccionService.buscarporId(this.portafolio.codigoPortafolio).subscribe(
+        this.VerificarProduccionService.obtenerporIdInyector(this.portafolio.codigoPortafolio).subscribe(
           (data: VerificacionProduccion[]) => {   
           if (data) {
             this.ProductorList = data;
@@ -219,7 +219,7 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
 
         obtenerTodoReinyector(){
  
-          this.VerificarProduccionService.buscarporId(this.portafolio.codigoPortafolio).subscribe(
+          this.VerificarProduccionService.buscarporIdReinyector(this.portafolio.codigoPortafolio).subscribe(
             (data: VerificacionProduccion[]) => {   
               if (data) {
                 this.ProductorList = data;

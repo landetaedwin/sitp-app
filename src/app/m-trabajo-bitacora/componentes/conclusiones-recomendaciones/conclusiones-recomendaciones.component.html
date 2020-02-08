@@ -133,7 +133,7 @@
             <tr *ngFor="let verificacionProduccion of ProductorList" style="font-size: 11px">
   
               <td>Verificación Producción</td>
-              <td>{{verificacionProduccion.valoracion | valoracionBitacora }} </td>
+              <td>{{verificacionProduccion.valoracion | ValoracionProduccion }} </td>
               <td>{{verificacionProduccion.justificado | JustificadoBitacora}} </td>
               <td>{{verificacionProduccion.observacion }}  </td>
             </tr>
@@ -144,7 +144,7 @@
             <tr *ngFor="let verificarNovedad of NovedadList" style="font-size: 11px">
   
               <td>Verificación Novedades</td>
-              <td>{{verificarNovedad.valoracion | valoracionBitacora }} </td>
+              <td>{{verificarNovedad.valoracion | JustificadoBitacora }} </td>
               <td>{{verificarNovedad.justificado | JustificadoBitacora}} </td>
               <td>{{verificarNovedad.observacion }}  </td>
             </tr>

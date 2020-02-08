@@ -12,7 +12,6 @@ import { SeguimientoNovedadesService } from 'src/app/m-trabajo-bitacora/servicio
 import { VerificarNovedadService } from 'src/app/m-trabajo-bitacora/servicios/verificarNovedad.service';
 import { Router, RouterLink } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { ToastModule } from 'primeng/toast';
 import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
@@ -47,7 +46,7 @@ export class VerificacionNovedadComponent implements OnInit {
     this.verificacioNovedad.estado=1;
     this.verificacioNovedad.justificado=2;
     this.verificacioNovedad.valoracion=1;
-    this.verificacioNovedad.novedad=1;
+
     
     this.estadolist = [
       { label: "Registrado", value: 1, disabled: false },
@@ -66,12 +65,7 @@ export class VerificacionNovedadComponent implements OnInit {
   
   ];
 
-  this.novedad= [
-  
-    { label: "Si", value: 1, disabled: false },
-    { label: "No", value: 2, disabled: false }
 
-];
   
   }
 
@@ -140,12 +134,12 @@ export class VerificacionNovedadComponent implements OnInit {
       if (data) {
         this.obtenerTodo();
        // this.verificacioNovedad.codVerfNov= this.portafolio.codigoPortafolio +"_"+ this.buscarpoId().length
-        console.log(this.verificacioNovedad.codVerfNov)
+        console.log(this.verificacioNovedad.novedad)
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se creo el Informe de Verificación de Novedad' });
       //  this.obtenerTodo();
         this.verificacioNovedad.justificado= null;
-      
+        this.verificacioNovedad.novedad=null;
       
       } else {
         this.loading = false;
@@ -196,6 +190,7 @@ cloneJSON(obj) {
   editNovedad() {
     this.loading = true;
     this.editarNovedad.codVerfNov= this.verificacioNovedad.codVerfNov
+    this.editarNovedad.novedad= this.verificacioNovedad.novedad
     this.editarNovedad.codVerfTrabajo = this.verificacioNovedad.codVerfTrabajo;
     this.editarNovedad.estado = this.verificacioNovedad.estado;
     this.editarNovedad.valoracion = this.verificacioNovedad.valoracion;
@@ -223,6 +218,7 @@ cloneJSON(obj) {
   }
 
   AnularNovedad() {
+  
     this.verificacioNovedad.codVerfNov= this.anularNovedad.codVerfNov
     this.verificacioNovedad.codPortafolio= this.anularNovedad.codPortafolio
     this.verificacioNovedad.codVerfTrabajo= this.anularNovedad.codVerfTrabajo
