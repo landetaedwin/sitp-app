@@ -1,146 +1,108 @@
-<p-fieldset legend="Busqueda de portafolio trabajo en Pozo" [toggleable]="true">
+<p-fieldset legend="BÚSQUEDA DE PORTAFOLIO TRABAJO EN POZO" [toggleable]="true">
 
-  <div class="row justify-content-end">
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-primary btn-block" (click)="buscarPortafolio()">
-        Buscar
-      </button>
-    </div>
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-success btn-block" (click)="crearPortafolio()">
-        Nuevo Portafolio
-      </button>
+
+  <div class="row ">
+    <div class="col-md-12">
+      <div class="row mt-2">
+        <div class="col-md-6 mt-1">
+          <button type="button" class="btn btn-sm btn-primary btn-block" (click)="buscarPortafolio()">
+            <i class="fa fa-search"></i> BUSCAR
+          </button>
+        </div>
+        <div class="col-md-6 mt-1" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+          <button type="button" class="btn btn-sm btn-success btn-block" (click)="crearPortafolio()">
+            <i class="fa fa-briefcase"></i> NUEVO PORTAFOLIO
+          </button>
+        </div>
+        <div class="col-md-6 mt-1" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
+          <button type="button" class="btn btn-sm btn-success btn-block" (click)="crearPortafolio()">
+            <i class="fa fa-briefcase"></i> NUEVO PORTAFOLIO
+          </button>
+        </div>
+        <div class="col-md-6 mt-1" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '17'">
+          <button type="button" class="btn btn-sm btn-success btn-block" (click)="crearPortafolio()">
+            <i class="fa fa-briefcase"></i> NUEVO PORTAFOLIO
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <hr>
 
-  <div class="row">
-    <div class="col-md-6">
+
+
+  <div class="row mt-2" (keyup.enter)="buscarPortafolio()">
+    <div class="col-md-12">
       <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Numero portafolio:</b></label>
-        </div>
-        <div class="col-md">
+        <div class="col-md-6">
+          <label><b>Numero portafolio:</b></label>
           <input [(ngModel)]="busquedaParametros.numeroPortafolio" pInputText />
         </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Funcionario:</b></label>
-        </div>
-        <div class="col-md">
-          <input [(ngModel)]="busquedaParametros.funcionario" pInputText />
+        <div class="col-md-6">
+          <label><b>Funcionario:</b></label>
+          <input type="text" [(ngModel)]="busquedaParametros.usuario.apellidos"
+            (click)="openModalFuncionarioBusqueda(usuarioBusquedaAdTemplate)" pInputText>
         </div>
       </div>
-    </div>
 
-  </div>
-  <div class="row">
-    <div class="col-md-6">
       <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Fecha desde:</b></label>
-        </div>
-        <div class="col-md">
+        <div class="col-md-6">
+          <label><b>Fecha desde:</b></label>
           <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"
             [(ngModel)]="busquedaParametros.fechaDesde">
           </p-calendar>
         </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Fecha hasta:</b></label>
-        </div>
-        <div class="col-md">
+        <div class="col-md-6">
+          <label><b>Fecha hasta:</b></label>
           <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"
             [(ngModel)]="busquedaParametros.fechaHasta">
           </p-calendar>
-
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
       <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Campo:*</b></label>
-        </div>
-        <div class="col-md">
-          <p-dropdown [options]="campoList" [(ngModel)]="campo" (onChange)="cargarPozosByCamCodigo(campo);"
+        <div class="col-md-6">
+          <label><b>Campo:*</b></label>
+          <p-dropdown [options]="campoList" [(ngModel)]="campo" (onChange)="getPozoListByCamCodigo(campo);"
             [filter]="true">
           </p-dropdown>
         </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Pozo:*</b></label>
-        </div>
-        <div class="col-md">
+        <div class="col-md-6">
+          <label><b>Pozo:*</b></label>
           <p-dropdown [options]="pozoList" [(ngModel)]="pozo" [filter]="true">
           </p-dropdown>
         </div>
       </div>
     </div>
-
-
   </div>
+
 </p-fieldset>
 <hr>
 
-<p-fieldset legend="Resultados" [toggleable]="true">
-
+<p-fieldset legend="RESULTADOS" [toggleable]="true">
   <div class="row">
     <div class="col-md-12">
-      <ul class="nav justify-content-end">
-        <li>
-          <i class="fa fa-pencil " aria-hidden="true"> Editar</i>
-        </li>
-        <li>
-          <i class="fa fa-calendar-check-o " aria-hidden="true"> Registrar trabajo diario</i>
-        </li>
-        <li>
-          <i class="fa fa-paperclip " aria-hidden="true"> Adjuntar documentos</i>
-        </li>
-        <li>
-          <i class="fa fa-file-pdf-o " aria-hidden="true"> Registrar Doc Ministerio</i>
-        </li>
-        <li>
-          <i class="fa fa-user " aria-hidden="true"> Informe final operadora</i>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <br>
-
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-bordered table-sm">
+      <table class="table table-striped table-sm">
         <thead>
-          <tr>
+          <tr class="text-center">
             <th>#</th>
+            <th>Portafolio</th>
             <th>Operadora</th>
             <th>Bloque</th>
             <th>Campo</th>
             <th>Pozo</th>
             <th>Trabajo</th>
             <th>Numero</th>
-            <th>Fecha</th>
-            <th>Accion</th>
+            <th>Fecha Registro</th>
+            <th>Estado</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr
-            *ngFor="let portafolio of portafolioList| paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;">
+          <tr class="text-center"
+            *ngFor="let portafolio of portafolioList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
+
             <td>{{i+1}} </td>
+            <td>{{portafolio.codigoPortafolio}} </td>
             <td>{{portafolio.operadora.cexApellidoPaterno}} </td>
             <td>{{portafolio.bloque.bqlNombre}}</td>
             <td>{{portafolio.campo.camNombre}}</td>
@@ -148,34 +110,60 @@
             <td>{{portafolio.tipoTrabajo.tipoTrabajo}}</td>
             <td>{{portafolio.numeroTrabajo}}</td>
             <td>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</td>
-            <td class="text-center" style="width:10%;">
-              <div class="row">
-                <div class="col-md-12">
-                  <ul class="nav">
-                    <li (click)="editarPortafolio(portafolio)">
-                      <i class="fa fa-pencil fa-2x"></i>
-                    </li>
-                    <li (click)="goToRegistroDiario(portafolio)">
-                      <i class="fa fa-calendar-check-o fa-2x"></i>
-                    </li>
-                    <li>
-                      <i class="fa fa-paperclip fa-2x" aria-hidden="true"></i>
-                    </li>
-                    <li>
-                      <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
-                    </li>
-                    <li>
-                      <i class="fa fa-user fa-2x" aria-hidden="true"></i>
-                    </li>
-                  </ul>
+            <td>{{portafolio.estado | estadoPortafolio }}</td>
+            <td>
+              <div class="btn-group dropleft">
+                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-cog"></i>
+                </button>
+                <div class="dropdown-menu">
+
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="openConfirmModal(confirmDialog, portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-trash-o"></i> Anular</button>
+
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="editarPortafolio(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-pencil"></i> Editar</button>
+
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="goToRegistroDiario(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-calendar-check-o"></i> Registro diario</button>
+
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '17'"
+                    (click)="goToRegistroDiario(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-calendar-check-o"></i> Registro diario</button>
+
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="goToDocumentoMinisterio(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-book"></i> Adjuntar documentos de Ministerio</button>
+
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                    (click)="goToDocumentoMinisterio(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-book"></i> Adjuntar documentos de Ministerio</button>
+
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="goToDocumentoOperadota(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-address-book-o"></i> Adjuntar documentos de Operadora</button>
+
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                    (click)="goToDocumentoOperadota(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-address-book-o"></i> Adjuntar documentos de Operadora</button>
+
+                  <button
+                    *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21' && portafolio.tipoPozo.codigoTipoPozo == 1"
+                    (click)="goToVerificarTasa(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-bar-chart"></i> Verficiar tasa</button>
+
+                  <button
+                    *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16' &&portafolio.tipoPozo.codigoTipoPozo == 1"
+                    (click)="goToVerificarTasa(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-bar-chart"></i> Verficiar tasa</button>
                 </div>
               </div>
-
-
             </td>
-
           </tr>
-
         </tbody>
       </table>
     </div>
@@ -183,13 +171,86 @@
   </div>
   <div class="row">
     <div class="col-md-12 text-center">
-      <pagination-controls id="paginator" (pageChange)="page_number = $event" previousLabel="Anterior"
-        nextLabel="Siguiente" responsive="true">
+      <pagination-controls id="foo" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+        responsive="true">
         ></pagination-controls>
     </div>
   </div>
 
 </p-fieldset>
+
+
+<ng-template #usuarioBusquedaAdTemplate>
+  <div class="container">
+    <div class="row" style="background-color: var(--btnColor); height: 28px;">
+      <div class="col-md-12 text-center">
+        <h5 style="color: white"> Usuarios </h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-1">
+        <input type="text" class="form-control form-control-sm w-100" [(ngModel)]="searchText"
+          placeholder="Buscar funcionario">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-1 table-responsive">
+        <table class="table table-hover table-sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Usuario</th>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let us of userList | filterSearch: {usuarioLogin: searchText,apellidos: searchText,nombres: searchText}; let i=index;"
+              (dblclick)="goSelectUserBusqueds(us)">
+              <td>{{i+1}}</td>
+              <td>{{us.usuarioLogin}}</td>
+              <td>{{us.apellidos}}</td>
+              <td>{{us.nombres}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row mt-1 mb-3 justify-content-end">
+      <div class="col-md-4 ">
+        <button type="button" class="btn btn-sm btn-danger btn-block"
+          (click)="closeUsuarioModalBusqueda()">SALIR</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #confirmDialog>
+  <div class="container mt-2 mb-2">
+
+    <div class="row">
+      <div class="col-md-12">
+        <h6> Anular portafolio </h6>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <p> ¿Desea anular este registro? </p>
+      </div>
+    </div>
+    <div class="row mt-1 mb-3">
+      <div class="col-md-6 ">
+        <button type="button" class="btn btn-sm btn-success btn-block" (click)="anularPortafolio()">Si</button>
+      </div>
+      <div class="col-md-6 ">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="confirmModalRef.hide()">No</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
 
 <ng-template #customLoadingTemplate> </ng-template>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">

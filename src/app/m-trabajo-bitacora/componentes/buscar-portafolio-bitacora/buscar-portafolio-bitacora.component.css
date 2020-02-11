@@ -7,7 +7,7 @@
 }
 
 input{
-    height: 20px;
+    height: 24px;
     width: 100%;
     margin-top: 4px;
     font-size: 12px;
@@ -22,7 +22,7 @@ label{
 
 body .ui-dropdown .ui-dropdown-label {
     padding-right: 2em;
-    height: 20px;
+    height: 24px;
 }
 
 .mtop{
@@ -36,4 +36,9 @@ body .ui-dropdown .ui-dropdown-label {
     font-size: 12px;
     border-radius: 5px;
     width: 100%;
+  }
+
+  li {
+    margin-left: 3px;
+    margin-right: 3px;
   }

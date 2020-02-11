@@ -1,0 +1,316 @@
+<H4> Seguimiento de Novedades</H4>
+
+<div class="row">
+  <div class="col-md-12">
+
+  </div>
+</div>
+
+<p-fieldset legend="Datos del portafolio" [toggleable]="true">
+  <div class="row mt-1">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Numero de Portafolio:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.codigoPortafolio}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha de Registro:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Funcionario:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-1">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Pozo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.pozo.pozNombre}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.tipoTrabajo.tipoTrabajo}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha TST:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaTrabajoSinTorre | date:'dd/MM/yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-1">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Número de Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.numeroTrabajo}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha Inicio Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaInicio  | date:'dd/MM/yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha Fin Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaFin  | date:'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-fieldset>
+<br>
+
+<p-fieldset *ngIf="Disabled ==0" class="col-md-6" legend="Formulario" [toggleable]="true">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="Seguimiento"><b>Nro. de Novedad:*</b></label>
+        </div>
+        <div class="col-md">
+          <p>{{verificacionNovedad.codVerfNov}} </p>
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="Seguimiento"><b>No. de Dcoumento:*</b></label>
+        </div>
+        <div class="col-md">
+          <input type="text" class="form-control" [(ngModel)]="seguimientoNovedad.numDoc">
+          <br>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+      <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="anexoDocumento"><b> Documento:*</b></label>
+            </div>
+            <div class="col-md">
+              <div class="custom-file">
+                <input (change)="onChangeAnexo1($event)" type="file" accept=".pdf" required>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="Seguimiento"><b>Entrada/Salida*</b></label>
+        </div>
+        <div class="col-md">
+            <p-dropdown [options]="estadolist" [(ngModel)]="seguimientoNovedad.entradaSalida" readonly></p-dropdown>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+
+<div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <br>
+          <label for="Seguimiento"><b>Asunto:*</b></label>
+        </div>
+        <div class="col-md">
+          <br>
+          <p-dropdown [options]="asuntoList" [(ngModel)]="seguimientoNovedad.asunto" readonly></p-dropdown>
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <br>
+          <label for="Seguimiento"><b>Tipo de Novedad :*</b></label>
+        </div>
+        <div class="col-md">
+          <br>
+          <p-dropdown [options]="novedadList" [(ngModel)]="seguimientoNovedad.tipoNovedad" readonly></p-dropdown>
+          <br>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" >
+        <div class="row">
+      <div class="col-md">
+        <label for="Seguimiento"><b>Conclusiones: </b></label>
+        <textarea id="Seguimiento" [(ngModel)]="seguimientoNovedad.observacion" class="md-textarea form-control"
+          rows="3"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="row">
+    
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-4">
+        <br>
+        <label for="campo"><b>Fecha de Actualización:</b></label>
+      </div>
+      <div class="col-md">
+        <br>
+      <p class="mtop">{{seguimientoNovedad.fechaActualizacion | date:'dd/MM/yyyy'}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="row">       
+      <div class="col-md-4">
+        <br>
+        <label for="campo"><b> Usuario: </b></label>
+      </div>
+      <div class="col-md">
+        <br>
+        <p>{{usuario.nombres}} {{usuario.apellidos}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row justify-content-end">
+    <div class="col-md-4">
+      <button type="button" class="btn btn-sm btn-info btn-block" (click)="guardar()">
+        Guardar
+      </button>
+    </div>
+  </div>
+</p-fieldset>
+
+
+<p-fieldset legend="Información Registrada" [toggleable]="true">
+
+
+    
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>Nro. Novedad</th>
+            <th>Nro. Documento</th>
+            <th>Entrada</th>
+            <th>Asunto</th>
+            <th>Tipo de Novedad</th>
+            <th>Estado</th>
+            <th>Archivo Adjunto</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+
+
+          <tr *ngFor="let seguimiento of seguimientoList  | paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;" style="font-size: 11px">    
+            <td>{{i+1}} </td>
+            <td>{{seguimiento.numDoc}} </td>
+            <td>{{seguimiento.entradaSalida }}  </td>
+            <td>{{seguimiento.asunto }}  </td>
+            <td>{{seguimiento.tipoNovedad }}  </td>
+            <td>{{seguimiento.estado| estadoBitacora }}  </td>
+            
+            <td>
+                <ul *ngIf="seguimiento.documento"
+                (click)="showPdf(seguimiento.archivoInforme.base64,seguimiento.archivoInforme.nombre)">
+                <i class="fa fa-file-pdf-o  fa-2x" aria-hidden="true"></i>
+              </ul>  
+            </td>
+          </tr>
+
+
+      
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</p-fieldset>
+
+
+
+<div class="row">
+  <div class="col-md-12 row justify-content-center">
+          <button type="button" class="btn btn-secondary btn-sm"  (click)="volver(portafolio) ">Volver
+          </button>
+</div>
+
+
+  <ng-template #customLoadingTemplate> </ng-template>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+  </ngx-loading>

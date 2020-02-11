@@ -3,11 +3,13 @@
   "version": "0.0.0-SNAPSHOT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --port 9002 --live-reload",
+    "build": "ng build --base-href ./",
     "test": "ng test",
+    "lint:fix": "ng lint base-web --fix",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:war": "npm run build && cd dist && jar -cvf ../sitp-app.war *"
   },
   "private": true,
   "dependencies": {

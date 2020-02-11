@@ -1,0 +1,295 @@
+
+  <H4> Editar Informe Trabajos de Operadora</H4>
+
+  <div class="row">
+    <div class="col-md-12">
+
+    </div>
+  </div>
+
+<p-fieldset legend="Datos del portafolio" [toggleable]="true">
+  <div class="row mt-1">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Numero de Portafolio:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.codigoPortafolio}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha de Registro:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Funcionario:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-1">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Pozo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.pozo.pozNombre}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.tipoTrabajo.tipoTrabajo}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha TST:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaTrabajoSinTorre | date:'dd/MM/yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-1">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Número de Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.numeroTrabajo}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha Inicio Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaInicio  | date:'dd/MM/yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha Fin Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaFin  | date:'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-fieldset>
+<br>
+
+<p-fieldset legend="Formulario" [toggleable]="true">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="InformeOperadora"><b>Numero de Oficio:*</b></label>
+        </div>
+        <div class="col-md">
+          <input type="text" class="form-control" [(ngModel)]="informeOperadora.numeroOficio">
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="InformeOperadora"><b>Numero de SGC:*</b></label>
+        </div>
+        <div class="col-md">
+          <input type="text" class="form-control" [(ngModel)]="informeOperadora.numeroSgc">
+          <br>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="InformeOperadora"><b>Anexo Informe:*</b></label>
+        </div>
+        <div class="col-md">
+            <div class="custom-file">
+                <input (change)="onChangeAnexo1($event)" type="file" accept=".pdf"  required >       
+            </div>
+                <br>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="anexoDocumento"><b>Anexo Documento:*</b></label>
+          </div>
+          <div class="col-md">
+              <div class="custom-file">
+                  <input (change)="onChangeAnexo2($event)" type="file" accept=".pdf" required >   
+              </div>    
+                  <br>
+          </div>
+        </div>
+      </div>
+  
+
+
+  </div>
+
+  <div class="row">
+   
+  
+ 
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <br>
+          <label for="InformeOperadora"><b>Fecha Oficio:*</b></label>
+        </div>
+        <div class="col-md">
+          <br>
+          <p class="mtop">{{informeOperadora.fechaOficio | date:'dd/MM/yyyy' }}</p>
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+            <br>
+            <label for="InformeOperadora"><b>Fecha de ARCH:*</b></label>
+          </div>
+          <div class="col-md">
+            <br>
+            <p class="mtop">{{informeOperadora.fechaArch | date:'dd/MM/yyyy' }}</p>
+            
+            <br>
+          </div>
+        </div>
+      </div>
+
+  </div>
+  <div class="row">
+    <div *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"  class="col-md-6">
+
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <br>
+          <label for="campo"><b>Fecha de Actualización:</b></label>
+        </div>
+        <div class="col-md">
+          <br>
+            <p class="mtop">{{today | date:'dd/MM/yyyy'}}</p>
+            <br>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <br>
+          <label for="InformeOperadora"><b>RIG:*</b></label>
+        </div>
+        <div class="col-md">
+        <br>
+          <input type="text" class="form-control" [(ngModel)]="informeOperadora.rig" required>
+          <br>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+            <br>
+            <label for="InformeOperadora"><b>Costo real (USD):*</b></label>
+          </div>
+          <div class="col-md">
+            <br>
+            <input type="number" class="form-control" [(ngModel)]="informeOperadora.costo_real"  required="true">
+            <br>
+          </div>
+        </div>
+      </div>
+  
+  </div>
+
+  <div class="row" [hidden]="">
+  </div>
+  <hr />
+  <div class="row justify-content-end">
+    <div class="col-md-4">
+        <button type="button" class="btn btn-sm btn-info btn-block" 
+       (click)="guardarInformeTrabajo()">
+          Actualizar
+        </button>
+    </div>
+
+  </div>
+</p-fieldset>
+
+
+<div class="row">
+    <div class="col-md-12 row justify-content-center">
+        <button type="button" class="btn btn-secondary btn-sm"  (click)="volver()">Volver
+        </button>
+      </div>
+</div>
+
+
+<ng-template #customLoadingTemplate> </ng-template>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>
+
+
+  
+  
+  
+
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+  </ngx-loading>

@@ -4,14 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { NgxLoadingModule } from 'ngx-loading';
 import { MessagesModule } from 'primeng/messages';
 import { LoginComponent } from './login/login.component';
+import { SoloNumerosDirective } from '../resources/directivas/solo-numeros.directive';
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent,SoloNumerosDirective],
   imports: [
     CommonModule,
     FormsModule,
     MessagesModule,
     NgxLoadingModule.forRoot({}),
+    
 
   ]
 })

@@ -1,6 +1,9 @@
-<p-fieldset legend="Busqueda de portafolio trabajo en Bitacora" [toggleable]="true">
+<p-fieldset legend="Busqueda de portafolio trabajo para Informes de Verificación" [toggleable]="true">
 
-  <div class="row">
+
+  <hr>
+
+  <div class="row" (keyup.enter)="buscarPortafolio()">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
@@ -14,14 +17,14 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
-          <label for="campo"><b>Pozo:</b></label>
+          <label for="campo"><b>Funcionario:</b></label>
         </div>
         <div class="col-md">
-          <input [(ngModel)]="busquedaParametros.pozo" pInputText />
-
+          <input [(ngModel)]="busquedaParametros.funcionario" pInputText />
         </div>
       </div>
     </div>
+
   </div>
   <div class="row">
     <div class="col-md-6">
@@ -55,67 +58,142 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
-          <label for="campo"><b>Funcionario:</b></label>
+          <label for="campo"><b>Campo:*</b></label>
         </div>
         <div class="col-md">
-          <input [(ngModel)]="busquedaParametros.funcionario" pInputText />
+          <p-dropdown [options]="campoList" [(ngModel)]="campo" (onChange)="getPozoListByCamCodigo(campo);"
+            [filter]="true">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Pozo:*</b></label>
+        </div>
+        <div class="col-md">
+          <p-dropdown [options]="pozoList" [(ngModel)]="pozo" [filter]="true">
+          </p-dropdown>
         </div>
       </div>
     </div>
 
+
   </div>
-  <div class="row justify-content-end">
-    <div class="col-md-4">
-      <button type="button" class="button" (click)="buscarPortafolio()">
+</p-fieldset>
+
+
+
+<div class="row justify-content-end">
+    <div class="col-md-4"> 
+        <br>
+      <button type="button" class="btn btn-sm btn-info btn-block" (click)="buscarPortafolio()">
         Buscar
       </button>
     </div>
   </div>
 
-</p-fieldset>
-<hr>
-
+<br>
 <p-fieldset legend="Resultados" [toggleable]="true">
+  <hr>
 
+ 
   <div class="row">
     <div class="col-md-12">
       <table class="table table-bordered table-sm">
         <thead>
           <tr>
-            <th>#</th>
+        
+            <th>Portafolio</th>
             <th>Operadora</th>
             <th>Bloque</th>
             <th>Campo</th>
             <th>Pozo</th>
             <th>Trabajo</th>
-            <th>Numero</th>
+            <th>Tipo Pozo</th>
             <th>Fecha</th>
-            <th>Accion</th>
+            <th>Estado</th>
+            <th>Acción</th>
           </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let portafolio of portafolioList; let i = index" style="font-size: 11px">
-            <td>{{i+1}} </td>
+
+
+        <tbody *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21' || usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
+          <tr
+            *ngFor="let portafolio of portafolioList| paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;">
+         
+            <td>{{portafolio.codigoPortafolio}}</td>
             <td>{{portafolio.operadora.cexApellidoPaterno}} </td>
             <td>{{portafolio.bloque.bqlNombre}}</td>
             <td>{{portafolio.campo.camNombre}}</td>
             <td>{{portafolio.pozo.pozNombre}}</td>
             <td>{{portafolio.tipoTrabajo.tipoTrabajo}}</td>
-            <td>{{portafolio.numeroTrabajo}}</td>
+            <td>{{portafolio.codigoTipoPozo| tipoPozoPipe}}</td>
             <td>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</td>
-            <td class="text-center">
-              <i class="fa fa-pencil-square-o fa-2x" (click)="informeOperadora(portafolio);"></i>
+            <td>{{portafolio.estado | estadoPortafolio}}</td>
+            <td class="text-center" style="width:10%;">
+              <div class="btn-group dropleft" *ngIf="portafolio.estado!=0">
+                  <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-cog"></i>
+                </button>
+
+                <div class="dropdown-menu">
+                    
+                  
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'" 
+                    (click)="informeOperadora(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-pencil"></i> Informe de Operadora</button>
+
+                      <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="verificarFechas(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-calendar-o"></i> Verificar Fechas</button>
+
+
+                      <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      (click)="verificarProduccion(portafolio)" class="dropdown-item" type="button"><i
+                        class="fa fa-area-chart"></i> Verificar Producción</button>
+                
+                        
+                      <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="verificarNovedad(portafolio);" class="dropdown-item" type="button"><i
+                      class="fa fa-newspaper-o"></i> Verificar Novedades</button>
+
+
+                     
+                      <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    (click)="conclusion(portafolio)" class="dropdown-item" type="button"><i
+                      class="fa fa-comments "></i> Conclusiones</button>
+
+            
+            </div>
+          </div>
             </td>
 
           </tr>
-
         </tbody>
+
+
+
+
+
+
+
+
       </table>
     </div>
-
   </div>
-
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <pagination-controls id="paginator" (pageChange)="page_number = $event" previousLabel="Anterior"
+        nextLabel="Siguiente" responsive="true">
+        ></pagination-controls>
+    </div>
+  </div>
 </p-fieldset>
+
+
 
 <ng-template #customLoadingTemplate> </ng-template>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">

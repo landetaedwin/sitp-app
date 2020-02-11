@@ -68,7 +68,7 @@ export class MenuComponent implements OnInit {
       this.router.navigate(['/login'])
     }
 
-    
+
     if (this.usuario.nombres) {
       this.userNom = this.usuario.nombres;
     }
@@ -78,7 +78,8 @@ export class MenuComponent implements OnInit {
 
     this.userCI = this.usuario.usuarioLogin;
 
-    if (this.usuario.perfil.codigoPerfil == '1') {
+    //ADMINISTRADOR
+    if (this.usuario.perfil.codigoPerfil == '21') {
       this.m1 = true;
       this.m2 = true;
       this.m3 = true;
@@ -115,9 +116,8 @@ export class MenuComponent implements OnInit {
 
     }
     //matriz
-    if (this.usuario.perfil.codigoPerfil == '2') {
+    if (this.usuario.perfil.codigoPerfil == '16') {
       this.m1 = true;
-      this.m2 = true;
       this.m3 = true;
       this.m6 = true;
       this.i0 = true;
@@ -133,9 +133,8 @@ export class MenuComponent implements OnInit {
 
     }
     //regional
-    if (this.usuario.perfil.codigoPerfil == '3') {
+    if (this.usuario.perfil.codigoPerfil == '17') {
       this.m1 = true;
-      this.m2 = true;
       this.m6 = true;
       this.i0 = true;
       this.i1 = true;
@@ -145,13 +144,13 @@ export class MenuComponent implements OnInit {
 
     }
     //pagos
-    if (this.usuario.perfil.codigoPerfil == '4') {
+    if (this.usuario.perfil.codigoPerfil == '18') {
       this.m5 = true;
       this.i19 = true;
       this.i20 = true;
     }
     //tazas
-    if (this.usuario.perfil.codigoPerfil == '5') {
+    if (this.usuario.perfil.codigoPerfil == '19') {
       this.m4 = true;
       this.m6 = true;
       this.i14 = true;
@@ -164,7 +163,7 @@ export class MenuComponent implements OnInit {
 
     }
     //bitacora
-    if (this.usuario.perfil.codigoPerfil == '6') {
+    if (this.usuario.perfil.codigoPerfil == '20') {
       this.m6 = true;
       this.i21 = true;
       this.i22 = true;
@@ -175,48 +174,31 @@ export class MenuComponent implements OnInit {
         label: 'Portafolio',
         visible: this.m1,
         items: [
+          { label: 'Crear portafolio', routerLink: [{ outlets: { sitp: ['crearPortafolio'] } }], visible: this.i1 },
           { label: 'Buscar portafolio', routerLink: [{ outlets: { sitp: ['buscarPortafolio'] } }], visible: this.i0 },
+
+          { label: 'Historial de pozo', routerLink: [{ outlets: { sitp: ['historialPozo'] } }], visible: this.i0 },
         ]
       },
       {
         label: 'Busqueda de portafolio anexo información',
         visible: this.m2,
         items: [
-          { label: 'Reportes diarios', routerLink: [{ outlets: { sitp: ['reportesDiarios'] } }], visible: this.i4 },
-          { label: 'Registro de Documentos Operadora', command: () => this.imprimirMensaje(), visible: this.i5 },
-          { label: 'Registro de Documentos Ministerio', command: () => this.imprimirMensaje(), visible: this.i6 },
           { label: 'Infome de resultados', command: () => this.imprimirMensaje(), visible: this.i7 },
-        ]
-      },
-      {
-        label: 'Busqueda de portafolio para verificación',
-        visible: this.m3,
-        items: [
-          { label: 'Buscar portfolio Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioBitacora'] } }], visible: this.i0},
-          { label: 'Verrificación de fechas', routerLink: [{ outlets: { sitp: ['verificacionFechas'] } }], visible: this.i8 },
-          { label: 'Verificación de cumplimiento de tasas', command: () => this.imprimirMensaje(), visible: this.i9 },
-          { label: 'Verificación de producción', routerLink: [{ outlets: { sitp: ['verificacionProduccion'] } }], visible: this.i10 },
-          { label: 'Verificación de Inyección/Reinyección', command: () => this.imprimirMensaje(), visible: this.i11 },
-          { label: 'Verificación de Observaciones', command: () => this.imprimirMensaje(), visible: this.i12 },
-          { label: 'Seguimiento de observaciones', command: () => this.imprimirMensaje(), visible: this.i13 },
         ]
       },
       {
         label: 'Registro de tasas',
         visible: this.m4,
         items: [
-          { label: 'Buscar registro de tasas', command: () => this.imprimirMensaje(), visible: this.i14 },
-          { label: 'Agregar registro de tasa', command: () => this.imprimirMensaje(), visible: this.i15 },
-          { label: 'Actualizar registro de tasa', command: () => this.imprimirMensaje(), visible: this.i16 },
-          { label: 'Editar registro de tasa', command: () => this.imprimirMensaje(), visible: this.i17 },
-          { label: 'Anular registro de tasa', command: () => this.imprimirMensaje(), visible: this.i18 },
+          { label: 'Buscar registro de tasas', routerLink: [{ outlets: { sitp: ['registroTasas'] } }], visible: this.i14 },
         ]
       },
       {
         label: 'Pagos',
         visible: this.m5,
         items: [
-          { label: 'Verificación de pagos', command: () => this.imprimirMensaje(), visible: this.i19 },
+          { label: 'Verificación de pagos', routerLink: [{ outlets: { sitp: ['verificarPagos'] } }], visible: this.i19 },
           { label: 'Busqueda de pagos registrados', command: () => this.imprimirMensaje(), visible: this.i20 },
         ]
       },
@@ -224,17 +206,13 @@ export class MenuComponent implements OnInit {
         label: 'Bitacora',
         visible: this.m6,
         items: [
-          { label: 'Registro de novedad', command: () => this.imprimirMensaje(), visible: this.i21 },
-          { label: 'Seguimiento de la novedad', command: () => this.imprimirMensaje(), visible: this.i22 },
-          { label: 'Informe Trabajo de Operadora', command: () => this.imprimirMensaje(), visible: this.i23 },
+          { label: 'Informes de Verificación', routerLink: [{ outlets: { sitp: ['buscarPortafolioBitacora'] } }], visible: this.i0 }
         ]
       },
       {
         label: 'Administrador',
         visible: this.m8,
         items: [
-          { label: 'Editar datos', style: "", command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Anular datos', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Asignación de Campos', routerLink: [{ outlets: { sitp: ['asignacionCampos'] } }], visible: true },
         ]
       },
@@ -246,7 +224,7 @@ export class MenuComponent implements OnInit {
           { label: 'Tipo de trabajo', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Número de trabajo', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Categorización de trabajo', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Tipo de pozo', command: () => this.imprimirMensaje(), visible: true },
+          { label: 'Tipo de pozo', routerLink: [{ outlets: { sitp: ['mantenimiento-tipo-pozo'] } }], visible: true },
           { label: 'Asunto de documento Operadora', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Asunto de documento Ministerio', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Yacimiento', command: () => this.imprimirMensaje(), visible: true },
@@ -257,7 +235,7 @@ export class MenuComponent implements OnInit {
           { label: 'Estado de asignación', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Estado del pago', command: () => this.imprimirMensaje(), visible: true },
           { label: 'Valoración de cumplimiento', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Consorsio', command: () => this.imprimirMensaje(), visible: true }
+          { label: 'Consorsio', routerLink: [{ outlets: { sitp: ['consorcios'] } }], visible: true }
         ]
       }
 
@@ -267,7 +245,7 @@ export class MenuComponent implements OnInit {
 
 
   closeSession() {
-    
+
     this.loginService.clearSession();
     this.router.navigate(['/login'])
   }

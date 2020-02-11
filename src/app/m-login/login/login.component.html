@@ -21,14 +21,14 @@
     </div>
   </div>
 
-  <div class="row" style="margin-top: 5%;">
+  <div class="row" style="margin-top: 5%;" (keyup.enter)="verifyLogin()">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-2">
           <label for="campo">Usuario:</label>
         </div>
         <div class="col-md-6">
-          <input id="username" name="username" type="text" [(ngModel)]="usuario.usuarioLogin" pInputText required />
+          <input id="username" name="username" type="text" [(ngModel)]="usuario.usuarioLogin" pInputText required solo-numeros maxlength="10"/>
         </div>
       </div>
 
@@ -64,7 +64,6 @@
       </p>
     </div>
   </div>
-  <p-messages></p-messages>
 </div>
 
 <ng-template #customLoadingTemplate> </ng-template>

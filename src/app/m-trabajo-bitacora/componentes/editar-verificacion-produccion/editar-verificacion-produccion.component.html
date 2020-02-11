@@ -1,0 +1,379 @@
+
+<h1>EditarVerificación de Pozo Productor</h1>
+
+<p-fieldset legend="Datos del portafolio" [toggleable]="true">
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Numero de Portafolio:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.codigoPortafolio}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha de Registro:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Funcionario:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Pozo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.pozo.pozNombre}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Trabajo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.tipoTrabajo.tipoTrabajo}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha TST:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaTrabajoSinTorre | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Número de Trabajo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.numeroTrabajo}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha Inicio:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaInicio  | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha Fin:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaFin  | date:'dd/MM/yyyy' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-fieldset>
+  <br>
+
+
+
+<p-fieldset legend="Tipo Pozo Productor" [style]="{width: '90%'}">
+ 
+
+    <div class="row">
+        
+      <div class="col-md-4">
+        <button pButton type="button" label="Cargar ANTES de inicio de trabajo" class="ui-button-success" (click)="cargarDatos()"></button> 
+      </div>
+
+
+      <div class="col-md-4">
+        <div class="col-md-3">
+            <label for="verificacion Fechas"><b># Registros:</b></label>
+         </div>
+         <div class="col-md-1">
+          <p-dropdown [options]="registrosList" [(ngModel)]="verificacionProduccion.numRegistros"readonly></p-dropdown>
+        </div>
+        
+    </div>
+
+
+      <div class="col-md-4">
+          
+        <button pButton type="button" label="Cargar DESPUES de fin de trabajo" class="ui-button-warning" (click)="cargarDatosDespues()" ></button>
+      </div>
+
+    
+</div>
+</p-fieldset>
+
+<br>
+<br>
+
+   <div class="row">
+  <div class="col-md-12">
+<p-fieldset legend="Produccion ANTES de trabajo" [toggleable]="true" >
+
+  <table class="table table-bordered table-sm">
+    
+        <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Bloque</th>
+            <th>Yacimiento</th>
+           
+            <th>BPPD</th>
+            <th>BFPD</th>
+            <th>BSW%</th>
+            <th>*API</th>
+            <th>Equipo</th>
+            <th>SALINIDAD PPM</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let produccion of datosAntes" style="font-size: 11px">
+
+         
+        <td>{{produccion.f_produccion  | date:'dd/MM/yyyy' }} </td>
+        <td>{{produccion.bloqueDetalle}} </td>
+        <td>{{produccion.yacimiento}} </td>
+        <td>{{produccion.bppd}} </td>
+        <td>{{produccion.bfpd}} </td>
+        <td>{{produccion.bsw}} </td>
+        <td>{{produccion.api}} </td>
+        <td>{{produccion.equipo}} </td>
+        <td>{{produccion.salinidad_ppm}} </td>
+
+        </tr>
+      <tr>
+          <td> <p><b>Promedio:</b></td>
+          <td></td>
+          <td></td>
+          <td> <p>{{produccion.PromedioAntesMostrar}}</p></td>
+      </tr>
+
+      </tbody>
+  </table>
+  <div class="col-md-12" *ngIf="produccion.ultimo_antes">
+      <div class="row">
+        <div class="col-md-4">
+            <p><b>Ultimo Antes :</b>
+              {{produccion.ultimo_antes}}</p>
+        </div>
+      </div>
+    </div>
+
+</p-fieldset>
+</div>
+</div>
+
+<br>
+<br>
+
+<div class="row">
+<div class="col-md-12">
+<p-fieldset legend="Produccion DESPUÉS de trabajo" [toggleable]="true" >
+ 
+
+<table class="table table-bordered table-sm">
+  
+      <thead>
+      <tr>
+          <th>Fecha</th>
+          <th>Bloque</th>
+          <th>Yacimiento</th>
+         
+          <th>BPPD</th>
+          <th>BFPD</th>
+          <th>BSW%</th>
+          <th>*API</th>
+          <th>Equipo</th>
+          <th>SALINIDAD PPM</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let produccion of datosDespues" style="font-size: 11px">
+
+        <td>{{produccion.f_produccion  | date:'dd/MM/yyyy' }} </td>
+        <td>{{produccion.bloqueDetalle}} </td>
+        <td>{{produccion.yacimiento}} </td>
+        <td>{{produccion.bppd}} </td>
+        <td>{{produccion.bfpd}} </td>
+        <td>{{produccion.bsw}} </td>
+        <td>{{produccion.api}} </td>
+        <td>{{produccion.equipo}} </td>
+        <td>{{produccion.salinidad_ppm}} </td>
+      </tr>
+
+      <tr>
+          <td> <p><b>Promedio:</b></td>
+          <td></td>
+          <td></td>
+          <td> <p>{{produccion.PromedioDespuesMostrar}}</p></td>
+      </tr>
+
+    </tbody>
+</table>
+
+<div class="col-md-12" *ngIf="produccion.ultimo_despues">
+    <div class="row">
+      <div class="col-md-4">
+          <p><b>Ultimo Después :</b>
+            {{produccion.ultimo_despues}}</p>
+      </div>
+    </div>
+<br>
+<br>
+
+<div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="verificacionFechas"><b>Porcentaje de Control :</b></label>
+        </div>
+        <div class="col-md">
+          
+            <p class="label">{{verificacionProduccion.PorcentajeMostrar}}%</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="row">       
+        <div class="col-md-4">
+          <label for="verificacionProduccion"><b>Porcentaje de Incremento / Disminución :</b></label>
+        </div>
+        <div class="col-md">
+            <p class="label">{{verificacionProduccion.porcentajeControlEstatico}}%</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+    <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="verificacionFechas"><b>Justificado:*</b></label>
+            </div>
+            <div class="col-md">
+              
+                <p-dropdown [options]="justificadoList" [(ngModel)]="verificacionProduccion.justificado" readonly></p-dropdown>
+            </div>
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <div class="row">       
+            <div class="col-md-4">
+              <label for="verificacionProduccion"><b>Valoración:*</b></label>
+            </div>
+            <div class="col-md">
+                <p class="label">{{verificacionProduccion.valoracion | ValoracionProduccion}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="verificacionProduccion"><b>Observacion:*</b></label>
+            </div>
+            <div class="col-md">
+                <textarea id="verificacionProduccion"   [(ngModel)]="verificacionProduccion.observacion"  class="md-textarea form-control" rows="3"></textarea>       
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="verificacionProduccion"><b>Estado:*</b></label>
+            </div>
+            <div class="col-md">
+            <p-dropdown [options]="estadolist" [(ngModel)]="verificacionProduccion.estado" readonly></p-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+
+  
+
+
+
+
+  <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Fecha de Actualización:</b></label>
+          </div>
+          <div class="col-md">
+            <p class="mtop">{{verificacionProduccion.fecha_actualizacion | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-md-6">
+        <div class="row">       
+          <div class="col-md-4">
+            <label for="campo"><b> Usuario: </b></label>
+          </div>
+          <div class="col-md">
+            <p>{{usuario.nombres}} {{usuario.apellidos}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="row">
+      <div class="col-md-4"></div>
+     
+    <div class="col-md-8">
+       
+      <button pButton type="button" label="Guardar" class="ui-button-success" (click)="guardar()">
+      </button>
+      &nbsp;&nbsp;
+    <button pButton type="button" label="Volver" class="ui-button-warning" (click)="volver()">
+    </button>
+  </div>
+  </div>
+ 
+
+

@@ -1,0 +1,161 @@
+<p-fieldset legend="Historial del pozo">
+  <div class="row justify-content-end">
+    <div class="col-md-2">
+      <button type="button" class="btn btn-sm btn-primary btn-block"
+        (click)="openModalHistorialPozo(historialPozoTemplate)">Agregar</button>
+    </div>
+
+    <div class="col-md-2">
+      <button type="button" class="btn btn-sm btn-primary btn-block" (click)="getHistorialPozoList()">Mostar
+        historial</button>
+    </div>
+  </div>
+</p-fieldset>
+<hr>
+<p-fieldset legend="Datos del historial de pozo" [toggleable]="true">
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover table-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Trabajo</th>
+            <th>Numero</th>
+            <th>Fecha TST</th>
+            <th>Fecha Fin</th>
+            <th>Categorización</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let hp of historialPozoList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
+            <td>{{i+1}}</td>
+            <td>{{hp.tipoTrabajo.tipoTrabajo}}</td>
+            <td>{{hp.numero}}</td>
+            <td>{{hp.fechaTST | date:'dd/MM/yyyy'}}</td>
+            <td>{{hp.fechaFin | date:'dd/MM/yyyy'}}</td>
+            <td>{{hp.categoria.categoria}}</td>
+
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <pagination-controls id="foo" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+        responsive="true">
+        ></pagination-controls>
+    </div>
+  </div>
+
+
+</p-fieldset>
+
+
+<ng-template #historialPozoTemplate>
+  <div class="container mt-3 mb-3">
+
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h4>Historial del pozo</h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4"><label>Campo: *</label></div>
+          <div class="col-md-8">
+            <p-dropdown [options]="campoList" [(ngModel)]="campo" (onChange)="getPozoListByCamCodigo(campo)"
+              [filter]="true"></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4"><label>Pozo: *</label></div>
+          <div class="col-md-8">
+            <p-dropdown [options]="pozoList" [(ngModel)]="pozo" [filter]="true"></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4"><label>Trabajo: *</label></div>
+          <div class="col-md-8">
+            <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo"
+              (onChange)="getCategoriaByCodigoTipoTrabajo(tipoTrabajo)" [filter]="true"></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12" *ngIf="tipoTrabajo.codigoTipoTrabajo == 3">
+        <div class="row">
+          <div class="col-md-4"><label>Fecha TST: *</label></div>
+          <div class="col-md-8">
+            <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+              [inputStyle]="{ width: '100%' }" [(ngModel)]="historialPozo.fechaTST"></p-calendar>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12" *ngIf="tipoTrabajo.codigoTipoTrabajo != 1">
+        <div class="row">
+          <div class="col-md-4"><label>Numero: *</label></div>
+          <div class="col-md-8">
+            <input [(ngModel)]="historialPozo.numero" pInputText>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4"><label>Fecha Inicio: *</label></div>
+          <div class="col-md-8">
+            <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+              [inputStyle]="{ width: '100%' }" [(ngModel)]="historialPozo.fechaInicio" (onSelect)="changeFechaFin()">
+            </p-calendar>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4"><label>Fecha Fin: *</label></div>
+          <div class="col-md-8">
+            <p-calendar [style]="{ width: '100%' }" [minDate]="minDateF" [maxDate]="maxDate"
+              [inputStyle]="{ width: '100%' }" [(ngModel)]="historialPozo.fechaFin"></p-calendar>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12" *ngIf="tipoTrabajo.codigoTipoTrabajo != 1">
+        <div class="row">
+          <div class="col-md-4"><label>Categorización: *</label></div>
+          <div class="col-md-8">
+            <p-dropdown [options]="categoriaList" [(ngModel)]="categoria" [filter]="true"></p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-primary btn-block" (click)="crearHistorialPozo()">Guardar</button>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-danger btn-block"
+          (click)="closeModalHistorialPozo()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+  <p-toast position="top-center"></p-toast>
+</ng-template>
+
+
+
+
+
+
+<ng-template #customLoadingTemplate> </ng-template>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>

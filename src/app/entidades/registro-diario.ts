@@ -11,4 +11,5 @@ export class RegistroDiario {
     estado: number
     fechaActualizacion: Date
     idUsuario: number
+
 }

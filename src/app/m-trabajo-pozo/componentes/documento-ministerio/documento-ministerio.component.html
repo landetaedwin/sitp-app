@@ -1,0 +1,476 @@
+<p-fieldset legend="Registro documentos habilitantes ministerio">
+  <p-fieldset legend="DATOS DEL PORTAFOLIO" [toggleable]="true">
+    <div class="row ">
+      <div class="col-md-12">
+        <div class="row mt-2">
+          <div class="col-md-6 mt-1">
+            <button type="button" class="btn btn-sm btn-success btn-block"
+              (click)="openModalDocumeto(documentoTemplate)"> <i class="fa fa-file-text-o"></i> Adjuntar
+              documento</button>
+          </div>
+          <div class="col-md-6 mt-1">
+            <button type="button" class="btn btn-sm btn-danger btn-block" (click)="goToBuscarPortafolio()">
+              <i class="fa fa-sign-out"> Volver</i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-1 mb-1">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Numero de portafolio:</b></label>
+            <p>{{portafolio.codigoPortafolio}}</p>
+          </div>
+          <div class="col-md-4">
+            <label><b>Fecha registro:</b></label>
+            <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
+          </div>
+          <div class="col-md-4">
+            <label><b>Funcionario:</b></label>
+            <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>{{cs.pozo}}:</b></label>
+            <p>{{portafolio.pozo.pozNombre}}</p>
+          </div>
+          <div class="col-md-4">
+            <label><b>{{cs.trabajo}}:</b></label>
+            <p>{{portafolio.tipoTrabajo.tipoTrabajo}}</p>
+          </div>
+          <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
+            <label><b>{{cs.fechaTST}}:</b></label>
+            <p>{{portafolio.fechaTrabajoSinTorre | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4" *ngIf="portafolio.numeroTrabajo">
+            <label><b>{{cs.numeroTrabajo}}:</b></label>
+            <p>{{portafolio.numeroTrabajo}}</p>
+          </div>
+          <div class="col-md-4" *ngIf="portafolio.fechaInicio">
+            <p><b>{{cs.fechaInicio}}:</b></p>
+            <p>{{portafolio.fechaInicio | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-fieldset>
+  <br>
+
+  <p-fieldset legend="Documentos ministerio" [toggleable]="true">
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nro SGC</th>
+              <th>Nro Oficio</th>
+              <th>Anexos</th>
+              <th>Fecha oficio</th>
+              <th>Asunto</th>
+              <th>Resolución</th>
+              <th>Objetivo</th>
+              <th>Estado</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="text-center"
+              *ngFor="let doc of documentoMinisterioList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
+
+              <td>{{i+1}} </td>
+              <td>{{doc.numeroSGC}} </td>
+              <td>{{doc.numeroOficio}} </td>
+              <td>
+                <ul>
+                  <li *ngIf="doc.urlOficio">
+                    <div class="btn-group dropright">
+                      <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Oficio adjunto
+                      </a>
+                      <div class="dropdown-menu">
+                        <button class="dropdown-item" type="button"
+                          (click)="showPdf(doc.fileOficio.base64, doc.fileOficio.nombre)"><i class="fa fa-download"></i>
+                          Descargar</button>
+                      </div>
+                    </div>
+                  </li>
+                  <li *ngIf="doc.urlAnexo1">
+                    <div class="btn-group dropright">
+                      <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Anexo 1
+                      </a>
+                      <div class="dropdown-menu">
+                        <button class="dropdown-item" type="button"
+                          (click)="showPdf(doc.fileAnexo1.base64, doc.fileAnexo1.nombre)"><i class="fa fa-download"></i>
+                          Descargar</button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </td>
+              <td>{{doc.fechaOficio  | date:'dd/MM/yyyy'}} </td>
+              <td>{{doc.asunto.asunto}} </td>
+              <td>{{doc.numeroResolucion}} </td>
+              <td>{{doc.objetivo}} </td>
+              <td>{{doc.estado | estadoDocOperadora}} </td>
+              <td>
+                <div class="btn-group dropleft">
+                  <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-cog"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                      (click)="openModalDocumentoEdit(documentoEditTemplate,doc)" class="dropdown-item" type="button"><i
+                        class="fa fa-pencil"></i>
+                      Editar</button>
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      (click)="openModalDocumentoEdit(documentoEditTemplate,doc)" class="dropdown-item" type="button"><i
+                        class="fa fa-pencil"></i>
+                      Editar</button>
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      (click)="openModalDocumentoEdit(confirmDialog,doc)" class="dropdown-item" type="button"><i
+                        class="fa fa-trash-o"></i> Anular</button>
+
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="documentoMinisterioList.length > 9">
+      <div class="col-md-12 text-center">
+        <pagination-controls id="foo" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+          responsive="true">
+          ></pagination-controls>
+      </div>
+    </div>
+
+
+  </p-fieldset>
+
+
+
+  <ng-template #documentoTemplate>
+    <div class="container mt-3 mb-3">
+
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h4>Documentos habilitantes minsterio</h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label><b>Nro. SGC:*</b></label>
+            </div>
+            <div class="col-md-8">
+              <input [(ngModel)]="documentoMinisterio.numeroSGC" pInputText numeros-doc />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label><b>Nro. Oficio:*</b></label>
+            </div>
+            <div class="col-md-8">
+              <input [(ngModel)]="documentoMinisterio.numeroOficio" pInputText numeros-doc />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anexos -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Dir. Oficio adjunto:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" data-max-size="2048" (change)="onChangeDocNroOficio($event);" />
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Adjuntar anexo:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" data-max-size="2048" (change)="onChangeAnexo1($event);" required>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Fecha Oficio:*</b></label>
+            </div>
+            <div class="col-md-8">
+              <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+                [inputStyle]="{ width: '100%' }" [(ngModel)]="documentoMinisterio.fechaOficio"></p-calendar>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Asunto:*</b></label>
+            </div>
+            <div class="col-md">
+              <p-dropdown [options]="asuntoList" [(ngModel)]="asunto" [filter]="true"
+                (onChange)="descativarNresolucion(asunto);"> </p-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Nro. Resolucion:*</b></label>
+            </div>
+            <div class="col-md">
+              <input [(ngModel)]="documentoMinisterio.numeroResolucion" pInputText [disabled]="nResol" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Objetivo:*</b></label>
+            </div>
+            <div class="col-md">
+              <input [(ngModel)]="documentoMinisterio.objetivo" pInputText />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-primary btn-block" (click)="guardar()">Guardar</button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-danger btn-block"
+            (click)="closeModalDocumento()">Cancelar</button>
+        </div>
+
+      </div>
+
+    </div>
+    <p-toast position="top-center"></p-toast>
+  </ng-template>
+
+
+  <ng-template #documentoEditTemplate>
+    <div class="container mt-3 mb-3">
+
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h4>Documentos habilitantes minsterio</h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label><b>Nro. SGC:*</b></label>
+            </div>
+            <div class="col-md-8">
+              <input [(ngModel)]="documentoMinisterioEdit.numeroSGC" pInputText numeros-doc />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label><b>Nro. Oficio:*</b></label>
+            </div>
+            <div class="col-md-8">
+              <input [(ngModel)]="documentoMinisterioEdit.numeroOficio" pInputText numeros-doc />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anexos -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Dir. Oficio adjunto:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeDocNroOficio($event);" />
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Adjuntar anexo:</b></label>
+            </div>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" accept=".pdf" (change)="onChangeAnexo1($event);" required>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-sm "> <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Fecha Oficio:*</b></label>
+            </div>
+            <div class="col-md-8">
+              <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+                [inputStyle]="{ width: '100%' }" [(ngModel)]="documentoMinisterioEdit.fechaOficio"></p-calendar>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Asunto:*</b></label>
+            </div>
+            <div class="col-md">
+              <p-dropdown [options]="asuntoList" [(ngModel)]="asunto" [filter]="true"
+                (onChange)="descativarNresolucion(asunto);"> </p-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Nro. Resolucion:*</b></label>
+            </div>
+            <div class="col-md">
+              <input [(ngModel)]="documentoMinisterioEdit.numeroResolucion" pInputText [disabled]="nResol" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="campo"><b>Objetivo:*</b></label>
+            </div>
+            <div class="col-md">
+              <input [(ngModel)]="documentoMinisterioEdit.objetivo" pInputText />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-primary btn-block" (click)="editarDocumento()">Editar</button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-danger btn-block"
+            (click)="closeModalDocumentoEdit()">Cancelar</button>
+        </div>
+
+      </div>
+
+    </div>
+    <p-toast position="top-center"></p-toast>
+  </ng-template>
+
+  <ng-template #confirmDialog>
+    <div class="container mt-2 mb-2">
+
+      <div class="row">
+        <div class="col-md-12">
+          <h6> Anular documento </h6>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <p> ¿Desea anular este registro? </p>
+        </div>
+      </div>
+      <div class="row mt-1 mb-3">
+        <div class="col-md-6 ">
+          <button type="button" class="btn btn-sm btn-success btn-block" (click)="anularDocumento()">Si</button>
+        </div>
+        <div class="col-md-6 ">
+          <button type="button" class="btn btn-sm btn-danger btn-block" (click)="confirmModalRef.hide()">No</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
+
+
+  <ng-template #customLoadingTemplate> </ng-template>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+  </ngx-loading>

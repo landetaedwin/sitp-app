@@ -11,10 +11,10 @@ export class Portafolio {
     codigoPortafolio: number
     codigoTipoTrabajo: number
     cexCodigo: number
-    bqlCodigo: String
+    blqCodigo: String
     camCodigo: String
     pozCodigo: string
-    pozNombre: String
+    pozNombre: string
     numeroTrabajo: number
     fechaTrabajoSinTorre: Date
     fechaInicio: Date
@@ -33,5 +33,10 @@ export class Portafolio {
     tipoPozo: TipoPozo;
     consorcio: Consorcio;
     funcionario: Usuario;
+
+    motivoCambio: string
+    observacion: string
+    fechaModificacion: Date
+
 
 }

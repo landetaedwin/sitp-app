@@ -1,14 +1,114 @@
-<p-fieldset legend="Informe de trabajos de Operadora" [toggleable]="true">
-  <div class="row">
-    <div class="col-md-12">
+<H4> Informe Trabajos de Operadora</H4>
 
+<div class="row">
+  <div class="col-md-12">
+
+  </div>
+</div>
+
+<p-fieldset legend="Datos del portafolio" [toggleable]="true">
+  <div class="row mt-1">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Numero de Portafolio:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.codigoPortafolio}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha de Registro:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Funcionario:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+        </div>
+      </div>
     </div>
   </div>
 
+  <div class="row mt-1">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Pozo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.pozo.pozNombre}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.tipoTrabajo.tipoTrabajo}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha TST:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaTrabajoSinTorre | date:'dd/MM/yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-1">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Número de Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.numeroTrabajo}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha Inicio Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaInicio  | date:'dd/MM/yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Fecha Fin Trabajo:</b></p>
+        </div>
+        <div class="col-md-8">
+          <p>{{portafolio.fechaFin  | date:'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-fieldset>
+<br>
 
-
+<p-fieldset *ngIf="Disabled ==0" class="col-md-6" legend="Formulario" [toggleable]="true">
   <div class="row">
-
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
@@ -16,6 +116,7 @@
         </div>
         <div class="col-md">
           <input type="text" class="form-control" [(ngModel)]="informeOperadora.numeroOficio">
+          <br>
         </div>
       </div>
     </div>
@@ -27,6 +128,7 @@
         </div>
         <div class="col-md">
           <input type="text" class="form-control" [(ngModel)]="informeOperadora.numeroSgc">
+          <br>
         </div>
       </div>
     </div>
@@ -34,110 +136,149 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="InformeOperadora"><b>Anexo Documento:*</b></label>
-        </div>
-        <div class="col-md">
-          <input type="file" accept=".pdf" [(ngModel)]="informeOperadora.anexoDocumento" required>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="InformeOperadora"><b>Fecha de Oficio:*</b></label>
-        </div>
-        <div class="col-md">
-          <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }" [(ngModel)]="informeOperadora.fechaOficio" required></p-calendar>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="InformeOperadora"><b>Fecha ARCH:*</b></label>
-        </div>
-        <div class="col-md">
-          <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }" [(ngModel)]="informeOperadora.fechaArch" required></p-calendar>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="InformeOperadora"><b>Costo real (USD):*</b></label>
-        </div>
-        <div class="col-md">
-          <input type="number" class="form-control" [(ngModel)]="informeOperadora.costo_real" required>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="InformeOperadora"><b>Estado:*</b></label>
-        </div>
-        <div class="col-md">
-        <p-dropdown [options]="estadolist" [(ngModel)]="informeOperadora.estado" readonly></p-dropdown>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Fecha de Actualización:</b></label>
-        </div>
-        <div class="col-md">
-            <p class="mtop">{{today | date:'MM-dd-yyyy'}}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="InformeOperadora"><b>RIG:*</b></label>
-        </div>
-        <div class="col-md">
-          <input type="text" class="form-control" [(ngModel)]="informeOperadora.rig" required>
-        </div>
-      </div>
-    </div>
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-4">
           <label for="InformeOperadora"><b>Anexo Informe:*</b></label>
         </div>
         <div class="col-md">
-          <input type="file" accept=".pdf" [(ngModel)]="informeOperadora.anexoInforme" required>
+          <div class="custom-file">
+            <input (change)="onChangeAnexo1($event)" type="file" accept=".pdf" >
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="anexoDocumento"><b>Anexo Documento:*</b></label>
+        </div>
+        <div class="col-md">
+          <div class="custom-file">
+            <input (change)="onChangeAnexo2($event)" type="file" accept=".pdf" >
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <div class="row">
+
+
+
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <br>
+          <label for="InformeOperadora"><b>Fecha Oficio:*</b></label>
+        </div>
+        <div class="col-md">
+          <br>
+          <p-calendar [style]="{ width: '100%' }" [maxDate]="today" [inputStyle]="{ width: '100%' }"
+            [(ngModel)]="informeOperadora.fechaOficio" ></p-calendar>
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <br>
+          <label for="InformeOperadora"><b>Fecha de ARCH:*</b></label>
+        </div>
+        <div class="col-md">
+          <br>
+          <p-calendar [style]="{ width: '100%' }" [minDate]="informeOperadora.fechaOficio" [maxDate]="today"
+            [inputStyle]="{ width: '100%' }" [(ngModel)]="informeOperadora.fechaArch"></p-calendar>
+          <br>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+   
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <br>
+          <label for="campo"><b>Fecha de Actualización:</b></label>
+        </div>
+        <div class="col-md">
+          <br>
+          <p class="mtop">{{today | date:'dd/MM/yyyy'}}</p>
+          <br>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row" [hidden]="tst">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <br>
+          <label for="InformeOperadora"><b>RIG:*</b></label>
+        </div>
+        <div class="col-md">
+          <br>
+          <input type="text" class="form-control" [(ngModel)]="informeOperadora.rig" >
+          <br>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <br>
+          <label for="InformeOperadora"><b>Costo real (USD):*</b></label>
+        </div>
+        <div class="col-md">
+          <br>
+          <input type="number" class="form-control" [(ngModel)]="informeOperadora.costo_real">
+          <br>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row" [hidden]="">
   </div>
   <hr />
   <div class="row justify-content-end">
     <div class="col-md-4">
-      <button type="button" class="button" (click)="guardarInformeTrabajo()">
+      <button type="button" class="btn btn-sm btn-info btn-block"
+        (click)="guardarInformeTrabajo()">
         Guardar
       </button>
     </div>
+
   </div>
 </p-fieldset>
 
 <br>
 <p-fieldset legend="Resultados" [toggleable]="true">
+
+  <ul class="nav justify-content-end">
+    <i class="fa fa-times" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">Anular Informe</i>
+    &nbsp; &nbsp;
+    <i class="fa fa-pencil-square-o" aria-hidden="true"> Editar Informe Operadora</i>
+  </ul>
 
   <div class="row">
     <div class="col-md-12">
@@ -148,26 +289,60 @@
             <th>Nro. Informe</th>
             <th>Nro. SGC</th>
             <th>Nro Oficio</th>
-            <th>Anexo Documento</th>
             <th>Fecha Oficio</th>
             <th>Fecha ARCH</th>
             <th>Costo Real</th>
             <th>Estado</th>
             <th>Fecha Actualizacion</th>
+            <th>Anexo Documento</th>
+            <th>Anexo Informe</th>
+            <th>Acción</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let informeOperadora of informelist" style="font-size: 11px">
 
             <td>{{informeOperadora.codInformeOperadora}} </td>
-          <td>{{informeOperadora.numeroSgc}} </td>
+            <td>{{informeOperadora.numeroSgc}} </td>
             <td>{{informeOperadora.numeroOficio}} </td>
-              <td><a href>{{informeOperadora.anexoDocumento}}</a> </td>
-                <td>{{informeOperadora.fechaOficio | date:'dd/MM/yyyy'}} </td>
+            <td>{{informeOperadora.fechaOficio | date:'dd/MM/yyyy'}} </td>
             <td>{{informeOperadora.fechaArch | date:'dd/MM/yyyy'}} </td>
-              <td>{{informeOperadora.costo_real}} </td>
-                <td>{{informeOperadora.estado}} </td>
-                <td>{{informeOperadora.fecha_actualizacion | date:'dd/MM/yyyy'}} </td>
+            <td>{{informeOperadora.costo_real}} </td>
+            <td>{{informeOperadora.estado | estadoOperadora}} </td>
+            <td>{{informeOperadora.fecha_actualizacion }} </td>
+
+            <td>
+             
+              <ul *ngIf="informeOperadora.anexo_Oficio " class="text-center"
+                (click)="showPdf(informeOperadora.archivoInforme.base64,informeOperadora.archivoInforme.nombre)">
+                <i class="fa fa-file-pdf-o  fa-2x" aria-hidden="true"></i>
+              </ul>
+
+              <ul *ngIf="!informeOperadora.anexo_Oficio">
+                No se ha cargado archivo adjunto
+              </ul>
+            </td>
+
+            <td class="text-center">
+              <ul *ngIf="informeOperadora.anexoDocumento" class="text-center"
+                (click)="showPdf(informeOperadora.archivoAnexo.base64,informeOperadora.archivoAnexo.nombre)">
+                <i class="fa fa-file-pdf-o  fa-2x" aria-hidden="true"></i>
+              </ul>
+
+              <ul *ngIf="!informeOperadora.anexo_Oficio">
+                No se ha cargado archivo adjunto
+              </ul>
+
+            </td>
+
+            <td class="text-center">
+              <i class="fa fa-pencil-square-o fa-2x" (click)="editarInformeOperadora(informeOperadora);"></i>
+              <i *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                (click)="openModalInformeAnular(InformeTempalteAnular, informeOperadora)">
+                <i class="fa fa-times fa-2x"></i>
+              </i>
+            </td>
+
 
 
           </tr>
@@ -178,7 +353,56 @@
 
   </div>
 
-</p-fieldset>
-<ng-template #customLoadingTemplate> </ng-template>
-<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
-</ngx-loading>
+
+  <div class="row">
+    <div class="col-md-12 row justify-content-center">
+      <button type="button" class="btn btn-secondary btn-sm" (click)="volver(portafolio) ">
+        <i class="fa fa-bars" aria-hidden="true">&nbsp;Menú Verificación</i>
+      </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-primary btn-sm" (click)="siguiente(portafolio)"><i class="fa fa-calendar"
+          aria-hidden="true">&nbsp; Verificar Fechas</i>
+      </button>
+    </div>
+  </div>
+
+
+  <ng-template #customLoadingTemplate> </ng-template>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+  </ngx-loading>
+
+
+
+  <ng-template #InformeTempalteAnular>
+    <div class="container mt-3 mb-3">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h4>Anular Novedad</h4>
+        </div>
+      </div>
+      <hr>
+
+      <div class="row">
+        <div class="col-md-12">
+          <p>¿Desea anular este registro?</p>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-primary btn-block" (click)="AnularInforme()">SI</button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-danger btn-block" (click)="closeModalInformeAnular()">NO</button>
+        </div>
+      </div>
+    </div>
+
+
+  </ng-template>
+
+
+
+  <ng-template #customLoadingTemplate> </ng-template>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+  </ngx-loading>

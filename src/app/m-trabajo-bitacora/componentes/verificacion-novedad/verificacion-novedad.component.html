@@ -1,0 +1,339 @@
+  
+  <H4> Verificación Novedades</H4>
+  <p-fieldset legend="Datos del portafolio" [toggleable]="true">
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Numero de Portafolio:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.codigoPortafolio}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha de Registro:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Funcionario:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Pozo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.pozo.pozNombre}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Trabajo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.tipoTrabajo.tipoTrabajo}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha TST:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaTrabajoSinTorre | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Número de Trabajo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.numeroTrabajo}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha Inicio Trabajo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaInicio  | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha Fin Trabajo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaFin  | date:'dd/MM/yyyy' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-fieldset>
+  <br>
+  
+<p-fieldset legend="Verificar Novedades" [toggleable]="true">
+  <div class="row">
+    <div class="col-md-12">
+
+    </div>
+  </div>
+
+
+ 
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">       
+        <div class="col-md-4">
+          <label for="verificacionNovedad"><b>Novedad:</b></label>
+        </div>
+        <div class="col-md">
+          <input type="text" class="form-control" [(ngModel)]="verificacioNovedad.novedad" >
+        </div>
+      </div>
+    </div>
+
+
+    
+
+    <div class="col-md-6">
+        <div class="row">       
+            <div class="col-md-4">
+              <label for="verificacionNovedad"><b>Valoración:*</b></label>
+            </div>
+            <div class="col-md">
+            <p-dropdown [options]="valoracionList" [(ngModel)]="verificacioNovedad.valoracion" readonly></p-dropdown>
+            </div>
+          </div>
+    </div>
+  
+
+  <div class="col-md-6">
+    <div class="row">       
+      <div class="col-md-4">
+        <label for="verificacionNovedad"><b>Justificado:*</b></label>
+      </div>
+      <div class="col-md">
+      <p-dropdown [options]="justificadoList" [(ngModel)]="verificacioNovedad.justificado" readonly></p-dropdown>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6" *ngIf="usuario.perfil.codigoPerfil == '21'">
+
+  </div>
+</div>
+
+<div class="row"  *ngIf="verificacioNovedad.justificado == 1">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <label for="verificacionNovedad"><b>Observacion:*</b></label>
+        </div>
+        <div class="col-md">
+            <textarea id="verificacionNovedad"   [(ngModel)]="verificacioNovedad.observacion"  class="md-textarea form-control" rows="3"></textarea>       
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-4">
+        <label for="campo"><b>Fecha de Actualización:</b></label>
+      </div>
+      <div class="col-md">
+        <p class="mtop">{{verificacioNovedad.fecha_actualizacion | date:'dd-MM-yyyy'}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="row">       
+      <div class="col-md-4">
+        <label for="campo"><b> Usuario: </b></label>
+      </div>
+      <div class="col-md">
+        <p>{{usuario.nombres}} {{usuario.apellidos}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+
+
+  <div class="row" >
+  </div>
+  <hr />
+  
+  <div class="row" >
+      <div class="col-md-12">
+  <div class="row justify-content-end">
+    <div class="col-md-4">
+      <button type="button" class="btn btn-sm btn-info btn-block" (click)="guardar()">
+        Guardar
+      </button>
+    </div>
+  </div>
+  <br>
+  <div *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'" class="row justify-content-end">  
+
+      <div class="col-md-4">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="volverMenu()">
+          Volver
+        </button>
+      </div>
+    </div> 
+  </div> 
+</div> 
+</p-fieldset>
+
+<br>
+
+<p-fieldset legend="Resultados" [toggleable]="true">
+
+    <div class="row">
+        <div class="col-md-12">
+          <ul class="nav justify-content-end">
+            <li>
+                <i class="fa fa-times">Anular Novedad</i>
+            </li>
+            <li>
+                &nbsp; &nbsp;
+            </li>
+            <li>
+            <i class="fa fa-thumb-tack ">Seguimiento Novedad</i>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+
+            <th>Cod. Novedad</th>
+            <th>Novedad</th>
+            <th>Justificado</th>
+            <th>Estado</th>
+            <th>Fecha Actualización</th>
+            <th>Observacion</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let editarNovedad of novedadList | paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;" style="font-size: 11px">
+
+            <td>{{editarNovedad.codVerfNov  }}</td>
+            <td>{{editarNovedad.novedad }} </td>
+            <td>{{editarNovedad.justificado | JustificadoBitacora}} </td>
+            <td>{{editarNovedad.estado | estadoBitacora}}  </td>
+            <td>{{editarNovedad.fecha_actualizacion  | date:'dd-MM-yyyy' }} </td>
+            <td>{{editarNovedad.observacion }} </td>
+            <td>
+            <i 
+            (click)="seguimientoNovedad(editarNovedad)">
+            <i class="fa fa-thumb-tack  fa-2x"></i>
+            </i>
+          <i>
+          <i *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+           (click)="openModalNovedadAnular(NovedadTempalteAnular, editarNovedad)">
+ 
+          <i class="fa fa-times fa-2x"></i>
+          </i>
+          </i>
+          </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-center">
+      </div>
+    </div>
+  </div>
+</p-fieldset>
+
+
+<div class="row">
+  <div *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"  class="col-md-12 row justify-content-center">
+      <button type="button" class="btn btn-secondary btn-sm"  (click)="volver(portafolio) "><i class="fa fa-bar-chart" aria-hidden="true">&nbsp;Verificar Producción</i>
+      </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-secondary btn-sm"  (click)="siguiente(portafolio) "><i class="fa fa-comments" aria-hidden="true">&nbsp;Conclusiones y Recomendaciones</i>
+      </button>
+</div>
+
+<ng-template #NovedadTempalteAnular>
+  <div class="container mt-3 mb-3">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h4>Anular Novedad</h4>
+      </div>
+    </div>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-12">
+        <p>¿Desea anular este registro?</p>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-primary btn-block" (click)="AnularNovedad()">SI</button>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="closeModalNovedadAnular()">NO</button>
+      </div>
+    </div>
+  </div>
+
+
+</ng-template>
+
+
+
+<ng-template #customLoadingTemplate> </ng-template>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>
+

@@ -1,176 +1,166 @@
 <p-fieldset legend="Creación portafoilo trabajo en Pozo" [toggleable]="true">
-  <div class="row justify-content-end">
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-success btn-block " (click)="guardarPortafolio()">
-        Actualizar
-      </button>
-    </div>
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-primary btn-block" (click)="openConfirmModal(confirmDialog)">
-        Anular
-      </button>
-    </div>
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-danger btn-block" (click)="goToBuscarPortafolio()">
-        Cancelar
-      </button>
-    </div>
-  </div>
 
-  <hr />
 
-  <div class="row">
+  <div class="row ">
     <div class="col-md-12">
-      <p class="float-right"><b>Fecha registro:&nbsp;&nbsp;</b> {{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
-    </div>
-    <div class="col-md-12">
-      <p class="float-right"><b>Funcionario:&nbsp;&nbsp;</b> {{portafolio.funcionario.nombres }} &nbsp;
-        {{portafolio.funcionario.apellidos }}</p>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Campo:*</b></label>
+      <div class="row mt-2">
+        <div class="col-md-8 mt-1">
+          <button type="button" class="btn btn-sm btn-success btn-block"
+            (click)="openModalEditarPortafolio(editarPortafolioTemplate)"> <i class="fa fa-floppy-o"></i></button>
         </div>
-        <div class="col-md">
+
+        <div class="col-md-4 mt-1">
+          <button type="button" class="btn btn-sm btn-danger btn-block" (click)="goToBuscarPortafolio()">
+            <i class="fa fa-sign-out"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row ">
+    <div class="col-md-8">
+
+
+
+
+      <div class="row mt-2">
+        <div class="col-md-3">
+          <label><b>Fecha registro:*</b></label>
+          <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
+        </div>
+        <div class="col-md-3">
+          <label><b>Funcionario registro:*</b></label>
+          <p>{{portafolio.funcionario.nombres }} {{portafolio.funcionario.apellidos }}</p>
+        </div>
+        <div class="col-md-3">
+          <label><b>Bloque:*</b></label>
+          <p>{{bloque.bqlNombre}}</p>
+        </div>
+        <div class="col-md-3">
+          <label><b>Operadora:*</b></label>
+          <p>{{operadora.cexApellidoPaterno}}</p>
+        </div>
+        <div class="col-md-12">
+          <label><b>Campo:*</b></label>
           <input type="text" [(ngModel)]="portafolio.campo.camNombre" pInputText disabled>
-
+          <!-- <p-dropdown [options]="campoList" [filter]="true" [(ngModel)]="campo" (onChange)="cargarCampoPozo(campo);">
+          </p-dropdown> -->
         </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Pozo:*</b></label>
+        <div class="col-md-12">
+          <label><b>Pozo:*</b></label>
+          <input type="text" [(ngModel)]="portafolio.pozo.pozNombre" pInputText disabled>
+          <!-- <p-dropdown [options]="pozoList" [(ngModel)]="pozo" (onChange)="cargarOperadoraByPozCompaniaPetrolera(pozo);"
+            [filter]="true">
+          </p-dropdown> -->
         </div>
-        <div class="col-md">
-          <p-dropdown [options]="pozoList" [(ngModel)]="pozo" (onChange)="cargarOperadoraByPozCompaniaPetrolera(pozo);">
-          </p-dropdown>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Bloque:*</b></label>
-        </div>
-        <div class="col-md">
-          <p class="mtop">{{bloque.bqlNombre}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Tipo pozo:*</b></label>
-        </div>
-        <div class="col-md">
+        <div class="col-md-12">
+          <label><b>Tipo pozo:*</b></label>
           <p-dropdown [options]="tipoPozoList" [(ngModel)]="tipoPozo"></p-dropdown>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Operadora:*</b></label>
-        </div>
-        <div class="col-md">
-          <p class="mtop">{{operadora.cexApellidoPaterno}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Consorcio:*</b></label>
-        </div>
-        <div class="col-md">
+        <div class="col-md-12">
+          <label><b>Consorcio:*</b></label>
           <p-dropdown [options]="consorcioList" [(ngModel)]="consorcio"></p-dropdown>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Trabajo:*</b></label>
-        </div>
-        <div class="col-md">
-          <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo"
-            (onChange)="verificacionTipoTrabajo(tipoTrabajo);"></p-dropdown>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6" [hidden]="!campoNumero">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Numero:</b></label>
-        </div>
-        <div class="col-md">
-          <p-dropdown [options]="numeroList" [(ngModel)]="numeroTrabajo"></p-dropdown>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row" [hidden]="!campoTst">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Fecha trabajo sin torre:</b></label>
-        </div>
-        <div class="col-md">
-          <p-calendar [style]="{ width: '100%' }" [maxDate]="maxDate" [inputStyle]="{ width: '100%' }"
-            [(ngModel)]="portafolio.fechaTrabajoSinTorre"></p-calendar>
-        </div>
-      </div>
-    </div>
 
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="campo"><b>Estado:</b></label>
+        <div class="col-md-12">
+          <label><b>Trabajo:*</b></label>
+          <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo"></p-dropdown>
         </div>
-        <div class="col-md">
+        <div class="col-md-12" *ngIf="tipoTrabajo.codigoTipoTrabajo == 3">
+          <label><b>Fecha trabajo sin torre:*</b></label>
+          <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+            [inputStyle]="{ width: '100%' }" [(ngModel)]="portafolio.fechaTrabajoSinTorre"></p-calendar>
+        </div>
+        <div class="col-md-12" *ngIf="tipoTrabajo.codigoTipoTrabajo != 1">
+          <label><b>Numero:</b></label>
+          <input type="text" [(ngModel)]="portafolio.numeroTrabajo" pInputText>
+        </div>
+
+        <div class="col-md-12">
+          <label><b>Estado:</b></label>
+          <p-dropdown [options]="estadoList" [(ngModel)]="portafolio.estado"></p-dropdown>
+        </div>
+
+        <div class="col-md-12">
+          <label><b>Observación:</b></label>
+          <textarea class="form-control" rows="3" [(ngModel)]="portafolio.observacion"></textarea>
+        </div>
+
+
+
+        <!-- <div class="col-md-12">
+          <label ><b>Estado:</b></label>
           <p-dropdown [options]="estadoList" [(ngModel)]="estado"></p-dropdown>
+        </div> -->
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-12">
+          <label><b>Motivo de cambio:</b></label>
+          <p>{{portafolio.motivoCambio}}</p>
+        </div>
+        <div class="col-md-12">
+
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr class="text-center">
+                <th scope="col">Historial del pozo</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="text-center">
+                <td>WO1</td>
+              </tr>
+              <tr class="text-center">
+                <td>WO2</td>
+              </tr>
+              <tr class="text-center">
+                <td>WO3</td>
+              </tr>
+              <tr class="text-center">
+                <td>WO4</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <ng-template #editarPortafolioTemplate>
+    <div class="container mt-3 mb-3">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h4>Editar portafolio</h4>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <label><b>Motivo de la edicion del portafolio:</b></label>
+          <textarea class="form-control" rows="3" [(ngModel)]="portafolio.motivoCambio"></textarea>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-primary btn-block" (click)="guardarPortafolio()">Editar</button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-danger btn-block"
+            (click)="closeModalEditarPortafolio()">Volver</button>
         </div>
       </div>
     </div>
-  </div>
-  <hr />
+    <p-toast position="top-center"></p-toast>
+
+  </ng-template>
 
 </p-fieldset>
 <ng-template #customLoadingTemplate> </ng-template>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
 </ngx-loading>
-
-
-
-<ng-template #confirmDialog>
-  <div class="container">
-    <div class="row mt-2" style="background-color: var(--btnColor); height: 28px;">
-      <div class="col-md-12">
-        <h5> ¿Desea anular el portafolio? </h5>
-      </div>
-    </div>
-    <div class="row mt-1 mb-3">
-      <div class="col-md-6 ">
-        <button type="button" class="btn btn-sm btn-success btn-block" (click)="anularPortafolio()">Si</button>
-      </div>
-      <div class="col-md-6 ">
-        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="confirmModalRef.hide()">No</button>
-      </div>
-    </div>
-  </div>
-</ng-template>

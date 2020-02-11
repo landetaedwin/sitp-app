@@ -1,0 +1,358 @@
+  
+  <H4> Conclusiones y Recomendaciones</H4>
+  <p-fieldset legend="Datos del portafolio" [toggleable]="true">
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Numero de Portafolio:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.codigoPortafolio}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha de Registro:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Funcionario:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Pozo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.pozo.pozNombre}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Trabajo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.tipoTrabajo.tipoTrabajo}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha TST:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaTrabajoSinTorre | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Número de Trabajo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.numeroTrabajo}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha Inicio Trabajo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaInicio  | date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <p><b>Fecha Fin Trabajo:</b></p>
+          </div>
+          <div class="col-md-8">
+            <p>{{portafolio.fechaFin  | date:'dd/MM/yyyy' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-fieldset>
+  <br>
+  
+
+  <p-fieldset legend="Resultados" [toggleable]="true">
+
+  
+      
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-bordered table-sm">
+          <thead>
+            <tr>
+  
+              <th>Tipo</th>
+              <th>Valoracion</th>
+              <th>Justificado</th>
+              <th>Observación</th>
+            </tr>
+          </thead>
+          <tbody>
+  
+  
+            <tr *ngFor="let verificacionFechas of verificacionFechasList" style="font-size: 11px">
+  
+              <td>Verificación Fechas</td>
+              <td>{{verificacionFechas.valoracion | valoracionBitacora }} </td>
+              <td>{{verificacionFechas.justificado | JustificadoBitacora}} </td>
+              <td>{{verificacionFechas.observacion }}  </td>
+            </tr>
+  
+  
+            <tr *ngFor="let verificacionProduccion of ProductorList" style="font-size: 11px">
+  
+              <td>Verificación Producción</td>
+              <td>{{verificacionProduccion.valoracion | ValoracionProduccion }} </td>
+              <td>{{verificacionProduccion.justificado | JustificadoBitacora}} </td>
+              <td>{{verificacionProduccion.observacion }}  </td>
+            </tr>
+  
+     
+  
+  
+            <tr *ngFor="let verificarNovedad of NovedadList" style="font-size: 11px">
+  
+              <td>Verificación Novedades</td>
+              <td>{{verificarNovedad.valoracion | JustificadoBitacora }} </td>
+              <td>{{verificarNovedad.justificado | JustificadoBitacora}} </td>
+              <td>{{verificarNovedad.observacion }}  </td>
+            </tr>
+  
+           
+  
+  
+          </tbody>
+        </table>
+      </div>
+  
+    </div>
+  </p-fieldset>
+
+  
+<p-fieldset legend="Verificar Novedades" [toggleable]="true">
+
+    <div class="row">
+      <div class="col-md-12" >
+          <div class="row">
+        <div class="col-md">
+          <label for="ConcConclusionRecomendacion">Conclusiones: </label>
+          <textarea id="ConcConclusionRecomendacion" [(ngModel)]="conclusionRecomendacion.conclusion" class="md-textarea form-control"
+            rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-12" >
+        <div class="row">
+      <div class="col-md">
+        <label for="ConcConclusionRecomendacion">Recomendaciones: </label>
+        <textarea id="ConcConclusionRecomendacion" [(ngModel)]="conclusionRecomendacion.recomendacion" class="md-textarea form-control"
+          rows="3"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col-md-6" *ngIf="usuario.perfil.codigoPerfil == '21'">
+      <div class="row">       
+          <div class="col-md-4">
+            <br>
+            <label for="verificacionNovedad"><b>Estado:*</b></label>
+          </div>
+          <div class="col-md">
+          <br>
+          <p-dropdown [options]="estadolist" [(ngModel)]="conclusionRecomendacion.estado" readonly></p-dropdown>
+          </div>
+        </div>  
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-4">
+
+        <label for="campo"><b>Fecha de Actualización:</b></label>
+      </div>
+      <div class="col-md">
+      <p class="mtop">{{conclusionRecomendacion.fecha_actualizacion | date:'dd-MM-yyyy'}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="row">       
+      <div class="col-md-4">
+
+        <label for="campo"><b> Usuario: </b></label>
+      </div>
+      <div class="col-md">
+        <p>{{usuario.nombres}} {{usuario.apellidos}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+
+
+  <div class="row" >
+  </div>
+  <hr />
+  <div class="row justify-content-end">
+    <div class="col-md-4">
+      <button type="button" class="btn btn-sm btn-info btn-block" (click)="guardarConclusionRecomendacion()">
+        Guardar
+      </button>
+    </div>
+  </div>
+</p-fieldset>
+
+<br>
+
+
+
+
+
+<p-fieldset legend="Información Registrada" [toggleable]="true">
+    <div class="row">
+        <div class="col-md-12">
+          <ul class="nav justify-content-end">
+            <li>
+                <i class="fa fa-times">Anular Fromulario</i>
+            </li>
+            <li>
+                &nbsp; &nbsp;
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+    
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Conclusion</th>
+            <th>Recomendación</th>
+            <th>Fecha Actualización</th>
+            <th>Acciones</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+
+
+          <tr *ngFor="let conclusionRecomendacion of conclusionList  | paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;" style="font-size: 11px">    
+            <td>{{i+1}} </td>
+            <td>{{conclusionRecomendacion.conclusion}} </td>
+            <td>{{conclusionRecomendacion.recomendacion }}  </td>
+            <td>{{conclusionRecomendacion.fecha_actualizacion | date:'dd-MM-yyyy' }}  </td>
+            <td>
+                <i *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                (click)="openModalConclusionAnular(ConclusionesTempalteAnular, conclusionRecomendacion)">
+                <i class="fa fa-times fa-2x"></i>
+                </i>
+            
+              </td>
+          </tr>
+
+
+      
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</p-fieldset>
+
+
+
+<div class="row">
+  <div class="col-md-12 row justify-content-center">
+          <button type="button" class="btn btn-secondary btn-sm"  (click)="volver(portafolio) "><i class="fa fa-newspaper-o" aria-hidden="true">&nbsp;Verificar Novedad</i>
+          </button>
+    
+    
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-secondary btn-sm"  (click)="siguiente(portafolio) "><i class="fa fa-bars" aria-hidden="true">&nbsp;Menú Verificación</i>
+      </button>
+</div>
+
+
+
+
+
+<ng-template #customLoadingTemplate> </ng-template>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>
+
+
+
+<ng-template #ConclusionesTempalteAnular>
+    <div class="container mt-3 mb-3">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h4>Anular Novedad</h4>
+        </div>
+      </div>
+      <hr>
+  
+      <div class="row">
+        <div class="col-md-12">
+          <p>¿Desea anular este registro?</p>
+        </div>
+      </div>
+  
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-primary btn-block" (click)="AnularConclusion()">SI</button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-sm btn-danger btn-block" (click)="closeModalNovedadAnular()">NO</button>
+        </div>
+      </div>
+    </div>
+  
+  
+  </ng-template>

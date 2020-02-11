@@ -1,117 +1,77 @@
-<p-fieldset legend="Registro reporte diario trabajos en pozo">
-  <div class="row">
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-primary btn-block">
-        {{cs.guardar}}
-      </button>
-    </div>
-    <div class="col-md-2">
-      <button type="button" class="btn btn-sm btn-success btn-block">
-        {{cs.cancelar}}
-      </button>
-    </div>
-  </div>
-  <hr>
-  <p-fieldset legend="Datos del portafolio" [toggleable]="true">
-    <div class="row mt-1">
-      <div class="col-md-4">
-        <div class="row">
-          <div class="col-md-4">
-            <p><b>{{cs.numeroPortafolio}}:</b></p>
-          </div>
-          <div class="col-md-8">
-            <p>{{portafolio.codigoPortafolio}}</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="row">
-          <div class="col-md-4">
-            <p><b>{{cs.fechaRegistro}}:</b></p>
-          </div>
-          <div class="col-md-8">
-            <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="row">
-          <div class="col-md-4">
-            <p><b>{{cs.funcionario}}:</b></p>
-          </div>
-          <div class="col-md-8">
-            <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+<p-fieldset legend="REGISTRO REPORTE DIARIO TRABAJOS EN POZO">
+  <p-fieldset legend="DATOS DEL PORTAFOLIO" [toggleable]="true">
+
+    <div class="row ">
+      <div class="col-md-12">
+        <div class="row mt-2 justify-content-end">
+
+          <div class="col-md-6 mt-1 mb-3">
+            <button type="button" class="btn btn-sm btn-danger btn-block" (click)="goToBuscarPortafolio()">
+              <i class="fa fa-sign-out"> Volver</i>
+            </button>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="row mt-1">
-      <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-12">
         <div class="row">
           <div class="col-md-4">
-            <p><b>{{cs.pozo}}:</b></p>
+            <label><b>Numero de portafolio:</b></label>
+            <p>{{portafolio.codigoPortafolio}}</p>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-4">
+            <label><b>Fecha registro:</b></label>
+            <p>{{portafolio.fechaRegistro | date:'dd/MM/yyyy'}}</p>
+          </div>
+          <div class="col-md-4">
+            <label><b>Funcionario:</b></label>
+            <p>{{portafolio.funcionario.nombres}} {{portafolio.funcionario.apellidos}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>{{cs.pozo}}:</b></label>
             <p>{{portafolio.pozo.pozNombre}}</p>
           </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="row">
           <div class="col-md-4">
-            <p><b>{{cs.trabajo}}:</b></p>
-          </div>
-          <div class="col-md-8">
+            <label><b>{{cs.trabajo}}:</b></label>
             <p>{{portafolio.tipoTrabajo.tipoTrabajo}}</p>
           </div>
-        </div>
-      </div>
-      <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
-        <div class="row">
-          <div class="col-md-4">
-            <p><b>{{cs.fechaTST}}:</b></p>
-          </div>
-          <div class="col-md-8">
+          <div class="col-md-4" *ngIf="portafolio.fechaTrabajoSinTorre">
+            <label><b>{{cs.fechaTST}}:</b></label>
             <p>{{portafolio.fechaTrabajoSinTorre | date:'dd/MM/yyyy'}}</p>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row mt-1">
-      <div class="col-md-4">
         <div class="row">
-          <div class="col-md-4">
-            <p><b>{{cs.numeroTrabajo}}:</b></p>
-          </div>
-          <div class="col-md-8">
+          <div class="col-md-4" *ngIf="portafolio.numeroTrabajo">
+            <label><b>{{cs.numeroTrabajo}}:</b></label>
             <p>{{portafolio.numeroTrabajo}}</p>
           </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="portafolio.fechaInicio">
             <p><b>{{cs.fechaInicio}}:</b></p>
+            <p>{{portafolio.fechaInicio | date:'dd/MM/yyyy'}}</p>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-4" *ngIf="!portafolio.fechaInicio">
+            <p><b>{{cs.fechaInicio}}:</b></p>
             <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
               [inputStyle]="{ width: '100%' }" [(ngModel)]="fechaInicio"></p-calendar>
           </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="portafolio.fechaFin">
             <p><b>{{cs.fechaFin}}:</b></p>
+            <p>{{portafolio.fechaFin | date:'dd/MM/yyyy'}}</p>
+
           </div>
-          <div class="col-md-8">
+          <div class="col-md-4" *ngIf="!portafolio.fechaFin">
+            <p><b>{{cs.fechaFin}}:</b></p>
             <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
-              [inputStyle]="{ width: '100%' }"></p-calendar>
+              [inputStyle]="{ width: '100%' }" [(ngModel)]="fechaFin"></p-calendar>
           </div>
         </div>
       </div>
     </div>
+
   </p-fieldset>
   <br>
   <p-fieldset legend="Acciones del portafolio" [toggleable]="true">
@@ -127,13 +87,16 @@
           [disabled]="bRegistroDiario">{{cs.registroDiario}}</button>
       </div>
       <div class="col-md-2">
-        <button type="button" class="btn btn-sm btn-info btn-block" [disabled]="bSuspecion">{{cs.suspencion}}</button>
+        <button type="button" class="btn btn-sm btn-info btn-block"
+          (click)="openModalSuspencion(registroDiarioTemplate)" [disabled]="bSuspecion">{{cs.suspencion}}</button>
       </div>
       <div class="col-md-2">
-        <button type="button" class="btn btn-sm btn-info btn-block" [disabled]="bReinicio">{{cs.reinicio}}</button>
+        <button type="button" class="btn btn-sm btn-info btn-block" (click)="openModalReinicio(registroDiarioTemplate)"
+          [disabled]="bReinicio">{{cs.reinicio}}</button>
       </div>
       <div class="col-md-2">
-        <button type="button" class="btn btn-sm btn-info btn-block" [disabled]="bFin">{{cs.terminar}}</button>
+        <button type="button" class="btn btn-sm btn-info btn-block" (click)="finalizarOperacionesRegistroDiario()"
+          [disabled]="bFin">{{cs.terminar}}</button>
       </div>
 
     </div>
@@ -142,20 +105,61 @@
   <p-fieldset legend="Registros del portafolio" [toggleable]="true">
     <div class="row">
       <div class="col-md-12">
-        <table class="table table-bordered table-sm">
+        <table class="table table-striped table-sm">
           <thead>
-            <tr>
+            <tr class="text-center">
               <th>#</th>
               <th>{{cs.accion}}</th>
               <th>{{cs.fechaAccion}}</th>
-              <th>{{cs.fechaFin}}/{{cs.fechaSuspencion}}</th>
               <th>{{cs.actividad}}</th>
+              <th>{{cs.estado}}</th>
+              <th></th>
             </tr>
           </thead>
+          <tbody>
+            <tr class="text-center"
+              *ngFor="let reg of registroDiarioList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{reg.accion.accion}}</td>
+              <td>{{reg.fechaAccion | date:'dd/MM/yyyy'}}</td>
+              <td>{{reg.actividad}}</td>
+              <td>{{reg.estado | estadoReporteDiario}}</td>
+              <td>
+                <div class="btn-group dropleft">
+                  <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-cog"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '17'"
+                      class="dropdown-item" type="button"
+                      (click)="openModalRegistroEdit(registroDiarioEditTemplate,reg)"><i class="fa fa-pencil"></i>
+                      Editar</button>
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      class="dropdown-item" type="button"
+                      (click)="openModalRegistroEdit(registroDiarioEditTemplate,reg)"><i class="fa fa-pencil"></i>
+                      Editar</button>
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                      class="dropdown-item" type="button" (click)="openConfirmModal(confirmDialog,reg)"><i
+                        class="fa fa-trash-o"></i> Anular</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
 
+
+          </tbody>
         </table>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <pagination-controls id="foo" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+          responsive="true">
+          ></pagination-controls>
+      </div>
+    </div>
+
   </p-fieldset>
 </p-fieldset>
 
@@ -167,59 +171,118 @@
 
 
 <ng-template #registroDiarioTemplate>
-  <p-fieldset legend="{{cs.registroDiario}}">
-    <div class="col-md-12">
-      <div class="row">
-        <div class="col-md-12">
-          <h6 style="color: red" [hidden]="!errorCrear">Completa todos los campos de este formulario</h6>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-12">
-              <p><b>{{cs.accion}}:</b></p>
-            </div>
-            <div class="col-md-12">
-              <p>{{registroDiario.accion.accion}}</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-12">
-              <p><b>{{cs.fechaAccion}}:</b></p>
-            </div>
-            <div class="col-md-12">
-              <p>{{registroDiario.fechaAccion | date:'dd/MM/yyyy'}}</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-12">
-              <p><b>{{cs.actividad}}:</b></p>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <textarea class="form-control" rows="5" [(ngModel)]="registroDiario.actividad"></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row justify-content-end mt-3 mb-3">
-        <div class="col-md-4">
-          <button type="button" class="btn btn-sm btn-block btn-success" (click)="guardarRegistroDiario()">
-            Guardar
-          </button>
-        </div>
-        <div class="col-md-4">
-          <button type="button" class="btn btn-sm btn-block btn-danger " (click)="closeModalRegistro()">
-            Cancelar
-          </button>
-        </div>
+  <div class="container mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-12">
+        <h5>{{cs.registroDiario}}</h5>
       </div>
     </div>
-  </p-fieldset>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <label>{{cs.accion}}:*</label>
+        <input [value]="registroDiario.accion.accion" pInputText disabled />
+      </div>
+      <div class="col-md-12">
+        <label>{{cs.fechaAccion}}:*</label>
+        <p-calendar [style]="{ width: '100%' }" [minDate]="minDateTrabajo" [maxDate]="maxDate"
+          [inputStyle]="{ width: '100%' }" [(ngModel)]="registroDiario.fechaAccion"></p-calendar>
+      </div>
+      <div class="col-md-12">
+        <label>{{cs.actividad}}:*</label>
+        <textarea class="form-control" rows="4" [(ngModel)]="registroDiario.actividad"></textarea>
+      </div>
+    </div>
+    <div class="row mt-1 mb-1">
+      <div class="col-md-6" *ngIf="registroDiario.accion == aRegistroTrabajo">
+        <button type="button" class="btn btn-sm btn-block btn-success" (click)="guardarRegistroDiario()">
+          Registrar trabajo
+        </button>
+      </div>
+
+      <div class="col-md-6" *ngIf="registroDiario.accion == aSuspencion">
+        <button type="button" class="btn btn-sm btn-block btn-success" (click)="guardarSuspencion()">
+          Suspender trabajo
+        </button>
+      </div>
+
+      <div class="col-md-6" *ngIf="registroDiario.accion == aReinicio">
+        <button type="button" class="btn btn-sm btn-block btn-success" (click)="guardarReinicio()">
+          Reiniciar trabajo
+        </button>
+      </div>
+
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-block btn-danger " (click)="closeModalRegistro()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+  <p-toast position="top-center"></p-toast>
+</ng-template>
+
+<ng-template #registroDiarioEditTemplate>
+  <div class="container mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-12">
+        <h5>{{cs.registroDiario}}</h5>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <label>{{cs.accion}}:</label>
+        <input [value]="registroDiarioEdit.accion.accion" pInputText disabled />
+      </div>
+      <div class="col-md-12">
+        <label>{{cs.fechaAccion}}:</label>
+        <p-calendar [style]="{ width: '100%' }" [minDate]="minDateTrabajo" [maxDate]="maxDate"
+          [inputStyle]="{ width: '100%' }" [(ngModel)]="registroDiarioEdit.fechaAccion"></p-calendar>
+      </div>
+      <div class="col-md-12">
+        <label>{{cs.actividad}}:</label>
+        <textarea class="form-control" rows="4" [(ngModel)]="registroDiarioEdit.actividad"></textarea>
+      </div>
+    </div>
+    <div class="row mt-1 mb-1">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-block btn-success" (click)="editarRegistroDiario()">
+          Editar
+        </button>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-block btn-danger " (click)="closeModalRegistroEdit()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+  <p-toast position="top-center"></p-toast>
+</ng-template>
+
+
+<ng-template #confirmDialog>
+  <div class="container mt-2 mb-2">
+
+    <div class="row">
+      <div class="col-md-12">
+        <h6> Anular registro diario </h6>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <p> ¿Desea anular este registro? </p>
+      </div>
+    </div>
+    <div class="row mt-1 mb-3">
+      <div class="col-md-6 ">
+        <button type="button" class="btn btn-sm btn-success btn-block" (click)="anularRegistroDiario()">Si</button>
+      </div>
+      <div class="col-md-6 ">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="confirmModalRef.hide()">No</button>
+      </div>
+    </div>
+  </div>
 </ng-template>

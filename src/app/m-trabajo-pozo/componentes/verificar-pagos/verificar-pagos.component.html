@@ -1,0 +1,318 @@
+<p-fieldset legend="Búsqueda verificación de pagos " [toggleable]="true">
+
+  <div class="row justify-content-end">
+    <div class="col-md-2">
+      <button type="button" class="btn btn-sm btn-primary btn-block" (click)="getPagoList()">
+        Buscar
+      </button>
+    </div>
+
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Campo:</b></label>
+        </div>
+        <div class="col-md">
+          <p-dropdown [options]="campoList" [(ngModel)]="campo" (onChange)="getPozoListByCamCodigo(campo);"
+            [filter]="true">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Pozo:</b></label>
+        </div>
+        <div class="col-md">
+          <p-dropdown [options]="pozoList" [(ngModel)]="pozo" [filter]="true">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Item:</b></label>
+        </div>
+        <div class="col-md">
+          <input [(ngModel)]="param.item" pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Estado:</b></label>
+        </div>
+        <div class="col-md">
+          <p-dropdown></p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Fecha desde:</b></label>
+        </div>
+        <div class="col-md">
+          <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }" [(ngModel)]="param.fechaDesde">
+          </p-calendar>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="campo"><b>Fecha hasta:</b></label>
+        </div>
+        <div class="col-md">
+          <p-calendar [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }" [(ngModel)]="param.fechaHasta">
+          </p-calendar>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</p-fieldset>
+<br>
+
+<p-fieldset legend="Datos registro de tasas" [toggleable]="true">
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="nav justify-content-end">
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+          <i class="fa fa-pencil"> Editar</i>
+        </li>
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '18'">
+          <i class="fa fa-pencil"> Editar</i>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12 table-responsive">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Operadora</th>
+            <th>Consorcio</th>
+            <th>Bloque</th>
+            <th>Campo</th>
+            <th>Pozo</th>
+            <th>Fecha pago </th>
+            <th>Item</th>
+            <th># Comprobante</th>
+            <th># Transacción</th>
+            <th># Factura</th>
+            <th>Valor</th>
+            <th>Documentos</th>
+            <th>Anexos</th>
+            <th>Estado</th>
+            <th>Accion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pago of pagoList | paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
+            <td>{{i+1}}</td>
+            <td>{{pago.documentoOperadora.portafolio.operadora.cexApellidoPaterno}}</td>
+            <td>{{pago.documentoOperadora.portafolio.consorcio.consorcio}}</td>
+            <td>{{pago.documentoOperadora.portafolio.bloque.bqlNombre}}</td>
+            <td>{{pago.documentoOperadora.portafolio.campo.camNombre}}</td>
+            <td>{{pago.documentoOperadora.portafolio.pozo.pozNombre}}</td>
+            <td>{{pago.fechaPago | date:'dd/MM/yyyy'}}</td>
+            <td>{{pago.item}}</td>
+            <td>{{pago.numeroComprobante}}</td>
+            <td>{{pago.numeroTransaccion}}</td>
+            <td>{{pago.numeroFactura}}</td>
+            <td>{{pago.valor}}</td>
+            <td>
+              <ul>
+                <li *ngIf="pago.documentoOperadora.urlOficio"
+                  (click)="showPdf(pago.documentoOperadora.fileOficio.base64, pago.documentoOperadora.fileOficio.nombre)">
+                  OFICIO:
+                  {{pago.documentoOperadora.fileOficio.nombre}}
+                </li>
+                <li *ngIf="pago.documentoOperadora.urlPagos"
+                  (click)="showPdf(pago.documentoOperadora.filePago.base64 ,pago.documentoOperadora.filePago.nombre)">
+                  PAGO:
+                  {{pago.documentoOperadora.filePago.nombre}}</li>
+              </ul>
+            </td>
+            <td>
+              <ul>
+                <li *ngIf="pago.documentoOperadora.urlAnexo1"
+                  (click)="showPdf(pago.documentoOperadora.fileAnexo1.base64, pago.documentoOperadora.fileAnexo1.nombre)">
+                  ANEXO:
+                  {{pago.documentoOperadora.fileAnexo1.nombre}}
+                </li>
+                <li *ngIf="pago.documentoOperadora.urlAnexo2"
+                  (click)="showPdf(pago.documentoOperadora.fileAnexo2.base64, pago.documentoOperadora.fileAnexo2.nombre)">
+                  ANEXO:
+                  {{pago.documentoOperadora.fileAnexo2.nombre}}
+                </li>
+                <li *ngIf="pago.documentoOperadora.urlAnexo3"
+                  (click)="showPdf(pago.documentoOperadora.fileAnexo3.base64, pago.documentoOperadora.fileAnexo3.nombre)">
+                  ANEXO:
+                  {{pago.documentoOperadora.fileAnexo3.nombre}}
+                </li>
+                <li *ngIf="pago.documentoOperadora.urlAnexo4"
+                  (click)="showPdf(pago.documentoOperadora.fileAnexo4.base64, pago.documentoOperadora.fileAnexo4.nombre)">
+                  ANEXO:
+                  {{pago.documentoOperadora.fileAnexo4.nombre}}
+                </li>
+              </ul>
+            </td>
+            <td>{{pago.estado}}</td>
+            <td>
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="nav justify-content-end">
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+                      <i class="fa fa-pencil fa-2x" (click)="openModalPagos(pagosTemplate,pago)"> </i>
+                    </li>
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '18'">
+                      <i class="fa fa-pencil fa-2x" (click)="openModalPagos(pagosTemplate,pago)"> </i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <pagination-controls id="foo" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+        responsive="true">
+        ></pagination-controls>
+    </div>
+  </div>
+</p-fieldset>
+
+
+
+<ng-template #pagosTemplate>
+  <div class="container mt-3 mb-3">
+
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h4>Pagos</h4>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Fecha pago:</b></label>
+          </div>
+          <div class="col-md-8">
+            <p-calendar [style]="{ width: '100%' }" [minDate]="minDate" [maxDate]="maxDate"
+              [inputStyle]="{ width: '100%' }" [(ngModel)]="pago.fechaPago"></p-calendar>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Item:</b></label>
+          </div>
+          <div class="col-md-8">
+            <input pInputText [(ngModel)]="pago.item" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Valor:</b></label>
+          </div>
+          <div class="col-md-8">
+            <input pInputText [(ngModel)]="pago.valor" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Nro.comprobante:</b></label>
+          </div>
+          <div class="col-md-8">
+            <input pInputText [disabled]="ncomp" [(ngModel)]="pago.numeroComprobante"
+              (ngModelChange)="bloquearTransferencia()" (keyup)="activarTransferencia()" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Nro.transferencia:</b></label>
+          </div>
+          <div class="col-md-8">
+            <input pInputText [disabled]="ntrans" [(ngModel)]="pago.numeroTransaccion"
+              (ngModelChange)="bloquearComprobante()" (keyup)="activarComprobante()" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Nro. factura:</b></label>
+          </div>
+          <div class="col-md-8">
+            <input [(ngModel)]="pago.numeroFactura" pInputText />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Estado:</b></label>
+          </div>
+          <div class="col-md">
+            <p-dropdown></p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-success btn-block" (click)="updatePago()">Marcar como
+          revisado</button>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="closeModalPagos()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+
+
+<ng-template #customLoadingTemplate> </ng-template>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>
