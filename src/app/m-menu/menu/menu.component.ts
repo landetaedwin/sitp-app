@@ -79,7 +79,7 @@ export class MenuComponent implements OnInit {
     this.userCI = this.usuario.usuarioLogin;
 
     //ADMINISTRADOR
-    if (this.usuario.perfil.codigoPerfil == '21') {
+    if (this.usuario.perfil.codigoPerfil == '3') {
       this.m1 = true;
       this.m2 = true;
       this.m3 = true;
@@ -116,7 +116,7 @@ export class MenuComponent implements OnInit {
 
     }
     //matriz
-    if (this.usuario.perfil.codigoPerfil == '16') {
+    if (this.usuario.perfil.codigoPerfil == '1') {
       this.m1 = true;
       this.m3 = true;
       this.m6 = true;
@@ -133,7 +133,7 @@ export class MenuComponent implements OnInit {
 
     }
     //regional
-    if (this.usuario.perfil.codigoPerfil == '17') {
+    if (this.usuario.perfil.codigoPerfil == '1') {
       this.m1 = true;
       this.m6 = true;
       this.i0 = true;
@@ -163,7 +163,7 @@ export class MenuComponent implements OnInit {
 
     }
     //bitacora
-    if (this.usuario.perfil.codigoPerfil == '20') {
+    if (this.usuario.perfil.codigoPerfil == '3') {
       this.m6 = true;
       this.i21 = true;
       this.i22 = true;
