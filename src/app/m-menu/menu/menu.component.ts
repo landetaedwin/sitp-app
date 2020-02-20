@@ -79,6 +79,8 @@ export class MenuComponent implements OnInit {
     this.userCI = this.usuario.usuarioLogin;
 
     //ADMINISTRADOR
+
+    console.log(this.usuario.perfil.codigoPerfil)
     if (this.usuario.perfil.codigoPerfil == '3') {
       this.m1 = true;
       this.m2 = true;
@@ -162,12 +164,7 @@ export class MenuComponent implements OnInit {
       this.i22 = true;
 
     }
-    //bitacora
-    if (this.usuario.perfil.codigoPerfil == '3') {
-      this.m6 = true;
-      this.i21 = true;
-      this.i22 = true;
-    }
+ 
 
     this.items = [
       {
