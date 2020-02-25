@@ -157,6 +157,7 @@ export class DocumentoOperadoraComponent implements OnInit {
 
   openModalPagos(template: TemplateRef<any>, codigoDocumentoOperadora: number) {
     this.pago = new Pago;
+    this.item = null
     this.getListItem()
     this.pago.codigoDocumentoOperadora = codigoDocumentoOperadora;
     this.pagoModalRef = this.modalService.show(template, { class: 'modal-md', backdrop: 'static', keyboard: false });
@@ -390,7 +391,7 @@ export class DocumentoOperadoraComponent implements OnInit {
     if (!this.pago.fechaPago) {
       errores.push("El campo fecha de pago es requerido");
     }
-    if (!this.item.cseCodigo) {
+    if (!this.item) {
       errores.push("El campo item es requerido");
     }
     if (!this.pago.valor) {

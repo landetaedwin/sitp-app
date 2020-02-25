@@ -51,7 +51,7 @@
           <label for="campo"><b>Estado:</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown></p-dropdown>
+          <p-dropdown [options]="estadolist" [(ngModel)]="estado"></p-dropdown>
         </div>
       </div>
     </div>
@@ -90,10 +90,10 @@
     <div class="col-md-12">
       <ul class="nav justify-content-end">
         <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'">
-          <i class="fa fa-pencil"> Editar</i>
+          <i class="fa fa-check-circle-o"> Marcar como verificado</i>
         </li>
         <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '18'">
-          <i class="fa fa-pencil"> Editar</i>
+          <i class="fa fa-check-circle-o"> Marcar como verificado</i>
         </li>
       </ul>
     </div>
@@ -118,7 +118,7 @@
             <th>Valor</th>
             <th>Documentos</th>
             <th>Anexos</th>
-            <th>Estado</th>
+            <th>Estado </th>
             <th>Accion</th>
           </tr>
         </thead>
@@ -173,16 +173,16 @@
                 </li>
               </ul>
             </td>
-            <td>{{pago.estado}}</td>
+            <td>{{pago.estado | estadoPago}}</td>
             <td>
               <div class="row">
                 <div class="col-md-12">
-                  <ul class="nav justify-content-end">
+                  <ul class="nav justify-content-center">
                     <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'">
-                      <i class="fa fa-pencil fa-2x" (click)="openModalPagos(pagosTemplate,pago)"> </i>
+                      <i class="fa fa-check-circle-o fa-2x" (click)="openModalPagos(pagosTemplate,pago)"> </i>
                     </li>
                     <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '18'">
-                      <i class="fa fa-pencil fa-2x" (click)="openModalPagos(pagosTemplate,pago)"> </i>
+                      <i class="ffa fa-check-circle-o fa-2x" (click)="openModalPagos(pagosTemplate,pago)"> </i>
                     </li>
                   </ul>
                 </div>
@@ -214,8 +214,6 @@
         <h4>Pagos</h4>
       </div>
     </div>
-
-
     <div class="row">
       <div class="col-md-12">
         <div class="row">
@@ -286,7 +284,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12">
+      <!-- <div class="col-md-12">
         <div class="row">
           <div class="col-md-4">
             <label for="campo"><b>Estado:</b></label>
@@ -295,7 +293,7 @@
             <p-dropdown></p-dropdown>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="row mt-3">
