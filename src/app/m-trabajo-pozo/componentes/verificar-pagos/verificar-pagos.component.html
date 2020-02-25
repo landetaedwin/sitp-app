@@ -89,7 +89,7 @@
   <div class="row">
     <div class="col-md-12">
       <ul class="nav justify-content-end">
-        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+        <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'">
           <i class="fa fa-pencil"> Editar</i>
         </li>
         <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '18'">
@@ -178,7 +178,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <ul class="nav justify-content-end">
-                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+                    <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'">
                       <i class="fa fa-pencil fa-2x" (click)="openModalPagos(pagosTemplate,pago)"> </i>
                     </li>
                     <li *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '18'">

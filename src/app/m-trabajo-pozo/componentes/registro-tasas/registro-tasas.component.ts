@@ -45,11 +45,19 @@ export class RegistroTasasComponent implements OnInit {
   maxDate: Date;
   minDate: Date;
 
+  estadolist: SelectItem[] = [];
+  estado: number;
+
   param: BusquedaParametros = new BusquedaParametros;
 
   constructor(public loginService: LoginService, public router: Router, private busquedaService: BusquedaService, private modalService: BsModalService, private dataApi: CreateUpdateService, private messageService: MessageService) {
     this.campoList = [{ label: "Seleccione", value: null, disabled: true }];
     this.pozoList = [{ label: "Seleccione", value: null, disabled: true }];
+
+    this.estadolist = [
+      { label: "Seleccione", value: null, disabled: true },
+      { label: "Activo", value: 1, disabled: false },
+      { label: "Derogado", value: 0, disabled: false }]
 
 
   }
@@ -71,21 +79,42 @@ export class RegistroTasasComponent implements OnInit {
   getTasaList() {
     this.loading = true;
     this.tasaList = [];
-
+    debugger
     if (this.pozo) {
       this.param.pozo = this.pozo.pozCodigo;
     }
     if (this.campo) {
       this.param.campo = this.campo.camCodigo;
     }
+
+    this.param.estado = this.estado;
+
     this.busquedaService.getTasaList(this.param).subscribe((data: Tasa[]) => {
 
       if (data.length > 0) {
-        this.tasaList = data;
+
+        let dataAux: Tasa[] = [];
+
+        for (let i: number = 0; i < data.length; i++) {
+          if (!data[i].operadora) {
+            data[i].operadora = new Operadora;
+            data[i].operadora.cexCodigo = null;
+            data[i].operadora.cexApellidoPaterno = "N/A";
+          }
+          if (!data[i].bloque) {
+            data[i].bloque = new Bloque;
+            data[i].bloque.blqCodigo = null;
+            data[i].bloque.bqlNombre = "N/A";
+          }
+          dataAux.push(data[i]);
+        }
+
+        this.tasaList = dataAux;
         this.param.pozo = null;
         this.param.campo = null;
         this.campo = null;
         this.pozo = null;
+        this.estado = null;
         this.param = new BusquedaParametros;
         this.loading = false;
       } else {
@@ -94,6 +123,7 @@ export class RegistroTasasComponent implements OnInit {
         this.param.campo = null;
         this.campo = null;
         this.pozo = null;
+        this.estado = null;
         this.param = new BusquedaParametros;
         this.loading = false;
       }
@@ -148,6 +178,8 @@ export class RegistroTasasComponent implements OnInit {
 
   cargarOperadoraByPozCompaniaPetrolera(pozo: Pozo) {
     this.operadoraT.cexApellidoPaterno = "n/a";
+    this.loading = true;
+    debugger
     if (pozo.pozCompaniaPetrolera) {
       this.loading = true;
       this.busquedaService.getOperadoraByCompaniaPetrolera(pozo.pozCompaniaPetrolera).subscribe(
@@ -226,7 +258,7 @@ export class RegistroTasasComponent implements OnInit {
 
 
   openModalTasaEdit(template: TemplateRef<any>, tasaEdit: Tasa) {
-
+    debugger
     this.getCampoList();
     this.getYacimientoList();
     this.tasaEdit = this.cloneJSON(tasaEdit);
@@ -303,6 +335,7 @@ export class RegistroTasasComponent implements OnInit {
   }
 
   editTasa() {
+    debugger
     this.loading = true;
     this.tasaEdit.camCodigo = this.campoT.camCodigo;
     this.tasaEdit.pozCodigo = this.pozoT.pozCodigo;
@@ -388,6 +421,8 @@ export class RegistroTasasComponent implements OnInit {
     downloadLink.download = fileName;
     downloadLink.click();
   }
+
+
 
 
 
