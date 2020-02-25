@@ -154,15 +154,14 @@ export class DocumentoMinisterioComponent implements OnInit {
       errores.push("El campo asunto es requerido");
     }
 
-    if (!this.documentoMinisterio.numeroResolucion) {
-      errores.push("El campo Nro. Resolucion es requerido");
+    if (!this.nResol) {
+      if (!this.documentoMinisterio.numeroResolucion) {
+        errores.push("El campo Nro. Resolucion es requerido");
+      }
     }
     if (!this.documentoMinisterio.objetivo) {
       errores.push("El campo objetivo es requerido");
     }
-
-
-
 
     if (errores.length <= 0) {
       this.loading = true;
@@ -321,8 +320,8 @@ export class DocumentoMinisterioComponent implements OnInit {
       }
     }, 2000);
 
-   
-    
+
+
   }
 
   closeModalDocumentoEdit() {
