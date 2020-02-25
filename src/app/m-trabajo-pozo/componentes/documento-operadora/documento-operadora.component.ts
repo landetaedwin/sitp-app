@@ -277,12 +277,14 @@ export class DocumentoOperadoraComponent implements OnInit {
       errores.push("El campo fecha ARCH es requerido");
     }
 
-    if (!this.categoria) {
-      errores.push("El campo categorización es requerido");
-    }
+    if (this.portafolio.codigoTipoTrabajo != 1) {
+      if (!this.categoria) {
+        errores.push("El campo categorización es requerido");
+      }
 
-    if (!this.asunto) {
-      errores.push("El campo asunto es requerido");
+      if (!this.asunto) {
+        errores.push("El campo asunto es requerido");
+      }
     }
 
     if (!this.documentoOperadora.objetivo) {
@@ -400,10 +402,7 @@ export class DocumentoOperadoraComponent implements OnInit {
     if (this.ncomp && !this.pago.numeroTransaccion) {
       errores.push("El campo Nro.transferencia es requerido");
     }
-    if (!this.pago.numeroFactura) {
-      errores.push("El campo Nro. factura es requerido");
-    }
-
+    
     if (errores.length <= 0) {
       this.loading = true;
       this.pago.estado = 1;
