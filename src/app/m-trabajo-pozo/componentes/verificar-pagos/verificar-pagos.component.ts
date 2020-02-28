@@ -26,6 +26,9 @@ export class VerificarPagosComponent implements OnInit {
   pozo: Pozo;
   param: BusquedaParametros = new BusquedaParametros;
 
+  estadolist: SelectItem[] = [];
+
+
   pagoList: Pago[] = []
 
   pago: Pago = new Pago;
@@ -35,10 +38,18 @@ export class VerificarPagosComponent implements OnInit {
 
   ntrans: boolean = false;
   ncomp: boolean = false;
+  estado: number;
 
 
+  constructor(private busquedaService: BusquedaService, private loginService: LoginService, private router: Router, private messageService: MessageService, private modalService: BsModalService, private dataApi: CreateUpdateService) {
+    this.estadolist = [
+      { label: "Seleccione ", value: null, disabled: false },
+      { label: "Registrado", value: 1, disabled: false },
+      { label: "Verificado ", value: 2, disabled: false },
+      // { label: "Anulado ", value: 0, disabled: false },
 
-  constructor(private busquedaService: BusquedaService, private loginService: LoginService, private router: Router, private messageService: MessageService, private modalService: BsModalService, private dataApi: CreateUpdateService) { }
+    ];
+  }
 
   ngOnInit() {
     this.loading = true;
@@ -94,6 +105,7 @@ export class VerificarPagosComponent implements OnInit {
     if (this.campo) {
       this.param.campo = this.campo.camCodigo;
     }
+    this.param.estado = this.estado;
     this.busquedaService.getPagoList(this.param).subscribe((data: Pago[]) => {
       if (data.length > 0) {
         this.pagoList = data;
@@ -101,6 +113,7 @@ export class VerificarPagosComponent implements OnInit {
         this.param.campo = null;
         this.campo = null;
         this.pozo = null;
+        this.estado = null;
         this.param = new BusquedaParametros;
         this.loading = false;
       } else {
@@ -109,6 +122,7 @@ export class VerificarPagosComponent implements OnInit {
         this.param.campo = null;
         this.campo = null;
         this.pozo = null;
+        this.estado = null;
         this.param = new BusquedaParametros;
         this.loading = false;
       }
@@ -178,6 +192,7 @@ export class VerificarPagosComponent implements OnInit {
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: '' + "Se verifico correctamente el pago." });
         this.closeModalPagos();
+        this.getPagoList();
 
       } else {
         this.loading = false;

@@ -28,6 +28,7 @@ import { VerificarPagosComponent } from './componentes/verificar-pagos/verificar
 import { EstadoTasaPipe } from '../resources/pipes/estado-tasa';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import {CheckboxModule} from 'primeng/checkbox';
+import { EstadoPago } from '../resources/pipes/estado-catalogos';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import {CheckboxModule} from 'primeng/checkbox';
     FilterSearchPipe,
     NumerosDocDirective,
     EstadoTasaPipe,
+    EstadoPago,
     HistorialPozoComponent,
     RegistroTasasComponent,
     VerificarPagosComponent,
