@@ -119,7 +119,7 @@
         </thead>
 
 
-        <tbody *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3' || usuario && usuario.perfil && usuario.perfil.codigoPerfil == '1'">
+        <tbody>
           <tr
             *ngFor="let portafolio of portafolioList| paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;">
          

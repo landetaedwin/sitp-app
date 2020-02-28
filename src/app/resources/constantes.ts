@@ -1,8 +1,8 @@
 export class Constantes {
 
-      PATH = 'http://172.16.20.48:9900';
+     // PATH = 'http://172.16.20.48:9900';
     //PATH = 'http://167.172.145.2:8080/';
-    //PATH = 'http://localhost:9900';
+    PATH = 'http://localhost:9900';
     SYS = '/sitp'
     MODULOCP = '/crearPortafolio'
 
@@ -40,7 +40,7 @@ export class Constantes {
 
     adjuntarDocumento = "Adjuntar Documento"
     
-    codigoPerfilAdministrador = "21";
-    codigoPerfilMatriz = "16";
-    codigoPerfilRegional = "17";
+    codigoPerfilAdministrador = "3";
+    codigoPerfilMatriz = "1";
+    codigoPerfilRegional = "1";
 }
