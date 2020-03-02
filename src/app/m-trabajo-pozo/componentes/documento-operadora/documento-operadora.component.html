@@ -92,7 +92,7 @@
                   <li>
                     <div *ngIf="doc.urlOficio" class="btn-group dropright">
                       <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{doc.fileOficio.nombre}}
+                        Oficio 
                       </a>
                       <div class="dropdown-menu">
                         <button class="dropdown-item" type="button"
@@ -104,7 +104,7 @@
                   <li>
                     <div *ngIf="doc.urlAnexo1" class="btn-group dropright">
                       <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{doc.fileAnexo1.nombre}}
+                       Anexo 1
                       </a>
                       <div class="dropdown-menu">
                         <button class="dropdown-item" type="button"
@@ -116,7 +116,7 @@
                   <li>
                     <div *ngIf="doc.urlAnexo2" class="btn-group dropright">
                       <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{doc.fileAnexo2.nombre}}
+                        Anexo 2
                       </a>
                       <div class="dropdown-menu">
                         <button class="dropdown-item" type="button"
@@ -128,7 +128,7 @@
                   <li>
                     <div *ngIf="doc.urlAnexo3" class="btn-group dropright">
                       <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{doc.fileAnexo3.nombre}}
+                        Anexo 3
                       </a>
                       <div class="dropdown-menu">
                         <button class="dropdown-item" type="button"
@@ -140,7 +140,7 @@
                   <li>
                     <div *ngIf="doc.urlAnexo4" class="btn-group dropright">
                       <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{doc.fileAnexo4.nombre}}
+                        Anexo 4
                       </a>
                       <div class="dropdown-menu">
                         <button class="dropdown-item" type="button"
@@ -152,7 +152,7 @@
                   <li>
                     <div *ngIf="doc.urlPagos" class="btn-group dropright">
                       <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{doc.filePago.nombre}}
+                        Pago
                       </a>
                       <div class="dropdown-menu">
                         <button class="dropdown-item" type="button"
@@ -175,15 +175,15 @@
                     <i class="fa fa-cog"></i>
                   </button>
                   <div class="dropdown-menu">
-                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '1'"
                       (click)="openModalDocumentoEdit(documentoEditTemplate,doc)" class="dropdown-item" type="button"><i
                         class="fa fa-pencil"></i>
                       Editar</button>
-                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
                       (click)="openModalDocumentoEdit(documentoEditTemplate,doc)" class="dropdown-item" type="button"><i
                         class="fa fa-pencil"></i>
                       Editar</button>
-                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
                       (click)="openModalDocumentoEdit(confirmDialog,doc)" class="dropdown-item" type="button"><i
                         class="fa fa-trash-o"></i> Anular</button>
                     <button
@@ -746,7 +746,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-              <label><b>Nro. factura:*</b></label>
+              <label><b>Nro. factura:</b></label>
             </div>
             <div class="col-md-8">
               <input [(ngModel)]="pago.numeroFactura" pInputText />

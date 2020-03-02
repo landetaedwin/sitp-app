@@ -149,7 +149,7 @@
     </div>
   </div>
 
-  <div class="col-md-6" *ngIf="usuario.perfil.codigoPerfil == '21'">
+  <div class="col-md-6" *ngIf="usuario.perfil.codigoPerfil == '3'">
 
   </div>
 </div>
@@ -274,7 +274,7 @@
             <i class="fa fa-thumb-tack  fa-2x"></i>
             </i>
           <i>
-          <i *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+          <i *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
            (click)="openModalNovedadAnular(NovedadTempalteAnular, editarNovedad)">
  
           <i class="fa fa-times fa-2x"></i>
@@ -295,7 +295,7 @@
 
 
 <div class="row">
-  <div *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"  class="col-md-12 row justify-content-center">
+  <div *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"  class="col-md-12 row justify-content-center">
       <button type="button" class="btn btn-secondary btn-sm"  (click)="volver(portafolio) "><i class="fa fa-bar-chart" aria-hidden="true">&nbsp;Verificar Producción</i>
       </button>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

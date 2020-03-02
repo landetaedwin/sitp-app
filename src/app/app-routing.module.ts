@@ -8,14 +8,12 @@ import { EditarVerificacionFechasComponent } from './m-trabajo-bitacora/componen
 import { EditarVerificacionInyectorComponent } from './m-trabajo-bitacora/componentes/editar-verificacion-inyector/editar-verificacion-inyector.component';
 import { EditarVerificacionProduccionComponent } from './m-trabajo-bitacora/componentes/editar-verificacion-produccion/editar-verificacion-produccion.component';
 import { EditarVerificacionReinyectorComponent } from './m-trabajo-bitacora/componentes/editar-verificacion-reinyector/editar-verificacion-reinyector.component';
-import { InformeTrabajosOperadoraComponent } from './m-trabajo-bitacora/componentes/informe-trabajos-operadora/informe-trabajos-operadora.component';
-import { ReportesDiariosComponent } from './m-trabajo-bitacora/componentes/reportes-diarios/reportes-diarios.component';
+import { InformeTrabajosOperadoraComponent } from './m-trabajo-bitacora/componentes/informe-trabajos-operadora/informe-trabajos-operadora.component';;
 import { VerificacionFechasComponent } from './m-trabajo-bitacora/componentes/verificacion-fechas/verificacion-fechas.component';
 import { VerificacionInyectorComponent } from './m-trabajo-bitacora/componentes/verificacion-inyector/verificacion-inyector.component';
 import { VerificacionNovedadComponent } from './m-trabajo-bitacora/componentes/verificacion-novedad/verificacion-novedad.component';
 import { VerificacionProduccionComponent } from './m-trabajo-bitacora/componentes/verificacion-produccion/verificacion-produccion.component';
 import { VerificacionReinyectorComponent } from './m-trabajo-bitacora/componentes/verificacion-reinyector/verificacion-reinyector.component';
-import { VerificacionTrabajoComponent } from './m-trabajo-bitacora/componentes/verificacion-trabajo/verificacion-trabajo.component';
 import { AsignacionCamposComponent } from './m-trabajo-pozo/componentes/asignacion-campos/asignacion-campos.component';
 import { BuscarPortafolioComponent } from './m-trabajo-pozo/componentes/buscar-portafolio/buscar-portafolio.component';
 import { CrearPortafolioComponent } from './m-trabajo-pozo/componentes/crear-portafolio/crear-portafolio.component';
@@ -29,7 +27,6 @@ import { VerificacionTasaComponent } from './m-trabajo-pozo/componentes/verifica
 import { VerificarPagosComponent } from './m-trabajo-pozo/componentes/verificar-pagos/verificar-pagos.component';
 import { ConclusionesRecomendacionesComponent } from './m-trabajo-bitacora/componentes/conclusiones-recomendaciones/conclusiones-recomendaciones.component';
 import { SeguimientoNovedadComponent } from './m-trabajo-bitacora/componentes/seguimiento-novedad/seguimiento-novedad.component';
-import { EditarSeguimientoNovedadComponent } from './m-trabajo-bitacora/componentes/editar-seguimiento-novedad/editar-seguimiento-novedad.component';
 import { ConsorciosComponent } from './m-mantenimiento/componentes/consorcios/consorcios.component';
 
 
@@ -52,7 +49,6 @@ const routes: Routes = [
       { path: 'asignacionCampos', component: AsignacionCamposComponent, outlet: 'sitp' },
       { path: 'buscarPortafolioBitacora', component: BuscarPortafolioBitacoraComponent, outlet: 'sitp' },
       { path: 'informeOperadora', component: InformeTrabajosOperadoraComponent, outlet: 'sitp' },
-      { path: 'reportesDiarios', component: ReportesDiariosComponent, outlet: 'sitp' },
       { path: 'verificacionFechas', component: VerificacionFechasComponent, outlet: 'sitp' },
       { path: 'editarFechas', component: EditarVerificacionFechasComponent, outlet: 'sitp' },
       { path: 'verificarProduccion', component: VerificacionProduccionComponent, outlet: 'sitp' },
@@ -67,7 +63,6 @@ const routes: Routes = [
       { path: 'EditarVerificacionReinyectorComponent', component: EditarVerificacionReinyectorComponent, outlet: 'sitp' },
       { path: 'conclusiones', component: ConclusionesRecomendacionesComponent, outlet: 'sitp' },
       { path: 'verificarTasa', component: VerificacionTasaComponent, outlet: 'sitp' },
-      { path: 'verificarTrabajo', component: VerificacionTrabajoComponent, outlet: 'sitp' },
       { path: 'historialPozo', component: HistorialPozoComponent, outlet: 'sitp' },
       { path: 'registroTasas', component: RegistroTasasComponent, outlet: 'sitp' },
       { path: 'verificarPagos', component: VerificarPagosComponent, outlet: 'sitp' },

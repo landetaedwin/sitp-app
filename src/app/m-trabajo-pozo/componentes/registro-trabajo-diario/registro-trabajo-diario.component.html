@@ -131,15 +131,15 @@
                     <i class="fa fa-cog"></i>
                   </button>
                   <div class="dropdown-menu">
-                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '17'"
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '1'"
                       class="dropdown-item" type="button"
                       (click)="openModalRegistroEdit(registroDiarioEditTemplate,reg)"><i class="fa fa-pencil"></i>
                       Editar</button>
-                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
                       class="dropdown-item" type="button"
                       (click)="openModalRegistroEdit(registroDiarioEditTemplate,reg)"><i class="fa fa-pencil"></i>
                       Editar</button>
-                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                    <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
                       class="dropdown-item" type="button" (click)="openConfirmModal(confirmDialog,reg)"><i
                         class="fa fa-trash-o"></i> Anular</button>
                   </div>

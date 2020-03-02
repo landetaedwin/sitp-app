@@ -9,17 +9,17 @@
             <i class="fa fa-search"></i> BUSCAR
           </button>
         </div>
-        <div class="col-md-6 mt-1" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+        <div class="col-md-6 mt-1" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'">
           <button type="button" class="btn btn-sm btn-success btn-block" (click)="crearPortafolio()">
             <i class="fa fa-briefcase"></i> NUEVO PORTAFOLIO
           </button>
         </div>
-        <div class="col-md-6 mt-1" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'">
+        <div class="col-md-6 mt-1" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '1'">
           <button type="button" class="btn btn-sm btn-success btn-block" (click)="crearPortafolio()">
             <i class="fa fa-briefcase"></i> NUEVO PORTAFOLIO
           </button>
         </div>
-        <div class="col-md-6 mt-1" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '17'">
+        <div class="col-md-6 mt-1" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '1'">
           <button type="button" class="btn btn-sm btn-success btn-block" (click)="crearPortafolio()">
             <i class="fa fa-briefcase"></i> NUEVO PORTAFOLIO
           </button>
@@ -119,45 +119,45 @@
                 </button>
                 <div class="dropdown-menu">
 
-                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
                     (click)="openConfirmModal(confirmDialog, portafolio)" class="dropdown-item" type="button"><i
                       class="fa fa-trash-o"></i> Anular</button>
 
-                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
                     (click)="editarPortafolio(portafolio)" class="dropdown-item" type="button"><i
                       class="fa fa-pencil"></i> Editar</button>
 
-                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
                     (click)="goToRegistroDiario(portafolio)" class="dropdown-item" type="button"><i
                       class="fa fa-calendar-check-o"></i> Registro diario</button>
 
-                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '17'"
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '1'"
                     (click)="goToRegistroDiario(portafolio)" class="dropdown-item" type="button"><i
                       class="fa fa-calendar-check-o"></i> Registro diario</button>
 
-                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
                     (click)="goToDocumentoMinisterio(portafolio)" class="dropdown-item" type="button"><i
                       class="fa fa-book"></i> Adjuntar documentos de Ministerio</button>
 
-                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '1'"
                     (click)="goToDocumentoMinisterio(portafolio)" class="dropdown-item" type="button"><i
                       class="fa fa-book"></i> Adjuntar documentos de Ministerio</button>
 
-                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
                     (click)="goToDocumentoOperadota(portafolio)" class="dropdown-item" type="button"><i
                       class="fa fa-address-book-o"></i> Adjuntar documentos de Operadora</button>
 
-                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '1'"
                     (click)="goToDocumentoOperadota(portafolio)" class="dropdown-item" type="button"><i
                       class="fa fa-address-book-o"></i> Adjuntar documentos de Operadora</button>
 
                   <button
-                    *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21' && portafolio.tipoPozo.codigoTipoPozo == 1"
+                    *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3' && portafolio.tipoPozo.codigoTipoPozo == 1"
                     (click)="goToVerificarTasa(portafolio)" class="dropdown-item" type="button"><i
                       class="fa fa-bar-chart"></i> Verficiar tasa</button>
 
                   <button
-                    *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16' &&portafolio.tipoPozo.codigoTipoPozo == 1"
+                    *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '1' &&portafolio.tipoPozo.codigoTipoPozo == 1"
                     (click)="goToVerificarTasa(portafolio)" class="dropdown-item" type="button"><i
                       class="fa fa-bar-chart"></i> Verficiar tasa</button>
                 </div>
