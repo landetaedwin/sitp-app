@@ -6,7 +6,7 @@
         Buscar
       </button>
     </div>
-    <div class="col-md-2" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'">
+    <div class="col-md-2" *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'">
       <button type="button" class="btn btn-sm btn-success btn-block" (click)="openModalTasa(tasaTempalte)">
         Nuevo
       </button>
@@ -84,7 +84,7 @@
           <label for="campo"><b>Estado:</b></label>
         </div>
         <div class="col-md">
-          <p-dropdown></p-dropdown>
+          <p-dropdown [options]="estadolist" [(ngModel)]="estado" ></p-dropdown>
         </div>
       </div>
     </div>
@@ -116,7 +116,7 @@
           <tr *ngFor="let t of tasaList | paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
             <td>{{i+1}}</td>
             <td>{{t.pozo.pozNombre}}</td>
-            <td>{{t.codigoAlias}}</td>
+            <td>{{t.alias}}</td>
             <td>{{t.yacimiento.yacimiento}}</td>
             <td>{{t.tasa}}</td>
             <td>{{t.numeroOficio}}</td>
@@ -124,8 +124,8 @@
             <td>{{t.numeroResolucion}}</td>
             <td>{{t.fechaResolucion | date:'dd/MM/yyyy'}}</td>
             <td>
-              <ul>
-                <li>
+              <ul >
+                <li *ngIf="t.file">
                   <div *ngIf="t.urlOficio" class="btn-group dropright">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       {{t.fileOficio.nombre}}
@@ -137,7 +137,7 @@
                     </div>
                   </div>
                 </li>
-                <li>
+                <li *ngIf="t.fileResolucion">
                   <div *ngIf="t.urlResolucion" class="btn-group dropright">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       {{t.fileResolucion.nombre}}
@@ -162,15 +162,15 @@
                 </button>
                 <div class="dropdown-menu">
 
-                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
                     (click)="openModalTasaAnular(tasaTempalteAnular, t)" class="dropdown-item" type="button"><i
                       class="fa fa-trash-o"></i> Derogar</button>
 
-                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
                     (click)="openModalTasaEdit(tasaTempalteEdit, t)" class="dropdown-item" type="button"><i
                       class="fa fa-pencil"></i> Editar</button>
 
-                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '16'"
+                  <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '1'"
                     (click)="openModalTasaEdit(tasaTempalteEdit, t)" class="dropdown-item" type="button"><i
                       class="fa fa-pencil"></i> Editar</button>
                 </div>

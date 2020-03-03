@@ -8,7 +8,6 @@ import { DropdownModule } from "primeng/dropdown";
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FieldsetModule } from "primeng/fieldset";
 import { BuscarPortafolioBitacoraComponent } from './componentes/buscar-portafolio-bitacora/buscar-portafolio-bitacora.component';
-import { ReportesDiariosComponent } from './componentes/reportes-diarios/reportes-diarios.component';
 import { VerificacionFechasComponent } from './componentes/verificacion-fechas/verificacion-fechas.component';
 import { VerificacionProduccionComponent } from './componentes/verificacion-produccion/verificacion-produccion.component';
 import { InformeTrabajosOperadoraComponent } from './componentes/informe-trabajos-operadora/informe-trabajos-operadora.component';
@@ -16,7 +15,6 @@ import { EditarInformeOperadoraComponent } from './componentes/editar-informe-op
 import { VerificacionNovedadComponent } from './componentes/verificacion-novedad/verificacion-novedad.component';
 import { VerificacionInyectorComponent } from './componentes/verificacion-inyector/verificacion-inyector.component';
 import { VerificacionReinyectorComponent } from './componentes/verificacion-reinyector/verificacion-reinyector.component';
-import { VerificacionTrabajoComponent } from './componentes/verificacion-trabajo/verificacion-trabajo.component';
 import { JustificadoBitacoraPipe } from '../resources/pipes/justificadoBitacora';
 import { ValoracionBitacoraPipe } from '../resources/pipes/valoracionBitacora';
 import { ValoracionProduccionPipe } from '../resources/pipes/valoracion-produccion';
@@ -31,11 +29,10 @@ import { EditarVerificacionReinyectorComponent } from './componentes/editar-veri
 import { ToastModule } from 'primeng/toast';
 import { ConclusionesRecomendacionesComponent } from './componentes/conclusiones-recomendaciones/conclusiones-recomendaciones.component';
 import { SeguimientoNovedadComponent } from './componentes/seguimiento-novedad/seguimiento-novedad.component';
-import { EditarSeguimientoNovedadComponent } from './componentes/editar-seguimiento-novedad/editar-seguimiento-novedad.component';
 
 
 @NgModule({
-  declarations: [ReportesDiariosComponent, VerificacionFechasComponent, VerificacionProduccionComponent,
+  declarations: [VerificacionFechasComponent, VerificacionProduccionComponent,
      InformeTrabajosOperadoraComponent,
      BuscarPortafolioBitacoraComponent,
 
@@ -45,7 +42,7 @@ import { EditarSeguimientoNovedadComponent } from './componentes/editar-seguimie
      EstadoInforme,
      VerificacionInyectorComponent,
      VerificacionReinyectorComponent,
-     VerificacionTrabajoComponent,
+   
      EstadoBitacoraPipe,
      JustificadoBitacoraPipe,
      ValoracionBitacoraPipe,
@@ -56,14 +53,14 @@ import { EditarSeguimientoNovedadComponent } from './componentes/editar-seguimie
      EditarVerificacionReinyectorComponent,
      ConclusionesRecomendacionesComponent,
      SeguimientoNovedadComponent,
-     EditarSeguimientoNovedadComponent,
+
     InformeTrabajosOperadoraComponent,
     BuscarPortafolioBitacoraComponent,
     EditarInformeOperadoraComponent,
     VerificacionNovedadComponent,
     VerificacionInyectorComponent,
     VerificacionReinyectorComponent,
-    VerificacionTrabajoComponent,
+  
     EstadoBitacoraPipe,
     JustificadoBitacoraPipe,
     ValoracionBitacoraPipe,

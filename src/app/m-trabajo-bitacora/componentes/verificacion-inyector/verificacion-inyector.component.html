@@ -395,7 +395,7 @@
             <td>{{verificacionProduccion.fecha_actualizacion | date:'dd/MM/yyyy'}} </td>
             <td class="text-center">
               <i class="fa fa-pencil-square-o fa-2x" (click)="debloquearActualizacion(verificacionProduccion)"></i> 
-              <i *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '21'"
+              <i *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
               (click)="openModalInformeAnular(InformeTempalteAnular, verificacionProduccion)">
               <i class="fa fa-times fa-2x"></i>
             </i> 
