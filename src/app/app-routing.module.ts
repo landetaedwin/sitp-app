@@ -28,6 +28,8 @@ import { VerificarPagosComponent } from './m-trabajo-pozo/componentes/verificar-
 import { ConclusionesRecomendacionesComponent } from './m-trabajo-bitacora/componentes/conclusiones-recomendaciones/conclusiones-recomendaciones.component';
 import { SeguimientoNovedadComponent } from './m-trabajo-bitacora/componentes/seguimiento-novedad/seguimiento-novedad.component';
 import { ConsorciosComponent } from './m-mantenimiento/componentes/consorcios/consorcios.component';
+import { AsuntoComponent } from './m-mantenimiento/componentes/asunto/asunto.component';
+
 
 
 
@@ -70,6 +72,8 @@ const routes: Routes = [
       { path: 'seguimientoNovedad', component: SeguimientoNovedadComponent, outlet: 'sitp' },
 
       { path: 'consorcios', component: ConsorciosComponent, outlet: 'sitp' },
+      { path: 'asunto', component: AsuntoComponent, outlet: 'sitp' },
+
 
     ]
   }

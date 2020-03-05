@@ -10,9 +10,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ConsorciosComponent } from './componentes/consorcios/consorcios.component';
 import { EstadoCatalogo } from '../resources/pipes/estado-catalogos';
+import { AsuntoComponent } from './componentes/asunto/asunto.component';
+
 
 @NgModule({
-  declarations: [ConsorciosComponent, EstadoCatalogo],
+  declarations: [ConsorciosComponent, EstadoCatalogo, AsuntoComponent],
   imports: [
     CommonModule,
     FormsModule,
