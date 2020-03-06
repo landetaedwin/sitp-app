@@ -14,10 +14,11 @@ import { AsuntoComponent } from './componentes/asunto/asunto.component';
 import { AccionComponent } from './componentes/accion/accion.component';
 import { TipoPozoComponent } from './componentes/tipo-pozo/tipo-pozo.component';
 import { TipoTrabajoComponent } from './componentes/tipo-trabajo/tipo-trabajo.component';
+import { ParametroComponent } from './componentes/parametro/parametro.component';
 
 
 @NgModule({
-  declarations: [ConsorciosComponent, EstadoCatalogo, AsuntoComponent, AccionComponent, TipoPozoComponent, TipoTrabajoComponent],
+  declarations: [ConsorciosComponent, EstadoCatalogo, AsuntoComponent, AccionComponent, TipoPozoComponent, TipoTrabajoComponent, ParametroComponent],
   imports: [
     CommonModule,
     FormsModule,
