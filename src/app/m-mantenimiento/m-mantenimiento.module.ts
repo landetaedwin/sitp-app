@@ -11,10 +11,13 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { ConsorciosComponent } from './componentes/consorcios/consorcios.component';
 import { EstadoCatalogo } from '../resources/pipes/estado-catalogos';
 import { AsuntoComponent } from './componentes/asunto/asunto.component';
+import { AccionComponent } from './componentes/accion/accion.component';
+import { TipoPozoComponent } from './componentes/tipo-pozo/tipo-pozo.component';
+import { TipoTrabajoComponent } from './componentes/tipo-trabajo/tipo-trabajo.component';
 
 
 @NgModule({
-  declarations: [ConsorciosComponent, EstadoCatalogo, AsuntoComponent],
+  declarations: [ConsorciosComponent, EstadoCatalogo, AsuntoComponent, AccionComponent, TipoPozoComponent, TipoTrabajoComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -27,9 +27,12 @@ import { VerificacionTasaComponent } from './m-trabajo-pozo/componentes/verifica
 import { VerificarPagosComponent } from './m-trabajo-pozo/componentes/verificar-pagos/verificar-pagos.component';
 import { ConclusionesRecomendacionesComponent } from './m-trabajo-bitacora/componentes/conclusiones-recomendaciones/conclusiones-recomendaciones.component';
 import { SeguimientoNovedadComponent } from './m-trabajo-bitacora/componentes/seguimiento-novedad/seguimiento-novedad.component';
-import { ConsorciosComponent } from './m-mantenimiento/componentes/consorcios/consorcios.component';
-import { AsuntoComponent } from './m-mantenimiento/componentes/asunto/asunto.component';
 
+import { AccionComponent } from './m-mantenimiento/componentes/accion/accion.component';
+import { AsuntoComponent } from './m-mantenimiento/componentes/asunto/asunto.component';
+import { ConsorciosComponent } from './m-mantenimiento/componentes/consorcios/consorcios.component';
+import { TipoPozoComponent } from './m-mantenimiento/componentes/tipo-pozo/tipo-pozo.component';
+import { TipoTrabajoComponent } from './m-mantenimiento/componentes/tipo-trabajo/tipo-trabajo.component';
 
 
 
@@ -69,11 +72,13 @@ const routes: Routes = [
       { path: 'registroTasas', component: RegistroTasasComponent, outlet: 'sitp' },
       { path: 'verificarPagos', component: VerificarPagosComponent, outlet: 'sitp' },
 
-      { path: 'seguimientoNovedad', component: SeguimientoNovedadComponent, outlet: 'sitp' },
-
-      { path: 'consorcios', component: ConsorciosComponent, outlet: 'sitp' },
+      { path: 'seguimientoNovedad', component: SeguimientoNovedadComponent, outlet: 'sitp' },      
+ 
+      { path: 'accion', component: AccionComponent, outlet: 'sitp' },
       { path: 'asunto', component: AsuntoComponent, outlet: 'sitp' },
-
+      { path: 'consorcios', component: ConsorciosComponent, outlet: 'sitp' },
+      { path: 'tipo-pozo', component: TipoPozoComponent, outlet: 'sitp' },
+      { path: 'tipo-trabajo', component: TipoTrabajoComponent, outlet: 'sitp' },
 
     ]
   }

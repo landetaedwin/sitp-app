@@ -1,0 +1,55 @@
+<p-fieldset legend="Mantenimiento catálogo tipo pozo">
+  <div class="row justify-content-end">
+      <div class="col-md-2 text-right">
+          <button type="button" class="btn btn-sm btn-success" (click)="getTipoPozoList()"><i class="fa fa-refresh"
+                  aria-hidden="true"></i>
+          </button>
+      </div>
+      <!--div class="col-md-2">
+          <button type="button" class="btn btn-sm btn-primary btn-block" (click)="openNewModal(new)">Nuevo</button>
+      </div-->
+
+  </div>
+</p-fieldset>
+<br>
+<p-fieldset legend="Tipo pozo" [toggleable]="true">
+  <div class="row">
+      <div class="col-md-12">
+          <table class="table table-hover table-sm">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Código Tipo Pozo</th>
+                      <th>Tipo Pozo</th>
+                      <!--th>Accion</th-->
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr
+                      *ngFor="let tipoPozo of tipoPozoList| paginate: { id: 'paginator1',itemsPerPage: page_size2, currentPage: page_number2 , totalItems: total}; let i=index;">
+                      <td>{{i+1}}</td>
+                      <td>{{tipoPozo.codigoTipoPozo}}</td>
+                      <td>{{tipoPozo.tipoPozo}}</td>
+                      <td>
+                          <!--span class="badge badge-primary" (click)="openEditModal(edit, tipoPozo)">Editar</span-->
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-md-12 text-center">
+          <pagination-controls id="paginator1" (pageChange)="page_number2 = $event" previousLabel="Anterior"
+              nextLabel="Siguiente" responsive="true">
+              ></pagination-controls>
+      </div>
+  </div>
+</p-fieldset>
+
+
+<ng-template #customLoadingTemplate> </ng-template>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>
+
+
