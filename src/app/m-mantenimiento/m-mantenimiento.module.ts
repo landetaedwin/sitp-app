@@ -15,10 +15,12 @@ import { AccionComponent } from './componentes/accion/accion.component';
 import { TipoPozoComponent } from './componentes/tipo-pozo/tipo-pozo.component';
 import { TipoTrabajoComponent } from './componentes/tipo-trabajo/tipo-trabajo.component';
 import { ParametroComponent } from './componentes/parametro/parametro.component';
+import { MotivoCambioComponent } from './componentes/motivo-cambio/motivo-cambio.component';
+import { YacimientoComponent } from './componentes/yacimiento/yacimiento.component';
 
 
 @NgModule({
-  declarations: [ConsorciosComponent, EstadoCatalogo, AsuntoComponent, AccionComponent, TipoPozoComponent, TipoTrabajoComponent, ParametroComponent],
+  declarations: [ConsorciosComponent, EstadoCatalogo, AsuntoComponent, AccionComponent, TipoPozoComponent, TipoTrabajoComponent, ParametroComponent, MotivoCambioComponent, YacimientoComponent],
   imports: [
     CommonModule,
     FormsModule,
