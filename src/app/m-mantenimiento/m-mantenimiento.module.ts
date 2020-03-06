@@ -17,10 +17,11 @@ import { TipoTrabajoComponent } from './componentes/tipo-trabajo/tipo-trabajo.co
 import { ParametroComponent } from './componentes/parametro/parametro.component';
 import { MotivoCambioComponent } from './componentes/motivo-cambio/motivo-cambio.component';
 import { YacimientoComponent } from './componentes/yacimiento/yacimiento.component';
+import { CategoriaComponent } from './componentes/categoria/categoria.component';
 
 
 @NgModule({
-  declarations: [ConsorciosComponent, EstadoCatalogo, AsuntoComponent, AccionComponent, TipoPozoComponent, TipoTrabajoComponent, ParametroComponent, MotivoCambioComponent, YacimientoComponent],
+  declarations: [ConsorciosComponent, EstadoCatalogo, AsuntoComponent, AccionComponent, TipoPozoComponent, TipoTrabajoComponent, ParametroComponent, MotivoCambioComponent, YacimientoComponent, CategoriaComponent],
   imports: [
     CommonModule,
     FormsModule,

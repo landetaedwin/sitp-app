@@ -220,16 +220,14 @@ export class MenuComponent implements OnInit {
         items: [
           { label: 'Acción Diaria', routerLink: [{ outlets: { sitp: ['accion'] } }], visible: true },
           { label: 'Asunto de documentos', routerLink: [{ outlets: { sitp: ['asunto'] } }], visible: true },
+          { label: 'Categoria', routerLink: [{ outlets: { sitp: ['categoria'] } }], visible: true },
           { label: 'Consorsio', routerLink: [{ outlets: { sitp: ['consorcios'] } }], visible: true },
           { label: 'Motivo cambio', routerLink: [{ outlets: { sitp: ['motivo-cambio'] } }], visible: true },
           { label: 'Parametro', routerLink: [{ outlets: { sitp: ['parametro'] } }], visible: true },
           { label: 'Tipo de pozo', routerLink: [{ outlets: { sitp: ['tipo-pozo'] } }], visible: true },
           { label: 'Tipo de trabajo', routerLink: [{ outlets: { sitp: ['tipo-trabajo'] } }], visible: true  },
-          { label: 'Yacimiento', routerLink: [{ outlets: { sitp: ['yacimiento'] } }], visible: true  },
-          
-          { label: 'Categorización de trabajo', command: () => this.imprimirMensaje(), visible: true },     
-          
-          
+          { label: 'Yacimiento', routerLink: [{ outlets: { sitp: ['yacimiento'] } }], visible: true  },          
+      
           { label: 'Número de registros de producción', command: () => this.imprimirMensaje(), visible: false },
           { label: 'Número de registros de inyección', command: () => this.imprimirMensaje(), visible: false },          
           { label: 'Estado de Tasas', command: () => this.imprimirMensaje(), visible: false },
