@@ -8,20 +8,20 @@ export class ValoracionBitacoraPipe implements PipeTransform {
     transform(value: any, args?: any): any {
 
         if (value == 0) {
-            return "Cumple Requisitos"
+            return "CUMPLE con fecha de Presentación de Informe de Resultados y CUMPLE con Notificacion o Solicitud de Aprobación"
         }
 
 
         if (value == 1) {
-            return "No Cumple fecha de Registro"
+            return "CUMPLE con fecha de Presentación de Informe  de Resultados y  NO CUMPLE CON Notificación o Solicitud de Aprobación."
         }
 
         if (value == 2) {
-            return "No cumple fecha de Presentación"
+            return "NO CUMPLE con fecha de Presentación de Informe  de Resultados y  CUMPLE CON Notificación o Solicitud de Aprobación."
         }
 
         if (value == 3) {
-            return "No cumple fecha de Presentación ni fecha de Registro"
+            return "NO CUMPLE con fecha de Presentación de Informe de Resultados y NO CUMPLE con Notificacion o Solicitud de Aprobación"
         }
       
     }
