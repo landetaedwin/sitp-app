@@ -96,9 +96,10 @@ this.novedadList= [
     this.verificarFechas.fecha_fin_trabajo= this.portafolio.fechaFin;
     this.sumafecha =new Date(this.verificarFechas.fecha_fin_trabajo);
     	
-    //let dieciseisDias = 1000 * 60 * 60 * 24 * 30;
-    //let resta = this.sumafecha.getTime() + dieciseisDias.;
-    this.verificarFechas.fechaPresentacion = new Date (this.verificarFechas.fechaPresentacion.setTime(this.sumafecha.getTime()+30))
+    let dieciseisDias = 1000 * 60 * 60 * 24 * 30;
+    let resta = this.sumafecha.getTime() + dieciseisDias;
+    //this.verificarFechas.fechaPresentacion = new Date (this.sumafecha.setTime(this.sumafecha.getTime()+30))
+    this.verificarFechas.fechaPresentacion = new Date (resta)
     this.verificarFechas.fecha_inicio_trabajo= new Date(this.portafolio.fechaInicio);
     this.today=new Date(this.today);
     //this.infomeOperadora.fechaArch= new Date(this.infomeOperadora.fechaArch);
@@ -149,6 +150,7 @@ this.novedadList= [
     }
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se Creó el Informe de Verificación de Fechas' });
+        this.verificarFechas.formDisabled = 1;
         this.obtenerTodo();
 
       } else {
