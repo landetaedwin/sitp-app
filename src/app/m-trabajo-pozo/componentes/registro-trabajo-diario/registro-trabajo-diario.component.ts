@@ -222,9 +222,12 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
       debugger
       let ff: Date = new Date(this.fechaFin)
       let fa: Date = new Date(this.registroDiarioList[0].fechaAccion)
-      if (ff < fa) {
-        this.messageService.add({ severity: 'error', detail: 'La fecha fin es mayor a la fecha de la ultima acción' });
-      } else {
+
+      //TODO: SITP-27 REPORTE DE TRABAJOS DIARIOS ERROR EN TERMINACIÓN
+      
+      // if (ff < fa) {
+      //   this.messageService.add({ severity: 'error', detail: 'La fecha fin es mayor a la fecha de la ultima acción' });
+      // } else {
         this.loading = true;
         this.portafolio.fechaFin = this.fechaFin;
         this.portafolio.fechaInicio = new Date(this.portafolio.fechaInicio);
@@ -255,7 +258,7 @@ export class RegistroTrabajoDiarioComponent implements OnInit {
           this.loading = false;
           console.log(err)
         });
-      }
+      //}
     } else {
       this.messageService.add({ severity: 'error', detail: 'Seleccione la fecha de fin' });
     }
