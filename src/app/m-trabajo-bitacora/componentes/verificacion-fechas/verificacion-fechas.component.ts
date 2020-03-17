@@ -29,11 +29,7 @@ export class VerificacionFechasComponent implements OnInit {
   x: number=0
   
   constructor(public verificarProduccionService:VerificarProduccionService,public busquedaService:BusquedaService, public informeTrabajoOperadoraService: InformeTrabajoOperadoraService, http:HttpClient, public verificacionFechaService: VerificarFechasService, private messageService: MessageService, public loginService: LoginService, public router: Router) {
-  // this.portafolio = this.verificacionFechaService.portafolio;
-    //this.verificarFechas.codPortafolio= this.portafolio.codigoPortafolio;
-    //this.verificarFechas.fecha_inicio_trabajo = this.portafolio.fechaInicio;
-    //this.verificarFechas.fecha_fin_trabajo= this.portafolio.fechaFin;
-
+  
     this.portafolio = this.verificacionFechaService.portafolio;
   
     this.verificarFechas.visualizar_valoraciom="No Cumple"
@@ -60,7 +56,6 @@ this.novedadList= [
 
 ];
 
-  //  this.informeOperadora.codPortafolio = this.portafolio.codigoPortafolio;
 
   }
 
@@ -101,9 +96,10 @@ this.novedadList= [
     this.verificarFechas.fecha_fin_trabajo= this.portafolio.fechaFin;
     this.sumafecha =new Date(this.verificarFechas.fecha_fin_trabajo);
     	
-    let dieciseisDias = 1000 * 60 * 60 * 24 * 33;
+    let dieciseisDias = 1000 * 60 * 60 * 24 * 30;
     let resta = this.sumafecha.getTime() + dieciseisDias;
-    this.verificarFechas.fechaPresentacion = new Date(resta)
+    //this.verificarFechas.fechaPresentacion = new Date (this.sumafecha.setTime(this.sumafecha.getTime()+30))
+    this.verificarFechas.fechaPresentacion = new Date (resta)
     this.verificarFechas.fecha_inicio_trabajo= new Date(this.portafolio.fechaInicio);
     this.today=new Date(this.today);
     //this.infomeOperadora.fechaArch= new Date(this.infomeOperadora.fechaArch);
@@ -154,6 +150,7 @@ this.novedadList= [
     }
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se Creó el Informe de Verificación de Fechas' });
+        this.verificarFechas.formDisabled = 1;
         this.obtenerTodo();
 
       } else {
@@ -239,7 +236,7 @@ this.novedadList= [
           this.verificarFechas.fechaNotificacion=new Date(this.docOperadoraList[0].fechaOficio)
         } 
         );
-        console.log("ewre411");
+      
      
       }
 

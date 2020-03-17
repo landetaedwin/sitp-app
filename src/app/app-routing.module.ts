@@ -27,7 +27,16 @@ import { VerificacionTasaComponent } from './m-trabajo-pozo/componentes/verifica
 import { VerificarPagosComponent } from './m-trabajo-pozo/componentes/verificar-pagos/verificar-pagos.component';
 import { ConclusionesRecomendacionesComponent } from './m-trabajo-bitacora/componentes/conclusiones-recomendaciones/conclusiones-recomendaciones.component';
 import { SeguimientoNovedadComponent } from './m-trabajo-bitacora/componentes/seguimiento-novedad/seguimiento-novedad.component';
+
+import { AccionComponent } from './m-mantenimiento/componentes/accion/accion.component';
+import { AsuntoComponent } from './m-mantenimiento/componentes/asunto/asunto.component';
+import { CategoriaComponent } from './m-mantenimiento/componentes/categoria/categoria.component';
 import { ConsorciosComponent } from './m-mantenimiento/componentes/consorcios/consorcios.component';
+import { MotivoCambioComponent } from './m-mantenimiento/componentes/motivo-cambio/motivo-cambio.component';
+import { ParametroComponent } from './m-mantenimiento/componentes/parametro/parametro.component';
+import { TipoPozoComponent } from './m-mantenimiento/componentes/tipo-pozo/tipo-pozo.component';
+import { TipoTrabajoComponent } from './m-mantenimiento/componentes/tipo-trabajo/tipo-trabajo.component';
+import { YacimientoComponent } from './m-mantenimiento/componentes/yacimiento/yacimiento.component';
 
 
 
@@ -67,9 +76,17 @@ const routes: Routes = [
       { path: 'registroTasas', component: RegistroTasasComponent, outlet: 'sitp' },
       { path: 'verificarPagos', component: VerificarPagosComponent, outlet: 'sitp' },
 
-      { path: 'seguimientoNovedad', component: SeguimientoNovedadComponent, outlet: 'sitp' },
-
+      { path: 'seguimientoNovedad', component: SeguimientoNovedadComponent, outlet: 'sitp' },      
+ 
+      { path: 'accion', component: AccionComponent, outlet: 'sitp' },
+      { path: 'asunto', component: AsuntoComponent, outlet: 'sitp' },
       { path: 'consorcios', component: ConsorciosComponent, outlet: 'sitp' },
+      { path: 'categoria', component: CategoriaComponent, outlet: 'sitp' },
+      { path: 'motivo-cambio', component: MotivoCambioComponent, outlet: 'sitp' },
+      { path: 'parametro', component: ParametroComponent, outlet: 'sitp' },
+      { path: 'tipo-pozo', component: TipoPozoComponent, outlet: 'sitp' },
+      { path: 'tipo-trabajo', component: TipoTrabajoComponent, outlet: 'sitp' },
+      { path: 'yacimiento', component: YacimientoComponent, outlet: 'sitp' },
 
     ]
   }

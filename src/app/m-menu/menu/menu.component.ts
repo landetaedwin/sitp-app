@@ -218,21 +218,23 @@ export class MenuComponent implements OnInit {
         label: 'Catálogos',
         visible: this.m7,
         items: [
-          { label: 'Tipo de trabajo', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Número de trabajo', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Categorización de trabajo', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Tipo de pozo', routerLink: [{ outlets: { sitp: ['mantenimiento-tipo-pozo'] } }], visible: true },
-          { label: 'Asunto de documento Operadora', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Asunto de documento Ministerio', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Yacimiento', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Número de registros de producción', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Número de registros de inyección', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Acción Diaria', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Estado de Tasas', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Estado de asignación', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Estado del pago', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Valoración de cumplimiento', command: () => this.imprimirMensaje(), visible: true },
-          { label: 'Consorsio', routerLink: [{ outlets: { sitp: ['consorcios'] } }], visible: true }
+          { label: 'Acción Diaria', routerLink: [{ outlets: { sitp: ['accion'] } }], visible: true },
+          { label: 'Asunto de documentos', routerLink: [{ outlets: { sitp: ['asunto'] } }], visible: true },
+          { label: 'Categoria', routerLink: [{ outlets: { sitp: ['categoria'] } }], visible: true },
+          { label: 'Consorsio', routerLink: [{ outlets: { sitp: ['consorcios'] } }], visible: true },
+          { label: 'Motivo cambio', routerLink: [{ outlets: { sitp: ['motivo-cambio'] } }], visible: true },
+          { label: 'Parametro', routerLink: [{ outlets: { sitp: ['parametro'] } }], visible: true },
+          { label: 'Tipo de pozo', routerLink: [{ outlets: { sitp: ['tipo-pozo'] } }], visible: true },
+          { label: 'Tipo de trabajo', routerLink: [{ outlets: { sitp: ['tipo-trabajo'] } }], visible: true  },
+          { label: 'Yacimiento', routerLink: [{ outlets: { sitp: ['yacimiento'] } }], visible: true  },          
+      
+          { label: 'Número de registros de producción', command: () => this.imprimirMensaje(), visible: false },
+          { label: 'Número de registros de inyección', command: () => this.imprimirMensaje(), visible: false },          
+          { label: 'Estado de Tasas', command: () => this.imprimirMensaje(), visible: false },
+          { label: 'Estado de asignación', command: () => this.imprimirMensaje(), visible: false },
+          { label: 'Estado del pago', command: () => this.imprimirMensaje(), visible: false },
+          { label: 'Valoración de cumplimiento', command: () => this.imprimirMensaje(), visible: false },
+          
         ]
       }
 

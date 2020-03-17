@@ -1,8 +1,8 @@
 export class Constantes {
 
-     // PATH = 'http://172.16.20.48:9900';
+      PATH = 'http://172.16.20.48:9900';
     //PATH = 'http://167.172.145.2:8080/';
-    PATH = 'http://localhost:9900';
+    //PATH = 'http://localhost:8080';
     SYS = '/sitp'
     MODULOCP = '/crearPortafolio'
 
