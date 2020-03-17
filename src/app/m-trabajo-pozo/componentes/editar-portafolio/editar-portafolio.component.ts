@@ -37,6 +37,9 @@ export class EditarPortafolioComponent implements OnInit {
   tipoTrabajoList: SelectItem[] = [];
   numeroList: SelectItem[] = [];
   estadoList: SelectItem[] = [];
+  portafolioAuditList: SelectItem[] = [];
+
+
 
   campo: Campo = new Campo;
   pozo: Pozo = new Pozo;
@@ -91,6 +94,8 @@ export class EditarPortafolioComponent implements OnInit {
       this.portafolio.fechaTrabajoSinTorre = new Date(this.portafolio.fechaTrabajoSinTorre);
     }
 
+    
+    this.cargarPortafolioAuditList();
     this.cargarCampoList();
     this.cargarTipoPozoList();
     this.cargarConsorcioList();
@@ -100,6 +105,20 @@ export class EditarPortafolioComponent implements OnInit {
 
   }
 
+
+  cargarPortafolioAuditList() {
+    this.busquedaService.getPorfatolioAuditList(this.portafolio.codigoPortafolio).subscribe(
+      (data:any) => {
+
+        this.portafolioAuditList =data;
+      
+        this.loading = false;
+      }, (err) => {
+        this.messageService.add({ severity: 'error', detail: 'Error interno' });
+        this.loading = false;
+        console.log(err)
+      });
+  }
 
   cargarCampoList() {
     this.busquedaService.getCampoList().subscribe(
@@ -311,6 +330,8 @@ export class EditarPortafolioComponent implements OnInit {
       }
     }
 
+    
+
     if (errores.length <= 0) {
       this.loading = true;
       this.loading = true;
@@ -370,6 +391,7 @@ export class EditarPortafolioComponent implements OnInit {
   }
 
   openModalEditarPortafolio(template: TemplateRef<any>) {
+    this.portafolio.motivoCambio = ""
     this.editarPortafolioModalRef = this.modalService.show(template, { class: 'modal-sm', backdrop: 'static', keyboard: false });
   }
 

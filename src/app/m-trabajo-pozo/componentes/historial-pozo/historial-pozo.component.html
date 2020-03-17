@@ -11,6 +11,31 @@
     </div>
   </div>
 </p-fieldset>
+
+
+<p-fieldset legend="Busqueda">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4"><label>Campo: *</label></div>
+        <div class="col-md-8">
+          <p-dropdown [options]="campoList" [(ngModel)]="campo" (onChange)="getPozoListByCamCodigo(campo)"
+            [filter]="true"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4"><label>Pozo: *</label></div>
+        <div class="col-md-8">
+          <p-dropdown [options]="pozoList" [(ngModel)]="pozo" [filter]="true"></p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-fieldset>
+
+
 <hr>
 <p-fieldset legend="Datos del historial de pozo" [toggleable]="true">
 
@@ -20,6 +45,7 @@
         <thead>
           <tr>
             <th>#</th>
+            <th>Pozo</th>
             <th>Trabajo</th>
             <th>Numero</th>
             <th>Fecha TST</th>
@@ -31,6 +57,7 @@
           <tr
             *ngFor="let hp of historialPozoList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
             <td>{{i+1}}</td>
+            <td>{{hp.pozo.pozNombre}}</td>
             <td>{{hp.tipoTrabajo.tipoTrabajo}}</td>
             <td>{{hp.numero}}</td>
             <td>{{hp.fechaTST | date:'dd/MM/yyyy'}}</td>

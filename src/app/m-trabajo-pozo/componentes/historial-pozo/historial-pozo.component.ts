@@ -58,39 +58,73 @@ export class HistorialPozoComponent implements OnInit {
     this.minDate = new Date(2010, 0, 1);
     this.minDateF = new Date(2010, 0, 1);
 
+    this.getCampoList();
+
     this.getHistorialPozoList();
 
 
   }
 
   getHistorialPozoList() {
-    debugger
-    this.busqueda.getHistorialPozoList().subscribe((data: HistorialPozo[]) => {
-      this.historialPozoList = data;
 
-      if (!data) {
-        this.loading = false;
-        this.messageService.add({ severity: 'info', detail: 'No existen datos' });
-      } else {
-        let dataAux: HistorialPozo[] = [];
-        for (let i: number = 0; i < data.length; i++) {
+    if (this.pozo) {
+      this.busqueda.getHistorialPozoListByFliter(this.pozo.pozCodigo).subscribe((data: HistorialPozo[]) => {
+        this.historialPozoList = data;
 
-          if (!data[i].categoria) {
-            data[i].categoria = new Categoria;
-            data[i].categoria.codigoCategoria = null;
-            data[i].categoria.categoria = "N/A";
+        if (!data) {
+          this.loading = false;
+          this.messageService.add({ severity: 'info', detail: 'No existen datos' });
+        } else {
+          let dataAux: HistorialPozo[] = [];
+          for (let i: number = 0; i < data.length; i++) {
+
+            if (!data[i].categoria) {
+              data[i].categoria = new Categoria;
+              data[i].categoria.codigoCategoria = null;
+              data[i].categoria.categoria = "N/A";
+            }
+            dataAux.push(data[i]);
           }
-          dataAux.push(data[i]);
+
+          this.historialPozoList = dataAux;
+          this.loading = false;
+
         }
-
-        this.historialPozoList = dataAux;
+      }, err => {
+        console.log(err)
         this.loading = false;
+      });
+    } else {
+      this.busqueda.getHistorialPozoList().subscribe((data: HistorialPozo[]) => {
+        this.historialPozoList = data;
 
-      }
-    }, err => {
-      console.log(err)
-      this.loading = false;
-    });
+        if (!data) {
+          this.loading = false;
+          this.messageService.add({ severity: 'info', detail: 'No existen datos' });
+        } else {
+          let dataAux: HistorialPozo[] = [];
+          for (let i: number = 0; i < data.length; i++) {
+
+            if (!data[i].categoria) {
+              data[i].categoria = new Categoria;
+              data[i].categoria.codigoCategoria = null;
+              data[i].categoria.categoria = "N/A";
+            }
+            dataAux.push(data[i]);
+          }
+
+          this.historialPozoList = dataAux;
+          this.loading = false;
+
+        }
+      }, err => {
+        console.log(err)
+        this.loading = false;
+      });
+    }
+
+
+
 
   }
 
@@ -184,7 +218,7 @@ export class HistorialPozoComponent implements OnInit {
       errores.push("El tipo de trabajo es requerido");
     }
 
-    
+
 
     if (!this.historialPozo.fechaInicio) {
       errores.push("El campo fecha inicio es requerido");
@@ -235,6 +269,10 @@ export class HistorialPozoComponent implements OnInit {
           this.messageService.add({ severity: 'info', detail: '' + res });
 
         }
+      }, (err) => {
+        this.messageService.add({ severity: 'error', detail: 'Error interno' });
+        this.loading = false;
+        console.log(err)
       });
 
     } else {

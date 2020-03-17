@@ -163,5 +163,11 @@ export class BusquedaService {
     return this.http.get(url, httpOptions);
   }
 
+  getPorfatolioAuditList(codigoPortafolio:number) {
+    const url = this.prop.PATH + this.prop.SYS + "/portafolio-service/portafolio-audit-list?codigoPortafolio="+codigoPortafolio;
+    return this.http.get(url, httpOptions);
+  }
+
+
 
 }
