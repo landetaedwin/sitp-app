@@ -275,10 +275,32 @@
       <div class="col-md-12">
         <div class="row">
           <div class="col-md-4">
-            <label for="campo"><b>Yacimiento:*</b></label>
+            <label for="campo"><b>Yacimiento 1:*</b></label>
           </div>
           <div class="col-md">
-            <p-dropdown [options]="yacimientoList" [(ngModel)]="yacimientoT" [filter]="true">
+            <p-dropdown [options]="yacimientoList1" [(ngModel)]="yacimientoT1" [filter]="true">
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Yacimiento 2:</b></label>
+          </div>
+          <div class="col-md">
+            <p-dropdown [options]="yacimientoList2" [(ngModel)]="yacimientoT2" [filter]="true">
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="campo"><b>Yacimiento 3:</b></label>
+          </div>
+          <div class="col-md">
+            <p-dropdown [options]="yacimientoList3" [(ngModel)]="yacimientoT3" [filter]="true">
             </p-dropdown>
           </div>
         </div>

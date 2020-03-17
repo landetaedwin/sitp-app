@@ -28,8 +28,15 @@ export class RegistroTasasComponent implements OnInit {
   campo: Campo;
   pozoList: SelectItem[] = [];
   pozo: Pozo;
-  yacimientoList: SelectItem[] = [];
-  yacimientoT: Yacimiento;
+
+  yacimientoList1: SelectItem[] = [];
+  yacimientoList2: SelectItem[] = [];
+  yacimientoList3: SelectItem[] = [];
+
+  yacimientoT1: Yacimiento;
+  yacimientoT2: Yacimiento;
+  yacimientoT3: Yacimiento;
+
   tasa: Tasa = new Tasa;
   tasaEdit: Tasa = new Tasa;
   tasaAnular: Tasa = new Tasa;
@@ -150,10 +157,14 @@ export class RegistroTasasComponent implements OnInit {
     this.busquedaService.getYacimientoList().subscribe(
       (data: Yacimiento[]) => {
         let c: Yacimiento;
-        this.yacimientoList = [{ label: "Seleccione", value: null, disabled: true }];
+        this.yacimientoList1 = [{ label: "Seleccione", value: null, disabled: true }];
+        this.yacimientoList2 = [{ label: "Seleccione", value: null, disabled: true }];
+        this.yacimientoList3 = [{ label: "Seleccione", value: null, disabled: true }];
         for (let i in data) {
           c = data[i];
-          this.yacimientoList.push({ label: c.yacimiento, value: c });
+          this.yacimientoList1.push({ label: c.yacimiento, value: c });
+          this.yacimientoList2.push({ label: c.yacimiento, value: c });
+          this.yacimientoList3.push({ label: c.yacimiento, value: c });
         }
         this.loading = false;
       });
@@ -246,7 +257,11 @@ export class RegistroTasasComponent implements OnInit {
     this.pozoT = new Pozo;
     this.bloqueT = new Bloque;
     this.operadoraT = new Operadora;
-    this.yacimientoT = new Yacimiento;
+
+    this.yacimientoT1 = new Yacimiento;
+    this.yacimientoT2 = new Yacimiento;
+    this.yacimientoT3 = new Yacimiento;
+
     this.bloqueT.bqlNombre = "n/a";
     this.operadoraT.cexApellidoPaterno = "n/a";
     this.registroTasaModalRef = this.modalService.show(template, { class: 'modal-md', backdrop: 'static', keyboard: false });
@@ -267,7 +282,12 @@ export class RegistroTasasComponent implements OnInit {
     this.pozoT = tasaEdit.pozo;
     this.bloqueT = tasaEdit.bloque;
     this.operadoraT = tasaEdit.operadora;
-    this.yacimientoT = tasaEdit.yacimiento;
+
+    //TODO: Edit yacimiento
+    this.yacimientoT1 = tasaEdit.yacimiento;
+    this.yacimientoT2 = tasaEdit.yacimiento;
+    this.yacimientoT3 = tasaEdit.yacimiento;
+
     this.tasaEdit.fechaOficio = new Date(tasaEdit.fechaOficio);
     this.tasaEdit.fechaResolucion = new Date(tasaEdit.fechaResolucion);
 
@@ -315,7 +335,9 @@ export class RegistroTasasComponent implements OnInit {
     this.tasa.estado = 1;
     this.tasa.idUsuario = this.usuario.idUsuario;
     this.tasa.fechaRegistro = new Date();
-    this.tasa.codigoYacimiento = this.yacimientoT.codigoYacimiento;
+    this.tasa.codigoYacimiento = this.yacimientoT1.codigoYacimiento;
+    this.tasa.codigoYacimiento2 = this.yacimientoT2.codigoYacimiento;
+    this.tasa.codigoYacimiento3 = this.yacimientoT3.codigoYacimiento;
 
 
     this.dataApi.transCrearTasa(this.tasa).subscribe(data => {
@@ -362,7 +384,9 @@ export class RegistroTasasComponent implements OnInit {
     }
     this.tasaEdit.idUsuario = this.usuario.idUsuario;
     this.tasaEdit.fechaActualizacion = new Date();
-    this.tasaEdit.codigoYacimiento = this.yacimientoT.codigoYacimiento;
+    this.tasaEdit.codigoYacimiento = this.yacimientoT1.codigoYacimiento;
+    this.tasaEdit.codigoYacimiento2 = this.yacimientoT2.codigoYacimiento;
+    this.tasaEdit.codigoYacimiento2 = this.yacimientoT3.codigoYacimiento;
 
 
     this.dataApi.transUpdateTasa(this.tasaEdit).subscribe(data => {

@@ -10,6 +10,8 @@ import { Yacimiento } from './yacimiento'
 export class Tasa {
     codigoTasa: number
     codigoYacimiento: number
+    codigoYacimiento2: number
+    codigoYacimiento3: number
     codigoAlias: number
     cexCodigo: number
     blqCodigo: String
@@ -34,6 +36,8 @@ export class Tasa {
     pozo: Pozo
     alias: string
     yacimiento: Yacimiento
+    yacimiento2: Yacimiento
+    yacimiento3: Yacimiento
     funcionario: Usuario
     fileOficio: Archivo
     fileResolucion: Archivo
