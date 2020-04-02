@@ -83,6 +83,7 @@ export class VerificacionReinyectorComponent implements OnInit {
 
 
   ngOnInit() {
+
     this.usuario = this.loginService.sessionValue;
     this.verificacionProduccion.fecha_actualizacion = this.today
     this.verificacionProduccion.porcentajeControlEstatico = 10
@@ -100,37 +101,17 @@ export class VerificacionReinyectorComponent implements OnInit {
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
       this.messageService.add({ severity: 'warn', detail: 'No se ha establecido una fecha de inicio o fin de actividades' });
     }
-
     this.verificacionProduccion.codPortafolio = this.portafolio.codigoPortafolio;
     this.verificacionProduccion.tipopozo = this.portafolio.tipoPozo
     this.produccionList = [];
     this.listarDatos();
-
-    this.verificacionProduccion.porcentajeControlEstatico = 10; 
-    this.usuario = this.loginService.sessionValue;
-    this.verificacionProduccion.fecha_actualizacion = this.today
-
-
-    if (!this.verificarProduccionService.portafolio) {
-      this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
-    }
-
-    if (!this.usuario) {
-      this.router.navigate(['/login'])
-    }
-
-    this.verificacionProduccion.codPortafolio = this.portafolio.codigoPortafolio;
-    this.verificacionProduccion.tipopozo = this.portafolio.tipoPozo
-    this.produccionList = [];
-
-    this.obtenerTodo();
-    this.verificacionProduccion.porcentajeControlEstatico = 10;
 
   }
 
 
 
   listarDatos() {
+    this.loading=true;
     this.verificarProduccionService.buscarporIdReinyector(this.portafolio.codigoPortafolio).subscribe(
       (data: VerificacionProduccion[]) => {
         console.log(data)
@@ -141,8 +122,9 @@ export class VerificacionReinyectorComponent implements OnInit {
         this.verificacionProduccionListar = [];
         this.verificacionProduccionListar = data;
         this.obtenerTodo();
-
+        this.loading=false;
       });
+      
   }
 
   almacenamientoAutomatico() {
@@ -158,21 +140,19 @@ export class VerificacionReinyectorComponent implements OnInit {
 
     this.verificarProduccionService.transCrearVerificarReinyector(this.verificacionProduccion).subscribe(data => {
       if (data) {
-        this.verificacionProduccion.fecha_actualizacion = this.today
-        this.loading = false;
+        this.verificacionProduccion.fecha_actualizacion = this.today 
 
       } else {
-        this.loading = false;
       }
       this.listarDatos();
-      console.log(this.verificacionProduccion)
+    
 
     });
   }
 
   cargarDatos(eProduccion: VerificacionProduccion) {
 
-  
+  this.loading=true
     this.verificarProduccionService.verificarProduccion = this.cloneJSON(eProduccion);
     this.verificarProduccionService.verificarProduccion = eProduccion;
 
@@ -185,9 +165,9 @@ export class VerificacionReinyectorComponent implements OnInit {
             this.produccion.promedio_antes = 0;
             //SUMA LOS DATOS
             for (let i: number = 0; i < data.length; i++) {
-              this.produccion.promedio_antes += data[i].Baipd;// 0,1,2
+              this.produccion.promedio_antes += data[i].baipd;// 0,1,2
               //ON=BTIENE EL ULTIMO VALOR
-              this.produccion.ultimo_antes = data[i].Baipd;
+              this.produccion.ultimo_antes = data[i].baipd;
             }
 
             //CALCULA PROMEDIO
@@ -209,16 +189,16 @@ export class VerificacionReinyectorComponent implements OnInit {
           }
           else {
             this.messageService.add({ severity: 'warn', detail: 'No se han encontrado datos para mostrar' });
+            this.loading = false;
           }
         }
 
-        this.loading = false;
+       
       });
-
+     
   }
 
   obtenerTodo() {
-
     this.verificarProduccionService.obtenerporIdReinyector(this.portafolio.codigoPortafolio).subscribe(
       (data: VerificacionProduccion[]) => {
         if (data) {
@@ -227,7 +207,7 @@ export class VerificacionReinyectorComponent implements OnInit {
           this.verificacionProduccion.observacion = null;
           //   this.verificarProduccionService.verificarProduccion=data[1].codVerificacion;
         }
-        this.loading = false;
+   
 
         if (data.length !== 0) {
 
@@ -256,9 +236,9 @@ export class VerificacionReinyectorComponent implements OnInit {
                 this.produccion.promedio_despues = 0;
                 //SUMA LOS DATOS
                 for (let i: number = 0; i < dataP.length; i++) {
-                  this.produccion.promedio_despues += dataP[i].Baipd;// 0,1,2
+                  this.produccion.promedio_despues += dataP[i].baipd;// 0,1,2
                   //ON=BTIENE EL ULTIMO VALOR
-                  this.produccion.ultimo_despues = dataP[i].Baipd;
+                  this.produccion.ultimo_despues = dataP[i].baipd;
                 }
 
                 //CALCULA PROMEDIO
@@ -272,7 +252,6 @@ export class VerificacionReinyectorComponent implements OnInit {
 
 
               }
-              this.loading = false;
             });
 
           this.verificarProduccionService.BuscarInfoReinyectorAntes(this.portafolio.fechaInicio, this.verificacionProduccion.numRegistros, this.portafolio.pozo.pozCodigo, this.verificacionProduccion.codVerificacion).subscribe(
@@ -282,9 +261,9 @@ export class VerificacionReinyectorComponent implements OnInit {
                 this.produccion.promedio_antes = 0;
                 //SUMA LOS DATOS
                 for (let i: number = 0; i < dataAntes.length; i++) {
-                  this.produccion.promedio_antes += dataAntes[i].Baipd;// 0,1,2
+                  this.produccion.promedio_antes += dataAntes[i].baipd;// 0,1,2
                   //ON=BTIENE EL ULTIMO VALOR
-                  this.produccion.ultimo_antes = dataAntes[i].Baipd;
+                  this.produccion.ultimo_antes = dataAntes[i].baipd;
                 }
 
                 //CALCULA PROMEDIO
@@ -300,15 +279,15 @@ export class VerificacionReinyectorComponent implements OnInit {
                   this.produccion.promedio_antes = (0)
                 };
               }
-              this.loading = false;
             });
 
         }
          
       });
+     
   }
   cargarDatosDespues(eProduccion: VerificacionProduccion){
-
+    this.loading=true
     this.portafolio.fechaFin = new Date(this.portafolio.fechaFin);
     this.verificacionProduccion.formDisabled = 0;
     this.verificarProduccionService.verificarProduccion  = this.cloneJSON(eProduccion);
@@ -324,9 +303,9 @@ export class VerificacionReinyectorComponent implements OnInit {
   
   //SUMA LOS DATOS
    for (let i:number=0 ; i < data.length; i++) {
-      this.produccion.promedio_despues += data[i].  Baipd;// 0,1,2
+      this.produccion.promedio_despues += data[i].  baipd;// 0,1,2
       //ON=BTIENE EL ULTIMO VALOR
-      this.produccion.ultimo_despues= data[i].Baipd;
+      this.produccion.ultimo_despues= data[i].baipd;
   }
   
   
@@ -342,15 +321,14 @@ export class VerificacionReinyectorComponent implements OnInit {
   
   
   
-  //OBTENER PORCENTAJE DE INCREMENTO / DISMINUCION
+ 
   this.sumaPorcentaje=  ( this.produccion.promedio_despues- this.produccion.promedio_antes)
-  console.log(this.sumaPorcentaje);
+  //console.log(this.sumaPorcentaje);
   this.verificacionProduccion.Porcentaje_inc_dis= ((this.sumaPorcentaje/this.produccion.promedio_antes)*100)
   this.verificacionProduccion.PorcentajeMostrar=this.verificacionProduccion.Porcentaje_inc_dis.toFixed(2);
   this.verificacionProduccion.porcentajeControl=this.verificacionProduccion.Porcentaje_inc_dis;
   this.verificacionProduccion.valor_despues= this.produccion.promedio_despues
   
-  //OBTENER VALORACION
   
     if (this.verificacionProduccion.Porcentaje_inc_dis>=0){
      
@@ -374,18 +352,18 @@ export class VerificacionReinyectorComponent implements OnInit {
       
   
   }
-        this.loading = false;
+  this.loading = false;
       });
+     
   }
 
   debloquearActualizacion(){
+    this.loading=true
     this.verificacionProduccion.formDisabled=0
     this.verificacionProduccion.fecha_actualizacion = new Date();
     this.verificarProduccionService.verificarProduccion=this.verificacionProduccion
     this.verificarProduccionService.obtenerporIdReinyector(this.portafolio.codigoPortafolio).subscribe(
       (data: VerificacionProduccion[]) => {
-        this.loading = false;
-
         if (data.length !== 0) {
           this.verificacionProduccion.PorcentajeMostrar= data[0].porcentajeControl.toFixed(2)
           this.verificacionProduccion.codVerificacion = data[0].codVerificacion
@@ -413,10 +391,11 @@ export class VerificacionReinyectorComponent implements OnInit {
             } 
         }
       });
-      
+    this.loading=false
   }
   
   editarProduccion(eProduccion) {
+    this.loading=true
     this.verificacionProduccion.formDisabled=1
     this.verificacionProduccion.estado=1;
     this.verificacionProduccion.idUsu= this.usuario.idUsuario;
@@ -450,6 +429,7 @@ export class VerificacionReinyectorComponent implements OnInit {
 
 
   AnularInforme() {
+    this.loading=true
     this.verificacionProduccion.codPortafolio= this.anularInforme.codPortafolio
     this.verificacionProduccion.estado=0;
     this.verificacionProduccion.idUsu= this.anularInforme.idUsu
@@ -479,6 +459,8 @@ export class VerificacionReinyectorComponent implements OnInit {
      //   this.closeModalNovedadAnular();
       }
     });
+    this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
+    this.loading=false
   }
 
   

@@ -161,12 +161,12 @@
         <tr *ngFor="let produccion of datosAntes" style="font-size: 11px">
 
          
-          <td>{{produccion.fecha_registro }} </td>
+          <td>{{produccion.f_produccion }} </td>
           <td>{{produccion.yacimiento}} </td>
           <td>{{produccion.bppd}} </td>
-          <td>{{produccion.bfpd}} </td>
-          <td>{{produccion.bsw}} </td>
-          <td>{{produccion.salinidad_ppm}} </td>
+          <td>{{produccion.Bfpd}} </td>
+          <td>{{produccion.Bsw}} </td>
+          <td>{{produccion.Salinidad_ppm}} </td>
           <td>{{produccion.equipo}} </td>
           <td>{{produccion.minMax}} </td>
   
@@ -174,7 +174,6 @@
         </tr>
       <tr>
           <td> <p><b>Promedio:</b></td>
-          <td></td>
           <td></td>
           <td> <p>{{produccion.PromedioAntesMostrar}}</p></td>
       </tr>
@@ -220,19 +219,18 @@
     <tbody>
       <tr *ngFor="let produccion of datosDespues" style="font-size: 11px">
 
-        <td>{{produccion.fecha_registro }} </td>
+        <td>{{produccion.f_produccion  }} </td>
         <td>{{produccion.yacimiento}} </td>
         <td>{{produccion.bppd}} </td>
-        <td>{{produccion.bfpd}} </td>
-        <td>{{produccion.bsw}} </td>
-        <td>{{produccion.salinidad_ppm}} </td>
+        <td>{{produccion.Bfpd}} </td>
+        <td>{{produccion.Bsw}} </td>
+        <td>{{produccion.Salinidad_ppm}} </td>
         <td>{{produccion.equipo}} </td>
         <td>{{produccion.minMax}} </td>
       </tr>
 
       <tr>
           <td> <p><b>Promedio:</b></td>
-          <td></td>
           <td></td>
           <td> <p>{{produccion.PromedioDespuesMostrar}}</p></td>
       </tr>
@@ -396,11 +394,11 @@
             <th>Observacion</th>
             <th>Estado</th>
             <th>Fecha Actualización</th>
-            <th>Anular</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let verificacionProduccion of produccionList | paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;" style="font-size: 11px">
+          <tr *ngFor="let verificacionProduccion of produccionList | paginate: { id: 'paginator',itemsPerPage: 8, currentPage: 1 }; let i=index;" style="font-size: 11px">
 
             <td>{{verificacionProduccion.codVerificacion}} </td>
             <td>{{verificacionProduccion.valor_antes}} </td>
@@ -411,7 +409,25 @@
             <td>{{verificacionProduccion.observacion }} </td>
             <td>{{verificacionProduccion.estado}} </td>
             <td>{{verificacionProduccion.fecha_actualizacion | date:'dd/MM/yyyy'}} </td>
+            
+            
             <td class="text-center">
+
+            <div class="btn-group dropleft" *ngIf="portafolio.estado!=0">
+              <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cog"></i>
+              </button>
+
+              <div class="dropdown-menu">
+              <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'" 
+              (click)="openModalInformeAnular(InformeTempalteAnular, verificacionProduccion)" class="dropdown-item" type="button">
+              <i class="fa fa-times"></i>Anular</button>
+              <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'" 
+              (click)="debloquearActualizacion(verificacionProduccion)" class="dropdown-item" type="button">
+              <i class="fa fa-pencil"></i> Informe de Operadora</button>
+            </div>
+          </div>
           </td>
           </tr>
 
@@ -431,4 +447,35 @@
     </div>
 </div>
 
+<ng-template #InformeTempalteAnular>
+  <div class="container mt-3 mb-3">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h4>Anular Productor</h4>
+      </div>
+    </div>
+    <hr>
 
+    <div class="row">
+      <div class="col-md-12">
+        <p>¿Desea anular este registro?</p>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-primary btn-block" (click)="AnularInforme()">SI</button>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-sm btn-danger btn-block" (click)="closeModalInformeAnular()">NO</button>
+      </div>
+    </div>
+  </div>
+
+
+</ng-template>
+
+
+<ng-template #customLoadingTemplate> </ng-template>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>

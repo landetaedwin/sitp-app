@@ -15,9 +15,9 @@ import { EditarInformeOperadoraComponent } from './componentes/editar-informe-op
 import { VerificacionNovedadComponent } from './componentes/verificacion-novedad/verificacion-novedad.component';
 import { VerificacionInyectorComponent } from './componentes/verificacion-inyector/verificacion-inyector.component';
 import { VerificacionReinyectorComponent } from './componentes/verificacion-reinyector/verificacion-reinyector.component';
-import { JustificadoBitacoraPipe } from '../resources/pipes/justificadoBitacora';
+import { JustificadoBitacoraPipe, TipoNovedadPipe } from '../resources/pipes/justificadoBitacora';
 import { ValoracionBitacoraPipe } from '../resources/pipes/valoracionBitacora';
-import { ValoracionProduccionPipe } from '../resources/pipes/valoracion-produccion';
+import { ValoracionProduccionPipe, ValoracionNovedadesPipe } from '../resources/pipes/valoracion-produccion';
 import { EstadoBitacoraPipe} from '../resources/pipes/estado-bitacora';
 import { TipoPozoPipe} from '../resources/pipes/tipo-pozo.pipe';
 import { EstadoPortafolioPipe} from '../resources/pipes/estado-portafolioBitacora.pipe';
@@ -62,6 +62,8 @@ import { SeguimientoNovedadComponent } from './componentes/seguimiento-novedad/s
     VerificacionReinyectorComponent,
   
     EstadoBitacoraPipe,
+    TipoNovedadPipe,
+    ValoracionNovedadesPipe,
     JustificadoBitacoraPipe,
     ValoracionBitacoraPipe,
     EditarVerificacionProduccionComponent,

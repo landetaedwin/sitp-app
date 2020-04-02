@@ -408,7 +408,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let verificacionProduccion of produccionList | paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;" style="font-size: 11px">
+          <tr *ngFor="let verificacionProduccion of produccionList | paginate: { id: 'paginator',itemsPerPage: 0, currentPage: 0 , totalItems: 0}; let i=index;" style="font-size: 11px">
 
             <td>{{verificacionProduccion.codVerificacion}} </td>
             <td>{{verificacionProduccion.valor_antes}} </td>

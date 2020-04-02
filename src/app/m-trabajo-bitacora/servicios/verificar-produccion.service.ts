@@ -141,12 +141,12 @@ export class VerificarProduccionService {
 
 
     Buscar3Antes(fechaInicio :Date, registros:number, pozo:String){
-      const url =  this.prop.PATH + "/sitp/VerificarProduccion/buscarAntes?ProduccionAntes="+ fechaInicio +"&Registros="+ registros+"&Pozo="+ pozo ;
+      const url =  this.prop.PATH + "/sitp/VerificarProduccion/buscarAntes?ProduccionAntes="+ fechaInicio +"&Registros="+ 10+"&Pozo="+ pozo ;
       return this.http.get(url, httpOptions);
     }
 
     BuscarDespues(fechaFin :Date, registros:number, pozo:String){
-      const url =  this.prop.PATH + "/sitp/VerificarProduccion/buscarDespues?ProduccionDespues="+ fechaFin +"&Registros="+ registros+"&Pozo="+ pozo ;
+      const url =  this.prop.PATH + "/sitp/VerificarProduccion/buscarDespues?ProduccionDespues="+ fechaFin +"&Registros="+ 10+"&Pozo="+ pozo ;
       return this.http.get(url, httpOptions);
     }
 

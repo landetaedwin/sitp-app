@@ -118,7 +118,7 @@
           <label for="verificacionNovedad"><b>Novedad:</b></label>
         </div>
         <div class="col-md">
-          <input type="text" class="form-control" [(ngModel)]="verificacioNovedad.novedad" >
+          <p-dropdown [options]="tipoNovedadList"  [(ngModel)]="verificacioNovedad.novedad" readonly></p-dropdown>
         </div>
       </div>
     </div>
@@ -252,6 +252,7 @@
 
             <th>Cod. Novedad</th>
             <th>Novedad</th>
+            <th>Cumple/ No Cumple</th>
             <th>Justificado</th>
             <th>Estado</th>
             <th>Fecha Actualización</th>
@@ -260,27 +261,35 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let editarNovedad of novedadList | paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;" style="font-size: 11px">
+          <tr *ngFor="let editarNovedad of novedadList | paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: 0 , totalItems: 1}; let i=index;" style="font-size: 11px">
 
             <td>{{editarNovedad.codVerfNov  }}</td>
-            <td>{{editarNovedad.novedad }} </td>
+            <td>{{editarNovedad.novedad | TipoNovedad}} </td>
+            <td>{{editarNovedad.valoracion | ValoracionNovedades}} </td>
             <td>{{editarNovedad.justificado | JustificadoBitacora}} </td>
             <td>{{editarNovedad.estado | estadoBitacora}}  </td>
             <td>{{editarNovedad.fecha_actualizacion  | date:'dd-MM-yyyy' }} </td>
             <td>{{editarNovedad.observacion }} </td>
-            <td>
-            <i 
-            (click)="seguimientoNovedad(editarNovedad)">
-            <i class="fa fa-thumb-tack  fa-2x"></i>
-            </i>
-          <i>
-          <i *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
-           (click)="openModalNovedadAnular(NovedadTempalteAnular, editarNovedad)">
- 
-          <i class="fa fa-times fa-2x"></i>
-          </i>
-          </i>
-          </td>
+          
+             <td class="text-center">
+
+              <div class="btn-group dropleft" *ngIf="portafolio.estado!=0  && editarNovedad.estado=='1'">
+                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-cog"></i>
+                </button>
+  
+                <div class="dropdown-menu">
+                <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'" 
+                (click)="seguimientoNovedad(editarNovedad)" class="dropdown-item" type="button">
+                <i class="fa fa-thumb-tack "></i>Seguimiento Novedad</button>
+                <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'" 
+                (click)="openModalNovedadAnular(NovedadTempalteAnular, editarNovedad)" class="dropdown-item" type="button">
+                <i class="fa fa-times "></i> Anular</button>
+              </div>
+            </div>
+            </td>
+     
           </tr>
 
         </tbody>

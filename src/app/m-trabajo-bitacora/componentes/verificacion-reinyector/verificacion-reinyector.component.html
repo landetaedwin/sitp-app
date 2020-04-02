@@ -155,8 +155,8 @@
         <tr *ngFor="let produccion of datosAntes" style="font-size: 11px">
 
          
-        <td>{{produccion.Fecha | date:'dd/MM/yyyy' }} </td>
-        <td>{{produccion.Baipd}} </td>
+        <td>{{produccion.fechaProduccion | date:'dd/MM/yyyy' }} </td>
+        <td>{{produccion.baipd}} </td>
        
        
         </tr>
@@ -200,8 +200,8 @@
     <tbody>
       <tr *ngFor="let produccion of datosDespues" style="font-size: 11px">
 
-        <td>{{produccion.Fecha  | date:'dd/MM/yyyy' }} </td>
-        <td>{{produccion.Baipd}} </td>
+        <td>{{produccion.fechaProduccion  | date:'dd/MM/yyyy' }} </td>
+        <td>{{produccion.baipd}} </td>
 
       </tr>
 
@@ -382,7 +382,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let verificacionProduccion of produccionList | paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;" style="font-size: 11px">
+          <tr *ngFor="let verificacionProduccion of produccionList | paginate: { id: 'paginator',itemsPerPage: 1, currentPage: 1 , totalItems: 10}; let i=index;" style="font-size: 11px">
 
             <td>{{verificacionProduccion.codVerificacion}} </td>
             <td>{{verificacionProduccion.valor_antes}} </td>
@@ -393,13 +393,28 @@
             <td>{{verificacionProduccion.observacion }} </td>
             <td>{{verificacionProduccion.estado| estadoBitacora}} </td>
             <td>{{verificacionProduccion.fecha_actualizacion | date:'dd/MM/yyyy'}} </td>
+
+
             <td class="text-center">
-              <i class="fa fa-pencil-square-o fa-2x" (click)="debloquearActualizacion(verificacionProduccion)"></i>   
-              <i *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'"
-                (click)="openModalInformeAnular(InformeTempalteAnular, verificacionProduccion)">
-                <i class="fa fa-times fa-2x"></i>
-              </i>         
-          </td>
+
+              <div class="btn-group dropleft" *ngIf="portafolio.estado!=0">
+                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-cog"></i>
+                </button>
+  
+                <div class="dropdown-menu">
+                <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'" 
+                (click)="openModalInformeAnular(InformeTempalteAnular, verificacionProduccion)" class="dropdown-item" type="button">
+                <i class="fa fa-times"></i>Anular</button>
+                <button *ngIf="usuario && usuario.perfil && usuario.perfil.codigoPerfil == '3'" 
+                (click)="debloquearActualizacion(verificacionProduccion)" class="dropdown-item" type="button">
+                <i class="fa fa-pencil"></i> Editar</button>
+              </div>
+            </div>.
+            </td>
+
+       
           </tr>
 
         </tbody>
@@ -444,4 +459,8 @@
     </div>
 </div>
 
+
+<ng-template #customLoadingTemplate> </ng-template>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>
 

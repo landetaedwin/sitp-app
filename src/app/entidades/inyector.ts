@@ -1,6 +1,6 @@
 export class Inyector {
     IdProduccion: Number
     CodVerfProd: Number
-    Fecha: Date
+    f_produccion: Date
     Baipd: number
 }

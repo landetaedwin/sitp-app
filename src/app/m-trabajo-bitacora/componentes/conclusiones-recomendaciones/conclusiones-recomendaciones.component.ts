@@ -93,12 +93,14 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
     this.conclusionRecomendacion.codPortafolio= this.portafolio.codigoPortafolio;   
     
    // this.buscarpoId();
-    this.obtenerTodoConclusionRecomendacion();
+
     this.obtenerTodoFechas();
     this.obtenerTodoInyector();
     this.obtenerTodoProductor();
     this.obtenerTodoReinyector();
-    this.obtenerTodoNovedad()
+    this.obtenerTodoNovedad();
+
+    this.obtenerTodoConclusionRecomendacion();
     }
 
  
@@ -121,6 +123,8 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
         this.conclusionRecomendacion.estado= 1;   
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se Creó el Informe de Conclusiones y Recomendaciones' });
+        this.conclusionRecomendacion.conclusion=null
+        this.conclusionRecomendacion.recomendacion=null;
         this.obtenerTodoConclusionRecomendacion();
 
       } else {
@@ -150,12 +154,12 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
         if (data) {
           this.conclusionRecomendacion.estado= 1;   
           this.loading = false;
-          this.messageService.add({ severity: 'success', detail: 'Se Creó el Informe de Conclusiones y Recomendaciones' });
+          this.messageService.add({ severity: 'success', detail: 'Se Actualizó el Informe de Conclusiones y Recomendaciones' });
           this.obtenerTodoConclusionRecomendacion();
   
         } else {
           this.loading = false;
-          this.messageService.add({ severity: 'info', detail: 'No se pudo crear el informe de Verificación de Fechas' });
+          this.messageService.add({ severity: 'info', detail: 'No se pudo Actualizar el informe' });
     
         }
       });
@@ -165,17 +169,24 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
 
 
     obtenerTodoConclusionRecomendacion(){
-      console.log("dsfdsf");
-      console.log();
+      this.loading=true;
       this.conclusionRecomendacionService.buscarporId(this.portafolio.codigoPortafolio).subscribe(
         (data: ConclusionRecomendacion[]) => {   
         if (data) {
           this.conclusionList = data;
         }   
+        else {
+          this.loading = false;
+          this.messageService.add({ severity: 'info', detail: 'No se han registrado Datos' });
+    
+        }
           this.loading = false;
   
         });
       }
+
+
+
 
 
       obtenerTodoFechas(){
@@ -184,7 +195,13 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
           (data: VerificacionFechas[]) => {   
           if (data) {
             this.verificacionFechasList = data;
+     
           }   
+          else {
+            this.loading = false;
+            this.messageService.add({ severity: 'info', detail: 'No se han registrado Datos de Fechas' });
+      
+          }
             this.loading = false;
     
           });
@@ -197,9 +214,10 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
           (data: VerificacionProduccion[]) => {   
           if (data) {
             this.ProductorList = data;
+          
           }   
             this.loading = false;
-    
+          
           });
         }
 
@@ -238,6 +256,11 @@ export class ConclusionesRecomendacionesComponent implements OnInit {
             if (data) {
               this.NovedadList = data;
             }   
+            else {
+              this.loading = false;
+              this.messageService.add({ severity: 'info', detail: 'No se han registrado Datos de Novedades' });
+        
+            }
               this.loading = false;
       
             });

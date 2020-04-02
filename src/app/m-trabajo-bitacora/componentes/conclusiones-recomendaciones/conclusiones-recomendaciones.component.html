@@ -121,6 +121,10 @@
           <tbody>
   
   
+
+          
+
+
             <tr *ngFor="let verificacionFechas of verificacionFechasList" style="font-size: 11px">
   
               <td>Verificación Fechas</td>
@@ -128,6 +132,7 @@
               <td>{{verificacionFechas.justificado | JustificadoBitacora}} </td>
               <td>{{verificacionFechas.observacion }}  </td>
             </tr>
+  
   
   
             <tr *ngFor="let verificacionProduccion of ProductorList" style="font-size: 11px">
@@ -144,7 +149,7 @@
             <tr *ngFor="let verificarNovedad of NovedadList" style="font-size: 11px">
   
               <td>Verificación Novedades</td>
-              <td>{{verificarNovedad.valoracion | JustificadoBitacora }} </td>
+              <td>{{verificarNovedad.valoracion | ValoracionNovedades }} </td>
               <td>{{verificarNovedad.justificado | JustificadoBitacora}} </td>
               <td>{{verificarNovedad.observacion }}  </td>
             </tr>
@@ -282,7 +287,7 @@
         <tbody>
 
 
-          <tr *ngFor="let conclusionRecomendacion of conclusionList  | paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;" style="font-size: 11px">    
+          <tr *ngFor="let conclusionRecomendacion of conclusionList  | paginate: { id: 'paginator',itemsPerPage: 10, currentPage: 1 , totalItems: 10}; let i=index;" style="font-size: 11px">    
             <td>{{i+1}} </td>
             <td>{{conclusionRecomendacion.conclusion}} </td>
             <td>{{conclusionRecomendacion.recomendacion }}  </td>

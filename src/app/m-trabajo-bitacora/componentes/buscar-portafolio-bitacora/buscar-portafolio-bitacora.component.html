@@ -121,7 +121,7 @@
 
         <tbody>
           <tr
-            *ngFor="let portafolio of portafolioList| paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: total}; let i=index;">
+            *ngFor="let portafolio of portafolioList| paginate: { id: 'paginator',itemsPerPage: page_size, currentPage: page_number , totalItems: null}; let i=index;">
          
             <td>{{portafolio.codigoPortafolio}}</td>
             <td>{{portafolio.operadora.cexApellidoPaterno}} </td>

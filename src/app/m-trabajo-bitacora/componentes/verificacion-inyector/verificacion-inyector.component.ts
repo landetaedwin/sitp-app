@@ -12,6 +12,7 @@ import { Router, RouterLink } from '@angular/router';
 import { Produccion } from 'src/app/entidades/produccion';
 import { Inyector } from 'src/app/entidades/inyector';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 
 @Component({
   selector: 'app-verificacion-inyector',
@@ -81,10 +82,16 @@ export class VerificacionInyectorComponent implements OnInit {
   ngOnInit() {
     this.usuario = this.loginService.sessionValue;
     this.verificacionProduccion.fecha_actualizacion = this.today
-  
+    this.verificacionProduccion.porcentajeControlEstatico=10;
    
+    
+    this.produccionList = [];
+    
     if (!this.verificarProduccionService.portafolio) {
       this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
+    }else{
+      this.verificacionProduccion.codPortafolio=this.portafolio.codigoPortafolio ;
+      this.verificacionProduccion.tipopozo= this.portafolio.tipoPozo;
     }
 
     if (!this.usuario) {
@@ -96,21 +103,21 @@ export class VerificacionInyectorComponent implements OnInit {
       this.messageService.add({ severity: 'warn', detail: 'No se ha establecido una fecha de inicio o fin de actividades' });
     }
 
-    this.verificacionProduccion.codPortafolio=this.portafolio.codigoPortafolio ;
-    this.verificacionProduccion.tipopozo= this.portafolio.tipoPozo
-    this.produccionList = [];
+
+
   this.listarDatos();
 
-  this.verificacionProduccion.porcentajeControlEstatico=10;
+
   }
 
   
   
 
   listarDatos(){
+    this.loading=true
     this.verificarProduccionService.buscarporIdInyector(this.portafolio.codigoPortafolio).subscribe(
       (data: VerificacionProduccion[]) => { 
-     console.log(data)
+    // console.log(data)
         if (data.length==0) {
           this.almacenamientoAutomatico()
         }
@@ -118,12 +125,16 @@ export class VerificacionInyectorComponent implements OnInit {
         this.verificacionProduccionListar = [];
         this.verificacionProduccionListar = data;
         this.obtenerTodo();
+        this.loading=false
 
       });
+
   }
 
     
   almacenamientoAutomatico(){
+
+    this.loading=true
     this.verificacionProduccion.idUsu= this.usuario.idUsuario;
     this.verificacionProduccion.descripcionValoracion= null
     this.verificacionProduccion.estado= 5
@@ -144,17 +155,13 @@ export class VerificacionInyectorComponent implements OnInit {
         this.loading = false;
       }
       this.listarDatos();
-     // this.listarDatos(); 
-      console.log(this.verificacionProduccion)
       
     });
-
 }
 
 
   cargarDatos(eProduccion: VerificacionProduccion){
-
-
+    this.loading=true;
     this.verificarProduccionService.verificarProduccion  = this.cloneJSON(eProduccion);
     this.verificarProduccionService.verificarProduccion = eProduccion;
     
@@ -193,26 +200,23 @@ export class VerificacionInyectorComponent implements OnInit {
     this.messageService.add({ severity: 'warn', detail: 'No se han encontrado datos para mostrar' });
   }
   }
-
-        this.loading = false;
+  this.loading=false; 
       });
-     
+ 
   }
 
 obtenerTodo() {
-
+  
   this.verificarProduccionService.obtenerporIdInyector(this.portafolio.codigoPortafolio).subscribe(
     (data: VerificacionProduccion[]) => {
       if (data) {
         this.produccionList = [];
         this.produccionList = data;
         this.verificacionProduccion.observacion = null;
-     //   this.verificarProduccionService.verificarProduccion=data[1].codVerificacion;
       }
-      this.loading = false;
+
 
       if (data.length!==0) {
-
         this.messageService.add({ severity: 'warn', detail: 'Ya existe un informe asignado en este pozo' });
         this.buttonDisabled=1;
         this.verificacionProduccion.formDisabled = 1;
@@ -232,7 +236,7 @@ obtenerTodo() {
           (dataP: Inyector[]) => {   
       
           if (dataP) {
-            console.log(dataP);
+           // console.log(dataP);
             this.datosDespues= dataP
             this.produccion.promedio_despues =0;
            
@@ -255,7 +259,7 @@ obtenerTodo() {
                    
     
     }
-            this.loading = false;
+
           });
 
           this.verificarProduccionService.BuscarInfoInyectorAntes(this.portafolio.fechaInicio, this.verificacionProduccion.numRegistros,  this.portafolio.pozo.pozCodigo, this.verificacionProduccion.codVerificacion ).subscribe(
@@ -274,8 +278,6 @@ obtenerTodo() {
           try{
           this.produccion.promedio_antes= (this.produccion.promedio_antes/dataAntes.length)
           this.produccion.PromedioAntesMostrar= this.produccion.promedio_antes.toFixed(2)
-          console.log(dataAntes.length)
-          console.log(this.produccion.promedio_antes);
           this.verificacionProduccion.valor_antes= this.produccion.promedio_antes
        
           }
@@ -286,14 +288,14 @@ obtenerTodo() {
       
           // console.log(  this.produccion.promedio_antes);
             }   
-              this.loading = false;
+         
             });
 
         }
-       // this.verificacionProduccion.formDisabled = 1;          
+
       });
 
-    
+ 
 }
 
 
@@ -302,13 +304,14 @@ obtenerTodo() {
 
 
 cargarDatosDespues(eProduccion: VerificacionProduccion){
+  this.loading=true;
 
   this.portafolio.fechaFin = new Date(this.portafolio.fechaFin);
   this.verificacionProduccion.formDisabled = 0;
   this.verificarProduccionService.verificarProduccion  = this.cloneJSON(eProduccion);
   this.verificarProduccionService.verificarProduccion = eProduccion;
  
-  console.log(this.verificacionProduccion)
+  //console.log(this.verificacionProduccion)
   this.verificarProduccionService.BuscarInfoInyectorDespues(this.portafolio.fechaFin, this.verificacionProduccion.numRegistros, this.portafolio.pozo.pozCodigo, this.verificarProduccionService.verificarProduccion.codVerificacion).subscribe(
     (data: Inyector[]) => {   
 
@@ -342,7 +345,6 @@ try{
 
 //OBTENER PORCENTAJE DE INCREMENTO / DISMINUCION
 this.sumaPorcentaje=  ( this.produccion.promedio_despues- this.produccion.promedio_antes)
-console.log(this.sumaPorcentaje);
 this.verificacionProduccion.Porcentaje_inc_dis= ((this.sumaPorcentaje/this.produccion.promedio_antes)*100)
 this.verificacionProduccion.PorcentajeMostrar=this.verificacionProduccion.Porcentaje_inc_dis.toFixed(2);
 this.verificacionProduccion.porcentajeControl=this.verificacionProduccion.Porcentaje_inc_dis;
@@ -374,10 +376,12 @@ this.verificacionProduccion.valor_despues= this.produccion.promedio_despues
 }
       this.loading = false;
     });
+   
 }
 
 
 debloquearActualizacion(){
+  this.loading=true
   this.verificacionProduccion.formDisabled=0
   this.verificacionProduccion.fecha_actualizacion = new Date();
 
@@ -414,18 +418,15 @@ debloquearActualizacion(){
           } 
         }
       });
+      this.loading=false
 }
 
 editarProduccion(eProduccion) {
-  //this.verificarProduccionService.verificarProduccion  = this.cloneJSON(eProduccion);
-  //this.verificarProduccionService.verificarProduccion = eProduccion;
-  console.log(this.verificarProduccionService.verificarProduccion );
-
+  this.loading=true
   this.verificacionProduccion.formDisabled=1
   this.verificacionProduccion.estado=1;
   this.verificacionProduccion.idUsu= this.usuario.idUsuario;
   this.verificacionProduccion.codVerificacion= this.verificarProduccionService.verificarProduccion.codVerificacion
-    console.log(this.verificacionProduccion);
     
     this.verificarProduccionService.transUpdateVerificacionInyector(this.verificacionProduccion).subscribe(data =>{
       if (data) {
@@ -439,26 +440,25 @@ editarProduccion(eProduccion) {
         this.messageService.add({ severity: 'info', detail: 'No se pudo actualizar el informe de Verificación de Novedad' });
   
       }
-
-      console.log(this.verificacionProduccion.codVerificacion)
     });
-  
+
 }
 
 volver(portafolio: Portafolio) {
-  console.log("click");
+  //console.log("click");
   this.verificarFechasService.portafolio = portafolio;
   this.router.navigate(['/menu', { outlets: { sitp: ['verificacionFechas'] } }]);
 }
 
 
 siguiente(portafolio: Portafolio) {
-  console.log("click");
+  //console.log("click");
   this.VerificarNovedadService.portafolio = portafolio;
   this.router.navigate(['/menu', { outlets: { sitp: ['verificarNovedad'] } }]);
 }
 
 AnularInforme() {
+  this.loading=true
   this.verificacionProduccion.codPortafolio= this.anularInforme.codPortafolio
   this.verificacionProduccion.estado=0;
   this.verificacionProduccion.idUsu= this.anularInforme.idUsu
@@ -471,23 +471,21 @@ AnularInforme() {
   this.verificacionProduccion.valoracion= this.anularInforme.valoracion
   this.verificacionProduccion.fecha_actualizacion= this.today
   this.verificacionProduccion.codVerificacion= this.anularInforme.codVerificacion
-  console.log(this.verificacionProduccion)
-
   this.verificarProduccionService.transUpdateVerificacionInyector(this.verificacionProduccion)
   .subscribe(data => {
    if (data ) {
-      this.loading = false;
       this.messageService.add({ severity: 'success', detail: 'Verificación Anulada' });
       //this.verificacionProduccion=null;
      this.closeModalInformeAnular();
-     this.obtenerTodo();
-      //this.listarDatos();
+     this.produccionList=[]
+
+  
     } else {
-      this.loading = false;
       this.messageService.add({ severity: 'Error', detail: 'No se ha podido anular'});
-   //   this.closeModalNovedadAnular();
     }
   });
+  this.router.navigate(['/menu', { outlets: { sitp: ['buscarPortafolioBitacora'] } }]);
+  this.loading=false
 }
 
 

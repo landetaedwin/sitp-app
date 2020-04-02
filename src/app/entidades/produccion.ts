@@ -14,13 +14,13 @@ export class Produccion {
     ultimo_antes: number
     ultimo_despues: number
     minMax = String
-    bsw: number
+    Bsw: number
     api: number
-    salinidad_ppm: String
+    Salinidad_ppm: String
     codigo_verificacion_produccion: String
     codigo_verificacion_tasa: String
     pozo_nombre: String
-    bfpd: Number
+    Bfpd: Number
     PromedioAntesMostrar: String
     PromedioDespuesMostrar: String
 

@@ -99,7 +99,7 @@
         </thead>
         <tbody>
           <tr class="text-center"
-            *ngFor="let portafolio of portafolioList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: p }; let i=index;">
+            *ngFor="let portafolio of portafolioList| paginate: {id: 'foo', itemsPerPage: 10, currentPage: 1 }; let i=index;">
 
             <td>{{i+1}} </td>
             <td>{{portafolio.codigoPortafolio}} </td>

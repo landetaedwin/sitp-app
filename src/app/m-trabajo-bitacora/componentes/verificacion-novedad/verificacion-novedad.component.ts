@@ -3,7 +3,6 @@ import { MessageService, SelectItem } from "primeng/api";
 import { LoginService } from 'src/app/m-login/servicios/login.service';
 import { VerificacionNovedad } from 'src/app/entidades/verificacion-novedad';
 import { Portafolio } from 'src/app/entidades/portafolio';
-
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Usuario } from 'src/app/m-login/entidades/usuario';
 import { ConclusionesRecomendaciones } from 'src/app/m-trabajo-bitacora/servicios/conclusiones-recomendaciones.service';
@@ -23,6 +22,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 export class VerificacionNovedadComponent implements OnInit {
   portafolio: Portafolio;
   estadolist: SelectItem[] = [];
+  tipoNovedadList: SelectItem[] = [];
   verificacioNovedad = new VerificacionNovedad();
   novedadList: VerificacionNovedad[] = [];
   usuario: Usuario;
@@ -44,6 +44,7 @@ export class VerificacionNovedadComponent implements OnInit {
 
     this.hoy = new Date();
     this.verificacioNovedad.estado=1;
+    this.verificacioNovedad.novedad="1";
     this.verificacioNovedad.justificado=2;
     this.verificacioNovedad.valoracion=1;
 
@@ -54,17 +55,25 @@ export class VerificacionNovedadComponent implements OnInit {
     ];
 
     this.valoracionList = [
-      { label: "Si", value: 1, disabled: false },
-      { label: "No", value: 2, disabled: false }
+      { label: "Cumple", value: 1, disabled: false },
+      { label: "No Cumple", value: 2, disabled: false }
     ];
     
     this.justificadoList= [
-
+      { label: "No", value: 2, disabled: false },    
       { label: "Si", value: 1, disabled: false },
-      { label: "No", value: 2, disabled: false }
+
   
   ];
 
+  this.tipoNovedadList= [
+
+    { label: "Falla de Registro", value: '0', disabled: false },
+    { label: "Suspensión indefinida", value: '1', disabled: false },
+    { label: "Suspensión Temporal", value: '2', disabled: false },
+    { label: "Falla Operativa", value: '3', disabled: false }
+
+];
 
   
   }
@@ -72,7 +81,11 @@ export class VerificacionNovedadComponent implements OnInit {
 
 
   ngOnInit() {
+    this.verificacioNovedad.novedad="0";
+    this.verificacioNovedad.estado=1;
+    this.verificacioNovedad.justificado=2;
     this.verificacioNovedad.fecha_actualizacion = this.hoy;
+
     this.usuario = this.loginService.sessionValue;
     this.novedadList = [];
 
@@ -111,16 +124,17 @@ export class VerificacionNovedadComponent implements OnInit {
 
 
   obtenerTodo() {
+    this.loading=true
     this.verificacioNovedad.codPortafolio = this.portafolio.codigoPortafolio;
     this.verificarNovedadService.buscarporId(this.portafolio.codigoPortafolio).subscribe(
       (data: VerificacionNovedad[]) => {
         if (data) {
           this.novedadList = [];
-          this.verificacioNovedad.codVerfNov= this.portafolio.codigoPortafolio +"_"+data.length
+          this.verificacioNovedad.codVerfNov= this.portafolio.codigoPortafolio +"_"+(data.length+1)
           this.novedadList = data;
           this.verificacioNovedad.estado=1
-         
-          console.log(this.verificacioNovedad.codVerfTrabajo)
+          
+         // console.log(this.verificacioNovedad.codVerfTrabajo)
         }
         this.loading = false;
      
@@ -129,21 +143,24 @@ export class VerificacionNovedadComponent implements OnInit {
   }
 
   guardar(){
+    this.loading=true;
     this.verificacioNovedad.idUsu= this.usuario.idUsuario;
     this.verificarNovedadService.transCrearVerificacionNovedad(this.verificacioNovedad).subscribe(data =>{
       if (data) {
         this.obtenerTodo();
        // this.verificacioNovedad.codVerfNov= this.portafolio.codigoPortafolio +"_"+ this.buscarpoId().length
-        console.log(this.verificacioNovedad.novedad)
+       //console.log(this.verificacioNovedad.novedad)
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: 'Se creo el Informe de Verificación de Novedad' });
+        this.loading=false;
       //  this.obtenerTodo();
-        this.verificacioNovedad.justificado= null;
-        this.verificacioNovedad.novedad=null;
+        this.verificacioNovedad.justificado= 2;
+        this.verificacioNovedad.novedad="1";
       
       } else {
         this.loading = false;
         this.messageService.add({ severity: 'info', detail: 'No se pudo crear el informe de Verificación de Novedad' });
+        this.loading=false;
   
       }
     });
@@ -206,6 +223,8 @@ cloneJSON(obj) {
         this.loading = false;
         this.messageService.add({ severity: 'success', detail: '' + data });
        // this.closeModalNovedadAnular();
+       this.verificacioNovedad.novedad="1";
+    this.verificacioNovedad.justificado=2;
         this.obtenerTodo();
 
       } else {
@@ -229,6 +248,7 @@ cloneJSON(obj) {
     this.verificacioNovedad.observacion= this.anularNovedad.observacion
     this.verificacioNovedad.valoracion= this.anularNovedad.valoracion
     this.verificacioNovedad.verfNovedad= this.anularNovedad.verfNovedad
+    
     this.loading = true;
     this.verificacioNovedad.estado = 2;
 

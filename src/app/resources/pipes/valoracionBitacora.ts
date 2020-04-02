@@ -23,6 +23,9 @@ export class ValoracionBitacoraPipe implements PipeTransform {
         if (value == 3) {
             return "NO CUMPLE con fecha de Presentación de Informe de Resultados y NO CUMPLE con Notificacion o Solicitud de Aprobación"
         }
-      
+        
+        if (value != 3 && value != 2 && value != 1 && value != 0) {
+            return "No se ha registrado Datos"
+        }
     }
 } 

@@ -59,7 +59,9 @@ export class BuscarPortafolioBitacoraComponent implements OnInit {
           this.campoList.push({ label: c.camNombre, value: c });
         }
       });
+      this.buscarPortafolio();
 
+      
   }
 
   buscarPortafolio() {
