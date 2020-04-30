@@ -25,32 +25,23 @@ export class DocumentoMinisterioComponent implements OnInit {
   documentoMinisterio: DocumentoMinisterio = new DocumentoMinisterio;
   documentoMinisterioList: DocumentoMinisterio[] = [];
   documentoMinisterioEdit: DocumentoMinisterio = new DocumentoMinisterio;
-
   documentoModalRef: BsModalRef;
   maxDate: Date;
   minDate: Date;
-
   docNroOficio: Archivo = new Archivo;
   anexo1: Archivo = new Archivo;
-
   asuntoList: SelectItem[] = [];
   asunto: Asunto;
-
   nResol: boolean = false;
-
   documentoEditRef: BsModalRef;
-
-
 
   constructor(public loginService: LoginService, public cs: Constantes, public messageService: MessageService, public router: Router, public buscarService: BusquedaService, private dataApi: CreateUpdateService, private modalService: BsModalService) {
     this.asuntoList = [{ label: "Seleccione", value: null, disabled: true }];
 
   }
   ngOnInit() {
-
     this.loading = true;
     this.usuario = this.loginService.sessionValue;
-
     if (!this.usuario) {
       this.router.navigate(['/login']);
     }
@@ -62,14 +53,12 @@ export class DocumentoMinisterioComponent implements OnInit {
     this.minDate = new Date(2010, 0, 1);
     this.getDocumentoMinisterioList();
     this.getAsuntoList();
-
   }
 
   getDocumentoMinisterioList() {
     this.buscarService.getDocumentoMinisterioByCodigoPortafolioList(this.portafolio.codigoPortafolio).subscribe((data: DocumentoMinisterio[]) => {
       this.documentoMinisterioList = data;
       this.loading = false;
-
     });
   }
 
@@ -86,6 +75,7 @@ export class DocumentoMinisterioComponent implements OnInit {
 
   openModalDocumeto(template: TemplateRef<any>) {
     this.loading = true;
+    this.asuntoList = [];
     this.documentoMinisterio = new DocumentoMinisterio;
     this.getAsuntoList();
     this.documentoModalRef = this.modalService.show(template, { class: 'modal-md', backdrop: 'static', keyboard: false });
@@ -130,15 +120,10 @@ export class DocumentoMinisterioComponent implements OnInit {
     } else {
       this.nResol = false;
     }
-
   }
 
-
   guardar() {
-
-
     let errores: string[] = [];
-
     if (!this.documentoMinisterio.numeroSGC) {
       errores.push("El campo Nro. SGC es requerido");
     }
