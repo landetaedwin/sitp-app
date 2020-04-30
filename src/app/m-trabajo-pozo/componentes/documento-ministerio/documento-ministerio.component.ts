@@ -116,9 +116,9 @@ export class DocumentoMinisterioComponent implements OnInit {
   descativarNresolucion(asunto: Asunto) {
     debugger
     if (asunto.codigoAsunto == 5 || asunto.codigoAsunto == 6) {
-      this.nResol = true;
-    } else {
       this.nResol = false;
+    } else {
+      this.nResol = true;
     }
   }
 
