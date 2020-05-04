@@ -1,8 +1,8 @@
 <p-fieldset legend="Mantenimiento catálogo categoría">
   <div class="row justify-content-end">
     <div class="col-md-2 text-right">
-      <button type="button" class="btn btn-sm btn-success" (click)="getCategoriaList()"><i class="fa fa-refresh"
-          aria-hidden="true"></i>
+      <button type="button" class="btn btn-sm btn-success" (click)="getCategoriaList()">
+        <i class="fa fa-refresh" aria-hidden="true"></i>
       </button>
     </div>
     <div class="col-md-2">
@@ -12,6 +12,7 @@
   </div>
 </p-fieldset>
 <br>
+
 <p-fieldset legend="Categoria" [toggleable]="true">
   <div class="row">
     <div class="col-md-12">
@@ -53,6 +54,7 @@
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
 </ngx-loading>
 
+<!--Para crear un nuevo-->
 <ng-template #new>
   <div class="container mb-3 mt-3">
     <p-fieldset legend="Categoria">
@@ -66,17 +68,15 @@
             </div>
           </div>
         </div>
-
+        
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-4"><label>Tipo trabajo: *</label></div>
+            <div class="col-md-4"><label>Trabajo: *</label></div>
             <div class="col-md-8">
-              <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo"
-                (onChangue)="getCategoriaByCodigoTipoTrabajo(tipoTrabajo)" [filter]="true"></p-dropdown>
+              <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo"></p-dropdown>
             </div>
           </div>
         </div>
-
 
       </div>
 
@@ -96,6 +96,7 @@
   </div>
 </ng-template>
 
+<!--Pantalla de editar-->
 <ng-template #edit>
   <div class="container mb-3 mt-3">
     <p-fieldset legend="Categoria">
@@ -114,8 +115,7 @@
           <div class="row">
             <div class="col-md-4"><label>Trabajo: *</label></div>
             <div class="col-md-8">
-              <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo"
-              (click)="getTipoTrabajoList()" [filter]="true"></p-dropdown>
+              <p-dropdown [options]="tipoTrabajoList" [(ngModel)]="tipoTrabajo"></p-dropdown>
             </div>
           </div>
         </div>

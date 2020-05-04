@@ -19,6 +19,7 @@ export class CategoriaService {
     return this.http.get(url, httpOptions);
   }
 
+  //Falta revisar como pasar el parámetro.  
   findCategoriaById(){
     const url = this.prop.PATH + "/sitp/categoria-service/categoria-id";
     return this.http.get(url, httpOptions);

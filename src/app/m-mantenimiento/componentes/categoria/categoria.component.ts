@@ -44,6 +44,7 @@ export class CategoriaComponent implements OnInit {
 
   ngOnInit() {
     this.getCategoriaList();
+    this.getTipoTrabajoList();
   }
 
   getCategoriaList() {
@@ -66,9 +67,21 @@ export class CategoriaComponent implements OnInit {
           this.loading = false;
         });
     }
+    
   }
 
+  
+  getTipoTrabajoList() {
+    this.busquedaService.getTipoTrabajoList().subscribe(
+      (data: TipoTrabajo[]) => {
+        let tt: TipoTrabajo;
+        for (let i in data) {
+          tt = data[i];
+          this.tipoTrabajoList.push({ label: tt.tipoTrabajo, value: tt });
+        }
 
+      });
+  }
 
 
   openNewModal(template: TemplateRef<any>) {
@@ -94,6 +107,7 @@ export class CategoriaComponent implements OnInit {
    // debugger
    // this.categoria.estado = 1;
    // this.categoria.fechaRegistro = new Date();
+   this.categoria.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
     this.categoriaService.onSaveCategoria(this.categoria).subscribe(res => {
       this.closeNewModal();
       this.loading = false;
@@ -104,6 +118,7 @@ export class CategoriaComponent implements OnInit {
   update() {
     this.loading = true;
     //this.categoriaEdit.fechaRegistro = new Date(this.categoriaEdit.fechaRegistro);
+    this.categoriaEdit.codigoTipoTrabajo = this.tipoTrabajo.codigoTipoTrabajo;
     this.categoriaService.onUpdateCategoria(this.categoriaEdit).subscribe(res => {
       this.closeEditModal();
       this.loading = false;
